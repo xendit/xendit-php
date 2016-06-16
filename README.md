@@ -7,7 +7,7 @@ PHP_ENV=staging php getPartnerInvoiceServiceClient.php 5760e6ad0e263a99266b33ea 
 PHP_ENV=[environment] php getPartnerInvoiceServiceClient.php [invoice_id] [nonce] [signature]
 ```
 
-# Post Example : # 
+# Post Example : #
 
 ```
 PHP_ENV=staging php postInvoicePartnerServiceClient.php 30000 lingga@xendit.com "testing xendit 3000"

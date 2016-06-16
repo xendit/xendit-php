@@ -17,8 +17,7 @@
 
          curl_setopt($curl, CURLOPT_URL, $end_point); 
 
-         curl_exec($curl);
-         
+         curl_exec($curl);         
          curl_close($curl);
       }
 
@@ -41,7 +40,6 @@
          curl_setopt($curl, CURLOPT_POSTFIELDS, $raw_data);
 
          curl_exec($curl);
-
          curl_close($curl);
       }
 
