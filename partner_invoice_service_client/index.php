@@ -5,7 +5,6 @@
          $this->server_domain = $options['server_domain'];
          $this->partner_id = $options['partner_id'];
          $this->secret_key = $options['secret_key'];
-         $this->nonce = date('Y-m-d\TH:i:s\Z');
       }
 
       function getInvoice ($invoice_id, $nonce, $signature) {
@@ -26,7 +25,7 @@
 
       	$end_point = $this->server_domain.'/invoices';
 
-         $data["nonce"] = $this->nonce;
+         $data["nonce"] = date('Y-m-d\TH:i:s\Z');
          $data["partner_id"] = $this->partner_id;
          $data["amount"] = $amount;
          $data["payer_email"] = $payer_email;
