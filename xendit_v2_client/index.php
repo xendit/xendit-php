@@ -13,7 +13,7 @@
             $headers = array();
             $headers[] = 'Content-Type: application/json';
 
-            $end_point = $this->server_domain.'/invoices';
+            $end_point = $this->server_domain.'/v2/invoices';
 
             $data['external_id'] = $external_id;
             $data['amount'] = (int)$amount;
@@ -104,7 +104,7 @@
             $headers = array();
             $headers[] = 'Content-Type: application/json';
 
-            $end_point = $this->server_domain.'/invoices/'.$invoice_id;
+            $end_point = $this->server_domain.'/v2/invoices/'.$invoice_id;
 
             curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
             curl_setopt($curl, CURLOPT_USERPWD, $this->secret_api_key.":");
