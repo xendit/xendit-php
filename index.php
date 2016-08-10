@@ -1,7 +1,6 @@
 <?php
 
     class XenditV2InvoiceClient {
-      
         function __construct ($options) {
             $this->server_domain = $options['server_domain'];
             $this->secret_api_key = $options['secret_api_key'];

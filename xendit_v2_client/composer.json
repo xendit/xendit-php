@@ -1,8 +1,0 @@
-{
-	"name": "@LieAlbertTriAdrian/xendit-v2-clients",
-	"version": "0.1.0",
-	"description": "PHP clients for xendit",
-	"require": {
-		"php": "^5.5.0"
-	}
-}
