@@ -1,9 +1,15 @@
 {
     "name": "xendit/xendit-php-clients",
     "description": "PHP clients for xendit api version 2",
+    "keywords": ["xendit"],
+    "homepage": "https://github.com/xendit/xendit-php-clients",
+    "type": "library",
     "version": "0.1.0",
     "minimum-stability": "stable",
     "require": {
-        "php": "^5.5.0"
+        "php": ">=5.4.0"
+    },
+    "autoload": {
+    	"psr-0": { "XenditPhpClients": "src/" }
     }
 }
