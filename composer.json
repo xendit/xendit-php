@@ -2,7 +2,7 @@
     "name": "xendit/xendit-php-clients",
     "description": "PHP clients for xendit api version 2",
     "version": "0.1.0",
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "require": {
         "php": "^5.5.0"
     }
