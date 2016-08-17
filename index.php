@@ -2,7 +2,12 @@
 
     class XenditV2InvoiceClient {
         function __construct ($options) {
-            $this->server_domain = $options['server_domain'];
+            if ($options['server_domain']) {
+                $this->server_domain = $options['server_domain'];
+            } else {
+                $this->server_domain = 'https://api.xendit.co';
+            }
+
             $this->secret_api_key = $options['secret_api_key'];
         }
 
@@ -91,9 +96,9 @@
 
             curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
             curl_setopt($curl, CURLOPT_USERPWD, $this->secret_api_key.":");
-            curl_setopt($curl, CURLOPT_URL, $end_point); 
+            curl_setopt($curl, CURLOPT_URL, $end_point);
 
-            curl_exec($curl);         
+            curl_exec($curl);
             curl_close($curl);
         }
 
@@ -107,9 +112,9 @@
 
             curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
             curl_setopt($curl, CURLOPT_USERPWD, $this->secret_api_key.":");
-            curl_setopt($curl, CURLOPT_URL, $end_point); 
+            curl_setopt($curl, CURLOPT_URL, $end_point);
 
-            curl_exec($curl);         
+            curl_exec($curl);
             curl_close($curl);
         }
 
@@ -123,9 +128,9 @@
 
             curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
             curl_setopt($curl, CURLOPT_USERPWD, $this->secret_api_key.":");
-            curl_setopt($curl, CURLOPT_URL, $end_point); 
+            curl_setopt($curl, CURLOPT_URL, $end_point);
 
-            curl_exec($curl);         
+            curl_exec($curl);
             curl_close($curl);
         }
     }
