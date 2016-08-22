@@ -39,8 +39,9 @@ php examples/get_balance_example.php
 
 # Post Invoice Status Callback Example : #
 ```
-1. Run php -S localhost:8006 examples/post_invoice_status_callback_server_example.php
-2. When invoice is paid, xendit will hit localhost:8006/paid_invoice_from_xendit with POST method:
+1. Run: cd examples
+2. Run: php -S localhost:8006 post_invoice_status_callback_server_example.php
+3. When invoice is paid, xendit will hit localhost:8006/paid_invoice_from_xendit with POST method:
 
 Ex :
 curl --include \
@@ -83,5 +84,5 @@ curl --include \
 }" \
 'http://localhost:8006/paid_invoice_from_xendit'
 
-3. localhost:8006/paid_invoice_from_xendit (callback url) get the paid invoice data.
+4. localhost:8006/paid_invoice_from_xendit (callback url) get the paid invoice data.
 ```
