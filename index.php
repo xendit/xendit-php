@@ -1,6 +1,6 @@
 <?php
 
-    class XenditV2InvoiceClient {
+    class XenditPHPClient {
         function __construct ($options) {
             if ($options['server_domain']) {
                 $this->server_domain = $options['server_domain'];
@@ -31,9 +31,13 @@
             curl_setopt($curl, CURLOPT_URL, $end_point);
             curl_setopt($curl, CURLOPT_POST, true);
             curl_setopt($curl, CURLOPT_POSTFIELDS, $payload);
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 
-            curl_exec($curl);
+            $response = curl_exec($curl);
             curl_close($curl);
+
+            $responseObject = json_decode($response, true);
+            return $responseObject;
         }
 
         function createDisbursement ($external_id, $amount, $bank_code, $account_holder_name, $account_number) {
@@ -57,9 +61,13 @@
             curl_setopt($curl, CURLOPT_URL, $end_point);
             curl_setopt($curl, CURLOPT_POST, true);
             curl_setopt($curl, CURLOPT_POSTFIELDS, $payload);
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 
-            curl_exec($curl);
+            $response = curl_exec($curl);
             curl_close($curl);
+
+            $responseObject = json_decode($response, true);
+            return $responseObject;
         }
 
         function createCallbackVirtualAccount ($external_id, $bank_code, $name) {
@@ -81,9 +89,13 @@
             curl_setopt($curl, CURLOPT_URL, $end_point);
             curl_setopt($curl, CURLOPT_POST, true);
             curl_setopt($curl, CURLOPT_POSTFIELDS, $payload);
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 
-            curl_exec($curl);
+            $response = curl_exec($curl);
             curl_close($curl);
+
+            $responseObject = json_decode($response, true);
+            return $responseObject;
         }
 
         function getDisbursement ($disbursement_id) {
@@ -97,9 +109,13 @@
             curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
             curl_setopt($curl, CURLOPT_USERPWD, $this->secret_api_key.":");
             curl_setopt($curl, CURLOPT_URL, $end_point);
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 
-            curl_exec($curl);
+            $response = curl_exec($curl);
             curl_close($curl);
+
+            $responseObject = json_decode($response, true);
+            return $responseObject;
         }
 
         function getInvoice ($invoice_id) {
@@ -113,9 +129,13 @@
             curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
             curl_setopt($curl, CURLOPT_USERPWD, $this->secret_api_key.":");
             curl_setopt($curl, CURLOPT_URL, $end_point);
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 
-            curl_exec($curl);
+            $response = curl_exec($curl);
             curl_close($curl);
+
+            $responseObject = json_decode($response, true);
+            return $responseObject;
         }
 
         function getBalance () {
@@ -129,9 +149,13 @@
             curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
             curl_setopt($curl, CURLOPT_USERPWD, $this->secret_api_key.":");
             curl_setopt($curl, CURLOPT_URL, $end_point);
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 
-            curl_exec($curl);
+            $response = curl_exec($curl);
             curl_close($curl);
+
+            $responseObject = json_decode($response, true);
+            return $responseObject;
         }
     }
 ?>
