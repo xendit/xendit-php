@@ -1,10 +1,12 @@
 <?php
-    require('config/xendit_v2_client_config.php');
+    require('config/xendit_php_client_config.php');
     require('index.php');
 
     $options['secret_api_key'] = constant('SECRET_API_KEY');
+    $options['server_domain'] = constant('SERVER_DOMAIN');
 
-    $xenditV2InvoiceClient = new XenditV2InvoiceClient($options);
+    $xenditPHPClient = new XenditPHPClient($options);
 
-    $xenditV2InvoiceClient->getBalance();
+    $response = $xenditPHPClient->getBalance();
+    print_r($response);
 ?>
