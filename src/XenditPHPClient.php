@@ -1,5 +1,7 @@
 <?php
 
+    namespace XenditClient;
+
     class XenditPHPClient {
         function __construct ($options) {
             if ($options['server_domain']) {

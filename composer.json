@@ -9,6 +9,6 @@
         "php": ">=5.4.0"
     },
     "autoload": {
-    	"psr-0": { "XenditPhpClients": "src/" }
+    	"psr-4": { "XenditClient\\": "src/" }
     }
 }

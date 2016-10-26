@@ -1,5 +1,6 @@
 # GET Invoice Example : #
 ```
+cd src/
 php examples/get_invoice_example.php 57ba6f57cf952cff10ebc073
 ```
 
@@ -10,6 +11,7 @@ php examples/get_invoice_example.php [invoice_id]
 # Create Invoice Example : #
 
 ```
+cd src/
 php examples/create_invoice_example.php "CUSTOM_ID_0"  30000 "payer_email@sample.com" "this is a description"
 ```
 
@@ -19,27 +21,31 @@ php examples/create_invoice_example.php [external_id] [amount] [payer_email] [de
 
 # Create Disbursement Example : #
 ```
+cd src/
 php examples/create_disbursement_example.php "CUSTOM_ID_1"  30000 "BCA" "Rizky" "1234567890"
 ```
 
 # GET Disbursement Example : #
 ```
+cd src/
 php examples/get_disbursement_example.php "57ba93175ef9e7077bcb969e"
 ```
 
 # Create Callback Virtual Account Example : #
 ```
+cd src/
 php examples/create_callback_virtual_account_example.php "CUSTOM_ID_2" "BCA" "Rizky"
 ```
 
 # GET Balance Example : #
 ```
+cd src/
 php examples/get_balance_example.php
 ```
 
 # Post Invoice Status Callback Example : #
 ```
-1. Run: cd examples
+1. Run: cd src/examples
 2. Run: php -S localhost:8006 post_invoice_status_callback_server_example.php
 3. When invoice is paid, xendit will hit localhost:8006/paid_invoice_from_xendit with POST method:
 
