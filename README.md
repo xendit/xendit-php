@@ -43,6 +43,12 @@ cd src/
 php examples/get_balance_example.php
 ```
 
+# Capture credit card payment
+```
+cd src/
+php examples/capture_credit_card_payment_example.php [token_id] [amount] [external_id]
+```
+
 # Post Invoice Status Callback Example : #
 ```
 1. Run: cd src/examples
