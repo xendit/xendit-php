@@ -6,11 +6,10 @@
 
     $xenditPHPClient = new XenditClient\XenditPHPClient($options);
 
-    $external_id = $argv[1];
-    $token_id = $argv[2];
-    $amount = $argv[3];
+    $credit_card_charge_id = $argv[1];
+    $amount = $argv[2];
 
-    $response = $xenditPHPClient->captureCreditCardPayment($external_id, $token_id, $amount);
+    $response = $xenditPHPClient->issueCreditCardRefund($credit_card_charge_id, $amount);
 
     print_r($response);
 ?>

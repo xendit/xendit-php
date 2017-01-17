@@ -4,12 +4,7 @@
 
     class XenditPHPClient {
         function __construct ($options) {
-            if ($options['server_domain']) {
-                $this->server_domain = $options['server_domain'];
-            } else {
-                $this->server_domain = 'https://api.xendit.co';
-            }
-
+            $this->server_domain = 'https://api.xendit.co';
             $this->secret_api_key = $options['secret_api_key'];
         }
 
@@ -72,6 +67,26 @@
             return $responseObject;
         }
 
+        function getVirtualAccountBanks () {
+            $curl = curl_init();
+
+            $headers = array();
+            $headers[] = 'Content-Type: application/json';
+
+            $end_point = $this->server_domain.'/available_virtual_account_banks';
+
+            curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+            curl_setopt($curl, CURLOPT_USERPWD, $this->secret_api_key.":");
+            curl_setopt($curl, CURLOPT_URL, $end_point);
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+
+            $response = curl_exec($curl);
+            curl_close($curl);
+
+            $responseObject = json_decode($response, true);
+            return $responseObject;            
+        }
+
         function createCallbackVirtualAccount ($external_id, $bank_code, $name) {
             $curl = curl_init();
 
@@ -120,6 +135,26 @@
             return $responseObject;
         }
 
+        function getAvailableDisbursementBanks () {
+            $curl = curl_init();
+
+            $headers = array();
+            $headers[] = 'Content-Type: application/json';
+
+            $end_point = $this->server_domain.'/available_disbursements_banks';
+
+            curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+            curl_setopt($curl, CURLOPT_USERPWD, $this->secret_api_key.":");
+            curl_setopt($curl, CURLOPT_URL, $end_point);
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+
+            $response = curl_exec($curl);
+            curl_close($curl);
+
+            $responseObject = json_decode($response, true);
+            return $responseObject;             
+        }
+
         function getInvoice ($invoice_id) {
             $curl = curl_init();
 
@@ -160,7 +195,7 @@
             return $responseObject;
         }
 
-        function captureCreditCardPayment($external_id, $token_id, $amount) {
+        function captureCreditCardPayment ($external_id, $token_id, $amount) {
             $curl = curl_init();
 
             $headers = array();
@@ -170,6 +205,32 @@
 
             $data['external_id'] = $external_id;
             $data['token_id'] = $token_id;
+            $data['amount'] = $amount;
+
+            $payload = json_encode($data);
+
+            curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+            curl_setopt($curl, CURLOPT_USERPWD, $this->secret_api_key.":");
+            curl_setopt($curl, CURLOPT_URL, $end_point);
+            curl_setopt($curl, CURLOPT_POST, true);
+            curl_setopt($curl, CURLOPT_POSTFIELDS, $payload);
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+
+            $response = curl_exec($curl);
+            curl_close($curl);
+
+            $responseObject = json_decode($response, true);
+            return $responseObject;
+        }
+
+        function issueCreditCardRefund ($credit_card_charge_id, $amount) {
+            $curl = curl_init();
+
+            $headers = array();
+            $headers[] = 'Content-Type: application/json';
+
+            $end_point = $this->server_domain.'/credit_card_charges/'.$credit_card_charge_id.'/refunds';
+
             $data['amount'] = $amount;
 
             $payload = json_encode($data);
