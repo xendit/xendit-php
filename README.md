@@ -49,6 +49,12 @@ cd src/
 php examples/capture_credit_card_payment_example.php [token_id] [amount] [external_id]
 ```
 
+# Name validator
+```
+cd src/
+php examples/validate_bank_account_holder_name.php [bank_account_number] [bank_code]
+```
+
 # Post Invoice Status Callback Example : #
 ```
 1. Run: cd src/examples
