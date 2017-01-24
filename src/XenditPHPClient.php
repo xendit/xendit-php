@@ -275,5 +275,60 @@
             $responseObject = json_decode($response, true);
             return $responseObject;
         }
+
+        function subscribeCreditCardRecurringPayment ($token_id, $initial_charge_amount, $initial_charge_external_id) {
+            $curl = curl_init();
+
+            $headers = array();
+            $headers[] = 'Content-Type: application/json';
+
+            $end_point = $this->server_domain.'/recurring_credit_card_subscription';
+
+            $data['token_id'] = $token_id;
+            $data['initial_charge_amount'] = $initial_charge_amount;
+            $data['initial_charge_external_id'] = $initial_charge_external_id;
+
+            $payload = json_encode($data);
+
+            curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+            curl_setopt($curl, CURLOPT_USERPWD, $this->secret_api_key.":");
+            curl_setopt($curl, CURLOPT_URL, $end_point);
+            curl_setopt($curl, CURLOPT_POST, true);
+            curl_setopt($curl, CURLOPT_POSTFIELDS, $payload);
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+
+            $response = curl_exec($curl);
+            curl_close($curl);
+
+            $responseObject = json_decode($response, true);
+            return $responseObject;
+        }
+
+        function captureSubsequentCreditCardRecurringPayment ($subscription_id, $amount, $external_id) {
+            $curl = curl_init();
+
+            $headers = array();
+            $headers[] = 'Content-Type: application/json';
+
+            $end_point = $this->server_domain.'/recurring_credit_card_subscription/'.$subscription_id.'/charges';
+
+            $data['amount'] = $amount;
+            $data['external_id'] = $external_id;
+
+            $payload = json_encode($data);
+
+            curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+            curl_setopt($curl, CURLOPT_USERPWD, $this->secret_api_key.":");
+            curl_setopt($curl, CURLOPT_URL, $end_point);
+            curl_setopt($curl, CURLOPT_POST, true);
+            curl_setopt($curl, CURLOPT_POSTFIELDS, $payload);
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+
+            $response = curl_exec($curl);
+            curl_close($curl);
+
+            $responseObject = json_decode($response, true);
+            return $responseObject;   
+        }
     }
 ?>
