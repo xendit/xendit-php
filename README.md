@@ -104,3 +104,15 @@ curl --include \
 
 4. localhost:8006/paid_invoice_from_xendit (callback url) get the paid invoice data.
 ```
+
+# Subscribe Credit Card Recurring Payment
+```
+cd src/
+php examples/subscribe_credit_card_recurring_payment_example.php [token_id] [initial_charge_amount] [initial_charge_external_id]
+```
+
+# Capture Subsequent Credit Card Recurring Payment
+```
+cd src/
+php examples/capture_subsequent_credit_card_recurring_payment_example.php [subscription_id] [amount] [external_id]
+```
