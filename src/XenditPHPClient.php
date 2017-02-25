@@ -37,11 +37,15 @@
             return $responseObject;
         }
 
-        function createDisbursement ($external_id, $amount, $bank_code, $account_holder_name, $account_number) {
+        function createDisbursement ($external_id, $amount, $bank_code, $account_holder_name, $account_number, $disbursement_options = null) {
             $curl = curl_init();
 
             $headers = array();
             $headers[] = 'Content-Type: application/json';
+
+            if (!empty($disbursement_options['X-IDEMPOTENCY-KEY'])) {
+                array_push($headers, 'X-IDEMPOTENCY-KEY: '.$disbursement_options['X-IDEMPOTENCY-KEY']);
+            }
 
             $end_point = $this->server_domain.'/disbursements';
 
