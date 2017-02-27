@@ -25,6 +25,12 @@ cd src/
 php examples/create_disbursement_example.php "CUSTOM_ID_1"  30000 "BCA" "Rizky" "1234567890"
 ```
 
+# Create Disbursement With Idempotency Key Example : #
+```
+cd src/
+php examples/create_disbursement_with_idempotency_key_example.php "CUSTOM_ID_1"  30000 "BCA" "Rizky" "1234567890" "idempotencykeytest123"
+```
+
 # GET Disbursement Example : #
 ```
 cd src/
