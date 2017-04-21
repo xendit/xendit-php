@@ -227,15 +227,20 @@
             return $responseObject;
         }
 
-        function issueCreditCardRefund ($credit_card_charge_id, $amount) {
+        function issueCreditCardRefund ($credit_card_charge_id, $amount, $external_id, $options = null) {
             $curl = curl_init();
 
             $headers = array();
             $headers[] = 'Content-Type: application/json';
 
+            if (!empty($options['X-IDEMPOTENCY-KEY'])) {
+                array_push($headers, 'X-IDEMPOTENCY-KEY: '.$options['X-IDEMPOTENCY-KEY']);
+            }
+
             $end_point = $this->server_domain.'/credit_card_charges/'.$credit_card_charge_id.'/refunds';
 
             $data['amount'] = $amount;
+            $data['external_id'] = $external_id;
 
             $payload = json_encode($data);
 
