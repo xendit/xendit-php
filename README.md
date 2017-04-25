@@ -111,6 +111,18 @@ curl --include \
 4. localhost:8006/paid_invoice_from_xendit (callback url) get the paid invoice data.
 ```
 
+# Issue credit card refund without idempotency key
+```
+cd src/
+php examples/issue_credit_card_refund_example.php [credit_card_charge_id] [amount] [external_id]
+```
+
+# Issue credit card refund with idempotency key
+```
+cd src/
+php examples/issue_credit_card_refund_with_idempotency_example.php [credit_card_charge_id] [amount] [external_id] [optional-idempotency-key]
+```
+
 # Subscribe Credit Card Recurring Payment
 ```
 cd src/
