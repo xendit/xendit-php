@@ -91,7 +91,7 @@
             return $responseObject;            
         }
 
-        function createCallbackVirtualAccount ($external_id, $bank_code, $name) {
+        function createCallbackVirtualAccount ($external_id, $bank_code, $name, $virtual_account_number) {
             $curl = curl_init();
 
             $headers = array();
@@ -102,6 +102,7 @@
             $data['external_id'] = $external_id;
             $data['bank_code'] = $bank_code;
             $data['name'] = $name;
+            $data['virtual_account_number'] = $virtual_account_number;
 
             $payload = json_encode($data);
 
