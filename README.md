@@ -129,14 +129,3 @@ cd src/
 php examples/issue_credit_card_refund_with_idempotency_example.php [credit_card_charge_id] [amount] [external_id] [optional-idempotency-key]
 ```
 
-# Subscribe Credit Card Recurring Payment
-```
-cd src/
-php examples/subscribe_credit_card_recurring_payment_example.php [token_id] [initial_charge_amount] [initial_charge_external_id]
-```
-
-# Capture Subsequent Credit Card Recurring Payment
-```
-cd src/
-php examples/capture_subsequent_credit_card_recurring_payment_example.php [subscription_id] [amount] [external_id]
-```
