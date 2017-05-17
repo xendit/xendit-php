@@ -58,7 +58,7 @@ php examples/get_balance_example.php
 # Capture credit card payment
 ```
 cd src/
-php examples/capture_credit_card_payment_example.php [token_id] [amount] [external_id]
+php examples/capture_credit_card_payment_example.php [external_id] [token_id] [amount] 
 ```
 
 # Name validator
