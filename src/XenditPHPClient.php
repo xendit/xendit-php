@@ -91,7 +91,7 @@
             return $responseObject;            
         }
 
-        function createCallbackVirtualAccount ($external_id, $bank_code, $name, $virtual_account_number = null) {
+        function createCallbackVirtualAccount ($external_id, $bank_code, $name, $virtual_account_number, $suggested_amount = null) {
             $curl = curl_init();
 
             $headers = array();
@@ -107,12 +107,44 @@
                 $data['virtual_account_number'] = $virtual_account_number;
             }
 
+            if (!empty($suggested_amount)) {
+                $data['suggested_amount'] = $suggested_amount;
+            }
+
             $payload = json_encode($data);
 
             curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
             curl_setopt($curl, CURLOPT_USERPWD, $this->secret_api_key.":");
             curl_setopt($curl, CURLOPT_URL, $end_point);
             curl_setopt($curl, CURLOPT_POST, true);
+            curl_setopt($curl, CURLOPT_POSTFIELDS, $payload);
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+
+            $response = curl_exec($curl);
+            curl_close($curl);
+
+            $responseObject = json_decode($response, true);
+            return $responseObject;
+        }
+
+        function updateCallbackVirtualAccount ($fixed_virtual_account_id, $suggested_amount = null) {
+            $curl = curl_init();
+
+            $headers = array();
+            $headers[] = 'Content-Type: application/json';
+
+            $end_point = $this->server_domain.'/callback_virtual_accounts/'.$fixed_virtual_account_id;
+            
+            if (!empty($suggested_amount)) {
+                $data['suggested_amount'] = $suggested_amount;
+            }
+
+            $payload = json_encode($data);
+
+            curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+            curl_setopt($curl, CURLOPT_USERPWD, $this->secret_api_key.":");
+            curl_setopt($curl, CURLOPT_URL, $end_point);
+            curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'PATCH');
             curl_setopt($curl, CURLOPT_POSTFIELDS, $payload);
             curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 
