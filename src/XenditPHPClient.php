@@ -8,7 +8,7 @@
             $this->secret_api_key = $options['secret_api_key'];
         }
 
-        function createInvoice ($external_id, $amount, $payer_email, $description) {
+        function createInvoice ($external_id, $amount, $payer_email, $description, $invoice_options = null) {
             $curl = curl_init();
 
             $headers = array();
@@ -20,6 +20,10 @@
             $data['amount'] = (int)$amount;
             $data['payer_email'] = $payer_email;
             $data['description'] = $description;
+
+            if (!empty($invoice_options['callback_virtual_account_id'])) {
+                $data['callback_virtual_account_id'] = $invoice_options['callback_virtual_account_id'];
+            }
 
             $payload = json_encode($data);
 
