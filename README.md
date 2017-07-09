@@ -23,7 +23,7 @@ php examples/create_invoice_example.php [external_id] [amount] [payer_email] [de
 
 ```
 cd src/
-php examples/create_invoice_with_callback_virtual_account_id_example.php "CUSTOM_ID_0"  30000 "payer_email@sample.com" "this is a description" "1234567"
+php examples/create_invoice_with_callback_virtual_account_id_example.php "CUSTOM_ID_0"  30000 "payer_email@sample.com" "this is a description" "5812caf55fc9b71a7313c652"
 ```
 
 # Create Disbursement Example : #
