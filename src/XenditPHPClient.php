@@ -15,8 +15,6 @@ class XenditPHPClient {
     }
 
     function createInvoice ($external_id, $amount, $payer_email, $description, $invoice_options = null) {
-        $curl = curl_init();
-
         $headers = array();
         $headers[] = 'Content-Type: application/json';
 
@@ -37,8 +35,6 @@ class XenditPHPClient {
     }
 
     function createDisbursement ($external_id, $amount, $bank_code, $account_holder_name, $account_number, $disbursement_options = null) {
-        $curl = curl_init();
-
         $headers = array();
         $headers[] = 'Content-Type: application/json';
 
@@ -60,8 +56,6 @@ class XenditPHPClient {
     }
 
     function getVirtualAccountBanks () {
-        $curl = curl_init();
-
         $headers = array();
         $headers[] = 'Content-Type: application/json';
 
@@ -71,8 +65,6 @@ class XenditPHPClient {
     }
 
     function createCallbackVirtualAccount ($external_id, $bank_code, $name, $virtual_account_number = null) {
-        $curl = curl_init();
-
         $headers = array();
         $headers[] = 'Content-Type: application/json';
 
@@ -92,8 +84,6 @@ class XenditPHPClient {
     }
 
     function getDisbursement ($disbursement_id) {
-        $curl = curl_init();
-
         $headers = array();
         $headers[] = 'Content-Type: application/json';
 
@@ -103,8 +93,6 @@ class XenditPHPClient {
     }
 
     function getAvailableDisbursementBanks () {
-        $curl = curl_init();
-
         $headers = array();
         $headers[] = 'Content-Type: application/json';
 
@@ -114,8 +102,6 @@ class XenditPHPClient {
     }
 
     function getInvoice ($invoice_id) {
-        $curl = curl_init();
-
         $headers = array();
         $headers[] = 'Content-Type: application/json';
 
@@ -134,8 +120,6 @@ class XenditPHPClient {
     }
 
     function captureCreditCardPayment ($external_id, $token_id, $amount) {
-        $curl = curl_init();
-
         $headers = array();
         $headers[] = 'Content-Type: application/json';
 
@@ -151,8 +135,6 @@ class XenditPHPClient {
     }
 
     function issueCreditCardRefund ($credit_card_charge_id, $amount, $external_id, $options = null) {
-        $curl = curl_init();
-
         $headers = array();
         $headers[] = 'Content-Type: application/json';
 
@@ -171,8 +153,6 @@ class XenditPHPClient {
     }
 
     function validateBankAccountHolderName ($bank_account_number, $bank_code) {
-        $curl = curl_init();
-
         $headers = array();
         $headers[] = 'Content-Type: application/json';
 

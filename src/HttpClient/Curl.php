@@ -33,7 +33,7 @@ class Curl {
 		    }
 		} elseif ($method == 'post') {
 			$opts[CURLOPT_POST] = 1;
-            $opts[CURLOPT_POSTFIELDS] = Util::urlEncode($params);
+			$opts[CURLOPT_POSTFIELDS] = Util::urlEncode($params);
 		}
 
 		$opts[CURLOPT_HTTPHEADER] = $headers;
