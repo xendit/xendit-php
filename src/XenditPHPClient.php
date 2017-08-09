@@ -59,6 +59,10 @@
             $data['account_holder_name'] = $account_holder_name;
             $data['account_number'] = $account_number;
 
+            if (!empty($disbursement_options['description'])) {
+                $data['description'] = $disbursement_options['description'];
+            }
+
             $payload = json_encode($data);
 
             curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
