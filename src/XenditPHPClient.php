@@ -96,7 +96,7 @@
             curl_close($curl);
 
             $responseObject = json_decode($response, true);
-            return $responseObject;            
+            return $responseObject;
         }
 
         function createCallbackVirtualAccount ($external_id, $bank_code, $name, $virtual_account_number = null) {
@@ -168,7 +168,7 @@
             curl_close($curl);
 
             $responseObject = json_decode($response, true);
-            return $responseObject;             
+            return $responseObject;
         }
 
         function getInvoice ($invoice_id) {
@@ -211,7 +211,7 @@
             return $responseObject;
         }
 
-        function captureCreditCardPayment ($external_id, $token_id, $amount, $authenticationId = null) {
+        function captureCreditCardPayment ($external_id, $token_id, $amount, $capture_options = null) {
             $curl = curl_init();
 
             $headers = array();
@@ -222,7 +222,18 @@
             $data['external_id'] = $external_id;
             $data['token_id'] = $token_id;
             $data['amount'] = $amount;
-            $data['authentication_id'] = $authenticationId;
+
+            if (!empty($capture_options['authentication_id'])) {
+                $data['authentication_id'] = $capture_options['authentication_id'];
+            }
+
+            if (!empty($capture_options['card_cvn'])) {
+                $data['card_cvn'] = $capture_options['card_cvn'];
+            }
+
+            if (!empty($capture_options['capture'])) {
+                $data['capture'] = $capture_options['capture'];
+            }
 
             $payload = json_encode($data);
 
