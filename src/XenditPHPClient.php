@@ -211,7 +211,7 @@
             return $responseObject;
         }
 
-        function captureCreditCardPayment ($external_id, $token_id, $amount) {
+        function captureCreditCardPayment ($external_id, $token_id, $amount, $authenticationId = null) {
             $curl = curl_init();
 
             $headers = array();
@@ -222,6 +222,7 @@
             $data['external_id'] = $external_id;
             $data['token_id'] = $token_id;
             $data['amount'] = $amount;
+            $data['authentication_id'] = $authenticationId;
 
             $payload = json_encode($data);
 
