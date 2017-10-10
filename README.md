@@ -68,6 +68,12 @@ cd src/
 php examples/capture_credit_card_payment_example.php [external_id] [token_id] [amount] 
 ```
 
+# Capture credit card payment with authentication id
+```
+cd src/
+php examples/capture_credit_card_payment_with_authentication_id_example.php [external_id] [token_id] [amount] [authentication_id]
+```
+
 # Name validator
 ```
 cd src/
