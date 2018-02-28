@@ -157,7 +157,7 @@
             $headers = array();
             $headers[] = 'Content-Type: application/json';
 
-            $end_point = $this->server_domain.'/disbursements/external_id='.$disbursement_id;
+            $end_point = $this->server_domain.'/disbursements/external_id='.$external_id;
 
             curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
             curl_setopt($curl, CURLOPT_USERPWD, $this->secret_api_key.":");
