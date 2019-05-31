@@ -21,8 +21,10 @@
             $data['payer_email'] = $payer_email;
             $data['description'] = $description;
 
-            if (!empty($invoice_options['callback_virtual_account_id'])) {
-                $data['callback_virtual_account_id'] = $invoice_options['callback_virtual_account_id'];
+            if ( is_array($invoice_options) ) {
+                foreach ( $invoice_options as $key => $value ) {
+                    $data[$key] = $value;
+                }
             }
 
             $payload = json_encode($data);
@@ -59,8 +61,10 @@
             $data['account_holder_name'] = $account_holder_name;
             $data['account_number'] = $account_number;
 
-            if (!empty($disbursement_options['description'])) {
-                $data['description'] = $disbursement_options['description'];
+            if ( is_array($disbursement_options) ) {
+                foreach ( $disbursement_options as $key => $value ) {
+                    $data[$key] = $value;
+                }
             }
 
             $payload = json_encode($data);
