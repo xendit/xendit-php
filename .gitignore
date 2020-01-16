@@ -20,3 +20,4 @@
 
 # For people using composer
 /vendor/
+.idea/*
