@@ -13,6 +13,24 @@ class Xendit
 
     public static $apiBase = 'https://api.xendit.co';
 
+    public static $libVersion = '2.0.0';
+
+    /**
+     * @return string
+     */
+    public static function getApiBase(): string
+    {
+        return self::$apiBase;
+    }
+
+    /**
+     * @param string $apiBase
+     */
+    public static function setApiBase(string $apiBase): void
+    {
+        self::$apiBase = $apiBase;
+    }
+
     /**
      * Get the value of apiKey
      * 

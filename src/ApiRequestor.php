@@ -33,7 +33,7 @@ class ApiRequestor
     {
         $defaultHeaders = [];
         $lib = 'php';
-        $libVersion = phpversion();
+        $libVersion = Xendit::$libVersion;
 
         $defaultHeaders['Content-Type'] = 'application/json';
         $defaultHeaders['xendit-lib'] = $lib;
@@ -60,7 +60,7 @@ class ApiRequestor
 
         $defaultHeaders = self::_setDefaultHeaders($headers);
 
-        list($rbody, $rcode, $rheaders) = $this->_createHttpClient()->sendRequest(
+        [$rbody, $rcode, $rheaders] = $this->_createHttpClient()->sendRequest(
             $method,
             $url,
             $defaultHeaders,

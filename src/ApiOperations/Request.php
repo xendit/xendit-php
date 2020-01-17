@@ -4,7 +4,7 @@ namespace Xendit\ApiOperations;
 
 trait Request
 {
-    protected static function _validateParams($params = null)
+    protected static function _validateParams($params = [])
     {
         // TODO: validation params
     }
@@ -17,12 +17,12 @@ trait Request
      *
      * @return array
      */
-    protected static function _request($method, $url, $params, $headers)
+    protected static function _request($method, $url, $params = [], $headers = [])
     {
         // TODO: validate params before request
 
         $requestor = new \Xendit\ApiRequestor();
-        list($response) = $requestor->request($method, $url, $params, $headers);
-        return [$response];
+        $response = $requestor->request($method, $url, $params, $headers);
+        return $response;
     }
 }
