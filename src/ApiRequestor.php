@@ -9,23 +9,24 @@ class ApiRequestor
     /**
      * @param $method
      * @param $url
-     * @param $params
-     * @param $headers
+     * @param array $params
+     * @param array $headers
      *
-     * @return mixed
+     * @return array
      */
     public function request($method, $url, $params = [], $headers = [])
     {
         list($rbody, $rcode, $rheaders)
             = $this->_requestRaw($method, $url, $params, $headers);
 
-        //TODO: interpret response
+        // TODO: interpret response if there's invalid response
 
-        return $response;
+        return json_decode($rbody, true);
     }
 
     /**
      * @param $headers
+     *
      * @return array
      */
     private function _setDefaultHeaders($headers)
@@ -46,6 +47,7 @@ class ApiRequestor
      * @param $url
      * @param $params
      * @param $headers
+     *
      * @return array
      */
     private function _requestRaw($method, $url, $params, $headers)
@@ -53,12 +55,12 @@ class ApiRequestor
         $apiKey = Xendit::$apiKey;
 
         if (!$apiKey) {
-            // throw exception
+            // TODO: throw exception
         }
 
         $defaultHeaders = self::_setDefaultHeaders($headers);
 
-        list($rbody, $rcode, $rheaders) = $this->httpClient()->sendRequest(
+        list($rbody, $rcode, $rheaders) = $this->_createHttpClient()->sendRequest(
             $method,
             $url,
             $defaultHeaders,
@@ -71,7 +73,7 @@ class ApiRequestor
     /**
      * @return HttpClient\GuzzleClient
      */
-    private function httpClient()
+    private function _createHttpClient()
     {
         if (!self::$_httpClient) {
             self::$_httpClient = HttpClient\GuzzleClient::instance();

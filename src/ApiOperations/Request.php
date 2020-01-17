@@ -19,6 +19,8 @@ trait Request
      */
     protected static function _request($method, $url, $params, $headers)
     {
+        // TODO: validate params before request
+
         $requestor = new \Xendit\ApiRequestor();
         list($response) = $requestor->request($method, $url, $params, $headers);
         return [$response];

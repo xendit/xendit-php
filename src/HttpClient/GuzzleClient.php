@@ -2,6 +2,8 @@
 
 namespace Xendit\HttpClient;
 
+require 'vendor\autoload.php';
+
 use GuzzleHttp\Client as Guzzle;
 use Xendit\Xendit;
 
@@ -45,7 +47,7 @@ class GuzzleClient
     /**
      * @param $method
      * @param string $url
-     * @param array $defaultHeaders
+     * @param array  $defaultHeaders
      * @param $params
      *
      * @return array
@@ -59,13 +61,13 @@ class GuzzleClient
         $opts['method'] = $method;
         $opts['headers'] = $defaultHeaders;
 
-        list($rbody, $rcode, $rheader) = (string) $this->_executeRequest($opts, $url);
+        [$rbody, $rcode, $rheader] = (string) $this->_executeRequest($opts, $url);
 
         return [$rbody, $rcode, $rheader];
     }
 
     /**
-     * @param array $opts
+     * @param array  $opts
      * @param string $url
      *
      * @return array
