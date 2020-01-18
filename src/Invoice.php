@@ -14,7 +14,7 @@ class Invoice
      */
     public static function classUrl()
     {
-        return "v2/invoices";
+        return "/v2/invoices";
     }
 
     /**
@@ -23,7 +23,7 @@ class Invoice
      *
      * @return array
      */
-    public function expireInvoice($id, $options = [])
+    public static function expireInvoice($id, $options = [])
     {
         $url =  '/invoices/' . $id . '/expire!';
 

@@ -5,6 +5,7 @@ namespace Xendit\HttpClient;
 require 'vendor\autoload.php';
 
 use GuzzleHttp\Client as Guzzle;
+use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\RequestOptions;
 use Xendit\Xendit;
 
@@ -24,9 +25,11 @@ class GuzzleClient
         if ($http) {
             $this->http = $http;
         } else {
+            $baseUri = strval(Xendit::$apiBase);
             $this->http = new Guzzle(
                 [
-                'base_url' => [\Xendit\Xendit::$apiBase]
+                    'base_uri' => $baseUri,
+                    'verify' => false
                 ]
             );
         }
@@ -61,7 +64,7 @@ class GuzzleClient
         $opts['headers'] = $defaultHeaders;
         $opts['params'] = $params;
 
-        [$rbody, $rcode, $rheader] = (string) $this->_executeRequest($opts, $url);
+        [$rbody, $rcode, $rheader] = $this->_executeRequest($opts, $url);
 
         return [$rbody, $rcode, $rheader];
     }
@@ -77,27 +80,40 @@ class GuzzleClient
         $headers = $opts['headers'];
         $params = $opts['params'];
         $apiKey = Xendit::$apiKey;
+        $url = strval($url);
 
-        if (count($params) > 0) {
-            $response =  $this->http->request(
-                $opts['method'], $url, [
-                    'auth' => [$apiKey, ''],
-                    'headers' => $headers,
-                    RequestOptions::JSON => $params
-                ]
-            );
+        try {
+            if (count($params) > 0) {
+                $response =  $this->http->request(
+                    $opts['method'], $url, [
+                        'auth' => [$apiKey, ''],
+                        'headers' => $headers,
+                        RequestOptions::JSON => $params
+                    ]
+                );
+            } else {
+                $response =  $this->http->request(
+                    $opts['method'], $url, [
+                        'auth' => [$apiKey, ''],
+                        'headers' => $headers
+                    ]
+                );
+            }
+        } catch (ClientException $e) {
+            $response = $e->getResponse();
+            $responseBody = $response->getBody()->getContents();
         }
 
-        $response =  $this->http->request(
-            $opts['method'], $url, [
-            'auth' => [$apiKey, ''],
-            'headers' => $headers
-            ]
-        );
-
-        $rbody = (string) $response->getBody();
+        $rbody = $response->getBody();
         $rcode = (int) $response->getStatusCode();
         $rheader = $response->getHeaders();
+
+//        echo('rbody\n');
+//        var_dump($rbody);
+//        echo('rcode\n');
+//        var_dump($rcode);
+//        echo('rheader\n');
+//        var_dump($rheader);
 
         return [$rbody, $rcode, $rheader];
     }

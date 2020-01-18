@@ -36,7 +36,7 @@ class Xendit
      * 
      * @return string Secret API key
      */ 
-    public function getApiKey()
+    public static function getApiKey()
     {
         return self::$apiKey;
     }
@@ -48,7 +48,7 @@ class Xendit
      *
      * @return void
      */
-    public function setApiKey($apiKey)
+    public static function setApiKey($apiKey)
     {
         self::$apiKey = $apiKey;
     }
