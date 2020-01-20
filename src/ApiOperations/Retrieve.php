@@ -2,12 +2,18 @@
 
 namespace Xendit\ApiOperations;
 
+/**
+ * Trait Retrieve
+ *
+ * @package Xendit\ApiOperations
+ */
 trait Retrieve
 {
     /**
-     * @param string $url
-     * @param int|null $id
-     * @param array $options
+     * Send GET request to retrieve data
+     *
+     * @param int|null $id      ID
+     * @param array    $options user's options
      *
      * @return array
      */

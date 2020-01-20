@@ -9,9 +9,23 @@ Xendit::setApiKey(
 xnd_development_prHUBDfVuOQTxyWTQSNkpjn9OwX9ZSUjdqgF9GenZ6hwhUQkc3NZ9WVexdH
 TAG
 );
-$params = ['external_id' => 'demo_147580196267',
-     'payer_email' => 'sample_email@xendit.co',
-     'description' => 'Trip to Bali',
-     'amount' => 23000];
+
+$params = ['external_id' => 'demo_147580196270',
+    'payer_email' => 'sample_email@xendit.co',
+    'description' => 'Trip to Bali',
+    'amount' => 32000
+];
+
 $createInvoice = \Xendit\Invoice::create($params);
 var_dump($createInvoice);
+
+$id = $createInvoice['id'];
+
+$getInvoice = \Xendit\Invoice::retrieve($id);
+var_dump($getInvoice);
+
+$expireInvoice = \Xendit\Invoice::expireInvoice($id);
+var_dump($expireInvoice);
+
+$getAllInvoice = \Xendit\Invoice::retrieveAll();
+var_dump(($getAllInvoice));

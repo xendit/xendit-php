@@ -2,6 +2,11 @@
 
 namespace Xendit;
 
+/**
+ * Class Invoice
+ *
+ * @package Xendit
+ */
 class Invoice
 {
     use ApiOperations\Request;
@@ -10,6 +15,8 @@ class Invoice
     use ApiOperations\RetrieveAll;
 
     /**
+     * Instantiate base URL
+     *
      * @return string
      */
     public static function classUrl()
@@ -18,8 +25,20 @@ class Invoice
     }
 
     /**
-     * @param $id
-     * @param array $options
+     * Instantiate required params for Create
+     *
+     * @return array
+     */
+    public static function createReqParams()
+    {
+        return ['external_id', 'payer_email', 'description', 'amount'];
+    }
+
+    /**
+     * Expire Invoice
+     *
+     * @param string $id      Invoice ID
+     * @param array  $options User's options
      *
      * @return array
      */

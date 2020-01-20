@@ -7,8 +7,15 @@ require 'vendor\autoload.php';
 use GuzzleHttp\Client as Guzzle;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\RequestOptions;
+use Xendit\Exceptions\ApiExceptions;
 use Xendit\Xendit;
+use function GuzzleHttp\Psr7\str;
 
+/**
+ * Class GuzzleClient
+ *
+ * @package Xendit\HttpClient
+ */
 class GuzzleClient
 {
     private static $_instance;
@@ -36,6 +43,8 @@ class GuzzleClient
     }
 
     /**
+     * Create Client instance
+     *
      * @return GuzzleClient
      */
     public static function instance()
@@ -47,12 +56,15 @@ class GuzzleClient
     }
 
     /**
-     * @param $method
-     * @param string $url
-     * @param array  $defaultHeaders
-     * @param $params
+     * Create a request to execute in _executeRequest
+     *
+     * @param string $method         request method
+     * @param string $url            url
+     * @param array  $defaultHeaders request headers
+     * @param array  $params         parameters
      *
      * @return array
+     * @throws ApiExceptions
      */
     public function sendRequest($method, string $url, array $defaultHeaders, $params)
     {
@@ -70,10 +82,13 @@ class GuzzleClient
     }
 
     /**
-     * @param array  $opts
-     * @param string $url
+     * Execute request
+     *
+     * @param array  $opts request options (headers, params)
+     * @param string $url  request url
      *
      * @return array
+     * @throws ApiExceptions
      */
     private function _executeRequest(array $opts, string $url)
     {
@@ -101,20 +116,41 @@ class GuzzleClient
             }
         } catch (ClientException $e) {
             $response = $e->getResponse();
-            $responseBody = $response->getBody()->getContents();
+            $rbody = json_decode($response->getBody()->getContents(), true);
+            $rcode = $response->getStatusCode();
+            $rheader = $response->getHeaders();
+
+            self::_handleAPIError(
+                array('body' => $rbody,
+                      'code' => $rcode,
+                      'header' => $rheader)
+            );
         }
 
         $rbody = $response->getBody();
         $rcode = (int) $response->getStatusCode();
         $rheader = $response->getHeaders();
 
-//        echo('rbody\n');
-//        var_dump($rbody);
-//        echo('rcode\n');
-//        var_dump($rcode);
-//        echo('rheader\n');
-//        var_dump($rheader);
-
         return [$rbody, $rcode, $rheader];
+    }
+
+    /**
+     * Handles API Error
+     *
+     * @param array $response response from GuzzleClient
+     *
+     * @throws ApiExceptions
+     */
+    private static function _handleAPIError($response)
+    {
+        $rbody = $response['body'];
+        $rcode = strval($response['code']);
+        //$rheader = $response['header'];
+
+        $message = $rbody['message'] . '. Error code' . $rcode . ' '
+                   . $rbody['error_code'] . '. More information: '
+                   . 'https://xendit.github.io/apireference/?bash#http-status-code';
+
+        throw new ApiExceptions($message);
     }
 }

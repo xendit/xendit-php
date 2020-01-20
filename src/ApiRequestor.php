@@ -2,30 +2,40 @@
 
 namespace Xendit;
 
+use Xendit\Exceptions\AuthenticationException;
+
+/**
+ * Class ApiRequestor
+ *
+ * @package Xendit
+ */
 class ApiRequestor
 {
     private static $_httpClient;
 
     /**
-     * @param $method
-     * @param $url
-     * @param array $params
-     * @param array $headers
+     * Send request and processing response
+     *
+     * @param string $method  request method (get, post, patch, etc)
+     * @param string $url     base url
+     * @param array  $params  user's params
+     * @param array  $headers user's additional headers
      *
      * @return array
+     * @throws AuthenticationException
      */
     public function request($method, $url, $params = [], $headers = [])
     {
         list($rbody, $rcode, $rheaders)
             = $this->_requestRaw($method, $url, $params, $headers);
 
-        // TODO: interpret response if there's invalid response
-
         return json_decode($rbody, true);
     }
 
     /**
-     * @param $headers
+     * Set must-have headers
+     *
+     * @param array $headers user's headers
      *
      * @return array
      */
@@ -43,19 +53,25 @@ class ApiRequestor
     }
 
     /**
-     * @param $method
-     * @param $url
-     * @param $params
-     * @param $headers
+     * Send request from client
+     *
+     * @param string $method  request method
+     * @param string $url     additional url to base url
+     * @param array  $params  user's params
+     * @param array  $headers request' headers
      *
      * @return array
+     * @throws AuthenticationException
      */
     private function _requestRaw($method, $url, $params, $headers)
     {
         $apiKey = Xendit::$apiKey;
 
         if (!$apiKey) {
-            // TODO: throw exception
+            $message = 'No API Key provided. Please set your API key first using '
+                . '"Xendit::setApiKey(your-secret-API-key)". You can generate API'
+                . ' keys from the Xendit Dashboard.';
+            throw new AuthenticationException($message);
         }
 
         $defaultHeaders = self::_setDefaultHeaders($headers);
@@ -71,6 +87,8 @@ class ApiRequestor
     }
 
     /**
+     * Create HTTP CLient
+     *
      * @return HttpClient\GuzzleClient
      */
     private function _createHttpClient()

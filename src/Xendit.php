@@ -16,6 +16,8 @@ class Xendit
     public static $libVersion = '2.0.0';
 
     /**
+     * ApiBase getter
+     *
      * @return string
      */
     public static function getApiBase(): string
@@ -24,7 +26,11 @@ class Xendit
     }
 
     /**
-     * @param string $apiBase
+     * ApiBase setter
+     *
+     * @param string $apiBase api base url
+     *
+     * @return void
      */
     public static function setApiBase(string $apiBase): void
     {

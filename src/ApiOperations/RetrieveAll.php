@@ -2,10 +2,17 @@
 
 namespace Xendit\ApiOperations;
 
+/**
+ * Trait RetrieveAll
+ *
+ * @package Xendit\ApiOperations
+ */
 trait RetrieveAll
 {
     /**
-     * @param array $options
+     * Send request to get all object, e.g Invoice
+     *
+     * @param array $options user's options
      *
      * @return array
      */
