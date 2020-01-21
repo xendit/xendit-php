@@ -14,17 +14,20 @@ class InvoiceTest extends TestCase
 
     public function testIsCreatable()
     {
-        $this->expectsRequest(
-            'POST',
-            '/v2/invoices'
-        );
-
         $params = [
             'external_id' => 'demo_147580196270',
             'payer_email' => 'sample_email@xendit.co',
             'description' => 'Trip to Bali',
             'amount' => 32000
         ];
+
+        $this->stubRequest(
+            'POST',
+            '/v2/invoices',
+            $params,
+            [],
+            $params
+        );
 
         $resource = Invoice::create($params);
         $this->assertEquals($resource['external_id'], $params['external_id']);
@@ -51,10 +54,16 @@ class InvoiceTest extends TestCase
 
     public function testIsListable()
     {
-        $this->expectsRequest(
+        $this->stubRequest(
             'GET',
-            '/v2/invoices'
+            '/v2/invoices',
+            [],
+            [],
+            [
+                'id' => self::TEST_RESOURCE_ID
+            ]
         );
+
         $resources = Invoice::retrieveAll();
         $this->assertTrue(is_array($resources));
         $this->assertTrue(array_key_exists('id', $resources[0]));
@@ -76,5 +85,31 @@ class InvoiceTest extends TestCase
         $resources = Invoice::expireInvoice(self::TEST_RESOURCE_ID);
         $this->assertEquals($resources['status'], 'EXPIRED');
         $this->assertEquals($resources['id'], self::TEST_RESOURCE_ID);
+    }
+
+    public function testIsCreatableThrowInvalidArgumentException()
+    {
+        $this->expectException(\Xendit\Exceptions\InvalidArgumentException::class);
+        $params = [
+            'external_id' => 'demo_147580196270',
+            'payer_email' => 'sample_email@xendit.co',
+            'description' => 'Trip to Bali',
+        ];
+
+        Invoice::create($params);
+    }
+
+    public function testIsGettableThrowApiException()
+    {
+        $this->expectException(\Xendit\Exceptions\ApiExceptions::class);
+
+        Invoice::retrieve(self::TEST_RESOURCE_ID);
+    }
+
+    public function testIsExpirableThrowApiException()
+    {
+        $this->expectException(\Xendit\Exceptions\ApiExceptions::class);
+
+        Invoice::expireInvoice(self::TEST_RESOURCE_ID);
     }
 }

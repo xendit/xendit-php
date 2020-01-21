@@ -7,6 +7,6 @@ namespace Xendit\Exceptions;
  *
  * @package Xendit\Exceptions
  */
-class ApiExceptions extends XenditExceptions
+class ApiExceptions extends \Exception implements ExceptionInterface
 {
 }

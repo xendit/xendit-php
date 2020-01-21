@@ -67,15 +67,6 @@ class ApiRequestor
      */
     private function _requestRaw($method, $url, $params, $headers)
     {
-        $apiKey = Xendit::$apiKey;
-
-        if (!$apiKey) {
-            $message = 'No API Key provided. Please set your API key first using '
-                . '"Xendit::setApiKey(your-secret-API-key)". You can generate API'
-                . ' keys from the Xendit Dashboard.';
-            throw new AuthenticationException($message);
-        }
-
         $defaultHeaders = self::_setDefaultHeaders($headers);
 
         [$rbody, $rcode, $rheaders] = $this->_httpClient()->sendRequest(

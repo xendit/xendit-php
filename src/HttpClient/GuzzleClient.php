@@ -4,6 +4,7 @@ namespace Xendit\HttpClient;
 
 use GuzzleHttp\Client as Guzzle;
 use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Exception\ServerException;
 use GuzzleHttp\RequestOptions;
 use Xendit\Exceptions\ApiExceptions;
 use Xendit\Xendit;
@@ -111,7 +112,7 @@ class GuzzleClient implements ClientInterface
                     ]
                 );
             }
-        } catch (ClientException $e) {
+        } catch (ClientException | ServerException $e) {
             $response = $e->getResponse();
             $rbody = json_decode($response->getBody()->getContents(), true);
             $rcode = $response->getStatusCode();
@@ -144,8 +145,8 @@ class GuzzleClient implements ClientInterface
         $rcode = strval($response['code']);
         //$rheader = $response['header'];
 
-        $message = $rbody['message'] . '. Error code ' . $rcode . ' '
-                   . $rbody['error_code'] . '. More information: '
+        $message = 'API Exception: ' . $rbody['message'] . ' Error code: '
+                   . $rcode . ' ' . $rbody['error_code'] . '. More information: '
                    . 'https://xendit.github.io/apireference/?bash#http-status-code';
 
         throw new ApiExceptions($message);
