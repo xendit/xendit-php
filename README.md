@@ -73,7 +73,7 @@ php examples/get_balance_example.php
 # Capture credit card payment
 ```
 cd src/
-php examples/capture_credit_card_payment_example.php [external_id] [token_id] [amount] 
+php examples/capture_credit_card_payment_example.php [external_id] [token_id] [amount]
 ```
 
 # Capture credit card payment with authentication id
@@ -149,4 +149,3 @@ php examples/issue_credit_card_refund_example.php [credit_card_charge_id] [amoun
 cd src/
 php examples/issue_credit_card_refund_with_idempotency_example.php [credit_card_charge_id] [amount] [external_id] [optional-idempotency-key]
 ```
-

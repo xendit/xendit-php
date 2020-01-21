@@ -54,9 +54,9 @@ class Xendit
 
     /**
      * Get the value of apiKey
-     * 
+     *
      * @return string Secret API key
-     */ 
+     */
     public static function getApiKey()
     {
         return self::$apiKey;

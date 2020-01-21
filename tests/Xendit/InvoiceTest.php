@@ -1,5 +1,16 @@
 <?php
 
+/**
+ * InvoiceTest.php
+ * php version 7.2.0
+ *
+ * @category Test
+ * @package  Xendit
+ * @author   Ellen <ellen@xendit.co>
+ * @license  https://opensource.org/licenses/MIT MIT License
+ * @link     https://api.xendit.co
+ */
+
 use Xendit\Invoice;
 use Xendit\TestCase;
 
@@ -88,7 +99,7 @@ class InvoiceTest extends TestCase
 
         $resources = Invoice::retrieveAll();
         $this->assertTrue(is_array($resources));
-        $this->assertTrue(array_key_exists('id', $resources[0]));
+        $this->assertTrue(array_key_exists('id', $resources));
     }
 
     /**
