@@ -11,7 +11,7 @@ use Xendit\Exceptions\AuthenticationException;
  */
 class ApiRequestor
 {
-    private static $_httpClient;
+    private static $_guzzleClient;
 
     /**
      * Send request and processing response
@@ -23,6 +23,7 @@ class ApiRequestor
      *
      * @return array
      * @throws AuthenticationException
+     * @throws Exceptions\ApiExceptions
      */
     public function request($method, $url, $params = [], $headers = [])
     {
@@ -62,6 +63,7 @@ class ApiRequestor
      *
      * @return array
      * @throws AuthenticationException
+     * @throws Exceptions\ApiExceptions
      */
     private function _requestRaw($method, $url, $params, $headers)
     {
@@ -76,7 +78,7 @@ class ApiRequestor
 
         $defaultHeaders = self::_setDefaultHeaders($headers);
 
-        [$rbody, $rcode, $rheaders] = $this->_createHttpClient()->sendRequest(
+        [$rbody, $rcode, $rheaders] = $this->_httpClient()->sendRequest(
             $method,
             $url,
             $defaultHeaders,
@@ -91,12 +93,23 @@ class ApiRequestor
      *
      * @return HttpClient\GuzzleClient
      */
-    private function _createHttpClient()
+    private function _httpClient()
     {
-        if (!self::$_httpClient) {
-            self::$_httpClient = HttpClient\GuzzleClient::instance();
+        if (!self::$_guzzleClient) {
+            self::$_guzzleClient = HttpClient\GuzzleClient::instance();
         }
-        return self::$_httpClient;
+        return self::$_guzzleClient;
     }
 
+    /**
+     * GuzzleClient Setter
+     *
+     * @param HttpClient\GuzzleClient $client client
+     *
+     * @return void
+     */
+    public static function setGuzzleClient($client)
+    {
+        self::$_guzzleClient = $client;
+    }
 }

@@ -2,21 +2,18 @@
 
 namespace Xendit\HttpClient;
 
-require 'vendor\autoload.php';
-
 use GuzzleHttp\Client as Guzzle;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\RequestOptions;
 use Xendit\Exceptions\ApiExceptions;
 use Xendit\Xendit;
-use function GuzzleHttp\Psr7\str;
 
 /**
  * Class GuzzleClient
  *
  * @package Xendit\HttpClient
  */
-class GuzzleClient
+class GuzzleClient implements ClientInterface
 {
     private static $_instance;
 

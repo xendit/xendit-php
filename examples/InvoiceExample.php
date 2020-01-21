@@ -27,5 +27,5 @@ var_dump($getInvoice);
 $expireInvoice = \Xendit\Invoice::expireInvoice($id);
 var_dump($expireInvoice);
 
-$getAllInvoice = \Xendit\Invoice::retrieveAll();
-var_dump(($getAllInvoice));
+//$getAllInvoice = \Xendit\Invoice::retrieveAll();
+//var_dump(($getAllInvoice));
