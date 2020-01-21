@@ -28,7 +28,7 @@ class Xendit
 
     public static $apiBase = 'https://api.xendit.co';
 
-    public static $libVersion = '2.0.0';
+    public static $libVersion;
 
     /**
      * ApiBase getter
@@ -72,5 +72,18 @@ class Xendit
     public static function setApiKey($apiKey)
     {
         self::$apiKey = $apiKey;
+    }
+
+    /**
+     * Get library version
+     *
+     * @return mixed
+     */
+    public static function getLibVersion()
+    {
+        $content = file_get_contents('composer.json');
+        $content = json_decode($content, true);
+
+        return $content['version'];
     }
 }
