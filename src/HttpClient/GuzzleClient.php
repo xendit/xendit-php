@@ -144,7 +144,7 @@ class GuzzleClient implements ClientInterface
         $rcode = strval($response['code']);
         //$rheader = $response['header'];
 
-        $message = $rbody['message'] . '. Error code' . $rcode . ' '
+        $message = $rbody['message'] . '. Error code ' . $rcode . ' '
                    . $rbody['error_code'] . '. More information: '
                    . 'https://xendit.github.io/apireference/?bash#http-status-code';
 

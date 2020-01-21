@@ -10,7 +10,7 @@ use Xendit\TestCase;
  */
 class InvoiceTest extends TestCase
 {
-    const TEST_RESOURCE_ID = "5e2554f8ec17a6231c0120a9";
+    const TEST_RESOURCE_ID = "123";
 
     public function testIsCreatable()
     {
@@ -35,10 +35,16 @@ class InvoiceTest extends TestCase
 
     public function testIsGettable()
     {
-        $this->expectsRequest(
-            'GET',
-            '/v2/invoices/' . self::TEST_RESOURCE_ID
+        $this->stubRequest(
+            'get',
+            '/v2/invoices/'.self::TEST_RESOURCE_ID,
+            [],
+            [],
+            [
+                'id' => self::TEST_RESOURCE_ID
+            ]
         );
+
         $resource = Invoice::retrieve(self::TEST_RESOURCE_ID);
         $this->assertEquals($resource['id'], self::TEST_RESOURCE_ID);
     }
@@ -56,10 +62,17 @@ class InvoiceTest extends TestCase
 
     public function testIsExpirable()
     {
-        $this->expectsRequest(
+        $this->stubRequest(
             'POST',
-            '/invoices/' . self::TEST_RESOURCE_ID . '/expire!'
+            '/invoices/' . self::TEST_RESOURCE_ID . '/expire!',
+            [],
+            [],
+            [
+                'id' => self::TEST_RESOURCE_ID,
+                'status' => 'EXPIRED'
+            ]
         );
+
         $resources = Invoice::expireInvoice(self::TEST_RESOURCE_ID);
         $this->assertEquals($resources['status'], 'EXPIRED');
         $this->assertEquals($resources['id'], self::TEST_RESOURCE_ID);
