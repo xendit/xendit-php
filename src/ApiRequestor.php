@@ -1,5 +1,16 @@
 <?php
 
+/**
+ * ApiRequestor.php
+ * php version 7.2.0
+ *
+ * @category Class
+ * @package  Xendit
+ * @author   Ellen <ellen@xendit.co>
+ * @license  https://opensource.org/licenses/MIT MIT License
+ * @link     https://api.xendit.co
+ */
+
 namespace Xendit;
 
 use Xendit\Exceptions\AuthenticationException;
@@ -7,7 +18,11 @@ use Xendit\Exceptions\AuthenticationException;
 /**
  * Class ApiRequestor
  *
- * @package Xendit
+ * @category Class
+ * @package  Xendit
+ * @author   Ellen <ellen@xendit.co>
+ * @license  https://opensource.org/licenses/MIT MIT License
+ * @link     https://api.xendit.co
  */
 class ApiRequestor
 {

@@ -1,5 +1,16 @@
 <?php
 
+/**
+ * GuzzleClient.php
+ * php version 7.2.0
+ *
+ * @category Class
+ * @package  Xendit\HttpClient
+ * @author   Ellen <ellen@xendit.co>
+ * @license  https://opensource.org/licenses/MIT MIT License
+ * @link     https://api.xendit.co
+ */
+
 namespace Xendit\HttpClient;
 
 use GuzzleHttp\Client as Guzzle;
@@ -12,7 +23,11 @@ use Xendit\Xendit;
 /**
  * Class GuzzleClient
  *
- * @package Xendit\HttpClient
+ * @category Class
+ * @package  Xendit\HttpClient
+ * @author   Ellen <ellen@xendit.co>
+ * @license  https://opensource.org/licenses/MIT MIT License
+ * @link     https://api.xendit.co
  */
 class GuzzleClient implements ClientInterface
 {
@@ -137,13 +152,13 @@ class GuzzleClient implements ClientInterface
      *
      * @param array $response response from GuzzleClient
      *
+     * @return void
      * @throws ApiExceptions
      */
     private static function _handleAPIError($response)
     {
         $rbody = $response['body'];
         $rcode = strval($response['code']);
-        //$rheader = $response['header'];
 
         $message = 'API Exception: ' . $rbody['message'] . ' Error code: '
                    . $rcode . ' ' . $rbody['error_code'] . '. More information: '

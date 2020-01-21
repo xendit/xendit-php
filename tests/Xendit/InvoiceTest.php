@@ -6,12 +6,22 @@ use Xendit\TestCase;
 /**
  * Class InvoiceTest
  *
- * @package Xendit
+ * @category Class
+ * @package  Xendit
+ * @author   Ellen <ellen@xendit.co>
+ * @license  https://opensource.org/licenses/MIT MIT License
+ * @link     https://api.xendit.co
  */
 class InvoiceTest extends TestCase
 {
     const TEST_RESOURCE_ID = "123";
 
+    /**
+     * Create Invoice test
+     * Should pass
+     *
+     * @return void
+     */
     public function testIsCreatable()
     {
         $params = [
@@ -36,6 +46,12 @@ class InvoiceTest extends TestCase
         $this->assertEquals($resource['amount'], $params['amount']);
     }
 
+    /**
+     * Get Invoice test
+     * Should pass
+     *
+     * @return void
+     */
     public function testIsGettable()
     {
         $this->stubRequest(
@@ -52,6 +68,12 @@ class InvoiceTest extends TestCase
         $this->assertEquals($resource['id'], self::TEST_RESOURCE_ID);
     }
 
+    /**
+     * GetAll Invoice test
+     * Should pass
+     *
+     * @return void
+     */
     public function testIsListable()
     {
         $this->stubRequest(
@@ -69,6 +91,13 @@ class InvoiceTest extends TestCase
         $this->assertTrue(array_key_exists('id', $resources[0]));
     }
 
+    /**
+     * Expire Invoice test
+     * Should pass
+     *
+     * @return void
+     * @throws \Xendit\Exceptions\ApiExceptions
+     */
     public function testIsExpirable()
     {
         $this->stubRequest(
@@ -87,6 +116,12 @@ class InvoiceTest extends TestCase
         $this->assertEquals($resources['id'], self::TEST_RESOURCE_ID);
     }
 
+    /**
+     * Create Invoice test
+     * Should throw InvalidArgumentException
+     *
+     * @return void
+     */
     public function testIsCreatableThrowInvalidArgumentException()
     {
         $this->expectException(\Xendit\Exceptions\InvalidArgumentException::class);
@@ -99,6 +134,12 @@ class InvoiceTest extends TestCase
         Invoice::create($params);
     }
 
+    /**
+     * Get Invoice test
+     * Should throw ApiException
+     *
+     * @return void
+     */
     public function testIsGettableThrowApiException()
     {
         $this->expectException(\Xendit\Exceptions\ApiExceptions::class);
@@ -106,6 +147,13 @@ class InvoiceTest extends TestCase
         Invoice::retrieve(self::TEST_RESOURCE_ID);
     }
 
+    /**
+     * Expire Invoice test
+     * Should throw ApiException
+     *
+     * @return void
+     * @throws \Xendit\Exceptions\ApiExceptions
+     */
     public function testIsExpirableThrowApiException()
     {
         $this->expectException(\Xendit\Exceptions\ApiExceptions::class);

@@ -1,5 +1,16 @@
 <?php
 
+/**
+ * Request.php
+ * php version 7.2.0
+ *
+ * @category Trait
+ * @package  Xendit\ApiOperations
+ * @author   Ellen <ellen@xendit.co>
+ * @license  https://opensource.org/licenses/MIT MIT License
+ * @link     https://api.xendit.co
+ */
+
 namespace Xendit\ApiOperations;
 
 use Xendit\Exceptions\InvalidArgumentException;
@@ -7,7 +18,11 @@ use Xendit\Exceptions\InvalidArgumentException;
 /**
  * Trait Request
  *
- * @package Xendit\ApiOperations
+ * @category Trait
+ * @package  Xendit\ApiOperations
+ * @author   Ellen <ellen@xendit.co>
+ * @license  https://opensource.org/licenses/MIT MIT License
+ * @link     https://api.xendit.co
  */
 trait Request
 {

@@ -1,11 +1,26 @@
 <?php
 
+/**
+ * RetrieveAll.php
+ * php version 7.2.0
+ *
+ * @category Trait
+ * @package  Xendit\ApiOperations
+ * @author   Ellen <ellen@xendit.co>
+ * @license  https://opensource.org/licenses/MIT MIT License
+ * @link     https://api.xendit.co
+ */
+
 namespace Xendit\ApiOperations;
 
 /**
  * Trait RetrieveAll
  *
- * @package Xendit\ApiOperations
+ * @category Trait
+ * @package  Xendit\ApiOperations
+ * @author   Ellen <ellen@xendit.co>
+ * @license  https://opensource.org/licenses/MIT MIT License
+ * @link     https://api.xendit.co
  */
 trait RetrieveAll
 {

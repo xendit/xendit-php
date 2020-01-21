@@ -2,12 +2,14 @@
 
 namespace Xendit;
 
-//require 'vendor\autoload.php';
-
 /**
  * Class TestCase
  *
- * @package Xendit
+ * @category Class
+ * @package  Xendit
+ * @author   Ellen <ellen@xendit.co>
+ * @license  https://opensource.org/licenses/MIT MIT License
+ * @link     https://api.xendit.co
  */
 class TestCase extends \PHPUnit\Framework\TestCase
 {
@@ -24,7 +26,6 @@ class TestCase extends \PHPUnit\Framework\TestCase
     protected function setUp(): void
     {
         $this->oriApiBase = Xendit::$apiBase;
-        //        $this->oriApiKey = Xendit::getApiKey();
         $this->oriApiKey = 'xnd_development_prHUBDfVuOQTxyWTQSNkpj'
             . 'n9OwX9ZSUjdqgF9GenZ6hwhUQkc3NZ9WVexdH';
         $this->oriApiVersion = Xendit::$libVersion;

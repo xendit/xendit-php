@@ -1,11 +1,26 @@
 <?php
 
+/**
+ * Xendit.php
+ * php version 7.2.0
+ *
+ * @category Class
+ * @package  Xendit
+ * @author   Ellen <ellen@xendit.co>
+ * @license  https://opensource.org/licenses/MIT MIT License
+ * @link     https://api.xendit.co
+ */
+
 namespace Xendit;
 
 /**
  * Class Xendit
  *
- * @package Xendit
+ * @category Class
+ * @package  Xendit
+ * @author   Ellen <ellen@xendit.co>
+ * @license  https://opensource.org/licenses/MIT MIT License
+ * @link     https://api.xendit.co
  */
 class Xendit
 {
