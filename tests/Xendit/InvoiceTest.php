@@ -11,6 +11,8 @@
  * @link     https://api.xendit.co
  */
 
+namespace Xendit;
+
 use Xendit\Invoice;
 use Xendit\TestCase;
 

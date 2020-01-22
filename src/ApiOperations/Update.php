@@ -27,9 +27,9 @@ trait Update
     /**
      * Send an update request
      *
-     * @param array $id      data ID
-     * @param array $params  user's params
-     * @param array $options user's options
+     * @param string $id      data ID
+     * @param array  $params  user's params
+     * @param array  $options user's options
      *
      * @return array
      */

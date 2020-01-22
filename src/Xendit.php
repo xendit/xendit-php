@@ -86,7 +86,18 @@ class Xendit
             $content = json_decode($content, true);
             self::$libVersion = $content['version'];
         }
-
         return self::$libVersion;
+    }
+
+    /**
+     * Set library version
+     *
+     * @param string $libVersion library version
+     *
+     * @return void
+     */
+    public static function setLibVersion($libVersion = null): void
+    {
+        self::$libVersion = $libVersion;
     }
 }

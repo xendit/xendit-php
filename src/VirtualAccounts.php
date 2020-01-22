@@ -82,7 +82,7 @@ class VirtualAccounts
      */
     public static function getFVAPayment($payment_id)
     {
-        $url = 'callback_virtual_account_payments/payment_id=' . $payment_id;
+        $url = '/callback_virtual_account_payments/payment_id=' . $payment_id;
 
         return static::_request('GET', $url);
     }
