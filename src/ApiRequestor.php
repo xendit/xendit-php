@@ -13,8 +13,6 @@
 
 namespace Xendit;
 
-use Xendit\Exceptions\AuthenticationException;
-
 /**
  * Class ApiRequestor
  *
@@ -59,11 +57,13 @@ class ApiRequestor
     {
         $defaultHeaders = [];
         $lib = 'php';
-        $libVersion = Xendit::$libVersion;
+        $libVersion = Xendit::getLibVersion();
 
         $defaultHeaders['Content-Type'] = 'application/json';
         $defaultHeaders['xendit-lib'] = $lib;
         $defaultHeaders['xendit-lib-ver'] = $libVersion;
+
+        var_dump($defaultHeaders);
 
         return array_merge($defaultHeaders, $headers);
     }
@@ -77,7 +77,6 @@ class ApiRequestor
      * @param array  $headers request' headers
      *
      * @return array
-     * @throws AuthenticationException
      * @throws Exceptions\ApiExceptions
      */
     private function _requestRaw($method, $url, $params, $headers)

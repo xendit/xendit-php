@@ -81,9 +81,12 @@ class Xendit
      */
     public static function getLibVersion()
     {
-        $content = file_get_contents('composer.json');
-        $content = json_decode($content, true);
+        if (self::$libVersion !== null) {
+            $content = file_get_contents('composer.json');
+            $content = json_decode($content, true);
+            self::$libVersion = $content['version'];
+        }
 
-        return $content['version'];
+        return self::$libVersion;
     }
 }
