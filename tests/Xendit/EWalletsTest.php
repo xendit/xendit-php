@@ -28,7 +28,7 @@ use Xendit\TestCase;
 class EWalletsTest extends TestCase
 {
     const TEST_RESOURCE_ID = "123";
-    const TEST_RESOURCE_TYPE = "OVO";
+    const TEST_RESOURCE_TYPE = "DANA";
 
     /**
      * Create EWallet test
@@ -43,7 +43,10 @@ class EWalletsTest extends TestCase
             'external_id' => 'demo_' . time(),
             'amount' => 32000,
             'phone' => '081298498259',
-            'ewallet_type' => 'OVO'
+            'expiration_date' => '2020-02-20T00:00:00.000Z',
+            'callback_url' => 'https://my-shop.com/callbacks',
+            'redirect_url' => 'https://my-shop.com/home',
+            'ewallet_type' => 'DANA'
         ];
 
         $this->stubRequest(
@@ -55,62 +58,83 @@ class EWalletsTest extends TestCase
         );
 
         $resource = EWallets::create($params);
+
         $this->assertEquals($resource['external_id'], $params['external_id']);
         $this->assertEquals($resource['phone'], $params['phone']);
         $this->assertEquals($resource['ewallet_type'], $params['ewallet_type']);
         $this->assertEquals($resource['amount'], $params['amount']);
+        $this->assertEquals($resource['callback_url'], $params['callback_url']);
+        $this->assertEquals($resource['redirect_url'], $params['redirect_url']);
+        $this->assertEquals(
+            $resource['expiration_date'],
+            $params['expiration_date']
+        );
     }
 
     /**
-     * Get Invoice test
+     * Get EWallets Payment test
      * Should pass
      *
      * @return void
+     * @throws Exceptions\ApiExceptions
      */
     public function testIsGettable()
     {
+        $params = [
+            'external_id' => self::TEST_RESOURCE_ID,
+            'amount' => 32000,
+            'phone' => '081298498259',
+            'expiration_date' => '2020-02-20T00:00:00.000Z',
+            'callback_url' => 'https://my-shop.com/callbacks',
+            'redirect_url' => 'https://my-shop.com/home',
+            'ewallet_type' => 'DANA'
+        ];
+
         $this->stubRequest(
             'get',
-            '/v2/invoices/'.self::TEST_RESOURCE_ID,
+            '/ewallets?external_id='.self::TEST_RESOURCE_ID.
+            '&ewallet_type='.self::TEST_RESOURCE_TYPE,
             [],
             [],
-            [
-                'id' => self::TEST_RESOURCE_ID
-            ]
+            $params
         );
 
-        $resource = Invoice::retrieve(self::TEST_RESOURCE_ID);
-        $this->assertEquals($resource['id'], self::TEST_RESOURCE_ID);
+        $resource = EWallets::getPaymentStatus(
+            self::TEST_RESOURCE_ID,
+            self::TEST_RESOURCE_TYPE
+        );
+
+        $this->assertEquals($resource['ewallet_type'], self::TEST_RESOURCE_TYPE);
     }
 
     /**
-     * Create Invoice test
+     * Create EWallets test
      * Should throw InvalidArgumentException
      *
      * @return void
+     * @throws Exceptions\ApiExceptions
      */
     public function testIsCreatableThrowInvalidArgumentException()
     {
         $this->expectException(\Xendit\Exceptions\InvalidArgumentException::class);
         $params = [
-            'external_id' => 'demo_147580196270',
-            'payer_email' => 'sample_email@xendit.co',
-            'description' => 'Trip to Bali',
+            'external_id' => 'demo_147580196270'
         ];
 
-        Invoice::create($params);
+        EWallets::create($params);
     }
 
     /**
-     * Get Invoice test
+     * Get EWallets Payment test
      * Should throw ApiException
      *
      * @return void
+     * @throws Exceptions\ApiExceptions
      */
     public function testIsGettableThrowApiException()
     {
         $this->expectException(\Xendit\Exceptions\ApiExceptions::class);
 
-        Invoice::retrieve(self::TEST_RESOURCE_ID);
+        EWallets::getPaymentStatus(self::TEST_RESOURCE_ID, self::TEST_RESOURCE_TYPE);
     }
 }

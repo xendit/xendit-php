@@ -85,8 +85,8 @@ class EWallets
     public static function getPaymentStatus($external_id, $ewallet_type)
     {
         $url = static::classUrl()
-            . '?external_id' . $external_id
-            . '&ewallet_type' . $ewallet_type;
+            . '?external_id=' . $external_id
+            . '&ewallet_type=' . $ewallet_type;
 
         return static::_request('GET', $url);
     }

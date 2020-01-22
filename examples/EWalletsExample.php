@@ -71,17 +71,17 @@ try {
 $createDana = \Xendit\EWallets::create($danaParams);
 var_dump($createDana);
 
-//$createLinkaja = \Xendit\EWallets::create($linkajaParams);
-//var_dump($createLinkaja);
+$createLinkaja = \Xendit\EWallets::create($linkajaParams);
+var_dump($createLinkaja);
 
-//$getOvo = \Xendit\EWallets::getPaymentStatus($ovoParams['external_id'], 'OVO');
-//var_dump($getOvo);
+$getOvo = \Xendit\EWallets::getPaymentStatus($ovoParams['external_id'], 'OVO');
+var_dump($getOvo);
 
 $getDana = \Xendit\EWallets::getPaymentStatus($danaParams['external_id'], 'DANA');
 var_dump($getDana);
 
-//$getLinkaja = \Xendit\EWallets::getPaymentStatus(
-//    $linkajaParams['external_id'],
-//    'LINKAJA'
-//);
-//var_dump($getLinkaja);
+$getLinkaja = \Xendit\EWallets::getPaymentStatus(
+    $linkajaParams['external_id'],
+    'LINKAJA'
+);
+var_dump($getLinkaja);
