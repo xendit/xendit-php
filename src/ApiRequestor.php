@@ -63,8 +63,6 @@ class ApiRequestor
         $defaultHeaders['xendit-lib'] = $lib;
         $defaultHeaders['xendit-lib-ver'] = $libVersion;
 
-        var_dump($defaultHeaders);
-
         return array_merge($defaultHeaders, $headers);
     }
 
