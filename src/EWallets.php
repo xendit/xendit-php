@@ -13,6 +13,8 @@
 
 namespace Xendit;
 
+use Xendit\Exceptions\InvalidArgumentException;
+
 /**
  * Class EWallets
  *
@@ -25,7 +27,6 @@ namespace Xendit;
 class EWallets
 {
     use ApiOperations\Request;
-    use ApiOperations\Retrieve;
 
     /**
      * Instantiate base URL
@@ -48,13 +49,21 @@ class EWallets
      */
     public static function create($params = [], $options = [])
     {
+        $requiredParams = [];
+
+        if (!array_key_exists('ewallet_type', $params)) {
+            $message = 'Please specify ewallet_type inside your parameters.';
+            throw new InvalidArgumentException($message);
+        }
+
         if ($params['ewallet_type'] === 'OVO') {
             $requiredParams = ['external_id', 'amount', 'phone'];
         } elseif ($params['ewallet_type'] === 'DANA') {
             $requiredParams = ['external_id', 'amount',
                 'callback_url', 'redirect_url'];
         } elseif ($params['ewallet_type'] === 'LINKAJA') {
-            $requiredParams = ['external_id', 'amount', 'phone'];
+            $requiredParams = ['external_id', 'amount', 'phone',
+                'items', 'callback_url', 'redirect_url'];
         }
 
         self::validateParams($params, $requiredParams);
@@ -65,18 +74,20 @@ class EWallets
     }
 
     /**
-     * Expire Invoice
+     * Get Payment Status
      *
-     * @param string $id      Invoice ID
-     * @param array  $options User's options
+     * @param string $external_id  external ID
+     * @param string $ewallet_type E-wallet type (OVO, DANA, LINKAJA
      *
      * @return array
      * @throws Exceptions\ApiExceptions
      */
-    public static function expireInvoice($id, $options = [])
+    public static function getPaymentStatus($external_id, $ewallet_type)
     {
-        $url =  '/invoices/' . $id . '/expire!';
+        $url = static::classUrl()
+            . '?external_id' . $external_id
+            . '&ewallet_type' . $ewallet_type;
 
-        return static::_request('POST', $url, $options);
+        return static::_request('GET', $url);
     }
 }
