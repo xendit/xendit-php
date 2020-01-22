@@ -42,7 +42,7 @@ $updateParams = ["suggested_amount" => 1000];
 $updateVA = \Xendit\VirtualAccounts::update($id, $updateParams);
 var_dump($updateVA);
 
-$paymentID = "VA_fixed-1579666681_1579666702976"; //got from test account
+$paymentID = "VA_fixed-1579666681_1579666702976";
 
 $getFVAPayment = \Xendit\VirtualAccounts::getFVAPayment($paymentID);
 var_dump($getFVAPayment);
