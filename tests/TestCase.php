@@ -39,7 +39,8 @@ class TestCase extends \PHPUnit\Framework\TestCase
         $this->oriApiBase = Xendit::$apiBase;
         $this->oriApiKey = 'xnd_development_prHUBDfVuOQTxyWTQSNkpj'
             . 'n9OwX9ZSUjdqgF9GenZ6hwhUQkc3NZ9WVexdH';
-        $this->oriApiVersion = Xendit::$libVersion;
+
+        $this->oriApiVersion = Xendit::getLibVersion();
 
         $this->clientMock = $this->createMock('\Xendit\HttpClient\ClientInterface');
 
