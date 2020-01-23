@@ -27,8 +27,8 @@ use Xendit\TestCase;
  */
 class EWalletsTest extends TestCase
 {
-    const TEST_RESOURCE_ID = "123";
-    const TEST_RESOURCE_TYPE = "DANA";
+    const TEST_ID = "123";
+    const TEST_TYPE = "DANA";
 
     /**
      * Create EWallet test
@@ -57,16 +57,25 @@ class EWalletsTest extends TestCase
             $params
         );
 
-        $resource = EWallets::create($params);
+        $expectedResult = EWallets::create($params);
 
-        $this->assertEquals($resource['external_id'], $params['external_id']);
-        $this->assertEquals($resource['phone'], $params['phone']);
-        $this->assertEquals($resource['ewallet_type'], $params['ewallet_type']);
-        $this->assertEquals($resource['amount'], $params['amount']);
-        $this->assertEquals($resource['callback_url'], $params['callback_url']);
-        $this->assertEquals($resource['redirect_url'], $params['redirect_url']);
+        $this->assertEquals($expectedResult['external_id'], $params['external_id']);
+        $this->assertEquals($expectedResult['phone'], $params['phone']);
         $this->assertEquals(
-            $resource['expiration_date'],
+            $expectedResult['ewallet_type'],
+            $params['ewallet_type']
+        );
+        $this->assertEquals($expectedResult['amount'], $params['amount']);
+        $this->assertEquals(
+            $expectedResult['callback_url'],
+            $params['callback_url']
+        );
+        $this->assertEquals(
+            $expectedResult['redirect_url'],
+            $params['redirect_url']
+        );
+        $this->assertEquals(
+            $expectedResult['expiration_date'],
             $params['expiration_date']
         );
     }
@@ -81,7 +90,7 @@ class EWalletsTest extends TestCase
     public function testIsGettable()
     {
         $params = [
-            'external_id' => self::TEST_RESOURCE_ID,
+            'external_id' => self::TEST_ID,
             'amount' => 32000,
             'phone' => '081298498259',
             'expiration_date' => '2020-02-20T00:00:00.000Z',
@@ -92,19 +101,22 @@ class EWalletsTest extends TestCase
 
         $this->stubRequest(
             'get',
-            '/ewallets?external_id='.self::TEST_RESOURCE_ID.
-            '&ewallet_type='.self::TEST_RESOURCE_TYPE,
+            '/ewallets?external_id='.self::TEST_ID.
+            '&ewallet_type='.self::TEST_TYPE,
             [],
             [],
             $params
         );
 
-        $resource = EWallets::getPaymentStatus(
-            self::TEST_RESOURCE_ID,
-            self::TEST_RESOURCE_TYPE
+        $expectedResult = EWallets::getPaymentStatus(
+            self::TEST_ID,
+            self::TEST_TYPE
         );
 
-        $this->assertEquals($resource['ewallet_type'], self::TEST_RESOURCE_TYPE);
+        $this->assertEquals(
+            $expectedResult['ewallet_type'],
+            self::TEST_TYPE
+        );
     }
 
     /**
@@ -135,6 +147,9 @@ class EWalletsTest extends TestCase
     {
         $this->expectException(\Xendit\Exceptions\ApiExceptions::class);
 
-        EWallets::getPaymentStatus(self::TEST_RESOURCE_ID, self::TEST_RESOURCE_TYPE);
+        EWallets::getPaymentStatus(
+            self::TEST_ID,
+            self::TEST_TYPE
+        );
     }
 }
