@@ -1,151 +1,223 @@
-# Ownership
+# Xendit API PHP Client
 
-Team: [TPI Team](https://www.draw.io/?state=%7B%22ids%22:%5B%221Vk1zqYgX2YqjJYieQ6qDPh0PhB2yAd0j%22%5D,%22action%22:%22open%22,%22userId%22:%22104938211257040552218%22%7D)
+This library is the abstraction of Xendit API for access from applications written with PHP.
 
-Slack Channel: [#integration-product](https://xendit.slack.com/messages/integration-product)
+- [Documentation](#documentation)
+- [Installation](#installation)
+- [Usage](#usage)
+  - [E-Wallets](#e-wallets)
+    - [Create Payment](#create-payment)
+    - [Get Payment Status](#get-payment-status)
+  - [Invoice](#invoice)
+    - [Create Invoice](#create-invoice)
+    - [Get Invoice](#get-invoice)
+    - [Get All Invoice](#get-all-invoice)
+    - [Expire Invoice](#expire-invoice)
+  - [Virtual Accounts](#virtual-accounts)
+    - [Create Fixed Virtual Account](#create-fixed-virtual-account)
+    - [Get Virtual Account Bank](#get-virtual-account-bank)
+    - [Get Fixed Virtual Account](#get-fixed-virtual-account)
+    - [Update Fixed Virtual Account](#update-fixed-virtual-account)
+    - [Get Fixed Virtual Account Payment](#get-fixed-virtual-account-payment)
+- [Contributing](#contributing)
+  - [Test](#tests)
+    - [Running test suite](#running-test-suite)
+    - [Running examples](#running-examples)
 
-Slack Mentions: `@troops-tpi`
 
-# GET Invoice Example : #
-```
-cd src/
-php examples/get_invoice_example.php 57ba6f57cf952cff10ebc073
-```
+---
 
-```
-php examples/get_invoice_example.php [invoice_id]
-```
+## Documentation
 
-# Create Invoice Example : #
+For the API documentation, check [Xendit API Reference](https://xendit.github.io/apireference).
 
-```
-cd src/
-php examples/create_invoice_example.php "CUSTOM_ID_0"  30000 "payer_email@sample.com" "this is a description"
-```
+## Installation
 
-```
-php examples/create_invoice_example.php [external_id] [amount] [payer_email] [description]
-```
+TBD
 
-# Create Invoice With Callback Virtual Account ID Example : #
+## Usage
 
-```
-cd src/
-php examples/create_invoice_with_callback_virtual_account_id_example.php "CUSTOM_ID_0"  30000 "payer_email@sample.com" "this is a description" "5812caf55fc9b71a7313c652"
-```
+Configure package with your account's secret key obtained from [Xendit Dashboard](https://dashboard.xendit.co/settings/developers#api-keys).
 
-# Create Disbursement Example : #
-```
-cd src/
-php examples/create_disbursement_example.php "CUSTOM_ID_1"  30000 "BCA" "Rizky" "1234567890"
-```
-
-# Create Disbursement With Idempotency Key Example : #
-```
-cd src/
-php examples/create_disbursement_with_idempotency_key_example.php "CUSTOM_ID_1"  30000 "BCA" "Rizky" "1234567890" "idempotencykeytest123"
+```php
+Xendit::setApiKey('secretKey');
 ```
 
-# GET Disbursement Example : #
-```
-cd src/
-php examples/get_disbursement_example.php "57ba93175ef9e7077bcb969e"
+### E-Wallets
+
+#### Create Payment
+
+To create payment, each e-wallet has its own required params. For more information, please check [Xendit API Reference - E-Wallets](https://xendit.github.io/apireference/?bash#create-payment).
+
+##### OVO
+
+```php
+$ovoParams = [
+    'external_id' => 'demo_' . time(),
+    'amount' => 32000,
+    'phone' => '081298498259',
+    'ewallet_type' => 'OVO'
+];
+
+$createOvo = \Xendit\EWallets::create($ovoParams);
+var_dump($createOvo);
 ```
 
-# Create Callback Virtual Account Example : #
-```
-cd src/
-php examples/create_callback_virtual_account_example.php "CUSTOM_ID_2" "BCA" "Rizky"
+##### DANA
+
+```php
+$danaParams = [
+    'external_id' => 'demo_' . time(),
+    'amount' => 32000,
+    'phone' => '081298498259',
+    'expiration_date' => '2020-02-20T00:00:00.000Z',
+    'callback_url' => 'https://my-shop.com/callbacks',
+    'redirect_url' => 'https://my-shop.com/home',
+    'ewallet_type' => 'DANA'
+];
+
+$createDana = \Xendit\EWallets::create($danaParams);
+var_dump($createDana);
 ```
 
-# Create Callback Virtual Account With Virtual Account Number Example : #
-```
-cd src/
-php examples/create_callback_virtual_account_example.php "CUSTOM_ID_2" "BCA" "Rizky" 100
-```
+##### LinkAja
 
-# GET Balance Example : #
-```
-cd src/
-php examples/get_balance_example.php
-```
-
-# Capture credit card payment
-```
-cd src/
-php examples/capture_credit_card_payment_example.php [external_id] [token_id] [amount]
-```
-
-# Capture credit card payment with authentication id
-```
-cd src/
-php examples/capture_credit_card_payment_with_authentication_id_example.php [external_id] [token_id] [amount] [authentication_id]
-```
-
-# Name validator
-```
-cd src/
-php examples/validate_bank_account_holder_name.php [bank_account_number] [bank_code]
-```
-
-# Post Invoice Status Callback Example : #
-```
-1. Run: cd src/examples
-2. Run: php -S localhost:8006 post_invoice_status_callback_server_example.php
-3. When invoice is paid, xendit will hit localhost:8006/paid_invoice_from_xendit with POST method:
-
-Ex :
-curl --include \
-     --request POST \
-     --header "Content-Type: application/json" \
-     --data-binary "{
-    \"id\": \"5691da1ccad1b1322b8a39e5\",
-    \"user_id\": \"569c861f909bb3f68020d363\",
-    \"external_id\": \"5691dab1322b8a39e51ccad1\",
-    \"status\": \"COMPLETED\",
-    \"is_high\": false,
-    \"merchant_name\": \"Xendit\",
-    \"merchant_profile_picture_url\": \"https://www.xendit.co/profile.png\",
-    \"amount\": 8000000,
-    \"billable_amount\": 8640000,
-    \"payer_email\": \"payer@test.com\",
-    \"description\": \"Invoice #123124123 for Nike shoes\",
-    \"received_amount\": 7760000,
-    \"xendit_fee_amount\": 79000,
-    \"taxes\": [
-        {
-            \"name\": \"VAT\",
-            \"percentage\": 0.10,
-            \"amount\": 800000
-        },
-        {
-            \"name\": \"PPH\",
-            \"percentage\": -0.02,
-            \"amount\": -160000
-        }
+```php
+$linkajaParams = [
+    'external_id' => 'demo_' . time(),
+    'amount' => 32000,
+    'phone' => '081298498259',
+    'items' => [
+        [
+            'id' => '123123',
+            'name' => 'Phone Case',
+            'price' => 100000,
+            'quantity' => 1
+        ],
+        [
+            'id' => '345678',
+            'name' => 'Powerbank',
+            'price' => 200000,
+            'quantity' => 1
+        ]
     ],
-    \"fees\": [
-        {
-            \"name\": \"Agent Fee\",
-            \"percentage\": 0.02,
-            \"amount\": 80000,
-            \"xendit_user_id\": \"57078f3faedd2019cfd8b2fc\"
-        }
-    ]
-}" \
-'http://localhost:8006/paid_invoice_from_xendit'
+    'callback_url' => 'https =>//yourwebsite.com/callback',
+    'redirect_url' => 'https =>//yourwebsite.com/order/123',
+    'ewallet_type' => 'LINKAJA'
+];
 
-4. localhost:8006/paid_invoice_from_xendit (callback url) get the paid invoice data.
+$createLinkaja = \Xendit\EWallets::create($linkajaParams);
+var_dump($createLinkaja);
 ```
 
-# Issue credit card refund without idempotency key
-```
-cd src/
-php examples/issue_credit_card_refund_example.php [credit_card_charge_id] [amount] [external_id]
+#### Get Payment Status
+
+```php
+$external_id = 'external-ID';
+$ewallet_type = 'OVO';
+$getPayments = \Xendit\EWallets::getPaymentStatus($external_id, 'OVO');
 ```
 
-# Issue credit card refund with idempotency key
+### Invoice
+
+#### Create Invoice
+
+```php
+$params = ['external_id' => 'demo_147580196270',
+    'payer_email' => 'sample_email@xendit.co',
+    'description' => 'Trip to Bali',
+    'amount' => 32000
+];
+
+$createInvoice = \Xendit\Invoice::create($params);
+var_dump($createInvoice);
 ```
-cd src/
-php examples/issue_credit_card_refund_with_idempotency_example.php [credit_card_charge_id] [amount] [external_id] [optional-idempotency-key]
+
+#### Get Invoice
+
+```php
+$id = 'invoice-id';
+$getInvoice = \Xendit\Invoice::retrieve($id);
+var_dump($getInvoice);
 ```
+
+#### Get All Invoice
+
+```php
+$getAllInvoice = \Xendit\Invoice::retrieveAll();
+var_dump(($getAllInvoice));
+```
+
+#### Expire Invoice
+
+```php
+$id = 'invoice-id';
+$expireInvoice = \Xendit\Invoice::expireInvoice($id);
+var_dump($expireInvoice);
+```
+
+### Virtual Accounts
+
+#### Create Fixed Virtual Account
+
+```php
+$params = ["external_id" => "VA_fixed-12341234",
+   "bank_code" => "MANDIRI",
+   "name" => "Steve Wozniak"
+];
+
+$createVA = \Xendit\VirtualAccounts::create($params);
+var_dump($createVA);
+```
+
+#### Get Virtual Account Bank
+
+```php
+$getVABanks = \Xendit\VirtualAccounts::getVABanks();
+var_dump($getVABanks);
+```
+
+#### Get Fixed Virtual Account
+
+```php
+$id = 'VA-id';
+$getVA = \Xendit\VirtualAccounts::retrieve($id);
+var_dump($getVA);
+```
+
+#### Update Fixed Virtual Account
+
+```php
+$id = 'VA-id';
+$updateParams = ["suggested_amount" => 1000];
+
+$updateVA = \Xendit\VirtualAccounts::update($id, $updateParams);
+var_dump($updateVA);
+```
+
+#### Get Fixed Virtual Account Payment
+```php
+$paymentID = 'payment-ID';
+$getFVAPayment = \Xendit\VirtualAccounts::getFVAPayment($paymentID);
+var_dump($getFVAPayment);
+```
+
+## Contributing
+
+For any requests, bugs, or comments, please open an [issue](https://github.com/xendit/xendit-php-clients/issues) or [submit a pull request](https://github.com/xendit/xendit-php-clients/pulls).
+
+### Tests
+
+#### Running test suite:
+
+```bash
+vendor\bin\phpunit tests
+```
+
+#### Running examples:
+
+```bash
+php examples\InvoiceExample.php
+```
+
+There is a pre-commit hook to run phpcs and phpcbf. Please make sure they passed before making commits/pushes.
