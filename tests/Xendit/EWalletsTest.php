@@ -57,25 +57,25 @@ class EWalletsTest extends TestCase
             $params
         );
 
-        $expectedResult = EWallets::create($params);
+        $result = EWallets::create($params);
 
-        $this->assertEquals($expectedResult['external_id'], $params['external_id']);
-        $this->assertEquals($expectedResult['phone'], $params['phone']);
+        $this->assertEquals($result['external_id'], $params['external_id']);
+        $this->assertEquals($result['phone'], $params['phone']);
         $this->assertEquals(
-            $expectedResult['ewallet_type'],
+            $result['ewallet_type'],
             $params['ewallet_type']
         );
-        $this->assertEquals($expectedResult['amount'], $params['amount']);
+        $this->assertEquals($result['amount'], $params['amount']);
         $this->assertEquals(
-            $expectedResult['callback_url'],
+            $result['callback_url'],
             $params['callback_url']
         );
         $this->assertEquals(
-            $expectedResult['redirect_url'],
+            $result['redirect_url'],
             $params['redirect_url']
         );
         $this->assertEquals(
-            $expectedResult['expiration_date'],
+            $result['expiration_date'],
             $params['expiration_date']
         );
     }
@@ -108,13 +108,13 @@ class EWalletsTest extends TestCase
             $params
         );
 
-        $expectedResult = EWallets::getPaymentStatus(
+        $result = EWallets::getPaymentStatus(
             self::TEST_ID,
             self::TEST_TYPE
         );
 
         $this->assertEquals(
-            $expectedResult['ewallet_type'],
+            $result['ewallet_type'],
             self::TEST_TYPE
         );
     }
