@@ -51,40 +51,42 @@ class Cards
     /**
      * Reverse authorized charge
      *
-     * @param string $id     charge ID
-     * @param array  $params user params
+     * @param string $id      charge ID
+     * @param array  $params  user params
+     * @param array  $headers user headers
      *
      * @return array
      * @throws Exceptions\ApiExceptions
      */
-    public static function reverseAuthorization($id, $params = [])
+    public static function reverseAuthorization($id, $params = [], $headers = [])
     {
         $url = self::classUrl() . '/' . $id . '/auth_reversal';
         $requiredParams = ['external_id'];
 
         self::validateParams($params, $requiredParams);
 
-        return static::_request('POST', $url, $params, []);
+        return static::_request('POST', $url, $params, $headers);
     }
 
     /**
      * Capture charge, see https://xendit.github.io/apireference/?bash#capture-charge
      * for more details
      *
-     * @param string $id     charge ID
-     * @param array  $params user parameters
+     * @param string $id      charge ID
+     * @param array  $params  user parameters
+     * @param array  $headers user headers
      *
      * @return array
      * @throws Exceptions\ApiExceptions
      */
-    public static function capture($id, $params = [])
+    public static function capture($id, $params = [], $headers = [])
     {
         $url = self::classUrl() . '/' . $id . '/capture';
         $requiredParams = ['amount'];
 
         self::validateParams($params, $requiredParams);
 
-        return static::_request('POST', $url, $params, []);
+        return static::_request('POST', $url, $params, $headers);
     }
 
     /**
@@ -93,18 +95,18 @@ class Cards
      *
      * @param string $id      charge ID
      * @param array  $params  user parameters
-     * @param array  $options user header
+     * @param array  $headers user headers
      *
      * @return array
      * @throws Exceptions\ApiExceptions
      */
-    public static function createRefund($id, $params = [], $options = [])
+    public static function createRefund($id, $params = [], $headers = [])
     {
         $url = self::classUrl() . '/' . $id . '/refunds';
         $requiredParams = ['amount', 'external_id'];
 
         self::validateParams($params, $requiredParams);
 
-        return static::_request('POST', $url, $params, $options);
+        return static::_request('POST', $url, $params, $headers);
     }
 }
