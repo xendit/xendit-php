@@ -5,6 +5,12 @@ This library is the abstraction of Xendit API for access from applications writt
 - [Documentation](#documentation)
 - [Installation](#installation)
 - [Usage](#usage)
+  - [Disbursements](#disbursements)
+    - [Create Disbursement](#create-disbursement)
+    - [Create Batch Disbursement](#create-batch-disbursement)
+    - [Get Disbursement by ID](#get-disbursement-by-id)
+    - [Get Disbursement by External ID](#get-disbursement-by-external-id)
+    - [Get Disbursement Available Banks](#get-disbursement-available-banks)
   - [E-Wallets](#e-wallets)
     - [Create Payment](#create-payment)
     - [Get Payment Status](#get-payment-status)
@@ -41,6 +47,99 @@ Configure package with your account's secret key obtained from [Xendit Dashboard
 
 ```php
 Xendit::setApiKey('secretKey');
+```
+
+### Disbursements
+
+#### Create Disbursement
+
+Without idempotency key:
+
+```php
+$params = [
+    'external_id'=> 'disb-12345678',
+    'amount'=> 15000,
+    'bank_code'=> 'BCA',
+    'account_holder_name'=> 'Joe',
+    'account_number'=> '1234567890',
+    'description'=>'Disbursement from Example'
+];
+
+$createDisbursements = \Xendit\Disbursements::create($params);
+var_dump($createDisbursements);
+```
+
+With idempotency key:
+
+```php
+$params = [
+    'external_id'=> 'disb-12345678',
+    'amount'=> 15000,
+    'bank_code'=> 'BCA',
+    'account_holder_name'=> 'Joe',
+    'account_number'=> '1234567890',
+    'description'=>'Disbursement from Example'
+];
+$headers = ['X-IDEMPOTENCY-KEY' => $params['external_id']];
+
+
+$createDisbursements = \Xendit\Disbursements::create($params, $headers);
+var_dump($createDisbursements);
+```
+
+#### Create Batch Disbursement
+
+```php
+$batch_params = [
+    'reference'=> 'disb_batch-12345678',
+    'disbursements'=> [
+        [
+            'amount'=> 20000,
+            'bank_code'=> 'BCA',
+            'bank_account_name'=> 'Fadlan',
+            'bank_account_number'=> '1234567890',
+            'description'=> 'Batch Disbursement',
+            'external_id'=> 'disbursement-1'
+        ],
+        [
+            'amount'=> 30000,
+            'bank_code'=> 'MANDIRI',
+            'bank_account_name'=> 'Lutfi',
+            'bank_account_number'=> '1234567891',
+            'description'=> 'Batch Disbursement with email notifications',
+            'external_id'=> 'disbursement-2',
+            'email_to'=> ['test+to@xendit.co'],
+            'email_cc'=> ['test+cc@xendit.co'],
+            'email_bcc'=> ['test+bcc1@xendit.co', 'test+bcc2@xendit.co']
+        ]
+    ]
+];
+
+$createBatchDisbursements = \Xendit\Disbursements::createBatch($batch_params);
+var_dump($createBatchDisbursements);
+```
+
+#### Get Disbursement by ID
+
+```php
+$id = 'disbursements-id';
+$getDisbursements = \Xendit\Disbursements::retrieve($id);
+var_dump($getDisbursements);
+```
+
+#### Get Disbursement by External ID
+
+```php
+$external_id = 'disbursements-ext-id';
+$getDisbursementsByExt = \Xendit\Disbursements::retrieveExternal($external_id);
+var_dump($getDisbursementsByExt);
+```
+
+#### Get Disbursement Available Banks
+
+```php
+$getDisbursementsBanks = \Xendit\Disbursements::getAvailableBanks();
+var_dump($getDisbursementsBanks);
 ```
 
 ### E-Wallets
@@ -154,6 +253,40 @@ var_dump(($getAllInvoice));
 $id = 'invoice-id';
 $expireInvoice = \Xendit\Invoice::expireInvoice($id);
 var_dump($expireInvoice);
+```
+
+### Retail Outlets
+
+#### Create Fixed Payment Code
+
+```php
+$params = [
+    'external_id'=> 'TEST-123456789',
+    'retail_outlet_name'=> 'ALFAMART',
+    'name'=> 'JOHN DOE',
+    'expected_amount'=> 25000
+];
+
+$createFPC = \Xendit\Retail::create($params);
+var_dump($createFPC);
+```
+
+#### Update Fixed Payment Code
+
+```php
+$id = 'FPC-id';
+$updateParams = ['expected_amount' => 20000];
+
+$updateFPC = \Xendit\Retail::update($id, $updateParams);
+var_dump($updateFPC);
+```
+
+#### Get Fixed Payment Code
+
+```php
+$id = 'FPC-id';
+$getFPC = \Xendit\Retail::retrieve($id);
+var_dump($getFPC);
 ```
 
 ### Virtual Accounts
