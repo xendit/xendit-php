@@ -92,8 +92,8 @@ class CardlessCreditTest extends TestCase
             $params['cardless_credit_type']
         );
         $this->assertEquals($result['amount'], $params['amount']);
-        $this->assertEquals($result['payment_type'], $params['payment_type'];
-        $this->assertEquals($result['items'], $params['items'];
+        $this->assertEquals($result['payment_type'], $params['payment_type']);
+        $this->assertEquals($result['items'], $params['items']);
         $this->assertEquals(
             $result['customer_details'],
             $params['customer_details']
