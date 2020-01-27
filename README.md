@@ -255,6 +255,38 @@ $expireInvoice = \Xendit\Invoice::expireInvoice($id);
 var_dump($expireInvoice);
 ```
 
+### Payouts
+
+#### Create Payout
+
+```php
+$params = [
+    'external_id'=> 'payouts-123456789',
+    'amount'=> 50000
+];
+
+$createPayout = \Xendit\Payouts::create($params);
+var_dump($createPayout);
+```
+
+#### Get Payout
+
+```php
+$id = 'payout-id';
+
+$getPayout = \Xendit\Payouts::retrieve($id);
+var_dump($getPayout);
+```
+
+#### Void Payout
+
+```php
+$id = 'payout-id';
+
+$voidPayout = \Xendit\Payouts::void($id);
+var_dump($voidPayout);
+```
+
 ### Retail Outlets
 
 #### Create Fixed Payment Code
