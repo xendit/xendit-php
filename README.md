@@ -255,6 +255,40 @@ $expireInvoice = \Xendit\Invoice::expireInvoice($id);
 var_dump($expireInvoice);
 ```
 
+### Retail Outlets
+
+#### Create Fixed Payment Code
+
+```php
+$params = [
+    'external_id'=> 'TEST-123456789',
+    'retail_outlet_name'=> 'ALFAMART',
+    'name'=> 'JOHN DOE',
+    'expected_amount'=> 25000
+];
+
+$createFPC = \Xendit\Retail::create($params);
+var_dump($createFPC);
+```
+
+#### Update Fixed Payment Code
+
+```php
+$id = 'FPC-id';
+$updateParams = ['expected_amount' => 20000];
+
+$updateFPC = \Xendit\Retail::update($id, $updateParams);
+var_dump($updateFPC);
+```
+
+#### Get Fixed Payment Code
+
+```php
+$id = 'FPC-id';
+$getFPC = \Xendit\Retail::retrieve($id);
+var_dump($getFPC);
+```
+
 ### Virtual Accounts
 
 #### Create Fixed Virtual Account
