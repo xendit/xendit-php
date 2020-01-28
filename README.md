@@ -5,6 +5,12 @@ This library is the abstraction of Xendit API for access from applications writt
 - [Documentation](#documentation)
 - [Installation](#installation)
 - [Usage](#usage)
+  - [Cards](#cards)
+    - [Create Charge](#create-charge)
+    - [Reverse Authentication](#reverse-authentication)
+    - [Capture Charge](#capture-charge)
+    - [Get Charge](#get-charge)
+    - [Create Refund](#create-refund)
   - [Disbursements](#disbursements)
     - [Create Disbursement](#create-disbursement)
     - [Create Batch Disbursement](#create-batch-disbursement)
@@ -47,6 +53,83 @@ Configure package with your account's secret key obtained from [Xendit Dashboard
 
 ```php
 Xendit::setApiKey('secretKey');
+```
+
+### Cards
+
+#### Create Charge
+
+```php
+$params = [
+    'token_id' => '5e2e8231d97c174c58bcf644',
+    'external_id' => 'card_' . time(),
+    'authentication_id' => '5e2e8658bae82e4d54d764c0',
+    'amount'=> 100000,
+    'card_cvn'=>'123',
+    'capture'=> false
+];
+
+$createCharge = \Xendit\Cards::create($params);
+var_dump($createCharge);
+```
+
+### Reverse Authentication
+
+```php
+$id = 'charge-id';
+$params = ['external_id' => 'ext-id'];
+
+$reverseAuth = \Xendit\Cards::reverseAuthorization(
+    $id,
+    $params
+);
+var_dump($reverseAuth);
+```
+
+#### Capture Charge
+
+```php
+$id = 'charge-id';
+$params = ['amount' => 100000];
+
+$captureCharge = \Xendit\Cards::capture($id, $params);
+var_dump($captureParams);
+```
+
+#### Get Charge
+
+```php
+$id = 'charge-id';
+
+$getCharge = \Xendit\Cards::retrieve($id);
+var_dump($getCharge);
+```
+
+#### Create Refund
+
+Without idempotency key:
+
+```php
+$params = [
+    'external_id' => 'ext-id',
+    'amount' => 20000
+];
+
+$refund = \Xendit\Cards::createRefund($id, $params);
+var_dump($refund);
+```
+
+With idempotency key:
+
+```php
+$params = [
+    'external_id' => 'ext-id',
+    'amount' => 20000
+];
+$headers = ['X-IDEMPOTENCY-KEY' => $params['external_id']];
+
+$refund = \Xendit\Cards::createRefund($id, $params, $headers);
+var_dump($refund);
 ```
 
 ### Disbursements
