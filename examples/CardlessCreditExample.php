@@ -15,15 +15,14 @@ use Xendit\Xendit;
 
 require 'vendor/autoload.php';
 
-Xendit::setApiKey(
-    <<<'TAG'
-xnd_development_RTgyPF8BMHDyzLQ3cYpU3UWoz5wQH3WvzwR9S36gkJYgrPGsjT2rKVVUONROyQ
-TAG
-);
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/..');
+$dotenv->load();
+
+Xendit::setApiKey(getenv('SECRET_API_KEY'));
 
 $params = [
     'cardless_credit_type'=> 'KREDIVO',
-    'external_id'=> 'test-cardless-credit-01',
+    'external_id'=> 'test-cardless-credit-02',
     'amount'=> 800000,
     'payment_type'=> '3_months',
     'items'=> [

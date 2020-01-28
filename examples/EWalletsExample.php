@@ -15,11 +15,10 @@ use Xendit\Xendit;
 
 require 'vendor/autoload.php';
 
-Xendit::setApiKey(
-    <<<'TAG'
-xnd_development_jImUer3BVw5nxbIBSfaueHm6vE9Dznc9PjL9m7SIeGZSAAncHbng2CmMHazxxa
-TAG
-);
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/..');
+$dotenv->load();
+
+Xendit::setApiKey(getenv('SECRET_API_KEY'));
 
 $ovoParams = [
     'external_id' => 'demo_' . time(),

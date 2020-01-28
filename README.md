@@ -54,7 +54,13 @@ For the API documentation, check [Xendit API Reference](https://xendit.github.io
 
 ## Installation
 
-TBD
+Install xendit-php-clients with composer by following command:
+
+```bash
+composer require xendit/xendit-php-clients
+```
+
+or add it manually in your `composer.json` file.
 
 ## Usage
 
@@ -63,6 +69,8 @@ Configure package with your account's secret key obtained from [Xendit Dashboard
 ```php
 Xendit::setApiKey('secretKey');
 ```
+
+If you want to use `.env`, copy `.env.example` to `.env` and insert your secret API key in variable `SECRET_API_KEY`. See example codes for more details.
 
 ### Disbursements
 

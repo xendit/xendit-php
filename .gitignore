@@ -26,4 +26,6 @@
 .phpunit.result.cache
 clover.xml
 
+.env
+
 composer.lock
