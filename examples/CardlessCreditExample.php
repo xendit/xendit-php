@@ -17,7 +17,7 @@ require 'vendor/autoload.php';
 
 Xendit::setApiKey(
     <<<'TAG'
-xnd_development_prHUBDfVuOQTxyWTQSNkpjn9OwX9ZSUjdqgF9GenZ6hwhUQkc3NZ9WVexdH
+xnd_development_RTgyPF8BMHDyzLQ3cYpU3UWoz5wQH3WvzwR9S36gkJYgrPGsjT2rKVVUONROyQ
 TAG
 );
 
