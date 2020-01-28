@@ -19,6 +19,21 @@ This library is the abstraction of Xendit API for access from applications writt
     - [Get Invoice](#get-invoice)
     - [Get All Invoice](#get-all-invoice)
     - [Expire Invoice](#expire-invoice)
+  - [Payouts](#payouts)
+    - [Create a Payout](#create-payout)
+    - [Get a Payout](#get-payout)
+    - [Void a Payout](#void-payout)
+  - [Retail Outlets](#retail-outlets)
+    - [Create Fixed Payment Code](#create-fixed-payment-code)
+    - [Update Fixed Payment Code](#update-fixed-payment-code)
+    - [Get Fixed Payment Code](#get-fixed-payment-code)
+  - [Recurring](#recurring-payments)
+    - [Create a Recurring Payment](#create-a-recurring-payment)
+    - [Get a Recurring Payment](#get-a-recurring-payment)
+    - [Edit a Recurring Payment](#edit-recurring-payment)
+    - [Pause a Recurring Payment](#pause-recurring-payment)
+    - [Stop a Recurring Payment](#stop-recurring-payment)
+    - [Resume a Recurring Payment](#resume-recurring-payment)
   - [Virtual Accounts](#virtual-accounts)
     - [Create Fixed Virtual Account](#create-fixed-virtual-account)
     - [Get Virtual Account Bank](#get-virtual-account-bank)
@@ -285,6 +300,70 @@ $id = 'payout-id';
 
 $voidPayout = \Xendit\Payouts::void($id);
 var_dump($voidPayout);
+```
+
+### Recurring Payments
+
+#### Create a Recurring Payment
+
+```php
+$params = [
+    'external_id' => 'demo_147580196270',
+    'payer_email' => 'sample_email@xendit.co',
+    'description' => 'Trip to Bali',
+    'amount' => 32000,
+    'interval' => 'MONTH',
+    'interval_count' => 1
+];
+
+$createRecurring = \Xendit\Recurring::create($params);
+var_dump($createRecurring);
+```
+
+#### Get a Recurring Payment
+
+```php
+$id = 'recurring-payment-id';
+
+$getRecurring = \Xendit\Recurring::retrieve($id);
+var_dump($getRecurring);
+```
+
+#### Edit Recurring Payment
+
+```php
+$id = 'recurring-payment-id';
+$params = ['amount' => 10000];
+
+$editRecurring = \Xendit\Recurring::update($id, $params);
+var_dump($editRecurring);
+```
+
+#### Stop Recurring Payment
+
+```php
+$id = 'recurring-payment-id';
+
+$stopRecurring = \Xendit\Recurring::stop($id);
+var_dump($stopRecurring);
+```
+
+#### Pause Recurring Payment
+
+```php
+$id = 'recurring-payment-id';
+
+$pauseRecurring = \Xendit\Recurring::pause($id);
+var_dump($pauseRecurring);
+```
+
+#### Resume Recurring Payment
+
+```php
+$id = 'recurring-payment-id';
+
+$resumeRecurring = \Xendit\Recurring::resume($id);
+var_dump($resumeRecurring);
 ```
 
 ### Retail Outlets

@@ -38,6 +38,9 @@ $id = $createRecurring['id'];
 $getRecurring = \Xendit\Recurring::retrieve($id);
 var_dump($getRecurring);
 
+$editRecurring = \Xendit\Recurring::update($id, ['amount' => 10000]);
+var_dump($editRecurring);
+
 $pauseRecurring = \Xendit\Recurring::pause($id);
 var_dump($pauseRecurring);
 
