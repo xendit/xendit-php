@@ -13,6 +13,8 @@
 
 namespace Xendit;
 
+use Xendit\Exceptions\InvalidArgumentException;
+
 /**
  * Class Balance
  *
@@ -27,6 +29,31 @@ class Balance
     use ApiOperations\Request;
 
     /**
+     * Available account type
+     *
+     * @return array
+     */
+    public static function accountType()
+    {
+        return ["CASH", "HOLDING", "TAX"];
+    }
+
+    /**
+     * Validation for account type
+     *
+     * @param string $account_type Account type
+     *
+     * @return void
+     */
+    public static function validateAccountType($account_type = null)
+    {
+        if (!in_array($account_type, self::accountType())) {
+            $msg = "Account type is invalid. Available types: CASH, TAX, HOLDING";
+            throw new InvalidArgumentException($msg);
+        }
+    }
+
+    /**
      * Send GET request to retrieve data
      *
      * @param string $account_type account type (CASH|HOLDING|TAX)
@@ -37,6 +64,7 @@ class Balance
      */
     public static function getBalance($account_type = null, $headers = [])
     {
+        self::validateAccountType($account_type);
         $url = '/balance?account_type=' . $account_type;
         return static::_request('GET', $url, [], $headers);
     }
