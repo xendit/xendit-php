@@ -15,10 +15,7 @@ use Xendit\Xendit;
 
 require 'vendor/autoload.php';
 
-$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/..');
-$dotenv->load();
-
-Xendit::setApiKey(getenv('SECRET_API_KEY'));
+Xendit::loadApiKey();
 
 $params = [
     'external_id' => 'demo_147580196270',
