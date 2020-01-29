@@ -5,6 +5,8 @@ This library is the abstraction of Xendit API for access from applications writt
 - [Documentation](#documentation)
 - [Installation](#installation)
 - [Usage](#usage)
+  - [Balance](#balance)
+    - [Get Balance](#get-balance)
   - [Cards](#cards)
     - [Create Charge](#create-charge)
     - [Reverse Authentication](#reverse-authentication)
@@ -79,6 +81,15 @@ Xendit::setApiKey('secretKey');
 ```
 
 If you want to use `.env`, copy `.env.example` to `.env` and insert your secret API key in variable `SECRET_API_KEY`. See example codes for more details.
+
+### Balance
+
+#### Get Balance
+
+```php
+$getBalance = \Xendit\Balance::getBalance('CASH');
+var_dump($getBalance);
+```
 
 ### Cards
 
