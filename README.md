@@ -5,6 +5,14 @@ This library is the abstraction of Xendit API for access from applications writt
 - [Documentation](#documentation)
 - [Installation](#installation)
 - [Usage](#usage)
+  - [Cards](#cards)
+    - [Create Charge](#create-charge)
+    - [Reverse Authentication](#reverse-authentication)
+    - [Capture Charge](#capture-charge)
+    - [Get Charge](#get-charge)
+    - [Create Refund](#create-refund)
+  - [Cardless Credit](#cardless-credit)
+    - [Create Cardless Credit Payment](#create-cardless-credit-payment)
   - [Disbursements](#disbursements)
     - [Create Disbursement](#create-disbursement)
     - [Create Batch Disbursement](#create-batch-disbursement)
@@ -71,6 +79,134 @@ Xendit::setApiKey('secretKey');
 ```
 
 If you want to use `.env`, copy `.env.example` to `.env` and insert your secret API key in variable `SECRET_API_KEY`. See example codes for more details.
+
+### Cards
+
+#### Create Charge
+
+```php
+$params = [
+    'token_id' => '5e2e8231d97c174c58bcf644',
+    'external_id' => 'card_' . time(),
+    'authentication_id' => '5e2e8658bae82e4d54d764c0',
+    'amount'=> 100000,
+    'card_cvn'=>'123',
+    'capture'=> false
+];
+
+$createCharge = \Xendit\Cards::create($params);
+var_dump($createCharge);
+```
+
+### Reverse Authentication
+
+```php
+$id = 'charge-id';
+$params = ['external_id' => 'ext-id'];
+
+$reverseAuth = \Xendit\Cards::reverseAuthorization(
+    $id,
+    $params
+);
+var_dump($reverseAuth);
+```
+
+#### Capture Charge
+
+```php
+$id = 'charge-id';
+$params = ['amount' => 100000];
+
+$captureCharge = \Xendit\Cards::capture($id, $params);
+var_dump($captureParams);
+```
+
+#### Get Charge
+
+```php
+$id = 'charge-id';
+
+$getCharge = \Xendit\Cards::retrieve($id);
+var_dump($getCharge);
+```
+
+#### Create Refund
+
+Without idempotency key:
+
+```php
+$params = [
+    'external_id' => 'ext-id',
+    'amount' => 20000
+];
+
+$refund = \Xendit\Cards::createRefund($id, $params);
+var_dump($refund);
+```
+
+With idempotency key:
+
+```php
+$params = [
+    'external_id' => 'ext-id',
+    'amount' => 20000
+];
+$headers = ['X-IDEMPOTENCY-KEY' => $params['external_id']];
+
+$refund = \Xendit\Cards::createRefund($id, $params, $headers);
+var_dump($refund);
+```
+
+### Cardless Credit
+
+#### Create Cardless Credit Payment
+
+```php
+$params = [
+    'cardless_credit_type'=> 'KREDIVO',
+    'external_id'=> 'test-cardless-credit-02',
+    'amount'=> 800000,
+    'payment_type'=> '3_months',
+    'items'=> [
+        [
+            'id'=> '123123',
+            'name'=> 'Phone Case',
+            'price'=> 200000,
+            'type'=> 'Smartphone',
+            'url'=> 'http=>//example.com/phone/phone_case',
+            'quantity'=> 2
+        ],
+        [
+            'id'=> '234567',
+            'name'=> 'Bluetooth Headset',
+            'price'=> 400000,
+            'type'=> 'Audio',
+            'url'=> 'http=>//example.com/phone/bluetooth_headset',
+            'quantity'=> 1
+        ]
+    ],
+    'customer_details'=> [
+        'first_name'=> 'customer first name',
+        'last_name'=> 'customer last name',
+        'email'=> 'customer@yourwebsite.com',
+        'phone'=> '081513114262'
+    ],
+    'shipping_address'=> [
+        'first_name'=> 'first name',
+        'last_name'=> 'last name',
+        'address'=> 'Jalan Teknologi No. 12',
+        'city'=> 'Jakarta',
+        'postal_code'=> '12345',
+        'phone'=> '081513114262',
+        'country_code'=> 'IDN'
+    ],
+    'redirect_url'=> 'https://example.com',
+    'callback_url'=> 'http://example.com/callback-cardless-credit'
+];
+
+$createPayment = \Xendit\CardlessCredit::create($params);
+var_dump($createPayment);
+```
 
 ### Disbursements
 

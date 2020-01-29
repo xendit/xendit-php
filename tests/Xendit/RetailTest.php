@@ -28,7 +28,7 @@ class RetailTest extends TestCase
     const TEST_ID = "TEST-123";
 
     /**
-     * Create Retail test
+     * Create FPC test
      * Should pass
      *
      * @return void
@@ -114,7 +114,7 @@ class RetailTest extends TestCase
     }
 
     /**
-     * Create VirtualAccount test
+     * Create FPC test
      * Should throw InvalidArgumentException
      *
      * @return void
