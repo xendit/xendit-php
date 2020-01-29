@@ -15,11 +15,7 @@ use Xendit\Xendit;
 
 require 'vendor/autoload.php';
 
-Xendit::setApiKey(
-    <<<'TAG'
-xnd_development_prHUBDfVuOQTxyWTQSNkpjn9OwX9ZSUjdqgF9GenZ6hwhUQkc3NZ9WVexdH
-TAG
-);
+Xendit::loadApiKey();
 
 $params = [
     'external_id' => 'demo_147580196270',
@@ -37,6 +33,9 @@ $id = $createRecurring['id'];
 
 $getRecurring = \Xendit\Recurring::retrieve($id);
 var_dump($getRecurring);
+
+$editRecurring = \Xendit\Recurring::update($id, ['amount' => 10000]);
+var_dump($editRecurring);
 
 $pauseRecurring = \Xendit\Recurring::pause($id);
 var_dump($pauseRecurring);

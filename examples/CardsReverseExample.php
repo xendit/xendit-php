@@ -15,11 +15,7 @@ use Xendit\Xendit;
 
 require 'vendor/autoload.php';
 
-Xendit::setApiKey(
-    <<<'TAG'
-xnd_development_prHUBDfVuOQTxyWTQSNkpjn9OwX9ZSUjdqgF9GenZ6hwhUQkc3NZ9WVexdH
-TAG
-);
+Xendit::loadApiKey();
 
 $params = [
     'token_id' => '5e2e8231d97c174c58bcf644',

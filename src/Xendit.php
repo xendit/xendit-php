@@ -13,6 +13,8 @@
 
 namespace Xendit;
 
+use Dotenv\Dotenv;
+
 /**
  * Class Xendit
  *
@@ -72,6 +74,24 @@ class Xendit
     public static function setApiKey($apiKey)
     {
         self::$apiKey = $apiKey;
+    }
+
+    /**
+     * Load API Key from user's environment or user input
+     *
+     * @param string|null $apiKey Secret API Key
+     *
+     * @return void
+     */
+    public static function loadApiKey($apiKey = null)
+    {
+        if ($apiKey) {
+            self::setApiKey($apiKey);
+        } else {
+            $dotenv = Dotenv::createImmutable(__DIR__ . '/..');
+            $dotenv->load();
+            Xendit::setApiKey(getenv('SECRET_API_KEY'));
+        }
     }
 
     /**

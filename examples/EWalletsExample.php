@@ -15,11 +15,7 @@ use Xendit\Xendit;
 
 require 'vendor/autoload.php';
 
-Xendit::setApiKey(
-    <<<'TAG'
-xnd_development_jImUer3BVw5nxbIBSfaueHm6vE9Dznc9PjL9m7SIeGZSAAncHbng2CmMHazxxa
-TAG
-);
+Xendit::loadApiKey();
 
 $ovoParams = [
     'external_id' => 'demo_' . time(),

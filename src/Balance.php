@@ -59,7 +59,9 @@ class Balance
      * @param string $account_type account type (CASH|HOLDING|TAX)
      * @param array  $headers      user's headers
      *
-     * @return array
+     * @return array[
+     *  'balance' => int
+     * ]
      * @throws Exceptions\ApiExceptions
      */
     public static function getBalance($account_type = null, $headers = [])

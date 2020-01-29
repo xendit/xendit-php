@@ -5,12 +5,16 @@ This library is the abstraction of Xendit API for access from applications writt
 - [Documentation](#documentation)
 - [Installation](#installation)
 - [Usage](#usage)
+  - [Balance](#balance)
+    - [Get Balance](#get-balance)
   - [Cards](#cards)
     - [Create Charge](#create-charge)
     - [Reverse Authentication](#reverse-authentication)
     - [Capture Charge](#capture-charge)
     - [Get Charge](#get-charge)
     - [Create Refund](#create-refund)
+  - [Cardless Credit](#cardless-credit)
+    - [Create Cardless Credit Payment](#create-cardless-credit-payment)
   - [Disbursements](#disbursements)
     - [Create Disbursement](#create-disbursement)
     - [Create Batch Disbursement](#create-batch-disbursement)
@@ -25,6 +29,21 @@ This library is the abstraction of Xendit API for access from applications writt
     - [Get Invoice](#get-invoice)
     - [Get All Invoice](#get-all-invoice)
     - [Expire Invoice](#expire-invoice)
+  - [Payouts](#payouts)
+    - [Create a Payout](#create-payout)
+    - [Get a Payout](#get-payout)
+    - [Void a Payout](#void-payout)
+  - [Recurring](#recurring-payments)
+    - [Create a Recurring Payment](#create-a-recurring-payment)
+    - [Get a Recurring Payment](#get-a-recurring-payment)
+    - [Edit a Recurring Payment](#edit-recurring-payment)
+    - [Pause a Recurring Payment](#pause-recurring-payment)
+    - [Stop a Recurring Payment](#stop-recurring-payment)
+    - [Resume a Recurring Payment](#resume-recurring-payment)
+  - [Retail Outlets](#retail-outlets)
+    - [Create Fixed Payment Code](#create-fixed-payment-code)
+    - [Update Fixed Payment Code](#update-fixed-payment-code)
+    - [Get Fixed Payment Code](#get-fixed-payment-code)
   - [Virtual Accounts](#virtual-accounts)
     - [Create Fixed Virtual Account](#create-fixed-virtual-account)
     - [Get Virtual Account Bank](#get-virtual-account-bank)
@@ -45,7 +64,13 @@ For the API documentation, check [Xendit API Reference](https://xendit.github.io
 
 ## Installation
 
-TBD
+Install xendit-php-clients with composer by following command:
+
+```bash
+composer require xendit/xendit-php-clients
+```
+
+or add it manually in your `composer.json` file.
 
 ## Usage
 
@@ -53,6 +78,17 @@ Configure package with your account's secret key obtained from [Xendit Dashboard
 
 ```php
 Xendit::setApiKey('secretKey');
+```
+
+If you want to use `.env`, copy `.env.example` to `.env` and insert your secret API key in variable `SECRET_API_KEY`. See example codes for more details.
+
+### Balance
+
+#### Get Balance
+
+```php
+$getBalance = \Xendit\Balance::getBalance('CASH');
+var_dump($getBalance);
 ```
 
 ### Cards
@@ -130,6 +166,57 @@ $headers = ['X-IDEMPOTENCY-KEY' => $params['external_id']];
 
 $refund = \Xendit\Cards::createRefund($id, $params, $headers);
 var_dump($refund);
+```
+
+### Cardless Credit
+
+#### Create Cardless Credit Payment
+
+```php
+$params = [
+    'cardless_credit_type'=> 'KREDIVO',
+    'external_id'=> 'test-cardless-credit-02',
+    'amount'=> 800000,
+    'payment_type'=> '3_months',
+    'items'=> [
+        [
+            'id'=> '123123',
+            'name'=> 'Phone Case',
+            'price'=> 200000,
+            'type'=> 'Smartphone',
+            'url'=> 'http=>//example.com/phone/phone_case',
+            'quantity'=> 2
+        ],
+        [
+            'id'=> '234567',
+            'name'=> 'Bluetooth Headset',
+            'price'=> 400000,
+            'type'=> 'Audio',
+            'url'=> 'http=>//example.com/phone/bluetooth_headset',
+            'quantity'=> 1
+        ]
+    ],
+    'customer_details'=> [
+        'first_name'=> 'customer first name',
+        'last_name'=> 'customer last name',
+        'email'=> 'customer@yourwebsite.com',
+        'phone'=> '081513114262'
+    ],
+    'shipping_address'=> [
+        'first_name'=> 'first name',
+        'last_name'=> 'last name',
+        'address'=> 'Jalan Teknologi No. 12',
+        'city'=> 'Jakarta',
+        'postal_code'=> '12345',
+        'phone'=> '081513114262',
+        'country_code'=> 'IDN'
+    ],
+    'redirect_url'=> 'https://example.com',
+    'callback_url'=> 'http://example.com/callback-cardless-credit'
+];
+
+$createPayment = \Xendit\CardlessCredit::create($params);
+var_dump($createPayment);
 ```
 
 ### Disbursements
@@ -368,6 +455,70 @@ $id = 'payout-id';
 
 $voidPayout = \Xendit\Payouts::void($id);
 var_dump($voidPayout);
+```
+
+### Recurring Payments
+
+#### Create a Recurring Payment
+
+```php
+$params = [
+    'external_id' => 'demo_147580196270',
+    'payer_email' => 'sample_email@xendit.co',
+    'description' => 'Trip to Bali',
+    'amount' => 32000,
+    'interval' => 'MONTH',
+    'interval_count' => 1
+];
+
+$createRecurring = \Xendit\Recurring::create($params);
+var_dump($createRecurring);
+```
+
+#### Get a Recurring Payment
+
+```php
+$id = 'recurring-payment-id';
+
+$getRecurring = \Xendit\Recurring::retrieve($id);
+var_dump($getRecurring);
+```
+
+#### Edit Recurring Payment
+
+```php
+$id = 'recurring-payment-id';
+$params = ['amount' => 10000];
+
+$editRecurring = \Xendit\Recurring::update($id, $params);
+var_dump($editRecurring);
+```
+
+#### Stop Recurring Payment
+
+```php
+$id = 'recurring-payment-id';
+
+$stopRecurring = \Xendit\Recurring::stop($id);
+var_dump($stopRecurring);
+```
+
+#### Pause Recurring Payment
+
+```php
+$id = 'recurring-payment-id';
+
+$pauseRecurring = \Xendit\Recurring::pause($id);
+var_dump($pauseRecurring);
+```
+
+#### Resume Recurring Payment
+
+```php
+$id = 'recurring-payment-id';
+
+$resumeRecurring = \Xendit\Recurring::resume($id);
+var_dump($resumeRecurring);
 ```
 
 ### Retail Outlets

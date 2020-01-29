@@ -15,11 +15,7 @@ use Xendit\Xendit;
 
 require 'vendor/autoload.php';
 
-Xendit::setApiKey(
-    <<<'TAG'
-xnd_development_prHUBDfVuOQTxyWTQSNkpjn9OwX9ZSUjdqgF9GenZ6hwhUQkc3NZ9WVexdH
-TAG
-);
+Xendit::loadApiKey();
 
 $params = ['external_id' => 'demo_147580196270',
     'payer_email' => 'sample_email@xendit.co',
