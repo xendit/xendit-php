@@ -55,7 +55,24 @@ class Invoice
      * @param string $id      Invoice ID
      * @param array  $options User's options
      *
-     * @return array
+     * @return array[
+     * 'id'=> string,
+     * 'user_id'=> string,
+     * 'external_id'=> string,
+     * 'status'=> string,
+     * 'merchant_name'=> string,
+     * 'merchant_profile_picture_url'=> string,
+     * 'amount'=> int,
+     * 'payer_email'=> string,
+     * 'description'=> string,
+     * 'invoice_url'=> string,
+     * 'expiry_date'=> string,
+     * 'available_banks'=> array,
+     * 'should_exclude_credit_card'=> bool,
+     * 'should_send_email'=> bool,
+     * 'created'=> string,
+     * 'updated'=> string
+     * ]
      * @throws Exceptions\ApiExceptions
      */
     public static function expireInvoice($id, $options = [])

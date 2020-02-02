@@ -39,6 +39,43 @@ class Cards
     }
 
     /**
+     * Capture charge, see https://xendit.github.io/apireference/?bash#capture-charge
+     * for more details
+     *
+     * @param string $id      charge ID
+     * @param array  $params  user parameters
+     * @param array  $headers user headers
+     *
+     * @return array [
+     *  'created' => string,
+     *  'status' => string,
+     *  'business_id' => string,
+     *  'authorized_amount' => int,
+     *  'external_id' => string,
+     *  'merchant_id' => string,
+     *  'merchant_reference_code' => string,
+     *  'card_type' => string,
+     *  'masked_card_number' => string,
+     *  'charge_type' => string,
+     *  'card_brand' => string,
+     *  'bank_reconciliation_id' => string,
+     *  'capture_amount' => int,
+     *  'descriptor' => string,
+     *  'id' => string
+     * ]
+     * @throws Exceptions\ApiExceptions
+     */
+    public static function capture($id, $params = [], $headers = [])
+    {
+        $url = self::classUrl() . '/' . $id . '/capture';
+        $requiredParams = ['amount'];
+
+        self::validateParams($params, $requiredParams);
+
+        return static::_request('POST', $url, $params, $headers);
+    }
+
+    /**
      * Instantiate required params for Create
      *
      * @return array
@@ -55,34 +92,21 @@ class Cards
      * @param array  $params  user params
      * @param array  $headers user headers
      *
-     * @return array
+     * @return array [
+     *  'created' => string,
+     *  'credit_card_charge_id' => string,
+     *  'external_id' => string,
+     *  'business_id' => string,
+     *  'amount' => int,
+     *  'status' => string,
+     *  'id' => string
+     * ]
      * @throws Exceptions\ApiExceptions
      */
     public static function reverseAuthorization($id, $params = [], $headers = [])
     {
         $url = self::classUrl() . '/' . $id . '/auth_reversal';
         $requiredParams = ['external_id'];
-
-        self::validateParams($params, $requiredParams);
-
-        return static::_request('POST', $url, $params, $headers);
-    }
-
-    /**
-     * Capture charge, see https://xendit.github.io/apireference/?bash#capture-charge
-     * for more details
-     *
-     * @param string $id      charge ID
-     * @param array  $params  user parameters
-     * @param array  $headers user headers
-     *
-     * @return array
-     * @throws Exceptions\ApiExceptions
-     */
-    public static function capture($id, $params = [], $headers = [])
-    {
-        $url = self::classUrl() . '/' . $id . '/capture';
-        $requiredParams = ['amount'];
 
         self::validateParams($params, $requiredParams);
 
@@ -97,7 +121,17 @@ class Cards
      * @param array  $params  user parameters
      * @param array  $headers user headers
      *
-     * @return array
+     * @return array [
+     *  'updated' => string,
+     *  'created' => string,
+     *  'credit_card_charge_id' => string,
+     *  'user_id' => string,
+     *  'amount' => int,
+     *  'external_id' => string,
+     *  'status' => string,
+     *  'fee_refund_amount' => int,
+     *  'id' => string
+     * ]
      * @throws Exceptions\ApiExceptions
      */
     public static function createRefund($id, $params = [], $headers = [])

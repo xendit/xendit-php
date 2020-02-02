@@ -18,9 +18,9 @@ require 'vendor/autoload.php';
 Xendit::loadApiKey();
 
 $params = [
-    'token_id' => '5e2e8231d97c174c58bcf644',
+    'token_id' => '5e3149b915faf8739dd96178',
     'external_id' => 'card_' . time(),
-    'authentication_id' => '5e2e85f9bae82e4d54d764b5',
+    'authentication_id' => '5e3149b915faf8739dd96179',
     'amount'=> 100000,
     'card_cvn'=>'123',
     'capture'=> false

@@ -54,7 +54,16 @@ class Payouts
      * @param string $id      payout ID
      * @param array  $headers user's headers
      *
-     * @return array
+     * @return array[
+     * 'id'=> string,
+     * 'external_id'=> string,
+     * 'amount'=> int,
+     * 'passcode'=> string,
+     * 'merchant_name'=> string,
+     * 'status'=> string,
+     * 'expiration_timestamp'=> string,
+     * 'created'=> string'
+     * ]
      * @throws Exceptions\ApiExceptions
      */
     public static function void($id, $headers = [])

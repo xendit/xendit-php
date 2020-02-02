@@ -44,7 +44,8 @@ class EWallets
      * @param array $params  user's parameters
      * @param array $options headers
      *
-     * @return array
+     * @return array please check for responses for each e-wallet type
+     * https://xendit.github.io/apireference/?bash#create-payment
      * @throws Exceptions\ApiExceptions
      */
     public static function create($params = [], $options = [])
@@ -79,7 +80,8 @@ class EWallets
      * @param string $external_id  external ID
      * @param string $ewallet_type E-wallet type (OVO, DANA, LINKAJA
      *
-     * @return array
+     * @return array please check for responses for each e-wallet type
+     * https://xendit.github.io/apireference/?bash#get-payment-status
      * @throws Exceptions\ApiExceptions
      */
     public static function getPaymentStatus($external_id, $ewallet_type)
