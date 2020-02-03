@@ -60,7 +60,8 @@ class Payouts
      * 'amount'=> int,
      * 'passcode'=> string,
      * 'merchant_name'=> string,
-     * 'status'=> string,
+     * 'status'=> 'ISSUED' || 'DISBURSING' || 'VOIDED' || 'LOCKED'
+     *            || 'COMPLETED' || 'FAILED',
      * 'expiration_timestamp'=> string,
      * 'created'=> string'
      * ]
