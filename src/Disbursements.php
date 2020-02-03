@@ -64,7 +64,7 @@ class Disbursements
      * 'reference'=> string,
      * 'total_uploaded_amount'=> int,
      * 'total_uploaded_count'=> int,
-     * 'status'=> string,
+     * 'status'=> 'NEEDS_APPROVAL',
      * 'id'=> string
      * ]
      * @throws Exceptions\ApiExceptions
