@@ -77,10 +77,16 @@ or add it manually in your `composer.json` file.
 Configure package with your account's secret key obtained from [Xendit Dashboard](https://dashboard.xendit.co/settings/developers#api-keys).
 
 ```php
-Xendit::setApiKey('secretKey');
+Xendit::loadApiKey('secretKey');
 ```
 
-If you want to use `.env`, copy `.env.example` to `.env` and insert your secret API key in variable `SECRET_API_KEY`. See example codes for more details.
+If you want to use `.env`, copy `.env.example` to `.env` and insert your secret API key in variable `SECRET_API_KEY`. Then, in your application, load your API key like the example below:
+
+```php
+Xendit::loadApiKey();
+```
+
+See example codes for more details.
 
 ### Balance
 
