@@ -57,7 +57,6 @@ trait Request
      * @param $headers array customer's optional headers
      *
      * @return array
-     * @throws \Xendit\Exceptions\AuthenticationException
      * @throws \Xendit\Exceptions\ApiExceptions
      */
     protected static function _request($method,

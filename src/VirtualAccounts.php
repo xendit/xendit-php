@@ -62,7 +62,10 @@ class VirtualAccounts
     /**
      * Get available VA banks
      *
-     * @return array
+     * @return array[
+     * 'name' => string,
+     * 'code' => string
+     * ]
      * @throws Exceptions\ApiExceptions
      */
     public static function getVABanks()
@@ -77,7 +80,17 @@ class VirtualAccounts
      *
      * @param string $payment_id payment ID
      *
-     * @return array
+     * @return array[
+     * 'id'=> string,
+     * 'payment_id'=> string,
+     * 'callback_virtual_account_id'=> string,
+     * 'external_id'=> string,
+     * 'merchant_code'=> string,
+     * 'account_number'=> string,
+     * 'bank_code'=> string,
+     * 'amount'=> int,
+     * 'transaction_timestamp'=> string
+     * ]
      * @throws Exceptions\ApiExceptions
      */
     public static function getFVAPayment($payment_id)

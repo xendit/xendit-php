@@ -72,7 +72,24 @@ class Recurring
      * @param string $id      recurring payment ID
      * @param array  $options user's headers
      *
-     * @return array
+     * @return array[
+     * 'id'=> string,
+     * 'user_id'=> string,
+     * 'external_id'=> string,
+     * 'status'=> 'ACTIVE' || 'STOPPED' || 'PAUSED',
+     * 'amount'=> int,
+     * 'payer_email'=> string,
+     * 'description'=> string,
+     * 'interval'=> string,
+     * 'interval_count'=> int,
+     * 'recurrence_progress'=> int,
+     * 'should_send_email'=> bool,
+     * 'missed_payment_action'=> string,
+     * 'recharge'=> bool,
+     * 'created'=> string,
+     * 'updated'=> string,
+     * 'start_date'=> string
+     * ]
      * @throws Exceptions\ApiExceptions
      */
     public static function stop($id, $options = [])
@@ -88,7 +105,24 @@ class Recurring
      * @param string $id      recurring payment ID
      * @param array  $options user's headers
      *
-     * @return array
+     * @return array[
+     * 'id'=> string,
+     * 'user_id'=> string,
+     * 'external_id'=> string,
+     * 'status'=> 'ACTIVE' || 'STOPPED' || 'PAUSED',
+     * 'amount'=> int,
+     * 'payer_email'=> string,
+     * 'description'=> string,
+     * 'interval'=> string,
+     * 'interval_count'=> int,
+     * 'recurrence_progress'=> int,
+     * 'should_send_email'=> bool,
+     * 'missed_payment_action'=> string,
+     * 'recharge'=> bool,
+     * 'created'=> string,
+     * 'updated'=> string,
+     * 'start_date'=> string
+     * ]
      * @throws Exceptions\ApiExceptions
      */
     public static function pause($id, $options = [])
@@ -104,7 +138,24 @@ class Recurring
      * @param string $id      recurring payment ID
      * @param array  $options user's headers
      *
-     * @return array
+     * @return array[
+     * 'id'=> string,
+     * 'user_id'=> string,
+     * 'external_id'=> string,
+     * 'status'=> 'ACTIVE' || 'STOPPED' || 'PAUSED',
+     * 'amount'=> int,
+     * 'payer_email'=> string,
+     * 'description'=> string,
+     * 'interval'=> string,
+     * 'interval_count'=> int,
+     * 'recurrence_progress'=> int,
+     * 'should_send_email'=> bool,
+     * 'missed_payment_action'=> string,
+     * 'recharge'=> bool,
+     * 'created'=> string,
+     * 'updated'=> string,
+     * 'start_date'=> string
+     * ]
      * @throws Exceptions\ApiExceptions
      */
     public static function resume($id, $options = [])
