@@ -59,7 +59,7 @@ class Invoice
      * 'id'=> string,
      * 'user_id'=> string,
      * 'external_id'=> string,
-     * 'status'=> string,
+     * 'status'=> 'EXPIRED',
      * 'merchant_name'=> string,
      * 'merchant_profile_picture_url'=> string,
      * 'amount'=> int,

@@ -128,7 +128,7 @@ class Cards
      *  'user_id' => string,
      *  'amount' => int,
      *  'external_id' => string,
-     *  'status' => string,
+     *  'status' => 'SUCCEEDED' || 'FAILED',
      *  'fee_refund_amount' => int,
      *  'id' => string
      * ]
