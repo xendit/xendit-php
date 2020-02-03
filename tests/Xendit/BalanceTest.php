@@ -58,11 +58,12 @@ class BalanceTest extends TestCase
      * Should throw ApiException
      *
      * @return void
+     * @throws Exceptions\InvalidArgumentException
      * @throws Exceptions\ApiExceptions
      */
-    public function testIsGettableThrowApiException()
+    public function testIsGettableThrowInvalidArgumentException()
     {
-        $this->expectException(\Xendit\Exceptions\ApiExceptions::class);
+        $this->expectException(\Xendit\Exceptions\InvalidArgumentException::class);
 
         Balance::getBalance();
     }
