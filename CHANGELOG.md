@@ -15,7 +15,7 @@
 
 ### Changed
 
-- Class structure - now the implementation is not merged into one class but divided into each product class
+- Class structure
 - Request to HTTP Client now use Guzzle Client instead of cURL
 
 ### Removed
