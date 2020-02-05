@@ -72,6 +72,14 @@ composer require xendit/xendit-php-clients
 
 or add it manually in your `composer.json` file.
 
+### Update from v1.x to v2.0.0
+
+To update xendit-php-clients with composer, use the following command:
+
+```bash
+composer update xendit/xendit-php-clients
+```
+
 ## Usage
 
 Configure package with your account's secret key obtained from [Xendit Dashboard](https://dashboard.xendit.co/settings/developers#api-keys).
