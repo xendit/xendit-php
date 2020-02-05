@@ -32,6 +32,8 @@ class Xendit
 
     public static $libVersion;
 
+    const VERSION = "2.0.0";
+
     /**
      * ApiBase getter
      *
@@ -102,7 +104,7 @@ class Xendit
     public static function getLibVersion()
     {
         if (self::$libVersion === null) {
-            $content = file_get_contents('composer.json');
+            $content = file_get_contents('./composer.json');
             $content = json_decode($content, true);
             self::$libVersion = $content['version'];
         }
