@@ -72,13 +72,17 @@ composer require xendit/xendit-php-clients
 
 or add it manually in your `composer.json` file.
 
-### Update from v1.x to v2.0.0
+### Update from v1.4.0 to v2.0.0
 
 To update xendit-php-clients with composer, use the following command:
 
 ```bash
 composer update xendit/xendit-php-clients
 ```
+
+### Migrate from v1.4.0 to v2.0.0
+
+To migrate, see [MIGRATE.md](MIGRATE.md) for more information.
 
 ## Usage
 
