@@ -80,8 +80,6 @@ To update xendit-php-clients with composer, use the following command:
 composer update xendit/xendit-php-clients
 ```
 
-### Migrate from v1.4.0 to v2.0.0
-
 To migrate, see [MIGRATE.md](MIGRATE.md) for more information.
 
 ## Usage
