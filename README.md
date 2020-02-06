@@ -9,7 +9,7 @@ This library is the abstraction of Xendit API for access from applications writt
     - [Get Balance](#get-balance)
   - [Cards](#cards)
     - [Create Charge](#create-charge)
-    - [Reverse Authentication](#reverse-authentication)
+    - [Reverse Authorization](#reverse-authorization)
     - [Capture Charge](#capture-charge)
     - [Get Charge](#get-charge)
     - [Create Refund](#create-refund)
@@ -114,16 +114,16 @@ $params = [
     'token_id' => '5e2e8231d97c174c58bcf644',
     'external_id' => 'card_' . time(),
     'authentication_id' => '5e2e8658bae82e4d54d764c0',
-    'amount'=> 100000,
-    'card_cvn'=>'123',
-    'capture'=> false
+    'amount' => 100000,
+    'card_cvn' => '123',
+    'capture' => false
 ];
 
 $createCharge = \Xendit\Cards::create($params);
 var_dump($createCharge);
 ```
 
-### Reverse Authentication
+### Reverse Authorization
 
 ```php
 $id = 'charge-id';
@@ -143,7 +143,7 @@ $id = 'charge-id';
 $params = ['amount' => 100000];
 
 $captureCharge = \Xendit\Cards::capture($id, $params);
-var_dump($captureParams);
+var_dump($captureCharge);
 ```
 
 #### Get Charge
@@ -188,45 +188,45 @@ var_dump($refund);
 
 ```php
 $params = [
-    'cardless_credit_type'=> 'KREDIVO',
-    'external_id'=> 'test-cardless-credit-02',
-    'amount'=> 800000,
-    'payment_type'=> '3_months',
-    'items'=> [
+    'cardless_credit_type' => 'KREDIVO',
+    'external_id' => 'test-cardless-credit-02',
+    'amount' => 800000,
+    'payment_type' => '3_months',
+    'items' => [
         [
-            'id'=> '123123',
-            'name'=> 'Phone Case',
-            'price'=> 200000,
-            'type'=> 'Smartphone',
-            'url'=> 'http=>//example.com/phone/phone_case',
-            'quantity'=> 2
+            'id' => '123123',
+            'name' => 'Phone Case',
+            'price' => 200000,
+            'type' => 'Smartphone',
+            'url' => 'http=>//example.com/phone/phone_case',
+            'quantity' => 2
         ],
         [
-            'id'=> '234567',
-            'name'=> 'Bluetooth Headset',
-            'price'=> 400000,
-            'type'=> 'Audio',
-            'url'=> 'http=>//example.com/phone/bluetooth_headset',
-            'quantity'=> 1
+            'id' => '234567',
+            'name' => 'Bluetooth Headset',
+            'price' => 400000,
+            'type' => 'Audio',
+            'url' => 'http=>//example.com/phone/bluetooth_headset',
+            'quantity' => 1
         ]
     ],
-    'customer_details'=> [
-        'first_name'=> 'customer first name',
-        'last_name'=> 'customer last name',
-        'email'=> 'customer@yourwebsite.com',
-        'phone'=> '081513114262'
+    'customer_details' => [
+        'first_name' => 'customer first name',
+        'last_name' => 'customer last name',
+        'email' => 'customer@yourwebsite.com',
+        'phone' => '081513114262'
     ],
-    'shipping_address'=> [
-        'first_name'=> 'first name',
-        'last_name'=> 'last name',
-        'address'=> 'Jalan Teknologi No. 12',
-        'city'=> 'Jakarta',
-        'postal_code'=> '12345',
-        'phone'=> '081513114262',
-        'country_code'=> 'IDN'
+    'shipping_address' => [
+        'first_name' => 'first name',
+        'last_name' => 'last name',
+        'address' => 'Jalan Teknologi No. 12',
+        'city' => 'Jakarta',
+        'postal_code' => '12345',
+        'phone' => '081513114262',
+        'country_code' => 'IDN'
     ],
-    'redirect_url'=> 'https://example.com',
-    'callback_url'=> 'http://example.com/callback-cardless-credit'
+    'redirect_url' => 'https://example.com',
+    'callback_url' => 'http://example.com/callback-cardless-credit'
 ];
 
 $createPayment = \Xendit\CardlessCredit::create($params);
@@ -241,12 +241,12 @@ Without idempotency key:
 
 ```php
 $params = [
-    'external_id'=> 'disb-12345678',
-    'amount'=> 15000,
-    'bank_code'=> 'BCA',
-    'account_holder_name'=> 'Joe',
-    'account_number'=> '1234567890',
-    'description'=>'Disbursement from Example'
+    'external_id' => 'disb-12345678',
+    'amount' => 15000,
+    'bank_code' => 'BCA',
+    'account_holder_name' => 'Joe',
+    'account_number' => '1234567890',
+    'description' => 'Disbursement from Example'
 ];
 
 $createDisbursements = \Xendit\Disbursements::create($params);
@@ -257,12 +257,12 @@ With idempotency key:
 
 ```php
 $params = [
-    'external_id'=> 'disb-12345678',
-    'amount'=> 15000,
-    'bank_code'=> 'BCA',
-    'account_holder_name'=> 'Joe',
-    'account_number'=> '1234567890',
-    'description'=>'Disbursement from Example'
+    'external_id' => 'disb-12345678',
+    'amount' => 15000,
+    'bank_code' => 'BCA',
+    'account_holder_name' => 'Joe',
+    'account_number' => '1234567890',
+    'description' => 'Disbursement from Example'
 ];
 $headers = ['X-IDEMPOTENCY-KEY' => $params['external_id']];
 
@@ -275,26 +275,26 @@ var_dump($createDisbursements);
 
 ```php
 $batch_params = [
-    'reference'=> 'disb_batch-12345678',
-    'disbursements'=> [
+    'reference' => 'disb_batch-12345678',
+    'disbursements' => [
         [
-            'amount'=> 20000,
-            'bank_code'=> 'BCA',
-            'bank_account_name'=> 'Fadlan',
-            'bank_account_number'=> '1234567890',
-            'description'=> 'Batch Disbursement',
-            'external_id'=> 'disbursement-1'
+            'amount' => 20000,
+            'bank_code' => 'BCA',
+            'bank_account_name' => 'Fadlan',
+            'bank_account_number' => '1234567890',
+            'description' => 'Batch Disbursement',
+            'external_id' => 'disbursement-1'
         ],
         [
-            'amount'=> 30000,
-            'bank_code'=> 'MANDIRI',
-            'bank_account_name'=> 'Lutfi',
-            'bank_account_number'=> '1234567891',
-            'description'=> 'Batch Disbursement with email notifications',
-            'external_id'=> 'disbursement-2',
-            'email_to'=> ['test+to@xendit.co'],
-            'email_cc'=> ['test+cc@xendit.co'],
-            'email_bcc'=> ['test+bcc1@xendit.co', 'test+bcc2@xendit.co']
+            'amount' => 30000,
+            'bank_code' => 'MANDIRI',
+            'bank_account_name' => 'Lutfi',
+            'bank_account_number' => '1234567891',
+            'description' => 'Batch Disbursement with email notifications',
+            'external_id' => 'disbursement-2',
+            'email_to' => ['test+to@xendit.co'],
+            'email_cc' => ['test+cc@xendit.co'],
+            'email_bcc' => ['test+bcc1@xendit.co', 'test+bcc2@xendit.co']
         ]
     ]
 ];
@@ -445,8 +445,8 @@ var_dump($expireInvoice);
 
 ```php
 $params = [
-    'external_id'=> 'payouts-123456789',
-    'amount'=> 50000
+    'external_id' => 'payouts-123456789',
+    'amount' => 50000
 ];
 
 $createPayout = \Xendit\Payouts::create($params);
@@ -541,10 +541,10 @@ var_dump($resumeRecurring);
 
 ```php
 $params = [
-    'external_id'=> 'TEST-123456789',
-    'retail_outlet_name'=> 'ALFAMART',
-    'name'=> 'JOHN DOE',
-    'expected_amount'=> 25000
+    'external_id' => 'TEST-123456789',
+    'retail_outlet_name' => 'ALFAMART',
+    'name' => 'JOHN DOE',
+    'expected_amount' => 25000
 ];
 
 $createFPC = \Xendit\Retail::create($params);
