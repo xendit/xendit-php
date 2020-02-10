@@ -21,7 +21,7 @@ $dotenv->load();
 Xendit::setApiKey(getenv('SECRET_API_KEY'));
 
 $params = [
-    'external_id'=> 'payouts-1234',
+    'external_id'=> 'payouts-123456789',
     'amount'=> 50000
 ];
 
