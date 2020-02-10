@@ -11,11 +11,14 @@
  * @link     https://api.xendit.co
  */
 
+use Dotenv\Dotenv;
 use Xendit\Xendit;
 
 require 'vendor/autoload.php';
 
-Xendit::loadApiKey();
+$dotenv = Dotenv::createImmutable(__DIR__ . '/..');
+$dotenv->load();
+Xendit::setApiKey(getenv('SECRET_API_KEY'));
 
 $getBalance = \Xendit\Balance::getBalance('CASH');
 var_dump($getBalance);

@@ -79,24 +79,6 @@ class Xendit
     }
 
     /**
-     * Load API Key from user's environment or user input
-     *
-     * @param string|null $apiKey Secret API Key
-     *
-     * @return void
-     */
-    public static function loadApiKey($apiKey = null)
-    {
-        if ($apiKey) {
-            self::setApiKey($apiKey);
-        } else {
-            $dotenv = Dotenv::createImmutable(__DIR__ . '/..');
-            $dotenv->load();
-            Xendit::setApiKey(getenv('SECRET_API_KEY'));
-        }
-    }
-
-    /**
      * Get library version
      *
      * @return mixed
