@@ -24,7 +24,7 @@ namespace Xendit;
  */
 class ApiRequestor
 {
-    private static $_guzzleClient;
+    private static $_httpClient;
 
     /**
      * Send request and processing response
@@ -35,7 +35,6 @@ class ApiRequestor
      * @param array  $headers user's additional headers
      *
      * @return array
-     * @throws AuthenticationException
      * @throws Exceptions\ApiExceptions
      */
     public function request($method, $url, $params = [], $headers = [])
@@ -98,10 +97,10 @@ class ApiRequestor
      */
     private function _httpClient()
     {
-        if (!self::$_guzzleClient) {
-            self::$_guzzleClient = HttpClient\GuzzleClient::instance();
+        if (!self::$_httpClient) {
+            self::$_httpClient = HttpClient\GuzzleClient::instance();
         }
-        return self::$_guzzleClient;
+        return self::$_httpClient;
     }
 
     /**
@@ -111,8 +110,8 @@ class ApiRequestor
      *
      * @return void
      */
-    public static function setGuzzleClient($client)
+    public static function setHttpClient($client)
     {
-        self::$_guzzleClient = $client;
+        self::$_httpClient = $client;
     }
 }
