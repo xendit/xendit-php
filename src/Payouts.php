@@ -51,7 +51,8 @@ class Payouts
     /**
      * Void a payout
      *
-     * @param string $id payout ID
+     * @param string $id     payout ID
+     * @param array  $params user's parameters
      *
      * @return array[
      * 'id'=> string,
@@ -66,10 +67,10 @@ class Payouts
      * ]
      * @throws Exceptions\ApiExceptions
      */
-    public static function void($id)
+    public static function void($id, $params = [])
     {
         $url = static::classUrl() . '/' . $id . '/void';
 
-        return static::_request('POST', $url);
+        return static::_request('POST', $url, $params);
     }
 }
