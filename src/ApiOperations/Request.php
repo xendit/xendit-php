@@ -65,11 +65,11 @@ trait Request
         $headers = [];
 
         if (array_key_exists('for-user-id', $params)) {
-            array_push($headers, $params['for-user-id']);
+            $headers['for-user-id'] = $params['for-user-id'];
         }
 
         if (array_key_exists('X-IDEMPOTENCY-KEY', $params)) {
-            array_push($headers, $params['X-IDEMPOTENCY-KEY']);
+            $headers['X-IDEMPOTENCY-KEY'] = $params['X-IDEMPOTENCY-KEY'];
         }
 
         $requestor = new \Xendit\ApiRequestor();
