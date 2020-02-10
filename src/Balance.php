@@ -57,17 +57,16 @@ class Balance
      * Send GET request to retrieve data
      *
      * @param string $account_type account type (CASH|HOLDING|TAX)
-     * @param array  $headers      user's headers
      *
      * @return array[
      *  'balance' => int
      * ]
      * @throws Exceptions\ApiExceptions
      */
-    public static function getBalance($account_type = null, $headers = [])
+    public static function getBalance($account_type = null)
     {
         self::validateAccountType($account_type);
         $url = '/balance?account_type=' . $account_type;
-        return static::_request('GET', $url, [], $headers);
+        return static::_request('GET', $url);
     }
 }

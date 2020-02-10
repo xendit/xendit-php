@@ -52,8 +52,7 @@ class Invoice
     /**
      * Expire Invoice
      *
-     * @param string $id      Invoice ID
-     * @param array  $options User's options
+     * @param string $id Invoice ID
      *
      * @return array[
      * 'id'=> string,
@@ -75,10 +74,10 @@ class Invoice
      * ]
      * @throws Exceptions\ApiExceptions
      */
-    public static function expireInvoice($id, $options = [])
+    public static function expireInvoice($id)
     {
         $url =  '/invoices/' . $id . '/expire!';
 
-        return static::_request('POST', $url, $options);
+        return static::_request('POST', $url);
     }
 }

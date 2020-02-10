@@ -56,8 +56,7 @@ class Disbursements
     /**
      * Send a create batch request
      *
-     * @param array $params  user's params
-     * @param array $options user's options
+     * @param array $params user's params
      *
      * @return array[
      * 'created'=> string,
@@ -69,7 +68,7 @@ class Disbursements
      * ]
      * @throws Exceptions\ApiExceptions
      */
-    public static function createBatch($params = [], $options = [])
+    public static function createBatch($params = [])
     {
         $requiredParams = ['reference', 'disbursements'];
 
@@ -77,14 +76,13 @@ class Disbursements
 
         $url = '/batch_disbursements';
 
-        return static::_request('POST', $url, $params, $options);
+        return static::_request('POST', $url, $params);
     }
 
     /**
      * Send GET request to retrieve data by external id
      *
      * @param string $external_id external id
-     * @param array  $options     user's options
      *
      * @return array[
      *  [
@@ -108,14 +106,14 @@ class Disbursements
      * 'email_to'=> ['test+to1@xendit.co','test+to2@xendit.co'],
      * 'email_cc'=> ['test+bcc@xendit.co'],
      * 'email_bcc'=> ['test+bcc@xendit.co']
-    ]
+     * ]
      * ]
      * @throws Exceptions\ApiExceptions
      */
-    public static function retrieveExternal($external_id, $options = [])
+    public static function retrieveExternal($external_id)
     {
         $url = static::classUrl() . '?external_id=' . $external_id;
-        return static::_request('GET', $url, [], $options);
+        return static::_request('GET', $url);
     }
 
     /**

@@ -41,14 +41,13 @@ class EWallets
     /**
      * Send a create request
      *
-     * @param array $params  user's parameters
-     * @param array $options headers
+     * @param array $params user's parameters
      *
      * @return array please check for responses for each e-wallet type
      * https://xendit.github.io/apireference/?bash#create-payment
      * @throws Exceptions\ApiExceptions
      */
-    public static function create($params = [], $options = [])
+    public static function create($params = [])
     {
         $requiredParams = [];
 
@@ -71,7 +70,7 @@ class EWallets
 
         $url = static::classUrl();
 
-        return static::_request('POST', $url, $params, $options);
+        return static::_request('POST', $url, $params);
     }
 
     /**

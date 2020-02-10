@@ -69,8 +69,7 @@ class Recurring
     /**
      * Stop a recurring payment
      *
-     * @param string $id      recurring payment ID
-     * @param array  $options user's headers
+     * @param string $id recurring payment ID
      *
      * @return array[
      * 'id'=> string,
@@ -92,18 +91,17 @@ class Recurring
      * ]
      * @throws Exceptions\ApiExceptions
      */
-    public static function stop($id, $options = [])
+    public static function stop($id)
     {
         $url = '/recurring_payments/' . $id . '/stop!';
 
-        return static::_request('POST', $url, $options);
+        return static::_request('POST', $url);
     }
 
     /**
      * Pause a recurring payment
      *
-     * @param string $id      recurring payment ID
-     * @param array  $options user's headers
+     * @param string $id recurring payment ID
      *
      * @return array[
      * 'id'=> string,
@@ -125,18 +123,17 @@ class Recurring
      * ]
      * @throws Exceptions\ApiExceptions
      */
-    public static function pause($id, $options = [])
+    public static function pause($id)
     {
         $url = '/recurring_payments/' . $id . '/pause!';
 
-        return static::_request('POST', $url, $options);
+        return static::_request('POST', $url);
     }
 
     /**
      * Resume a recurring payment
      *
-     * @param string $id      recurring payment ID
-     * @param array  $options user's headers
+     * @param string $id recurring payment ID
      *
      * @return array[
      * 'id'=> string,
@@ -158,10 +155,10 @@ class Recurring
      * ]
      * @throws Exceptions\ApiExceptions
      */
-    public static function resume($id, $options = [])
+    public static function resume($id)
     {
         $url = '/recurring_payments/' . $id . '/resume!';
 
-        return static::_request('POST', $url, $options);
+        return static::_request('POST', $url);
     }
 }
