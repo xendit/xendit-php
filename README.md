@@ -5,6 +5,7 @@ This library is the abstraction of Xendit API for access from applications writt
 - [Documentation](#documentation)
 - [Installation](#installation)
 - [Usage](#usage)
+- [Methods' Signature and Examples](#methods-signature-and-examples)
   - [Balance](#balance)
     - [Get Balance](#get-balance)
   - [Cards](#cards)
@@ -92,9 +93,17 @@ Xendit::setApiKey('secretKey');
 
 See example codes for more details.
 
+## Methods' Signature and Examples
+
 ### Balance
 
 #### Get Balance
+
+```php
+\Xendit\Balance::getBalance(string $account_type);
+```
+
+Usage example:
 
 ```php
 $getBalance = \Xendit\Balance::getBalance('CASH');
@@ -104,6 +113,12 @@ var_dump($getBalance);
 ### Cards
 
 #### Create Charge
+
+```php
+\Xendit\Cards::create(array $params);
+```
+
+Usage example:
 
 ```php
 $params = [
@@ -122,6 +137,12 @@ var_dump($createCharge);
 #### Reverse Authorization
 
 ```php
+\Xendit\Cards::reverseAuthorization(string $id, array $params);
+```
+
+Usage example:
+
+```php
 $id = 'charge-id';
 $params = ['external_id' => 'ext-id'];
 
@@ -135,6 +156,12 @@ var_dump($reverseAuth);
 #### Capture Charge
 
 ```php
+\Xendit\Cards::capture(string $id, array $params);
+```
+
+Usage example:
+
+```php
 $id = 'charge-id';
 $params = ['amount' => 100000];
 
@@ -145,6 +172,12 @@ var_dump($captureCharge);
 #### Get Charge
 
 ```php
+\Xendit\Cards::retrieve(string $id);
+```
+
+Usage example:
+
+```php
 $id = 'charge-id';
 
 $getCharge = \Xendit\Cards::retrieve($id);
@@ -152,6 +185,12 @@ var_dump($getCharge);
 ```
 
 #### Create Refund
+
+```php
+\Xendit\Cards::createRefund(string $id, array $params);
+```
+
+Usage examples
 
 Without idempotency key:
 
@@ -181,6 +220,12 @@ var_dump($refund);
 ### Cardless Credit
 
 #### Create Cardless Credit Payment
+
+```php
+\Xendit\CardlessCredit::create(array $params);
+```
+
+Usage example:
 
 ```php
 $params = [
@@ -233,6 +278,12 @@ var_dump($createPayment);
 
 #### Create Disbursement
 
+```php
+\Xendit\Disbursements::create(array $params);
+```
+
+Usage examples
+
 Without idempotency key:
 
 ```php
@@ -269,6 +320,12 @@ var_dump($createDisbursements);
 #### Create Batch Disbursement
 
 ```php
+\Xendit\Disbursements::createBatch(array $params);
+```
+
+Usage example:
+
+```php
 $batch_params = [
     'reference' => 'disb_batch-12345678',
     'disbursements' => [
@@ -301,12 +358,24 @@ var_dump($createBatchDisbursements);
 #### Get Disbursement by ID
 
 ```php
+\Xendit\Disbursements::retrieve(string $id);
+```
+
+Usage example:
+
+```php
 $id = 'disbursements-id';
 $getDisbursements = \Xendit\Disbursements::retrieve($id);
 var_dump($getDisbursements);
 ```
 
 #### Get Disbursement by External ID
+
+```php
+\Xendit\Disbursements::retrieveExternal(string $external_id);
+```
+
+Usage example:
 
 ```php
 $external_id = 'disbursements-ext-id';
@@ -317,6 +386,12 @@ var_dump($getDisbursementsByExt);
 #### Get Disbursement Available Banks
 
 ```php
+\Xendit\Disbursements::getAvailableBanks();
+```
+
+Usage example:
+
+```php
 $getDisbursementsBanks = \Xendit\Disbursements::getAvailableBanks();
 var_dump($getDisbursementsBanks);
 ```
@@ -324,6 +399,10 @@ var_dump($getDisbursementsBanks);
 ### E-Wallets
 
 #### Create Payment
+
+```php
+\Xendit\EWallets::create(array $params);
+```
 
 To create payment, each e-wallet has its own required params. For more information, please check [Xendit API Reference - E-Wallets](https://xendit.github.io/apireference/?bash#create-payment).
 
@@ -391,14 +470,26 @@ var_dump($createLinkaja);
 #### Get Payment Status
 
 ```php
+\Xendit\EWallets::getPaymentStatus(string $external_id, string $ewallet_type);
+```
+
+Usage example:
+
+```php
 $external_id = 'external-ID';
 $ewallet_type = 'OVO';
-$getPayments = \Xendit\EWallets::getPaymentStatus($external_id, 'OVO');
+$getPayments = \Xendit\EWallets::getPaymentStatus($external_id, $ewallet_type);
 ```
 
 ### Invoice
 
 #### Create Invoice
+
+```php
+\Xendit\Invoice::create(array $params);
+```
+
+Usage example:
 
 ```php
 $params = ['external_id' => 'demo_147580196270',
@@ -414,6 +505,12 @@ var_dump($createInvoice);
 #### Get Invoice
 
 ```php
+\Xendit\Invoice::retrieve(string $id);
+```
+
+Usage example:
+
+```php
 $id = 'invoice-id';
 $getInvoice = \Xendit\Invoice::retrieve($id);
 var_dump($getInvoice);
@@ -422,11 +519,23 @@ var_dump($getInvoice);
 #### Get All Invoice
 
 ```php
+\Xendit\Invoice::retrieveAll();
+```
+
+Usage example:
+
+```php
 $getAllInvoice = \Xendit\Invoice::retrieveAll();
 var_dump(($getAllInvoice));
 ```
 
 #### Expire Invoice
+
+```php
+\Xendit\Invoice::expireInvoice(string $id);
+```
+
+Usage example:
 
 ```php
 $id = 'invoice-id';
@@ -437,6 +546,12 @@ var_dump($expireInvoice);
 ### Payouts
 
 #### Create Payout
+
+```php
+\Xendit\Payouts::create(array $params);
+```
+
+Usage example:
 
 ```php
 $params = [
@@ -451,6 +566,12 @@ var_dump($createPayout);
 #### Get Payout
 
 ```php
+\Xendit\Payouts::retrieve(string $id);
+```
+
+Usage example:
+
+```php
 $id = 'payout-id';
 
 $getPayout = \Xendit\Payouts::retrieve($id);
@@ -458,6 +579,12 @@ var_dump($getPayout);
 ```
 
 #### Void Payout
+
+```php
+\Xendit\Payouts::void(string $id);
+```
+
+Usage example:
 
 ```php
 $id = 'payout-id';
@@ -469,6 +596,12 @@ var_dump($voidPayout);
 ### Recurring Payments
 
 #### Create a Recurring Payment
+
+```php
+\Xendit\Recurring::create(array $params);
+```
+
+Usage example:
 
 ```php
 $params = [
@@ -487,6 +620,12 @@ var_dump($createRecurring);
 #### Get a Recurring Payment
 
 ```php
+\Xendit\Recurring::retrieve(string $id);
+```
+
+Usage example:
+
+```php
 $id = 'recurring-payment-id';
 
 $getRecurring = \Xendit\Recurring::retrieve($id);
@@ -494,6 +633,12 @@ var_dump($getRecurring);
 ```
 
 #### Edit Recurring Payment
+
+```php
+\Xendit\Recurring::update(string $id, array $params);
+```
+
+Usage example:
 
 ```php
 $id = 'recurring-payment-id';
@@ -506,6 +651,12 @@ var_dump($editRecurring);
 #### Stop Recurring Payment
 
 ```php
+\Xendit\Recurring::stop(string $id);
+```
+
+Usage example:
+
+```php
 $id = 'recurring-payment-id';
 
 $stopRecurring = \Xendit\Recurring::stop($id);
@@ -513,6 +664,12 @@ var_dump($stopRecurring);
 ```
 
 #### Pause Recurring Payment
+
+```php
+\Xendit\Recurring::pause(string $id);
+```
+
+Usage example:
 
 ```php
 $id = 'recurring-payment-id';
@@ -524,6 +681,12 @@ var_dump($pauseRecurring);
 #### Resume Recurring Payment
 
 ```php
+\Xendit\Recurring::resume(string $id);
+```
+
+Usage example:
+
+```php
 $id = 'recurring-payment-id';
 
 $resumeRecurring = \Xendit\Recurring::resume($id);
@@ -533,6 +696,12 @@ var_dump($resumeRecurring);
 ### Retail Outlets
 
 #### Create Fixed Payment Code
+
+```php
+\Xendit\Retail::create(array $params);
+```
+
+Usage example:
 
 ```php
 $params = [
@@ -549,6 +718,12 @@ var_dump($createFPC);
 #### Update Fixed Payment Code
 
 ```php
+\Xendit\Retail::update(string $id, array $params);
+```
+
+Usage example:
+
+```php
 $id = 'FPC-id';
 $updateParams = ['expected_amount' => 20000];
 
@@ -559,6 +734,12 @@ var_dump($updateFPC);
 #### Get Fixed Payment Code
 
 ```php
+\Xendit\Retail::retrieve(string $id);
+```
+
+Usage example:
+
+```php
 $id = 'FPC-id';
 $getFPC = \Xendit\Retail::retrieve($id);
 var_dump($getFPC);
@@ -567,6 +748,12 @@ var_dump($getFPC);
 ### Virtual Accounts
 
 #### Create Fixed Virtual Account
+
+```php
+\Xendit\VirtualAccounts::create(array $params);
+```
+
+Usage example:
 
 ```php
 $params = ["external_id" => "VA_fixed-12341234",
@@ -581,11 +768,23 @@ var_dump($createVA);
 #### Get Virtual Account Bank
 
 ```php
+\Xendit\VirtualAccounts::getVABanks();
+```
+
+Usage example:
+
+```php
 $getVABanks = \Xendit\VirtualAccounts::getVABanks();
 var_dump($getVABanks);
 ```
 
 #### Get Fixed Virtual Account
+
+```php
+\Xendit\VirtualAccounts::retrieve(string $id);
+```
+
+Usage example:
 
 ```php
 $id = 'VA-id';
@@ -596,6 +795,12 @@ var_dump($getVA);
 #### Update Fixed Virtual Account
 
 ```php
+\Xendit\VirtualAccounts::update(string $id, array $params);
+```
+
+Usage example:
+
+```php
 $id = 'VA-id';
 $updateParams = ["suggested_amount" => 1000];
 
@@ -604,6 +809,13 @@ var_dump($updateVA);
 ```
 
 #### Get Fixed Virtual Account Payment
+
+```php
+\Xendit\VirtualAccounts::getFVAPayment(string $paymentID);
+```
+
+Usage example:
+
 ```php
 $paymentID = 'payment-ID';
 $getFVAPayment = \Xendit\VirtualAccounts::getFVAPayment($paymentID);
