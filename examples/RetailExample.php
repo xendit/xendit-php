@@ -21,10 +21,10 @@ $dotenv->load();
 Xendit::setApiKey(getenv('SECRET_API_KEY'));
 
 $params = [
-    'external_id'=> 'TEST-123456789',
-    'retail_outlet_name'=> 'ALFAMART',
-    'name'=> 'JOHN DOE',
-    'expected_amount'=> 25000
+    'external_id' => 'TEST-123456789',
+    'retail_outlet_name' => 'ALFAMART',
+    'name' => 'JOHN DOE',
+    'expected_amount' => 25000
 ];
 
 $createFPC = \Xendit\Retail::create($params);

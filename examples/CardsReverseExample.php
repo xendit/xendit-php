@@ -24,9 +24,9 @@ $params = [
     'token_id' => '5e3149b915faf8739dd96178',
     'external_id' => 'card_' . time(),
     'authentication_id' => '5e3149b915faf8739dd96179',
-    'amount'=> 100000,
-    'card_cvn'=>'123',
-    'capture'=> false
+    'amount' => 100000,
+    'card_cvn' =>'123',
+    'capture' => false
 ];
 
 $createCharge = \Xendit\Cards::create($params);

@@ -21,12 +21,13 @@ $dotenv->load();
 Xendit::setApiKey(getenv('SECRET_API_KEY'));
 
 $params = [
-    'external_id'=> 'disb-12345678',
-    'amount'=> 15000,
-    'bank_code'=> 'BCA',
-    'account_holder_name'=> 'Joe',
-    'account_number'=> '1234567890',
-    'description'=>'Disbursement from Example'
+    'external_id' => 'disb-12345678',
+    'amount' => 15000,
+    'bank_code' => 'BCA',
+    'account_holder_name' => 'Joe',
+    'account_number' => '1234567890',
+    'description' => 'Disbursement from Example',
+    'X-IDEMPOTENCY-KEY'
 ];
 
 $batch_params = [
