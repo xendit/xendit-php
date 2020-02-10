@@ -87,13 +87,7 @@ To migrate, see [MIGRATE.md](MIGRATE.md) for more information.
 Configure package with your account's secret key obtained from [Xendit Dashboard](https://dashboard.xendit.co/settings/developers#api-keys).
 
 ```php
-Xendit::loadApiKey('secretKey');
-```
-
-If you want to use `.env`, copy `.env.example` to `.env` and insert your secret API key in variable `SECRET_API_KEY`. Then, in your application, load your API key like the example below:
-
-```php
-Xendit::loadApiKey();
+Xendit::setApiKey('secretKey');
 ```
 
 See example codes for more details.
@@ -125,7 +119,7 @@ $createCharge = \Xendit\Cards::create($params);
 var_dump($createCharge);
 ```
 
-### Reverse Authorization
+#### Reverse Authorization
 
 ```php
 $id = 'charge-id';
@@ -176,11 +170,11 @@ With idempotency key:
 ```php
 $params = [
     'external_id' => 'ext-id',
-    'amount' => 20000
+    'amount' => 20000,
+    'X-IDEMPOTENCY-KEY' => 'unique-id'
 ];
-$headers = ['X-IDEMPOTENCY-KEY' => $params['external_id']];
 
-$refund = \Xendit\Cards::createRefund($id, $params, $headers);
+$refund = \Xendit\Cards::createRefund($id, $params);
 var_dump($refund);
 ```
 
@@ -264,12 +258,11 @@ $params = [
     'bank_code' => 'BCA',
     'account_holder_name' => 'Joe',
     'account_number' => '1234567890',
-    'description' => 'Disbursement from Example'
+    'description' => 'Disbursement from Example',
+    'X-IDEMPOTENCY-KEY' => 'unique-id'
 ];
-$headers = ['X-IDEMPOTENCY-KEY' => $params['external_id']];
 
-
-$createDisbursements = \Xendit\Disbursements::create($params, $headers);
+$createDisbursements = \Xendit\Disbursements::create($params);
 var_dump($createDisbursements);
 ```
 
