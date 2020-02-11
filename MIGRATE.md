@@ -8,13 +8,7 @@ In the v1.4.0, secret API key is instantiated inside the config file. However in
 with:
 
 ```php
-Xendit::loadApiKey('secretKey');
-```
-
-or secret API key can be stored inside `.env` file and be instantiated with following:
-
-```php
-Xendit::loadApiKey();
+Xendit::setApiKey('secretKey');
 ```
 
 ### Calling methods
