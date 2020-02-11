@@ -2,6 +2,22 @@
 
 ## v1.4.0 to v2.0.0
 
+### New package name
+
+For standardization purpose, package `xendit-php-clients` will be renamed to `xendit-php`.
+
+To install this package with `composer`, run command:
+
+```bash
+composer require xendit/xendit-php
+```
+
+To update with `composer`, run command:
+
+```bash
+composer update xendit/xendit-php
+```
+
 ### Instantiate API Key
 
 In the v1.4.0, secret API key is instantiated inside the config file. However in v2.0.0, secret API key is instantiated
