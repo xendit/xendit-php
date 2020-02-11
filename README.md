@@ -68,7 +68,7 @@ For the API documentation, check [Xendit API Reference](https://xendit.github.io
 Install xendit-php-clients with composer by following command:
 
 ```bash
-composer require xendit/xendit-php-clients
+composer require xendit/xendit-php
 ```
 
 or add it manually in your `composer.json` file.
@@ -78,7 +78,7 @@ or add it manually in your `composer.json` file.
 To update xendit-php-clients with composer, use the following command:
 
 ```bash
-composer update xendit/xendit-php-clients
+composer update xendit/xendit-php
 ```
 
 To migrate, see [MIGRATE.md](MIGRATE.md) for more information.

@@ -1,9 +1,9 @@
 {
-    "name": "xendit/xendit-php-clients",
+    "name": "xendit/xendit-php",
     "description": "PHP clients for Xendit API",
     "version": "2.0.0",
     "keywords": ["xendit"],
-    "homepage": "https://github.com/xendit/xendit-php-clients",
+    "homepage": "https://github.com/xendit/xendit-php",
     "type": "library",
     "minimum-stability": "stable",
     "require": {
