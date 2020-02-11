@@ -11,15 +11,18 @@
  * @link     https://api.xendit.co
  */
 
+use Dotenv\Dotenv;
 use Xendit\Xendit;
 
 require 'vendor/autoload.php';
 
-Xendit::loadApiKey();
+$dotenv = Dotenv::createImmutable(__DIR__ . '/..');
+$dotenv->load();
+Xendit::setApiKey(getenv('SECRET_API_KEY'));
 
 $params = [
-    'external_id'=> 'payouts-123456789',
-    'amount'=> 50000
+    'external_id' => 'payouts-123456789',
+    'amount' => 50000
 ];
 
 $createPayout = \Xendit\Payouts::create($params);

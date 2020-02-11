@@ -44,7 +44,7 @@ class TestCase extends \PHPUnit\Framework\TestCase
 
         $this->clientMock = $this->createMock('\Xendit\HttpClient\ClientInterface');
 
-        ApiRequestor::setGuzzleClient(HttpClient\GuzzleClient::instance());
+        ApiRequestor::setHttpClient(HttpClient\GuzzleClient::instance());
     }
 
     /**
@@ -80,7 +80,7 @@ class TestCase extends \PHPUnit\Framework\TestCase
                 $this->returnCallback(
                     function ($method, $url, $headers, $params) {
                         $guzzleClient = HttpClient\GuzzleClient::instance();
-                        ApiRequestor::setGuzzleClient($guzzleClient);
+                        ApiRequestor::setHttpClient($guzzleClient);
                         return $guzzleClient->sendRequest(
                             $method,
                             $url,
@@ -128,7 +128,7 @@ class TestCase extends \PHPUnit\Framework\TestCase
      */
     private function _prepareRequestMock($method, $path, $params, $headers)
     {
-        ApiRequestor::setGuzzleClient($this->clientMock);
+        ApiRequestor::setHttpClient($this->clientMock);
 
         Xendit::setApiKey(
             <<<TAG

@@ -15,6 +15,7 @@
 
 ### Changed
 
+- Package renaming from `xendit-php-clients` to `xendit-php`
 - Class structure
 - Request to HTTP Client now use Guzzle Client instead of cURL
 

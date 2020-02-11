@@ -32,7 +32,7 @@ trait Request
      * @param array $params         user's parameters
      * @param array $requiredParams required parameters
      *
-     * @return bool
+     * @return void
      */
     protected static function validateParams($params = [], $requiredParams = [])
     {
@@ -51,19 +51,27 @@ trait Request
     /**
      * Send request to Api Requestor
      *
-     * @param $method  string
-     * @param $url     string ext url to the API
-     * @param $params  array parameters
-     * @param $headers array customer's optional headers
+     * @param $method string
+     * @param $url    string ext url to the API
+     * @param $params array parameters
      *
      * @return array
      * @throws \Xendit\Exceptions\ApiExceptions
      */
     protected static function _request($method,
         $url,
-        $params = [],
-        $headers = []
+        $params = []
     ) {
+        $headers = [];
+
+        if (array_key_exists('for-user-id', $params)) {
+            $headers['for-user-id'] = $params['for-user-id'];
+        }
+
+        if (array_key_exists('X-IDEMPOTENCY-KEY', $params)) {
+            $headers['X-IDEMPOTENCY-KEY'] = $params['X-IDEMPOTENCY-KEY'];
+        }
+
         $requestor = new \Xendit\ApiRequestor();
         return $requestor->request($method, $url, $params, $headers);
     }

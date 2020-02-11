@@ -27,18 +27,17 @@ trait Update
     /**
      * Send an update request
      *
-     * @param string $id      data ID
-     * @param array  $params  user's params
-     * @param array  $options user's options
+     * @param string $id     data ID
+     * @param array  $params user's params
      *
      * @return array
      */
-    public static function update($id, $params = [], $options = [])
+    public static function update($id, $params = [])
     {
         self::validateParams($params, static::updateReqParams());
 
         $url = static::classUrl() . '/' . $id;
 
-        return static::_request('PATCH', $url, $params, $options);
+        return static::_request('PATCH', $url, $params);
     }
 }

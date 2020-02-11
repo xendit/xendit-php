@@ -27,17 +27,16 @@ trait Create
     /**
      * Send a create request
      *
-     * @param array $params  user's params
-     * @param array $options user's options
+     * @param array $params user's params
      *
      * @return array
      */
-    public static function create($params = [], $options = [])
+    public static function create($params = [])
     {
         self::validateParams($params, static::createReqParams());
 
         $url = static::classUrl();
 
-        return static::_request('POST', $url, $params, $options);
+        return static::_request('POST', $url, $params);
     }
 }

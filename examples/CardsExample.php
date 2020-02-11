@@ -11,19 +11,22 @@
  * @link     https://api.xendit.co
  */
 
+use Dotenv\Dotenv;
 use Xendit\Xendit;
 
 require 'vendor/autoload.php';
 
-Xendit::loadApiKey();
+$dotenv = Dotenv::createImmutable(__DIR__ . '/..');
+$dotenv->load();
+Xendit::setApiKey(getenv('SECRET_API_KEY'));
 
 $params = [
     'token_id' => '5e2e8231d97c174c58bcf644',
     'external_id' => 'card_' . time(),
     'authentication_id' => '5e2e8658bae82e4d54d764c0',
-    'amount'=> 100000,
-    'card_cvn'=>'123',
-    'capture'=> false
+    'amount' => 100000,
+    'card_cvn' =>'123',
+    'capture' => false
 ];
 
 $captureParams = ['amount' => 100000];
