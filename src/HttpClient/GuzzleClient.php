@@ -17,7 +17,7 @@ use GuzzleHttp\Client as Guzzle;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\ServerException;
 use GuzzleHttp\RequestOptions;
-use Xendit\Exceptions\ApiExceptions;
+use Xendit\Exceptions\ApiException;
 use Xendit\Xendit;
 
 /**
@@ -77,7 +77,7 @@ class GuzzleClient implements ClientInterface
      * @param array  $params         parameters
      *
      * @return array
-     * @throws ApiExceptions
+     * @throws ApiException
      */
     public function sendRequest($method, string $url, array $defaultHeaders, $params)
     {
@@ -101,7 +101,7 @@ class GuzzleClient implements ClientInterface
      * @param string $url  request url
      *
      * @return array
-     * @throws ApiExceptions
+     * @throws ApiException
      */
     private function _executeRequest(array $opts, string $url)
     {
@@ -153,17 +153,16 @@ class GuzzleClient implements ClientInterface
      * @param array $response response from GuzzleClient
      *
      * @return void
-     * @throws ApiExceptions
+     * @throws ApiException
      */
     private static function _handleAPIError($response)
     {
         $rbody = $response['body'];
-        $rcode = strval($response['code']);
+        
+        $rhttp = strval($response['code']);
+        $message = $rbody['message'];
+        $rcode = $rbody['error_code'];
 
-        $message = 'API Exception: ' . $rbody['message'] . ' Error code: '
-                   . $rcode . ' ' . $rbody['error_code'] . '. More information: '
-                   . 'https://xendit.github.io/apireference/?bash#http-status-code';
-
-        throw new ApiExceptions($message);
+        throw new ApiException($message, $rhttp, $rcode);
     }
 }
