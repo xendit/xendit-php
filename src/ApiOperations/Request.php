@@ -56,7 +56,7 @@ trait Request
      * @param $params array parameters
      *
      * @return array
-     * @throws \Xendit\Exceptions\ApiExceptions
+     * @throws \Xendit\Exceptions\ApiException
      */
     protected static function _request($method,
         $url,

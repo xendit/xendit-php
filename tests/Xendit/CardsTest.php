@@ -110,7 +110,7 @@ class CardsTest extends TestCase
      * Should pass
      *
      * @return void
-     * @throws Exceptions\ApiExceptions
+     * @throws Exceptions\ApiException
      */
     public function testIsCaptureable()
     {
@@ -136,7 +136,7 @@ class CardsTest extends TestCase
      * Should pass
      *
      * @return void
-     * @throws Exceptions\ApiExceptions
+     * @throws Exceptions\ApiException
      */
     public function testIsRefundable()
     {
@@ -164,7 +164,7 @@ class CardsTest extends TestCase
      * Should pass
      *
      * @return void
-     * @throws Exceptions\ApiExceptions
+     * @throws Exceptions\ApiException
      */
     public function testIsReversable()
     {
@@ -209,7 +209,7 @@ class CardsTest extends TestCase
      */
     public function testIsGettableThrowException()
     {
-        $this->expectException(\Xendit\Exceptions\ApiExceptions::class);
+        $this->expectException(\Xendit\Exceptions\ApiException::class);
 
         Cards::retrieve(self::CHARGE_ID);
     }
@@ -219,7 +219,7 @@ class CardsTest extends TestCase
      * Should throw ApiException
      *
      * @return void
-     * @throws Exceptions\ApiExceptions
+     * @throws Exceptions\ApiException
      */
     public function testIsCaptureableThrowException()
     {
@@ -227,7 +227,7 @@ class CardsTest extends TestCase
             'amount'=> 100000
         ];
 
-        $this->expectException(\Xendit\Exceptions\ApiExceptions::class);
+        $this->expectException(\Xendit\Exceptions\ApiException::class);
         Cards::capture(self::CHARGE_ID, $params);
     }
 
@@ -236,7 +236,7 @@ class CardsTest extends TestCase
      * Should throw ApiException
      *
      * @return void
-     * @throws Exceptions\ApiExceptions
+     * @throws Exceptions\ApiException
      */
     public function testIsRefundableThrowException()
     {
@@ -245,7 +245,7 @@ class CardsTest extends TestCase
             'external_id' => 'card_' . time(),
         ];
 
-        $this->expectException(\Xendit\Exceptions\ApiExceptions::class);
+        $this->expectException(\Xendit\Exceptions\ApiException::class);
         Cards::createRefund(self::CHARGE_ID, $params);
     }
 
@@ -254,7 +254,7 @@ class CardsTest extends TestCase
      * Should throw ApiException
      *
      * @return void
-     * @throws Exceptions\ApiExceptions
+     * @throws Exceptions\ApiException
      */
     public function testIsReversableThrowException()
     {
@@ -262,7 +262,7 @@ class CardsTest extends TestCase
             'external_id' => 'card_' . time()
         ];
 
-        $this->expectException(\Xendit\Exceptions\ApiExceptions::class);
+        $this->expectException(\Xendit\Exceptions\ApiException::class);
         Cards::reverseAuthorization(self::CHARGE_ID, $params);
     }
 }

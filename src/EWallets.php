@@ -45,7 +45,7 @@ class EWallets
      *
      * @return array please check for responses for each e-wallet type
      * https://xendit.github.io/apireference/?bash#create-payment
-     * @throws Exceptions\ApiExceptions
+     * @throws Exceptions\ApiException
      */
     public static function create($params = [])
     {
@@ -81,7 +81,7 @@ class EWallets
      *
      * @return array please check for responses for each e-wallet type
      * https://xendit.github.io/apireference/?bash#get-payment-status
-     * @throws Exceptions\ApiExceptions
+     * @throws Exceptions\ApiException
      */
     public static function getPaymentStatus($external_id, $ewallet_type)
     {

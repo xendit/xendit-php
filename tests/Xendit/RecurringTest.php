@@ -118,7 +118,7 @@ class RecurringTest extends TestCase
      * Should pass
      *
      * @return void
-     * @throws Exceptions\ApiExceptions
+     * @throws Exceptions\ApiException
      */
     public function testIsStoppable()
     {
@@ -143,7 +143,7 @@ class RecurringTest extends TestCase
      * Should pass
      *
      * @return void
-     * @throws Exceptions\ApiExceptions
+     * @throws Exceptions\ApiException
      */
     public function testIsPausable()
     {
@@ -168,7 +168,7 @@ class RecurringTest extends TestCase
      * Should pass
      *
      * @return void
-     * @throws Exceptions\ApiExceptions
+     * @throws Exceptions\ApiException
      */
     public function testIsResumable()
     {
@@ -214,7 +214,7 @@ class RecurringTest extends TestCase
      */
     public function testIsGettableThrowApiException()
     {
-        $this->expectException(\Xendit\Exceptions\ApiExceptions::class);
+        $this->expectException(\Xendit\Exceptions\ApiException::class);
 
         Recurring::retrieve(self::TEST_ID);
     }
@@ -231,7 +231,7 @@ class RecurringTest extends TestCase
             'amount' => 32000
         ];
 
-        $this->expectException(\Xendit\Exceptions\ApiExceptions::class);
+        $this->expectException(\Xendit\Exceptions\ApiException::class);
 
         Recurring::update(self::TEST_ID, $params);
     }
@@ -241,11 +241,11 @@ class RecurringTest extends TestCase
      * Should throw ApiException
      *
      * @return void
-     * @throws Exceptions\ApiExceptions
+     * @throws Exceptions\ApiException
      */
     public function testIsStoppableThrowException()
     {
-        $this->expectException(\Xendit\Exceptions\ApiExceptions::class);
+        $this->expectException(\Xendit\Exceptions\ApiException::class);
 
         Recurring::stop(self::TEST_ID);
     }
@@ -255,11 +255,11 @@ class RecurringTest extends TestCase
      * Should throw ApiException
      *
      * @return void
-     * @throws Exceptions\ApiExceptions
+     * @throws Exceptions\ApiException
      */
     public function testIsPausableThrowException()
     {
-        $this->expectException(\Xendit\Exceptions\ApiExceptions::class);
+        $this->expectException(\Xendit\Exceptions\ApiException::class);
 
         Recurring::pause(self::TEST_ID);
     }
@@ -269,11 +269,11 @@ class RecurringTest extends TestCase
      * Should throw ApiException
      *
      * @return void
-     * @throws Exceptions\ApiExceptions
+     * @throws Exceptions\ApiException
      */
     public function testIsResumableThrowException()
     {
-        $this->expectException(\Xendit\Exceptions\ApiExceptions::class);
+        $this->expectException(\Xendit\Exceptions\ApiException::class);
 
         $result = Recurring::resume(self::TEST_ID);
     }

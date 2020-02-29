@@ -89,7 +89,7 @@ class Recurring
      * 'updated'=> string,
      * 'start_date'=> string
      * ]
-     * @throws Exceptions\ApiExceptions
+     * @throws Exceptions\ApiException
      */
     public static function stop($id)
     {
@@ -121,7 +121,7 @@ class Recurring
      * 'updated'=> string,
      * 'start_date'=> string
      * ]
-     * @throws Exceptions\ApiExceptions
+     * @throws Exceptions\ApiException
      */
     public static function pause($id)
     {
@@ -153,7 +153,7 @@ class Recurring
      * 'updated'=> string,
      * 'start_date'=> string
      * ]
-     * @throws Exceptions\ApiExceptions
+     * @throws Exceptions\ApiException
      */
     public static function resume($id)
     {

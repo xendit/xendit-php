@@ -62,7 +62,7 @@ class Cards
      *  'descriptor' => string,
      *  'id' => string
      * ]
-     * @throws Exceptions\ApiExceptions
+     * @throws Exceptions\ApiException
      */
     public static function capture($id, $params = [])
     {
@@ -99,7 +99,7 @@ class Cards
      *  'status' => string,
      *  'id' => string
      * ]
-     * @throws Exceptions\ApiExceptions
+     * @throws Exceptions\ApiException
      */
     public static function reverseAuthorization($id, $params = [])
     {
@@ -129,7 +129,7 @@ class Cards
      *  'fee_refund_amount' => int,
      *  'id' => string
      * ]
-     * @throws Exceptions\ApiExceptions
+     * @throws Exceptions\ApiException
      */
     public static function createRefund($id, $params = [])
     {

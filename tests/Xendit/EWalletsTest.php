@@ -35,7 +35,7 @@ class EWalletsTest extends TestCase
      * Should pass
      *
      * @return void
-     * @throws Exceptions\ApiExceptions
+     * @throws Exceptions\ApiException
      */
     public function testIsCreatable()
     {
@@ -85,7 +85,7 @@ class EWalletsTest extends TestCase
      * Should pass
      *
      * @return void
-     * @throws Exceptions\ApiExceptions
+     * @throws Exceptions\ApiException
      */
     public function testIsGettable()
     {
@@ -124,7 +124,7 @@ class EWalletsTest extends TestCase
      * Should throw InvalidArgumentException
      *
      * @return void
-     * @throws Exceptions\ApiExceptions
+     * @throws Exceptions\ApiException
      */
     public function testIsCreatableThrowInvalidArgumentException()
     {
@@ -141,11 +141,11 @@ class EWalletsTest extends TestCase
      * Should throw ApiException
      *
      * @return void
-     * @throws Exceptions\ApiExceptions
+     * @throws Exceptions\ApiException
      */
     public function testIsGettableThrowApiException()
     {
-        $this->expectException(\Xendit\Exceptions\ApiExceptions::class);
+        $this->expectException(\Xendit\Exceptions\ApiException::class);
 
         EWallets::getPaymentStatus(
             self::TEST_ID,
