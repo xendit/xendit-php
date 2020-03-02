@@ -51,6 +51,9 @@ This library is the abstraction of Xendit API for access from applications writt
     - [Get Fixed Virtual Account](#get-fixed-virtual-account)
     - [Update Fixed Virtual Account](#update-fixed-virtual-account)
     - [Get Fixed Virtual Account Payment](#get-fixed-virtual-account-payment)
+- [Exceptions](#exceptions)
+  - [InvalidArgumentException](#invalidargumentexception)
+  - [ApiException](#apiexception)
 - [Contributing](#contributing)
   - [Test](#tests)
     - [Running test suite](#running-test-suite)
@@ -820,6 +823,50 @@ Usage example:
 $paymentID = 'payment-ID';
 $getFVAPayment = \Xendit\VirtualAccounts::getFVAPayment($paymentID);
 var_dump($getFVAPayment);
+```
+
+## Exceptions
+
+### InvalidArgumentException
+
+`InvalidArgumentException` will be thrown if the argument provided by user is not sufficient to create the request.
+
+For example, there are required arguments such as `external_id`, `payer_email`, `description`, and `amount` to create an invoice. If user lacks one or more arguments when attempting to create one, `InvalidArgumentException` will be thrown.
+
+`InvalidArgumentException` is derived from PHP's `InvalidArgumentException`. For more information about this Exception methods and properties, please check [PHP Documentation](https://www.php.net/manual/en/class.invalidargumentexception.php).
+
+### ApiException
+
+`ApiException` wraps up Xendit API error. This exception will be thrown if there are errors from Xendit API side, e.g. get fixed virtual account with invalid `id`. 
+
+To get exception message:
+
+```php
+try {
+    $getInvoice = \Xendit\Invoice::retrieve('123');
+} catch (\Xendit\Exceptions\ApiException $e) {
+    var_dump($e->getMessage());
+}
+```
+
+To get exception HTTP error code:
+
+```php
+try {
+    $getInvoice = \Xendit\Invoice::retrieve('123');
+} catch (\Xendit\Exceptions\ApiException $e) {
+    var_dump($e->getCode());
+}
+```
+
+To get exception Xendit API error code:
+
+```php
+try {
+    $getInvoice = \Xendit\Invoice::retrieve('123');
+} catch (\Xendit\Exceptions\ApiException $e) {
+    var_dump($e->getErrorCode());
+}
 ```
 
 ## Contributing
