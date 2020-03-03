@@ -24,6 +24,5 @@ namespace Xendit\Exceptions;
  */
 class InvalidArgumentException
     extends \InvalidArgumentException
-    implements ExceptionInterface
 {
 }
