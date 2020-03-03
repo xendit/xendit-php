@@ -61,7 +61,7 @@ class Balance
      * @return array[
      *  'balance' => int
      * ]
-     * @throws Exceptions\ApiExceptions
+     * @throws Exceptions\ApiException
      */
     public static function getBalance($account_type = null)
     {

@@ -63,7 +63,7 @@ $linkajaParams = [
 try {
     $createOvo = \Xendit\EWallets::create($ovoParams);
     var_dump($createOvo);
-} catch (\Xendit\Exceptions\ApiExceptions $exception) {
+} catch (\Xendit\Exceptions\ApiException $exception) {
     var_dump($exception);
 }
 

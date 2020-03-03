@@ -109,7 +109,7 @@ class InvoiceTest extends TestCase
      * Should pass
      *
      * @return void
-     * @throws \Xendit\Exceptions\ApiExceptions
+     * @throws \Xendit\Exceptions\ApiException
      */
     public function testIsExpirable()
     {
@@ -155,7 +155,7 @@ class InvoiceTest extends TestCase
      */
     public function testIsGettableThrowApiException()
     {
-        $this->expectException(\Xendit\Exceptions\ApiExceptions::class);
+        $this->expectException(\Xendit\Exceptions\ApiException::class);
 
         Invoice::retrieve(self::TEST_RESOURCE_ID);
     }
@@ -165,11 +165,11 @@ class InvoiceTest extends TestCase
      * Should throw ApiException
      *
      * @return void
-     * @throws \Xendit\Exceptions\ApiExceptions
+     * @throws \Xendit\Exceptions\ApiException
      */
     public function testIsExpirableThrowApiException()
     {
-        $this->expectException(\Xendit\Exceptions\ApiExceptions::class);
+        $this->expectException(\Xendit\Exceptions\ApiException::class);
 
         Invoice::expireInvoice(self::TEST_RESOURCE_ID);
     }

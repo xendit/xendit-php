@@ -64,7 +64,7 @@ class Payouts
      * 'expiration_timestamp'=> string,
      * 'created'=> string'
      * ]
-     * @throws Exceptions\ApiExceptions
+     * @throws Exceptions\ApiException
      */
     public static function void($id)
     {

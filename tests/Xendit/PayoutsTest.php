@@ -84,7 +84,7 @@ class PayoutsTest extends TestCase
      * Should pass
      *
      * @return void
-     * @throws \Xendit\Exceptions\ApiExceptions
+     * @throws \Xendit\Exceptions\ApiException
      */
     public function testIsVoidable()
     {
@@ -127,7 +127,7 @@ class PayoutsTest extends TestCase
      */
     public function testIsGettableThrowApiException()
     {
-        $this->expectException(\Xendit\Exceptions\ApiExceptions::class);
+        $this->expectException(\Xendit\Exceptions\ApiException::class);
 
         Payouts::retrieve(self::TEST_ID);
     }
@@ -137,11 +137,11 @@ class PayoutsTest extends TestCase
      * Should throw
      *
      * @return void
-     * @throws \Xendit\Exceptions\ApiExceptions
+     * @throws \Xendit\Exceptions\ApiException
      */
     public function testIsVoidableThrowApiException()
     {
-        $this->expectException(\Xendit\Exceptions\ApiExceptions::class);
+        $this->expectException(\Xendit\Exceptions\ApiException::class);
 
         Payouts::void(self::TEST_ID);
     }

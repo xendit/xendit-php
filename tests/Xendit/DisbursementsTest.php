@@ -69,7 +69,7 @@ class DisbursementsTest extends TestCase
      * Should pass
      *
      * @return void
-     * @throws \Xendit\Exceptions\ApiExceptions
+     * @throws \Xendit\Exceptions\ApiException
      */
     public function testIsBatchCreatable()
     {
@@ -116,7 +116,7 @@ class DisbursementsTest extends TestCase
      * Should pass
      *
      * @return void
-     * @throws \Xendit\Exceptions\ApiExceptions
+     * @throws \Xendit\Exceptions\ApiException
      */
     public function testBanksIsGettable()
     {
@@ -174,7 +174,7 @@ class DisbursementsTest extends TestCase
      * Should pass
      *
      * @return void
-     * @throws \Xendit\Exceptions\ApiExceptions
+     * @throws \Xendit\Exceptions\ApiException
      */
     public function testIsGettableByExternalID()
     {
@@ -213,7 +213,7 @@ class DisbursementsTest extends TestCase
      * Should throw InvalidArgumentException
      *
      * @return void
-     * @throws \Xendit\Exceptions\ApiExceptions
+     * @throws \Xendit\Exceptions\ApiException
      */
     public function testIsBatchCreatableThrowInvalidArgumentException()
     {
@@ -233,7 +233,7 @@ class DisbursementsTest extends TestCase
      */
     public function testIsGettableByIDThrowApiException()
     {
-        $this->expectException(\Xendit\Exceptions\ApiExceptions::class);
+        $this->expectException(\Xendit\Exceptions\ApiException::class);
 
         Disbursements::retrieve(self::TEST_ID);
     }
@@ -243,11 +243,11 @@ class DisbursementsTest extends TestCase
      * Should throw ApiException
      *
      * @return void
-     * @throws \Xendit\Exceptions\ApiExceptions
+     * @throws \Xendit\Exceptions\ApiException
      */
     public function testIsGettableByExtIDThrowApiException()
     {
-        $this->expectException(\Xendit\Exceptions\ApiExceptions::class);
+        $this->expectException(\Xendit\Exceptions\ApiException::class);
 
         Disbursements::retrieveExternal(self::TEST_ID);
     }

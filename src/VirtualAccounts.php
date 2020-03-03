@@ -66,7 +66,7 @@ class VirtualAccounts
      * 'name' => string,
      * 'code' => string
      * ]
-     * @throws Exceptions\ApiExceptions
+     * @throws Exceptions\ApiException
      */
     public static function getVABanks()
     {
@@ -91,7 +91,7 @@ class VirtualAccounts
      * 'amount'=> int,
      * 'transaction_timestamp'=> string
      * ]
-     * @throws Exceptions\ApiExceptions
+     * @throws Exceptions\ApiException
      */
     public static function getFVAPayment($payment_id)
     {

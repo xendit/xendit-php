@@ -60,7 +60,7 @@ class VirtualAccountTest extends TestCase
      * Should pass
      *
      * @return void
-     * @throws \Xendit\Exceptions\ApiExceptions
+     * @throws \Xendit\Exceptions\ApiException
      */
     public function testVABanksIsGettable()
     {
@@ -136,7 +136,7 @@ class VirtualAccountTest extends TestCase
      * Should pass
      *
      * @return void
-     * @throws \Xendit\Exceptions\ApiExceptions
+     * @throws \Xendit\Exceptions\ApiException
      */
     public function testIsGettableFVAPayment()
     {
@@ -178,7 +178,7 @@ class VirtualAccountTest extends TestCase
      */
     public function testIsVAGettableThrowApiException()
     {
-        $this->expectException(\Xendit\Exceptions\ApiExceptions::class);
+        $this->expectException(\Xendit\Exceptions\ApiException::class);
 
         VirtualAccounts::retrieve(self::TEST_RESOURCE_ID);
     }
@@ -191,7 +191,7 @@ class VirtualAccountTest extends TestCase
      */
     public function testIsUpdateableThrowApiException()
     {
-        $this->expectException(\Xendit\Exceptions\ApiExceptions::class);
+        $this->expectException(\Xendit\Exceptions\ApiException::class);
 
         VirtualAccounts::update(self::TEST_RESOURCE_ID);
     }
@@ -201,11 +201,11 @@ class VirtualAccountTest extends TestCase
      * Should throw ApiException
      *
      * @return void
-     * @throws \Xendit\Exceptions\ApiExceptions
+     * @throws \Xendit\Exceptions\ApiException
      */
     public function testIsFVAPaymentGettableThrowApiException()
     {
-        $this->expectException(\Xendit\Exceptions\ApiExceptions::class);
+        $this->expectException(\Xendit\Exceptions\ApiException::class);
 
         VirtualAccounts::getFVAPayment(self::TEST_RESOURCE_ID);
     }

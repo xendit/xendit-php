@@ -35,7 +35,7 @@ class BalanceTest extends TestCase
      * Should pass
      *
      * @return void
-     * @throws Exceptions\ApiExceptions
+     * @throws Exceptions\ApiException
      */
     public function testIsGettable()
     {
@@ -59,7 +59,7 @@ class BalanceTest extends TestCase
      *
      * @return void
      * @throws Exceptions\InvalidArgumentException
-     * @throws Exceptions\ApiExceptions
+     * @throws Exceptions\ApiException
      */
     public function testIsGettableThrowInvalidArgumentException()
     {

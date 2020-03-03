@@ -66,7 +66,7 @@ class Disbursements
      * 'status'=> 'NEEDS_APPROVAL',
      * 'id'=> string
      * ]
-     * @throws Exceptions\ApiExceptions
+     * @throws Exceptions\ApiException
      */
     public static function createBatch($params = [])
     {
@@ -108,7 +108,7 @@ class Disbursements
      * 'email_bcc'=> ['test+bcc@xendit.co']
      * ]
      * ]
-     * @throws Exceptions\ApiExceptions
+     * @throws Exceptions\ApiException
      */
     public static function retrieveExternal($external_id)
     {
@@ -136,7 +136,7 @@ class Disbursements
      * 'can_disburse'=> true,
      * 'can_name_validate'=> true
      * ]]
-     * @throws Exceptions\ApiExceptions
+     * @throws Exceptions\ApiException
      */
     public static function getAvailableBanks()
     {

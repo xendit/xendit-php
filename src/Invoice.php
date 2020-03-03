@@ -72,7 +72,7 @@ class Invoice
      * 'created'=> string,
      * 'updated'=> string
      * ]
-     * @throws Exceptions\ApiExceptions
+     * @throws Exceptions\ApiException
      */
     public static function expireInvoice($id)
     {

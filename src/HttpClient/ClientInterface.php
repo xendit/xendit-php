@@ -13,7 +13,7 @@
 
 namespace Xendit\HttpClient;
 
-use Xendit\Exceptions\ApiExceptions;
+use Xendit\Exceptions\ApiException;
 
 /**
  * Interface ClientInterface
@@ -35,7 +35,7 @@ interface ClientInterface
      * @param array  $params         parameters
      *
      * @return array
-     * @throws ApiExceptions
+     * @throws ApiException
      */
     public function sendRequest($method,
         string $url,

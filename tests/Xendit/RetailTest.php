@@ -137,7 +137,7 @@ class RetailTest extends TestCase
      */
     public function testIsGettableThrowApiException()
     {
-        $this->expectException(\Xendit\Exceptions\ApiExceptions::class);
+        $this->expectException(\Xendit\Exceptions\ApiException::class);
 
         Retail::retrieve(self::TEST_ID);
     }
@@ -150,7 +150,7 @@ class RetailTest extends TestCase
      */
     public function testIsUpdateableThrowApiException()
     {
-        $this->expectException(\Xendit\Exceptions\ApiExceptions::class);
+        $this->expectException(\Xendit\Exceptions\ApiException::class);
 
         $params = ['suggested_amount' => 10000];
 

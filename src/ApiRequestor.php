@@ -35,7 +35,7 @@ class ApiRequestor
      * @param array  $headers user's additional headers
      *
      * @return array
-     * @throws Exceptions\ApiExceptions
+     * @throws Exceptions\ApiException
      */
     public function request($method, $url, $params = [], $headers = [])
     {
@@ -74,7 +74,7 @@ class ApiRequestor
      * @param array  $headers request' headers
      *
      * @return array
-     * @throws Exceptions\ApiExceptions
+     * @throws Exceptions\ApiException
      */
     private function _requestRaw($method, $url, $params, $headers)
     {
