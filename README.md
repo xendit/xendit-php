@@ -96,6 +96,14 @@ Xendit::setApiKey('secretKey');
 
 See example codes for more details.
 
+## Config
+
+#### Set HTTP Timeout
+
+```php
+Xendit::setHttpTimeOut(60);
+```
+
 ## Methods' Signature and Examples
 
 ### Balance
