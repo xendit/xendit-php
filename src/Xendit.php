@@ -32,6 +32,8 @@ class Xendit
 
     public static $libVersion;
 
+    public static $timeOut = 0; 
+
     const VERSION = "2.0.3";
 
     /**
@@ -101,5 +103,27 @@ class Xendit
     public static function setLibVersion($libVersion = null): void
     {
         self::$libVersion = $libVersion;
+    }
+
+    /**
+     * Set HTTP TimeOut
+     *
+     * @return int
+     */
+    public static function getHttpTimeOut(): int
+    {
+        return self::$timeOut;
+    }
+
+    /**
+     * Set HTTP TimeOut
+     *
+     * @param int $number
+     *
+     * @return void
+     */
+    public static function setHttpTimeOut(int $number): void
+    {
+        self::$timeOut = $number;
     }
 }
