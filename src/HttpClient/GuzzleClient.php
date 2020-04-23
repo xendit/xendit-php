@@ -49,7 +49,8 @@ class GuzzleClient implements ClientInterface
             $this->http = new Guzzle(
                 [
                     'base_uri' => $baseUri,
-                    'verify' => false
+                    'verify' => false,
+                    'timeout' => 60
                 ]
             );
         }
