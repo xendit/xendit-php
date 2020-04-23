@@ -1,7 +1,7 @@
 {
     "name": "xendit/xendit-php",
     "description": "PHP clients for Xendit API",
-    "version": "2.3.0",
+    "version": "2.3.1",
     "keywords": ["xendit"],
     "homepage": "https://github.com/xendit/xendit-php",
     "type": "library",
