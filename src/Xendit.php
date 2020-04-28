@@ -32,6 +32,8 @@ class Xendit
 
     public static $libVersion;
 
+    private static $_httpClient;
+
     const VERSION = "2.0.3";
 
     /**
@@ -101,5 +103,15 @@ class Xendit
     public static function setLibVersion($libVersion = null): void
     {
         self::$libVersion = $libVersion;
+    }
+
+    public static function setHttpClient(HttpClientInterface $client): void 
+    {   
+        self::$_httpClient = $client;
+    }
+
+    public static function getHttpClient(): HttpClientInterface
+    {
+        return self::$_httpClient;
     }
 }
