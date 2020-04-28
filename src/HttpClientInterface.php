@@ -2,7 +2,8 @@
 
 namespace Xendit;
 
-interface HttpClientInterface {
+interface HttpClientInterface
+{
     /**
      * Create and send an HTTP request.
      *
