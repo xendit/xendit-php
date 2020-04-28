@@ -36,14 +36,12 @@ class GuzzleClient implements ClientInterface
     protected $http;
 
     /**
-     * XenditClient constructor.
-     *
-     * @param Guzzle|null $http client
+     * XenditClient constructor
      */
-    public function __construct(Guzzle $http = null)
+    public function __construct()
     {
-        if ($http) {
-            $this->http = $http;
+        if (Xendit::getHttpClient()) {
+            $this->http = Xendit::getHttpClient();
         } else {
             $baseUri = strval(Xendit::$apiBase);
             $this->http = new Guzzle(

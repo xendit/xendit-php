@@ -1,8 +1,10 @@
 {
     "name": "xendit/xendit-php",
     "description": "PHP clients for Xendit API",
-    "version": "2.3.1",
-    "keywords": ["xendit"],
+    "version": "2.4.0",
+    "keywords": [
+        "xendit"
+    ],
     "homepage": "https://github.com/xendit/xendit-php",
     "type": "library",
     "minimum-stability": "stable",
@@ -13,7 +15,9 @@
         "ext-json": "*"
     },
     "autoload": {
-    	"psr-4": { "Xendit\\": "src/" }
+        "psr-4": {
+            "Xendit\\": "src/"
+        }
     },
     "autoload-dev": {
         "psr-4": {

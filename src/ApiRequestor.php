@@ -102,16 +102,4 @@ class ApiRequestor
         }
         return self::$_httpClient;
     }
-
-    /**
-     * GuzzleClient Setter
-     *
-     * @param HttpClient\GuzzleClient $client client
-     *
-     * @return void
-     */
-    public static function setHttpClient($client)
-    {
-        self::$_httpClient = $client;
-    }
 }

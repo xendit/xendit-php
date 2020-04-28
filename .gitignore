@@ -28,4 +28,5 @@ clover.xml
 
 .env
 
-composer.lock
+composer-setup.php
+bin/
