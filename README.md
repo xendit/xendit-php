@@ -59,7 +59,6 @@ This library is the abstraction of Xendit API for access from applications writt
     - [Running test suite](#running-test-suite)
     - [Running examples](#running-examples)
 
-
 ---
 
 ## Documentation
@@ -94,7 +93,17 @@ Configure package with your account's secret key obtained from [Xendit Dashboard
 Xendit::setApiKey('secretKey');
 ```
 
-See example codes for more details.
+See [example codes](./examples) for more details.
+
+### Use Custom HTTP Client
+
+A custom HTTP Client that implements [HttpClientInterface](./src/HttpClientInterface.php) can be injected like so
+
+```php
+Xendit::setHttpClient($client);
+```
+
+Checkout [custom http client example](./examples/CustomHttpClient.php) for implementation reference.
 
 ## Methods' Signature and Examples
 
@@ -837,7 +846,7 @@ For example, there are required arguments such as `external_id`, `payer_email`, 
 
 ### ApiException
 
-`ApiException` wraps up Xendit API error. This exception will be thrown if there are errors from Xendit API side, e.g. get fixed virtual account with invalid `id`. 
+`ApiException` wraps up Xendit API error. This exception will be thrown if there are errors from Xendit API side, e.g. get fixed virtual account with invalid `id`.
 
 To get exception message:
 
