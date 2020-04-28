@@ -1,7 +1,28 @@
 <?php
 
+/**
+ * HttpClientInterface.php
+ * php version 7.2.0
+ *
+ * @category Class
+ * @package  Xendit
+ * @author   Stanley Nguyen <stanley@xendit.co>
+ * @license  https://opensource.org/licenses/MIT MIT License
+ * @link     https://github.com/xendit/xendit-php/blob/master/src/HttpClientInterface.php
+ */
+
 namespace Xendit;
 
+
+/**
+ * Interface HttpClientInterface
+ *
+ * @category Interface
+ * @package  Xendit
+ * @author   Stanley Nguyen <stanley@xendit.co>
+ * @license  https://opensource.org/licenses/MIT MIT License
+ * @link     https://github.com/xendit/xendit-php/blob/master/src/HttpClientInterface.php
+ */
 interface HttpClientInterface
 {
     /**
