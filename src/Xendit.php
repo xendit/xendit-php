@@ -107,22 +107,22 @@ class Xendit
 
     /**
      * Set custom http client
-     * 
+     *
      * @param HttpCLientInterface $client custom http client
-     * 
+     *
      * @return void
      */
-    public static function setHttpClient(HttpClientInterface $client): void 
-    {   
+    public static function setHttpClient(HttpClientInterface $client): void
+    {
         self::$_httpClient = $client;
     }
 
     /**
      * Get current http client being used in the package
-     * 
+     *
      * @return HttpClientInterface
      */
-    public static function getHttpClient(): HttpClientInterface
+    public static function getHttpClient(): ?HttpClientInterface
     {
         return self::$_httpClient;
     }
