@@ -122,7 +122,7 @@ class Xendit
      *
      * @return HttpClientInterface
      */
-    public static function getHttpClient(): ?HttpClientInterface
+    public static function getHttpClient()
     {
         return self::$_httpClient;
     }
