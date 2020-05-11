@@ -88,7 +88,11 @@ class GuzzleClient implements ClientInterface
         $opts['headers'] = $defaultHeaders;
         $opts['params'] = $params;
 
-        [$rbody, $rcode, $rheader] = $this->_executeRequest($opts, $url);
+        $response = $this->_executeRequest($opts, $url);
+        
+        $rbody = $response[0];
+        $rcode = $response[1];
+        $rheader = $response[2];
 
         return [$rbody, $rcode, $rheader];
     }
