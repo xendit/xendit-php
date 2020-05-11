@@ -79,13 +79,17 @@ class ApiRequestor
     private function _requestRaw($method, $url, $params, $headers)
     {
         $defaultHeaders = self::_setDefaultHeaders($headers);
-
-        [$rbody, $rcode, $rheaders] = $this->_httpClient()->sendRequest(
+        
+        $response = $this->_httpClient()->sendRequest(
             $method,
             $url,
             $defaultHeaders,
             $params
         );
+
+        $rbody = $response[0];
+        $rcode = $response[1];
+        $rheaders = $response[2];
 
         return [$rbody, $rcode, $rheaders];
     }
