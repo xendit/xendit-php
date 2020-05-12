@@ -34,7 +34,7 @@ class Xendit
 
     private static $_httpClient;
 
-    const VERSION = "2.0.3";
+    const VERSION = "2.4.2";
 
     /**
      * ApiBase getter
