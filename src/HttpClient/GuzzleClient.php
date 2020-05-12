@@ -14,8 +14,7 @@
 namespace Xendit\HttpClient;
 
 use GuzzleHttp\Client as Guzzle;
-use GuzzleHttp\Exception\ClientException;
-use GuzzleHttp\Exception\ServerException;
+use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\RequestOptions;
 use Xendit\Exceptions\ApiException;
 use Xendit\Xendit;
@@ -88,11 +87,15 @@ class GuzzleClient implements ClientInterface
         $opts['headers'] = $defaultHeaders;
         $opts['params'] = $params;
 
-        [$rbody, $rcode, $rheader] = $this->_executeRequest($opts, $url);
+        $response = $this->_executeRequest($opts, $url);
+        
+        $rbody = $response[0];
+        $rcode = $response[1];
+        $rheader = $response[2];
 
         return [$rbody, $rcode, $rheader];
     }
-
+    
     /**
      * Execute request
      *
@@ -108,7 +111,6 @@ class GuzzleClient implements ClientInterface
         $params = $opts['params'];
         $apiKey = Xendit::$apiKey;
         $url = strval($url);
-
         try {
             if (count($params) > 0) {
                 $response =  $this->http->request(
@@ -126,12 +128,12 @@ class GuzzleClient implements ClientInterface
                     ]
                 );
             }
-        } catch (ClientException | ServerException $e) {
+        } catch (RequestException $e) {
             $response = $e->getResponse();
             $rbody = json_decode($response->getBody()->getContents(), true);
             $rcode = $response->getStatusCode();
             $rheader = $response->getHeaders();
-
+    
             self::_handleAPIError(
                 array('body' => $rbody,
                       'code' => $rcode,
