@@ -47,7 +47,10 @@ class GuzzleClient implements ClientInterface
                 [
                     'base_uri' => $baseUri,
                     'verify' => false,
-                    'timeout' => 60
+                    'timeout' => 60,
+                    'headers' => [
+                        'User-Agent' => null
+                    ]
                 ]
             );
         }
