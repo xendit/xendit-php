@@ -882,6 +882,13 @@ try {
 
 For any requests, bugs, or comments, please open an [issue](https://github.com/xendit/xendit-php-clients/issues) or [submit a pull request](https://github.com/xendit/xendit-php-clients/pulls).
 
+### Installing Packages
+Before you start to code, run this command to install all of the required packages. Make sure you have `composer` installed in your computer
+
+```bash
+composer install
+```
+
 ### Tests
 
 #### Running test suite:
