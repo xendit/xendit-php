@@ -72,6 +72,10 @@ trait Request
             $headers['X-IDEMPOTENCY-KEY'] = $params['X-IDEMPOTENCY-KEY'];
         }
 
+        if (array_key_exists('api-version', $params)) {
+            $headers['api-version'] = $params['api-version'];
+        }
+
         $requestor = new \Xendit\ApiRequestor();
         return $requestor->request($method, $url, $params, $headers);
     }

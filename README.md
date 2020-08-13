@@ -34,6 +34,9 @@ This library is the abstraction of Xendit API for access from applications writt
     - [Create a Payout](#create-payout)
     - [Get a Payout](#get-payout)
     - [Void a Payout](#void-payout)
+  - [QR Code](#qr-code)
+    - [Create a QR Code](#create-a-qr-code)
+    - [Get QR Code](#get-qr-code)
   - [Recurring](#recurring-payments)
     - [Create a Recurring Payment](#create-a-recurring-payment)
     - [Get a Recurring Payment](#get-a-recurring-payment)
@@ -605,6 +608,40 @@ $voidPayout = \Xendit\Payouts::void($id);
 var_dump($voidPayout);
 ```
 
+### QR Code
+
+#### Create a QR Code
+
+```php
+\Xendit\QRCode::create(array $params);
+```
+
+Usage example:
+
+```php
+$params = [
+    'external_id' => 'demo_123456',
+    'type' => 'STATIC',
+    'callback_url' => 'https://webhook.site',
+    'amount' => 10000,
+];
+
+$qr_code = \Xendit\QRCode::create($params);
+var_dump($qr_code)
+```
+
+#### Get QR Code
+
+```php
+\Xendit\QRCode::get(string $external_id);
+```
+
+Usage example:
+```php
+$qr_code = \Xendit\QRCode::get('external_123');
+var_dump($qr_code);
+```
+
 ### Recurring Payments
 
 #### Create a Recurring Payment
@@ -881,6 +918,13 @@ try {
 ## Contributing
 
 For any requests, bugs, or comments, please open an [issue](https://github.com/xendit/xendit-php-clients/issues) or [submit a pull request](https://github.com/xendit/xendit-php-clients/pulls).
+
+### Installing Packages
+Before you start to code, run this command to install all of the required packages. Make sure you have `composer` installed in your computer
+
+```bash
+composer install
+```
 
 ### Tests
 
