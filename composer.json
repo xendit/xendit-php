@@ -1,7 +1,7 @@
 {
     "name": "xendit/xendit-php",
     "description": "PHP clients for Xendit API",
-    "version": "2.4.3",
+    "version": "2.5.0",
     "license": "MIT",
     "keywords": [
         "xendit"
