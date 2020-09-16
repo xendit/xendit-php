@@ -21,7 +21,7 @@ $dotenv->load();
 Xendit::setApiKey(getenv('SECRET_API_KEY'));
 
 $ovoParams = [
-    'external_id' => 'demo_' . time(),
+    'external_id' => 'demo-' . time(),
     'amount' => 32000,
     'phone' => '081298498259',
     'ewallet_type' => 'OVO'
