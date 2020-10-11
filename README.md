@@ -642,6 +642,14 @@ $qr_code = \Xendit\QRCode::get('external_123');
 var_dump($qr_code);
 ```
 
+On Laravel, if you get `Non-static method Xendit\QRCode::get() should not be called statically`
+use this method
+```php
+$qr_code = new \Xendit\QRCode()
+$qr_code = $qr_code->get('external_123');
+dd($qr_code);
+```
+
 ### Recurring Payments
 
 #### Create a Recurring Payment
