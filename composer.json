@@ -1,7 +1,7 @@
 {
     "name": "xendit/xendit-php",
     "description": "PHP clients for Xendit API",
-    "version": "2.5.0",
+    "version": "2.5.1",
     "license": "MIT",
     "keywords": [
         "xendit"
@@ -11,7 +11,7 @@
     "minimum-stability": "stable",
     "require": {
         "php": ">=7.2.0",
-        "squizlabs/php_codesniffer": "*",
+        "squizlabs/php_codesniffer": "~3.5",
         "guzzlehttp/guzzle": "~6.0",
         "ext-json": "*"
     },
