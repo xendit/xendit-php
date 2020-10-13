@@ -3,12 +3,12 @@
 /**
  * QRCode.php
  * php version 7.2.0
- * 
+ *
  * @category Class
  * @package  Xendit
  * @author   Dave <kevindave@xendit.co>
  * @license  https://opensource.org/licenses/MIT MIT License
- * @link     https://api.xendit.co 
+ * @link     https://api.xendit.co
  */
 namespace Xendit;
 
@@ -16,7 +16,7 @@ use Xendit\Exceptions\InvalidArgumentException;
 
 /**
  * Class QRCode
- * 
+ *
  * @category Class
  * @package  Xendit
  * @author   Dave <kevindave@xendit.co>
@@ -29,7 +29,7 @@ class QRCode
 
   /**
    * Instantiate base URL
-   * 
+   *
    * @return string
    */
   public static function classUrl()
@@ -44,9 +44,9 @@ class QRCode
    * Required parameters: external_id, type, callback_url, amount.
    * For DYNAMIC QR Code type, amount is required.
    * For STATIC QR Code type, amount will be ignored.
-   * 
+   *
    * To create QR Code for a Xenplatform sub-account, include for-user-id in $params
-   * 
+   *
    * Please refer to this documentation for more detailed info
    * https://xendit.github.io/apireference/#create-qr-code
    *
@@ -94,7 +94,7 @@ class QRCode
    * Get QR Code
    *
    * Get a QR Code by its external_id
-   * 
+   *
    * Please refer to this documentation for more detailed info
    * https://xendit.github.io/apireference/#get-qr-code-by-external-id
    *
@@ -112,10 +112,10 @@ class QRCode
    * ]
    * @throws Exception\ApiException
    **/
-  public function get(string $external_id)
+  public static function get(string $external_id)
   {
       $url = static::classUrl(). '/' . $external_id;
-      
+
       return static::_request('GET', $url);
   }
 }
