@@ -28,5 +28,6 @@ clover.xml
 
 .env
 
+composer.phar
 composer-setup.php
 bin/
