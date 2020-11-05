@@ -56,4 +56,26 @@ class CardlessCredit
             'callback_url'
         ];
     }
+
+    /**
+     * Calculate payment types
+     *
+     * @param array $params user's parameters
+     * @return array
+     * @throws ApiException
+     */
+    public static function calcPaymentTypes($params = [])
+    {
+        $requiredParams = [
+            'cardless_credit_type',
+            'amount',
+            'items',
+        ];
+
+        self::validateParams($params, $requiredParams);
+
+        $url = static::classUrl() . '/payment-types';
+
+        return static::_request('POST', $url, $params);
+    }
 }
