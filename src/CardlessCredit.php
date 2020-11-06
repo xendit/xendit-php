@@ -64,7 +64,7 @@ class CardlessCredit
      * @return array
      * @throws ApiException
      */
-    public static function calcPaymentTypes($params = [])
+    public static function calculatePaymentTypes($params = [])
     {
         $requiredParams = [
             'cardless_credit_type',

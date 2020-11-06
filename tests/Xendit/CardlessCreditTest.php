@@ -198,7 +198,7 @@ class CardlessCreditTest extends TestCase
             $response
         );
 
-        $result = CardlessCredit::calcPaymentTypes($params);
+        $result = CardlessCredit::calculatePaymentTypes($params);
 
         $this->assertArrayHasKey('message', $result);
         $this->assertArrayHasKey('payments', $result);
@@ -223,6 +223,6 @@ class CardlessCreditTest extends TestCase
             ]
         ];
 
-        CardlessCredit::calcPaymentTypes($params);
+        CardlessCredit::calculatePaymentTypes($params);
     }
 }

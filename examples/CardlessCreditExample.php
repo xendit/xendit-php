@@ -80,5 +80,5 @@ $params = [
     ]
 ];
 
-$calculatePaymentTypes = \Xendit\CardlessCredit::calcPaymentTypes($params);
+$calculatePaymentTypes = \Xendit\CardlessCredit::calculatePaymentTypes($params);
 var_dump($calculatePaymentTypes);
