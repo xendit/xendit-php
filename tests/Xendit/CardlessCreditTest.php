@@ -121,4 +121,108 @@ class CardlessCreditTest extends TestCase
 
         CardlessCredit::create($params);
     }
+
+    /**
+     * Calculate payment types
+     * Should pass
+     *
+     * @return void
+     */
+    public function testIsGettable()
+    {
+        $params = [
+            'cardless_credit_type' => 'KREDIVO',
+            'amount' => 2000000,
+            'items' => [
+                [
+                    'id' => '123123',
+                    'name' => 'Phone Case',
+                    'price' => 1000000,
+                    'type' => 'Smartphone',
+                    'url' => 'http://example.com/phone/phone_case',
+                    'quantity' => 2
+                ]
+            ]
+        ];
+
+        $response = [
+            "message" => "Available payment types are listed.",
+            "payments" => [
+                [
+                    "raw_monthly_installment" => 187534.66680439,
+                    "name" => "Bayar dalam 6 bulan",
+                    "amount" => 1000000,
+                    "installment_amount" => 1125240,
+                    "raw_amount" => 1000000,
+                    "rate" => 2.95,
+                    "down_payment" => 0,
+                    "monthly_installment" => 187540,
+                    "discounted_monthly_installment" => 0,
+                    "tenure" => 6,
+                    "id" => "6_months",
+                ],
+                [
+                    "raw_monthly_installment" => 1020000,
+                    "name" => "Bayar dalam 30 hari",
+                    "amount" => 1020000,
+                    "installment_amount" => 1020000,
+                    "raw_amount" => 1020000,
+                    "rate" => 0,
+                    "down_payment" => 0,
+                    "monthly_installment" => 1020000,
+                    "discounted_monthly_installment" => 0,
+                    "tenure" => 1,
+                    "id" => "30_days",
+                ],
+                [
+                    "raw_monthly_installment" => 356786.46273702,
+                    "name" => "Bayar dalam 3 bulan",
+                    "amount" => 1000000,
+                    "installment_amount" => 1070370,
+                    "raw_amount" => 1000000,
+                    "rate" => 2.95,
+                    "down_payment" => 0,
+                    "monthly_installment" => 356790,
+                    "discounted_monthly_installment" => 0,
+                    "tenure" => 3,
+                    "id" => "3_months",
+                ],
+            ],
+        ];
+
+        $this->stubRequest(
+            'POST',
+            '/cardless-credit/payment-types',
+            $params,
+            [],
+            $response
+        );
+
+        $result = CardlessCredit::calculatePaymentTypes($params);
+
+        $this->assertArrayHasKey('message', $result);
+        $this->assertArrayHasKey('payments', $result);
+    }
+
+    public function testIsGettableThrowApiException()
+    {
+        $this->expectException(\Xendit\Exceptions\ApiException::class);
+
+        $params = [
+            'cardless_credit_type' => 'KREDIVO',
+            'amount' => 2000000,
+            'items' => [
+                [
+                    'id' => '123123',
+                    'name' => 'Phone Case',
+                    'price' => 1000000,
+                    'type' => 'Smartphone',
+                    'url' => 'http://example.com/phone/phone_case',
+                    'quantity' => 2
+                ]
+            ]
+        ];
+
+        CardlessCredit::calculatePaymentTypes($params);
+    }
 }

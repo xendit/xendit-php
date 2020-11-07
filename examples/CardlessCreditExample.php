@@ -64,3 +64,21 @@ $params = [
 
 $createPayment = \Xendit\CardlessCredit::create($params);
 var_dump($createPayment);
+
+$params = [
+    'cardless_credit_type' => 'KREDIVO',
+    'amount' => 2000000,
+    'items' => [
+        [
+            'id' => '123123',
+            'name' => 'Phone Case',
+            'price' => 1000000,
+            'type' => 'Smartphone',
+            'url' => 'http://example.com/phone/phone_case',
+            'quantity' => 2
+        ]
+    ]
+];
+
+$calculatePaymentTypes = \Xendit\CardlessCredit::calculatePaymentTypes($params);
+var_dump($calculatePaymentTypes);
