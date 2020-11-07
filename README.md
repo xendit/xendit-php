@@ -2,65 +2,66 @@
 
 This library is the abstraction of Xendit API for access from applications written with PHP.
 
-- [Documentation](#documentation)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Methods' Signature and Examples](#methods-signature-and-examples)
-  - [Balance](#balance)
-    - [Get Balance](#get-balance)
-  - [Cards](#cards)
-    - [Create Charge](#create-charge)
-    - [Reverse Authorization](#reverse-authorization)
-    - [Capture Charge](#capture-charge)
-    - [Get Charge](#get-charge)
-    - [Create Refund](#create-refund)
-  - [Cardless Credit](#cardless-credit)
-    - [Create Cardless Credit Payment](#create-cardless-credit-payment)
-  - [Disbursements](#disbursements)
-    - [Create Disbursement](#create-disbursement)
-    - [Create Batch Disbursement](#create-batch-disbursement)
-    - [Get Disbursement by ID](#get-disbursement-by-id)
-    - [Get Disbursement by External ID](#get-disbursement-by-external-id)
-    - [Get Disbursement Available Banks](#get-disbursement-available-banks)
-  - [E-Wallets](#e-wallets)
-    - [Create Payment](#create-payment)
-    - [Get Payment Status](#get-payment-status)
-  - [Invoice](#invoice)
-    - [Create Invoice](#create-invoice)
-    - [Get Invoice](#get-invoice)
-    - [Get All Invoice](#get-all-invoice)
-    - [Expire Invoice](#expire-invoice)
-  - [Payouts](#payouts)
-    - [Create a Payout](#create-payout)
-    - [Get a Payout](#get-payout)
-    - [Void a Payout](#void-payout)
-  - [QR Code](#qr-code)
-    - [Create a QR Code](#create-a-qr-code)
-    - [Get QR Code](#get-qr-code)
-  - [Recurring](#recurring-payments)
-    - [Create a Recurring Payment](#create-a-recurring-payment)
-    - [Get a Recurring Payment](#get-a-recurring-payment)
-    - [Edit a Recurring Payment](#edit-recurring-payment)
-    - [Pause a Recurring Payment](#pause-recurring-payment)
-    - [Stop a Recurring Payment](#stop-recurring-payment)
-    - [Resume a Recurring Payment](#resume-recurring-payment)
-  - [Retail Outlets](#retail-outlets)
-    - [Create Fixed Payment Code](#create-fixed-payment-code)
-    - [Update Fixed Payment Code](#update-fixed-payment-code)
-    - [Get Fixed Payment Code](#get-fixed-payment-code)
-  - [Virtual Accounts](#virtual-accounts)
-    - [Create Fixed Virtual Account](#create-fixed-virtual-account)
-    - [Get Virtual Account Bank](#get-virtual-account-bank)
-    - [Get Fixed Virtual Account](#get-fixed-virtual-account)
-    - [Update Fixed Virtual Account](#update-fixed-virtual-account)
-    - [Get Fixed Virtual Account Payment](#get-fixed-virtual-account-payment)
-- [Exceptions](#exceptions)
-  - [InvalidArgumentException](#invalidargumentexception)
-  - [ApiException](#apiexception)
-- [Contributing](#contributing)
-  - [Test](#tests)
-    - [Running test suite](#running-test-suite)
-    - [Running examples](#running-examples)
+-   [Documentation](#documentation)
+-   [Installation](#installation)
+-   [Usage](#usage)
+-   [Methods' Signature and Examples](#methods-signature-and-examples)
+    -   [Balance](#balance)
+        -   [Get Balance](#get-balance)
+    -   [Cards](#cards)
+        -   [Create Charge](#create-charge)
+        -   [Reverse Authorization](#reverse-authorization)
+        -   [Capture Charge](#capture-charge)
+        -   [Get Charge](#get-charge)
+        -   [Create Refund](#create-refund)
+    -   [Cardless Credit](#cardless-credit)
+        -   [Create Cardless Credit Payment](#create-cardless-credit-payment)
+        -   [Calculate Payment Types](#calculate-payment-types)
+    -   [Disbursements](#disbursements)
+        -   [Create Disbursement](#create-disbursement)
+        -   [Create Batch Disbursement](#create-batch-disbursement)
+        -   [Get Disbursement by ID](#get-disbursement-by-id)
+        -   [Get Disbursement by External ID](#get-disbursement-by-external-id)
+        -   [Get Disbursement Available Banks](#get-disbursement-available-banks)
+    -   [E-Wallets](#e-wallets)
+        -   [Create Payment](#create-payment)
+        -   [Get Payment Status](#get-payment-status)
+    -   [Invoice](#invoice)
+        -   [Create Invoice](#create-invoice)
+        -   [Get Invoice](#get-invoice)
+        -   [Get All Invoice](#get-all-invoice)
+        -   [Expire Invoice](#expire-invoice)
+    -   [Payouts](#payouts)
+        -   [Create a Payout](#create-payout)
+        -   [Get a Payout](#get-payout)
+        -   [Void a Payout](#void-payout)
+    -   [QR Code](#qr-code)
+        -   [Create a QR Code](#create-a-qr-code)
+        -   [Get QR Code](#get-qr-code)
+    -   [Recurring](#recurring-payments)
+        -   [Create a Recurring Payment](#create-a-recurring-payment)
+        -   [Get a Recurring Payment](#get-a-recurring-payment)
+        -   [Edit a Recurring Payment](#edit-recurring-payment)
+        -   [Pause a Recurring Payment](#pause-recurring-payment)
+        -   [Stop a Recurring Payment](#stop-recurring-payment)
+        -   [Resume a Recurring Payment](#resume-recurring-payment)
+    -   [Retail Outlets](#retail-outlets)
+        -   [Create Fixed Payment Code](#create-fixed-payment-code)
+        -   [Update Fixed Payment Code](#update-fixed-payment-code)
+        -   [Get Fixed Payment Code](#get-fixed-payment-code)
+    -   [Virtual Accounts](#virtual-accounts)
+        -   [Create Fixed Virtual Account](#create-fixed-virtual-account)
+        -   [Get Virtual Account Bank](#get-virtual-account-bank)
+        -   [Get Fixed Virtual Account](#get-fixed-virtual-account)
+        -   [Update Fixed Virtual Account](#update-fixed-virtual-account)
+        -   [Get Fixed Virtual Account Payment](#get-fixed-virtual-account-payment)
+-   [Exceptions](#exceptions)
+    -   [InvalidArgumentException](#invalidargumentexception)
+    -   [ApiException](#apiexception)
+-   [Contributing](#contributing)
+    -   [Test](#tests)
+        -   [Running test suite](#running-test-suite)
+        -   [Running examples](#running-examples)
 
 ---
 
@@ -287,6 +288,34 @@ $params = [
 
 $createPayment = \Xendit\CardlessCredit::create($params);
 var_dump($createPayment);
+```
+
+#### Calculate Payment Types
+
+```php
+\Xendit\CardlessCredit::calculatePaymentTypes(array $params);
+```
+
+Usage example:
+
+```php
+$params = [
+    'cardless_credit_type' => 'KREDIVO',
+    'amount' => 2000000,
+    'items' => [
+        [
+            'id' => '123123',
+            'name' => 'Phone Case',
+            'price' => 1000000,
+            'type' => 'Smartphone',
+            'url' => 'http://example.com/phone/phone_case',
+            'quantity' => 2
+        ]
+    ]
+];
+
+$calculatePaymentTypes = \Xendit\CardlessCredit::calculatePaymentTypes($params);
+var_dump($calculatePaymentTypes);
 ```
 
 ### Disbursements
@@ -637,6 +666,7 @@ var_dump($qr_code)
 ```
 
 Usage example:
+
 ```php
 $qr_code = \Xendit\QRCode::get('external_123');
 var_dump($qr_code);
@@ -920,6 +950,7 @@ try {
 For any requests, bugs, or comments, please open an [issue](https://github.com/xendit/xendit-php-clients/issues) or [submit a pull request](https://github.com/xendit/xendit-php-clients/pulls).
 
 ### Installing Packages
+
 Before you start to code, run this command to install all of the required packages. Make sure you have `composer` installed in your computer
 
 ```bash
