@@ -11,14 +11,11 @@
  * @link     https://api.xendit.co
  */
 
-use Dotenv\Dotenv;
 use Xendit\Xendit;
 
 require 'vendor/autoload.php';
 
-$dotenv = Dotenv::createImmutable(__DIR__ . '/..');
-$dotenv->load();
-Xendit::setApiKey(getenv('SECRET_API_KEY'));
+Xendit::setApiKey('SECRET_API_KEY');
 
 $params = [
     'token_id' => '5e3149b915faf8739dd96178',

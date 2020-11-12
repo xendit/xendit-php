@@ -11,14 +11,11 @@
  * @link     https://api.xendit.co
  */
 
-use Dotenv\Dotenv;
 use Xendit\Xendit;
 
 require 'vendor/autoload.php';
 
-$dotenv = Dotenv::createImmutable(__DIR__ . '/..');
-$dotenv->load();
-Xendit::setApiKey(getenv('SECRET_API_KEY'));
+Xendit::setApiKey('SECRET_API_KEY');
 
 $params = ["external_id" => "VA_fixed-12341234",
    "bank_code" => "MANDIRI",
