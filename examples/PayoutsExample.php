@@ -19,7 +19,8 @@ Xendit::setApiKey('SECRET_API_KEY');
 
 $params = [
     'external_id' => 'payouts-123456789',
-    'amount' => 50000
+    'amount' => 50000,
+    "email" => 'demo@xendit.co'
 ];
 
 $createPayout = \Xendit\Payouts::create($params);
