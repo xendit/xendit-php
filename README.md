@@ -471,7 +471,7 @@ $ovoParams = [
     'amount' => 32000,
     'phone' => '081298498259',
     'ewallet_type' => 'OVO',
-    'x-api-version' => '2019-02-04',
+    'X-API-VERSION' => '2019-02-04',
 ];
 
 $createOvo = \Xendit\EWallets::create($ovoParams);
