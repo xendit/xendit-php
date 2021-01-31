@@ -451,13 +451,27 @@ var_dump($getDisbursementsBanks);
 To create payment, each e-wallet has its own required params. For more information, please check [Xendit API Reference - E-Wallets](https://xendit.github.io/apireference/?bash#create-payment).
 
 ##### OVO
-
+Without x-api-version key:
 ```php
 $ovoParams = [
     'external_id' => 'demo_' . time(),
     'amount' => 32000,
     'phone' => '081298498259',
     'ewallet_type' => 'OVO'
+];
+
+$createOvo = \Xendit\EWallets::create($ovoParams);
+var_dump($createOvo);
+```
+
+With x-api-version key:
+```php
+$ovoParams = [
+    'external_id' => 'demo_' . time(),
+    'amount' => 32000,
+    'phone' => '081298498259',
+    'ewallet_type' => 'OVO',
+    'X-API-VERSION' => '2019-02-04',
 ];
 
 $createOvo = \Xendit\EWallets::create($ovoParams);

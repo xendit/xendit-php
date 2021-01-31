@@ -3,7 +3,7 @@
 /**
  * QRCodeExample.php
  * php version 7.2.0
- * 
+ *
  * @category Example
  * @package  Xendit/Examples
  * @author   Dave <kevindave@xendit.co>
@@ -25,7 +25,7 @@ $params = [
 ];
 
 $created_qr_code = \Xendit\QRCode::create($params);
-var_dump($createdQRCode);
+var_dump($created_qr_code);
 
 $qr_code = \Xendit\QRCode::get('external_123');
 var_dump($qr_code);

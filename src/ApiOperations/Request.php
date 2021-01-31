@@ -58,7 +58,8 @@ trait Request
      * @return array
      * @throws \Xendit\Exceptions\ApiException
      */
-    protected static function _request($method,
+    protected static function _request(
+        $method,
         $url,
         $params = []
     ) {
@@ -74,6 +75,10 @@ trait Request
 
         if (array_key_exists('api-version', $params)) {
             $headers['api-version'] = $params['api-version'];
+        }
+
+        if (array_key_exists('X-API-VERSION', $params)) {
+            $headers['X-API-VERSION'] = $params['X-API-VERSION'];
         }
 
         $requestor = new \Xendit\ApiRequestor();

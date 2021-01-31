@@ -46,7 +46,58 @@ class EWalletsTest extends TestCase
             'expiration_date' => '2020-02-20T00:00:00.000Z',
             'callback_url' => 'https://my-shop.com/callbacks',
             'redirect_url' => 'https://my-shop.com/home',
-            'ewallet_type' => 'DANA'
+            'ewallet_type' => 'DANA',
+        ];
+
+        $this->stubRequest(
+            'POST',
+            '/ewallets',
+            $params,
+            [],
+            $params
+        );
+
+        $result = EWallets::create($params);
+
+        $this->assertEquals($result['external_id'], $params['external_id']);
+        $this->assertEquals($result['phone'], $params['phone']);
+        $this->assertEquals(
+            $result['ewallet_type'],
+            $params['ewallet_type']
+        );
+        $this->assertEquals($result['amount'], $params['amount']);
+        $this->assertEquals(
+            $result['callback_url'],
+            $params['callback_url']
+        );
+        $this->assertEquals(
+            $result['redirect_url'],
+            $params['redirect_url']
+        );
+        $this->assertEquals(
+            $result['expiration_date'],
+            $params['expiration_date']
+        );
+    }
+
+    /**
+     * Create EWallet test
+     * Should pass
+     *
+     * @return void
+     * @throws Exceptions\ApiException
+     */
+    public function testIsCreatableWithApiVersion()
+    {
+        $params = [
+            'external_id' => 'demo_' . time(),
+            'amount' => 32000,
+            'phone' => '081298498259',
+            'expiration_date' => '2020-02-20T00:00:00.000Z',
+            'callback_url' => 'https://my-shop.com/callbacks',
+            'redirect_url' => 'https://my-shop.com/home',
+            'ewallet_type' => 'OVO',
+            'x-api-version' => '2019-02-04',
         ];
 
         $this->stubRequest(
