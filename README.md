@@ -233,6 +233,29 @@ $refund = \Xendit\Cards::createRefund($id, $params);
 var_dump($refund);
 ```
 
+#### Create Promotion
+
+```php
+\Xendit\Promotion::create(array $params);
+```
+
+usage examples:
+
+```php
+$params = [
+    'reference_id' => 'reference_123',
+    'description' => 'test promotion',
+    'currency' => 'IDR',
+    'start_time' => '2021-01-01T00:00:00.000Z',
+    'end_time' => '2021-01-02T00:00:00.000Z',
+    'promo_code' => 'testpromo',
+    'discount_amount' => 5000
+];
+
+$createPromotion = \Xendit\Promotion::create($params);
+var_dump($createPromotion);
+```
+
 ### Cardless Credit
 
 #### Create Cardless Credit Payment
