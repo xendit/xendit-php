@@ -91,4 +91,41 @@ class EWallets
 
         return static::_request('GET', $url);
     }
+
+    /**
+     * Send a create e-wallet charge request
+     *
+     * @param array $params user's parameters
+     *
+     * @return array please check for responses parameters here
+     * https://developers.xendit.co/api-reference/?bash#create-ewallet-charge
+     * @throws Exceptions\ApiException
+     */
+    public static function createEWalletCharge($params = [])
+    {
+        $requiredParams = ['reference_id', 'currency', 'amount', 'checkout_method'];
+
+        self::validateParams($params, $requiredParams);
+
+        $url = static::classUrl() . '/charges';
+
+        return static::_request("POST", $url, $params);
+    }
+
+    /**
+     * Get e-wallet charge status
+     *
+     * @param string $charge_id chargee ID
+     *
+     * @return array please check for responses parameters here
+     * https://developers.xendit.co/api-reference/?bash#get-ewallet-charge-status
+     * @throws Exceptions\ApiException
+     */
+    public static function getEWalletChargeStatus($charge_id)
+    {
+        $url = static::classUrl()
+            . '/charges/' . $charge_id;
+
+        return static::_request('GET', $url);
+    }
 }
