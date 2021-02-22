@@ -24,8 +24,8 @@ This library is the abstraction of Xendit API for access from applications writt
         -   [Get Disbursement by External ID](#get-disbursement-by-external-id)
         -   [Get Disbursement Available Banks](#get-disbursement-available-banks)
     -   [E-Wallets](#e-wallets)
-        -   [Create Payment](#create-payment)
-        -   [Get Payment Status](#get-payment-status)
+        -   [Create E-Wallet Charge](#create-e-wallet-charge)
+        -   [Get E-Wallet Charge Status](#get-e-wallet-charge-status)
     -   [Invoice](#invoice)
         -   [Create Invoice](#create-invoice)
         -   [Get Invoice](#get-invoice)
@@ -442,101 +442,47 @@ var_dump($getDisbursementsBanks);
 
 ### E-Wallets
 
-#### Create Payment
+#### Create E-Wallet Charge
 
 ```php
-\Xendit\EWallets::create(array $params);
+\Xendit\EWallets::createEWalletCharge(array $params);
 ```
 
-To create payment, each e-wallet has its own required params. For more information, please check [Xendit API Reference - E-Wallets](https://xendit.github.io/apireference/?bash#create-payment).
+For more information about the params, please check [Xendit API Reference - E-Wallets](https://developers.xendit.co/api-reference/#create-ewallet-charge).
 
-##### OVO
-Without x-api-version key:
-```php
-$ovoParams = [
-    'external_id' => 'demo_' . time(),
-    'amount' => 32000,
-    'phone' => '081298498259',
-    'ewallet_type' => 'OVO'
-];
-
-$createOvo = \Xendit\EWallets::create($ovoParams);
-var_dump($createOvo);
-```
-
-With x-api-version key:
-```php
-$ovoParams = [
-    'external_id' => 'demo_' . time(),
-    'amount' => 32000,
-    'phone' => '081298498259',
-    'ewallet_type' => 'OVO',
-    'X-API-VERSION' => '2019-02-04',
-];
-
-$createOvo = \Xendit\EWallets::create($ovoParams);
-var_dump($createOvo);
-```
-
-##### DANA
+Usage example:
 
 ```php
-$danaParams = [
-    'external_id' => 'demo_' . time(),
-    'amount' => 32000,
-    'phone' => '081298498259',
-    'expiration_date' => '2020-02-20T00:00:00.000Z',
-    'callback_url' => 'https://my-shop.com/callbacks',
-    'redirect_url' => 'https://my-shop.com/home',
-    'ewallet_type' => 'DANA'
-];
-
-$createDana = \Xendit\EWallets::create($danaParams);
-var_dump($createDana);
-```
-
-##### LinkAja
-
-```php
-$linkajaParams = [
-    'external_id' => 'demo_' . time(),
-    'amount' => 32000,
-    'phone' => '081298498259',
-    'items' => [
-        [
-            'id' => '123123',
-            'name' => 'Phone Case',
-            'price' => 100000,
-            'quantity' => 1
-        ],
-        [
-            'id' => '345678',
-            'name' => 'Powerbank',
-            'price' => 200000,
-            'quantity' => 1
-        ]
+$ewalletChargeParams = [
+    'reference_id' => 'test-reference-id',
+    'currency' => 'IDR',
+    'amount' => 50000,
+    'checkout_method' => 'ONE_TIME_PAYMENT',
+    'channel_code' => 'ID_SHOPEEPAY',
+    'channel_properties' => [
+        'success_redirect_url' => 'https://yourwebsite.com/order/123',
     ],
-    'callback_url' => 'https =>//yourwebsite.com/callback',
-    'redirect_url' => 'https =>//yourwebsite.com/order/123',
-    'ewallet_type' => 'LINKAJA'
+    'metadata' => [
+        'meta' => 'data'
+    ]
 ];
 
-$createLinkaja = \Xendit\EWallets::create($linkajaParams);
-var_dump($createLinkaja);
+$createEWalletCharge = \Xendit\EWallets::createEWalletCharge($ewalletChargeParams);
+var_dump($createEWalletCharge);
 ```
 
-#### Get Payment Status
+#### Get E-Wallet Charge Status
 
 ```php
-\Xendit\EWallets::getPaymentStatus(string $external_id, string $ewallet_type);
+\Xendit\EWallets::getEWalletChargeStatus(string $charge_id);
 ```
 
 Usage example:
 
 ```php
-$external_id = 'external-ID';
-$ewallet_type = 'OVO';
-$getPayments = \Xendit\EWallets::getPaymentStatus($external_id, $ewallet_type);
+$charge_id = 'ewc_f3925450-5c54-4777-98c1-fcf22b0d1e1c';
+$getEWalletChargeStatus = \Xendit\EWallets::getEWalletChargeStatus($charge_id);
+var_dump($getEWalletChargeStatus);
 ```
 
 ### Invoice

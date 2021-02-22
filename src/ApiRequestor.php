@@ -79,7 +79,7 @@ class ApiRequestor
     private function _requestRaw($method, $url, $params, $headers)
     {
         $defaultHeaders = self::_setDefaultHeaders($headers);
-        
+
         $response = $this->_httpClient()->sendRequest(
             $method,
             $url,
@@ -107,15 +107,15 @@ class ApiRequestor
         return self::$_httpClient;
     }
 
-    /**	
-     * GuzzleClient Setter	
-     *	
-     * @param HttpClient\GuzzleClient $client client	
-     *	
-     * @return void	
-     */	
-    public static function setHttpClient($client)	
-    {	
-        self::$_httpClient = $client;	
+    /**
+     * GuzzleClient Setter
+     *
+     * @param HttpClient\GuzzleClient $client client
+     *
+     * @return void
+     */
+    public static function setHttpClient($client)
+    {
+        self::$_httpClient = $client;
     }
 }

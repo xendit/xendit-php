@@ -29,6 +29,7 @@ class EWalletsTest extends TestCase
 {
     const TEST_ID = "123";
     const TEST_TYPE = "DANA";
+    const TEST_CHARGE_ID = "ewc_f3925450-5c54-4777-98c1-fcf22b0d1e1c";
 
     /**
      * Create EWallet test
@@ -201,6 +202,209 @@ class EWalletsTest extends TestCase
         EWallets::getPaymentStatus(
             self::TEST_ID,
             self::TEST_TYPE
+        );
+    }
+
+    /**
+     * Create EWallet Charge test
+     * Should pass
+     *
+     * @return void
+     * @throws Exceptions\ApiException
+     */
+    public function testIsEWalletChargeCreatable()
+    {
+        $params = [
+            'reference_id' => 'test-reference-id',
+            'currency' => 'IDR',
+            'amount' => 50000,
+            'checkout_method' => 'ONE_TIME_PAYMENT',
+            'channel_code' => 'ID_SHOPEEPAY',
+            'channel_properties' => [
+                'success_redirect_url' => 'https://yourwebsite.com/order/123',
+            ],
+            'metadata' => [
+                'meta' => 'data'
+            ]
+        ];
+
+        $this->stubRequest(
+            'POST',
+            '/ewallets/charges',
+            $params,
+            [],
+            $params
+        );
+
+        $result = EWallets::createEWalletCharge($params);
+
+        $this->assertEquals($result['reference_id'], $params['reference_id']);
+        $this->assertEquals($result['currency'], $params['currency']);
+        $this->assertEquals($result['amount'], $params['amount']);
+        $this->assertEquals(
+            $result['checkout_method'],
+            $params['checkout_method']
+        );
+        $this->assertEquals(
+            $result['channel_code'],
+            $params['channel_code']
+        );
+        $this->assertEquals(
+            $result['channel_properties'],
+            $params['channel_properties']
+        );
+        $this->assertEquals(
+            $result['metadata'],
+            $params['metadata']
+        );
+    }
+
+    /**
+     * Create EWallet Charge test with headers
+     * Should pass
+     *
+     * @return void
+     * @throws Exceptions\ApiException
+     */
+    public function testIsEWalletChargeCreatableWithHeaders()
+    {
+        $params = [
+            'reference_id' => 'test-reference-id',
+            'currency' => 'IDR',
+            'amount' => 50000,
+            'checkout_method' => 'ONE_TIME_PAYMENT',
+            'channel_code' => 'ID_SHOPEEPAY',
+            'channel_properties' => [
+                'success_redirect_url' => 'https://yourwebsite.com/order/123',
+            ],
+            'metadata' => [
+                'meta' => 'data'
+            ],
+            'for-user-id' => 'user-id',
+            'with-fee-rule' => 'fee-rule'
+        ];
+
+        $this->stubRequest(
+            'POST',
+            '/ewallets/charges',
+            $params,
+            [],
+            $params
+        );
+
+        $result = EWallets::createEWalletCharge($params);
+
+        $this->assertEquals($result['reference_id'], $params['reference_id']);
+        $this->assertEquals($result['currency'], $params['currency']);
+        $this->assertEquals($result['amount'], $params['amount']);
+        $this->assertEquals(
+            $result['checkout_method'],
+            $params['checkout_method']
+        );
+        $this->assertEquals(
+            $result['channel_code'],
+            $params['channel_code']
+        );
+        $this->assertEquals(
+            $result['channel_properties'],
+            $params['channel_properties']
+        );
+        $this->assertEquals(
+            $result['metadata'],
+            $params['metadata']
+        );
+    }
+
+    /**
+     * Create EWallets Charge test
+     * Should throw InvalidArgumentException
+     *
+     * @return void
+     * @throws Exceptions\ApiException
+     */
+    public function testIsEWalletChargeCreatableThrowInvalidArgumentException()
+    {
+        $this->expectException(\Xendit\Exceptions\InvalidArgumentException::class);
+        $params = [
+            'reference_id' => 'test-ref-id'
+        ];
+
+        EWallets::createEWalletCharge($params);
+    }
+
+    /**
+     * Get EWallets Charge Status test
+     * Should pass
+     *
+     * @return void
+     * @throws Exceptions\ApiException
+     */
+    public function testIsEWalletChargeGettable()
+    {
+        $params = [
+            'id' => self::TEST_CHARGE_ID,
+            'business_id' => 'business_id_example',
+            'reference_id' => self::TEST_ID,
+            'status' => 'PENDING',
+            'currency' => 'IDR',
+            'charge_amount' => 50000,
+            'capture_amount' => 50000,
+            'checkout_method' => 'ONE_TIME_PAYMENT',
+            'channel_code' => 'ID_SHOPEEPAY',
+            'channel_properties' => [
+                'success_redirect_url' => 'https://yourwebsite.com/order/123'
+            ],
+            'actions' => [
+                'desktop_web_checkout_url' => null,
+                'mobile_web_checkout_url' => null,
+                'mobile_deeplink_checkout_url' =>
+                'https://mobile.deeplink.checkout.url',
+                'qr_checkout_string' => 'test-qr-string'
+            ],
+            'is_redirect_required' => true,
+            'callback_url' => 'https://yourwebsite.com/order/123',
+            'created' => '2021-02-09T06:22:35.064408Z',
+            'updated' => '2021-02-09T06:22:35.064408Z',
+            'voided_at' => null,
+            'capture_now' => true,
+            'customer_id' => null,
+            'payment_method_id' => null,
+            'failure_code' => null,
+            'basket' => null,
+            'metadata' => null
+        ];
+
+        $this->stubRequest(
+            'get',
+            '/ewallets/charges/'.self::TEST_CHARGE_ID,
+            [],
+            [],
+            $params
+        );
+
+        $result = EWallets::getEWalletChargeStatus(
+            self::TEST_CHARGE_ID
+        );
+
+        $this->assertEquals(
+            $result['id'],
+            self::TEST_CHARGE_ID
+        );
+    }
+
+    /**
+     * Get EWallets Charge Status test
+     * Should throw ApiException
+     *
+     * @return void
+     * @throws Exceptions\ApiException
+     */
+    public function testIsEWalletChargeGettableThrowApiException()
+    {
+        $this->expectException(\Xendit\Exceptions\ApiException::class);
+
+        EWallets::getEWalletChargeStatus(
+            self::TEST_CHARGE_ID
         );
     }
 }

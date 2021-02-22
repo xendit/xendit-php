@@ -61,7 +61,9 @@ class CardlessCredit
      * Calculate payment types
      *
      * @param array $params user's parameters
+     *
      * @return array
+     *
      * @throws ApiException
      */
     public static function calculatePaymentTypes($params = [])

@@ -69,6 +69,10 @@ trait Request
             $headers['for-user-id'] = $params['for-user-id'];
         }
 
+        if (array_key_exists('with-fee-rule', $params)) {
+            $headers['with-fee-rule'] = $params['with-fee-rule'];
+        }
+
         if (array_key_exists('X-IDEMPOTENCY-KEY', $params)) {
             $headers['X-IDEMPOTENCY-KEY'] = $params['X-IDEMPOTENCY-KEY'];
         }
