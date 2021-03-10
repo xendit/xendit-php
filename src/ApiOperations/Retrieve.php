@@ -27,7 +27,7 @@ trait Retrieve
     /**
      * Send GET request to retrieve data
      *
-     * @param int|null $id ID
+     * @param string|null $id ID
      *
      * @return array
      */
