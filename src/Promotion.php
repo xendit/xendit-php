@@ -49,6 +49,7 @@ class Promotion
      * https://developers.xendit.co/api-reference/#create-promotion
      *
      * @param array $params user's parameters
+     *
      * @return array [
      *   'business_id' =>  string,
      *   'currency' => string,
@@ -63,24 +64,26 @@ class Promotion
      *   'status' => string,
      *   'type' => string,
      * ]
+     *
      * @throws Exceptions\InvalidArgumentException
+     *
      * @throws Exceptions\ApiException if request status code is not 2xx
      **/
     public static function create($params = [])
     {
-        if (
-            !array_key_exists('promo_code', $params) &&
-            !array_key_exists('bin_list', $params)
+        if (!array_key_exists('promo_code', $params)
+            && !array_key_exists('bin_list', $params)
         ) {
-            $message = 'Please specify "promo_code" or "bin_list" inside your parameters.';
+            $message = 'Please specify "promo_code" or "bin_list"' .
+                       'inside your parameters.';
             throw new InvalidArgumentException($message);
         }
 
-        if (
-            !array_key_exists('discount_percent', $params) &&
-            !array_key_exists('discount_amount', $params)
+        if (!array_key_exists('discount_percent', $params)
+            && !array_key_exists('discount_amount', $params)
         ) {
-            $message = 'Please specify "discount_percent" or "discount_amount" inside your parameters.';
+            $message = 'Please specify "discount_percent" or "discount_amount"' .
+                       'inside your parameters.';
             throw new InvalidArgumentException($message);
         }
 
