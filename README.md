@@ -17,6 +17,9 @@ This library is the abstraction of Xendit API for access from applications writt
     -   [Cardless Credit](#cardless-credit)
         -   [Create Cardless Credit Payment](#create-cardless-credit-payment)
         -   [Calculate Payment Types](#calculate-payment-types)
+    -   [Customers](#customers)
+        -   [Create Customer](#create-customer)
+        -   [Get Customer by Reference ID](#get-customer-by-reference-id)
     -   [Disbursements](#disbursements)
         -   [Create Disbursement](#create-disbursement)
         -   [Create Batch Disbursement](#create-batch-disbursement)
@@ -339,6 +342,59 @@ $params = [
 
 $calculatePaymentTypes = \Xendit\CardlessCredit::calculatePaymentTypes($params);
 var_dump($calculatePaymentTypes);
+```
+
+### Customers
+
+#### Create Customer
+
+```php
+\Xendit\Customers::createCustomer(array $params);
+```
+
+Usage example:
+
+```php
+$customerParams = [
+    'reference_id' => '' . time(),
+    'given_names' => 'customer 1',
+    'email' => 'customer@website.com',
+    'mobile_number' => '+6281212345678',
+    'description' => 'dummy customer',
+    'middle_name' => 'middle',
+    'surname' => 'surname',
+    'addresses' => [
+        [
+            'country' => 'ID',
+            'street_line1' => 'Jl. 123',
+            'street_line2' => 'Jl. 456',
+            'city' => 'Jakarta Selatan',
+            'province' => 'DKI Jakarta',
+            'state' => '-',
+            'postal_code' => '12345'
+        ]
+    ],
+    'metadata' => [
+        'meta' => 'data'
+    ]
+];
+
+$createCustomer = \Xendit\Customers::createCustomer($customerParams);
+var_dump($createCustomer);
+```
+
+#### Get Customer by Reference ID
+
+```php
+\Xendit\Customers::getCustomerByReferenceID(string $reference_id);
+```
+
+Usage example:
+
+```php
+$reference_id = 'ref_id';
+$getCustomer = \Xendit\Customers::getCustomerByReferenceID($reference_id);
+var_dump($getCustomer);
 ```
 
 ### Disbursements
