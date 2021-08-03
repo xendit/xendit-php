@@ -27,6 +27,62 @@ use Xendit\TestCase;
  */
 class CustomersTest extends TestCase
 {
+    const CUSTOMER_PARAMS = [
+        'reference_id' => 'test-ref-iddd',
+        'given_names' => 'customer 1',
+        'email' => 'customer@website.com',
+        'mobile_number' => '+6281212345678',
+        'description' => 'dummy customer',
+        'middle_name' => 'middle',
+        'surname' => 'surname',
+        'addresses' => [
+            [
+                'country' => 'ID',
+                'street_line1' => 'Jl. 123',
+                'street_line2' => 'Jl. 456',
+                'city' => 'Jakarta Selatan',
+                'province' => 'DKI Jakarta',
+                'state' => '-',
+                'postal_code' => '12345'
+            ]
+        ],
+        'metadata' => [
+            'meta' => 'data'
+        ]
+    ];
+
+    const CUSTOMER_RESPONSE = [
+        'id' => '0f2de6f1-2023-403b-aaea-5f0a8a611f7d',
+        'reference_id' => 'test-ref-iddd',
+        'given_names' => 'customer 1',
+        'email' => 'customer@website.com',
+        'mobile_number' => '+6281212345678',
+        'description' => 'dummy customer',
+        'middle_name' => 'middle',
+        'surname' => 'surname',
+        'phone_number' => null,
+        'nationality' => null,
+        'date_of_birth' => null,
+        'metadata' => [
+            'meta' => 'data'
+        ],
+        'employment' => null,
+        'addresses' => [
+            [
+                'category' => '',
+                'country' => 'ID',
+                'state' => '-',
+                'province' => 'DKI Jakarta',
+                'city' => 'Jakarta Selatan',
+                'postal_code' => '12345',
+                'street_line1' => 'Jl. 123',
+                'street_line2' => 'Jl. 456',
+                'is_preferred' => false
+            ]
+        ],
+        'source_of_wealth' => null
+    ];
+
     /**
      * Create customer test
      * Should pass
@@ -36,61 +92,9 @@ class CustomersTest extends TestCase
      */
     public function testIsCustomerCreatable()
     {
-        $params = [
-            'reference_id' => 'test-ref-iddd',
-            'given_names' => 'customer 1',
-            'email' => 'customer@website.com',
-            'mobile_number' => '+6281212345678',
-            'description' => 'dummy customer',
-            'middle_name' => 'middle',
-            'surname' => 'surname',
-            'addresses' => [
-                [
-                    'country' => 'ID',
-                    'street_line1' => 'Jl. 123',
-                    'street_line2' => 'Jl. 456',
-                    'city' => 'Jakarta Selatan',
-                    'province' => 'DKI Jakarta',
-                    'state' => '-',
-                    'postal_code' => '12345'
-                ]
-            ],
-            'metadata' => [
-                'meta' => 'data'
-            ]
-        ];
+        $params = self::CUSTOMER_PARAMS;
 
-        $response = [
-            'id' => '0f2de6f1-2023-403b-aaea-5f0a8a611f7d',
-            'reference_id' => 'test-ref-iddd',
-            'given_names' => 'customer 1',
-            'email' => 'customer@website.com',
-            'mobile_number' => '+6281212345678',
-            'description' => 'dummy customer',
-            'middle_name' => 'middle',
-            'surname' => 'surname',
-            'phone_number' => null,
-            'nationality' => null,
-            'date_of_birth' => null,
-            'metadata' => [
-                'meta' => 'data'
-            ],
-            'employment' => null,
-            'addresses' => [
-                [
-                    'category' => '',
-                    'country' => 'ID',
-                    'state' => '-',
-                    'province' => 'DKI Jakarta',
-                    'city' => 'Jakarta Selatan',
-                    'postal_code' => '12345',
-                    'street_line1' => 'Jl. 123',
-                    'street_line2' => 'Jl. 456',
-                    'is_preferred' => false
-                ]
-            ],
-            'source_of_wealth' => null
-        ];
+        $response = self::CUSTOMER_RESPONSE;
 
         $this->stubRequest(
             'POST',
@@ -114,62 +118,12 @@ class CustomersTest extends TestCase
      */
     public function testIsCustomerCreatableWithHeaders()
     {
-        $params = [
-            'reference_id' => 'test-ref-iddd',
-            'given_names' => 'customer 1',
-            'email' => 'customer@website.com',
-            'mobile_number' => '+6281212345678',
-            'description' => 'dummy customer',
-            'middle_name' => 'middle',
-            'surname' => 'surname',
-            'addresses' => [
-                [
-                    'country' => 'ID',
-                    'street_line1' => 'Jl. 123',
-                    'street_line2' => 'Jl. 456',
-                    'city' => 'Jakarta Selatan',
-                    'province' => 'DKI Jakarta',
-                    'state' => '-',
-                    'postal_code' => '12345'
-                ]
-            ],
-            'metadata' => [
-                'meta' => 'data'
-            ],
-            'for-user-id' => 'user-id'
-        ];
+        $params = array_merge(
+            self::CUSTOMER_PARAMS,
+            array('for-user-id' => 'user-id')
+        );
 
-        $response = [
-            'id' => '0f2de6f1-2023-403b-aaea-5f0a8a611f7d',
-            'reference_id' => 'test-ref-iddd',
-            'given_names' => 'customer 1',
-            'email' => 'customer@website.com',
-            'mobile_number' => '+6281212345678',
-            'description' => 'dummy customer',
-            'middle_name' => 'middle',
-            'surname' => 'surname',
-            'phone_number' => null,
-            'nationality' => null,
-            'date_of_birth' => null,
-            'metadata' => [
-                'meta' => 'data'
-            ],
-            'employment' => null,
-            'addresses' => [
-                [
-                    'category' => '',
-                    'country' => 'ID',
-                    'state' => '-',
-                    'province' => 'DKI Jakarta',
-                    'city' => 'Jakarta Selatan',
-                    'postal_code' => '12345',
-                    'street_line1' => 'Jl. 123',
-                    'street_line2' => 'Jl. 456',
-                    'is_preferred' => false
-                ]
-            ],
-            'source_of_wealth' => null
-        ];
+        $response = self::CUSTOMER_RESPONSE;
 
         $this->stubRequest(
             'POST',
@@ -210,39 +164,7 @@ class CustomersTest extends TestCase
      */
     public function testIsCustomerGettable()
     {
-        $response = [
-            [
-                'id' => '0f2de6f1-2023-403b-aaea-5f0a8a611f7d',
-                'reference_id' => 'test-ref-iddd',
-                'given_names' => 'customer 1',
-                'email' => 'customer@website.com',
-                'mobile_number' => '+6281212345678',
-                'description' => 'dummy customer',
-                'middle_name' => 'middle',
-                'surname' => 'surname',
-                'phone_number' => null,
-                'nationality' => null,
-                'date_of_birth' => null,
-                'metadata' => [
-                    'meta' => 'data'
-                ],
-                'employment' => null,
-                'addresses' => [
-                    [
-                        'category' => '',
-                        'country' => 'ID',
-                        'state' => '-',
-                        'province' => 'DKI Jakarta',
-                        'city' => 'Jakarta Selatan',
-                        'postal_code' => '12345',
-                        'street_line1' => 'Jl. 123',
-                        'street_line2' => 'Jl. 456',
-                        'is_preferred' => false
-                    ]
-                ],
-                'source_of_wealth' => null
-            ]
-        ];
+        $response = [self::CUSTOMER_RESPONSE];
 
         $this->stubRequest(
             'get',
