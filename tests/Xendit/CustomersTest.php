@@ -28,7 +28,7 @@ use Xendit\TestCase;
 class CustomersTest extends TestCase
 {
     const CUSTOMER_PARAMS = [
-        'reference_id' => 'test-ref-iddd',
+        'reference_id' => 'test-ref-id',
         'given_names' => 'customer 1',
         'email' => 'customer@website.com',
         'mobile_number' => '+6281212345678',
@@ -53,7 +53,7 @@ class CustomersTest extends TestCase
 
     const CUSTOMER_RESPONSE = [
         'id' => '0f2de6f1-2023-403b-aaea-5f0a8a611f7d',
-        'reference_id' => 'test-ref-iddd',
+        'reference_id' => 'test-ref-id',
         'given_names' => 'customer 1',
         'email' => 'customer@website.com',
         'mobile_number' => '+6281212345678',
@@ -82,6 +82,8 @@ class CustomersTest extends TestCase
         ],
         'source_of_wealth' => null
     ];
+
+    const REFERENCE_ID = 'test-ref-id';
 
     /**
      * Create customer test
@@ -149,7 +151,7 @@ class CustomersTest extends TestCase
     {
         $this->expectException(\Xendit\Exceptions\InvalidArgumentException::class);
         $params = [
-            'reference_id' => 'test-ref-id'
+            'reference_id' => self::REFERENCE_ID
         ];
 
         Customers::createCustomer($params);
@@ -168,14 +170,14 @@ class CustomersTest extends TestCase
 
         $this->stubRequest(
             'get',
-            '/customers?reference_id=test-ref-iddd',
+            '/customers?reference_id=' . self::REFERENCE_ID,
             [],
             [],
             $response
         );
 
         $result = Customers::getCustomerByReferenceID(
-            'test-ref-iddd'
+            self::REFERENCE_ID
         );
 
         $this->assertEquals($response, $result);
@@ -193,7 +195,7 @@ class CustomersTest extends TestCase
         $this->expectException(\Xendit\Exceptions\ApiException::class);
 
         Customers::getCustomerByReferenceID(
-            'test-ref-iddd'
+            self::REFERENCE_ID
         );
     }
 }
