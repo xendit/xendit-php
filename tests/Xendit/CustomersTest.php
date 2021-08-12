@@ -112,6 +112,62 @@ class CustomersTest extends TestCase
     }
 
     /**
+     * Create customer test with mobile_number missing
+     * Should pass
+     *
+     * @return void
+     * @throws Exceptions\ApiException
+     */
+    public function testIsCustomerCreatableWithMobileNumberMissing()
+    {
+        $params = self::CUSTOMER_PARAMS;
+        unset($params['mobile_number']);
+
+        $response = self::CUSTOMER_RESPONSE;
+        $response['mobile_number'] = null;
+
+        $this->stubRequest(
+            'POST',
+            '/customers',
+            $params,
+            [],
+            $response
+        );
+
+        $result = Customers::createCustomer($params);
+
+        $this->assertEquals($response, $result);
+    }
+
+    /**
+     * Create customer test with email missing
+     * Should pass
+     *
+     * @return void
+     * @throws Exceptions\ApiException
+     */
+    public function testIsCustomerCreatableWithEmailMissing()
+    {
+        $params = self::CUSTOMER_PARAMS;
+        unset($params['email']);
+
+        $response = self::CUSTOMER_RESPONSE;
+        $response['email'] = null;
+
+        $this->stubRequest(
+            'POST',
+            '/customers',
+            $params,
+            [],
+            $response
+        );
+
+        $result = Customers::createCustomer($params);
+
+        $this->assertEquals($response, $result);
+    }
+
+    /**
      * Create customer test with headers
      * Should pass
      *
