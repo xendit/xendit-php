@@ -51,6 +51,12 @@ class Customers
     {
         $requiredParams = ['reference_id', 'given_names'];
 
+        if (array_key_exists('mobile_number', $params)) {
+            array_push($requiredParams, 'mobile_number');
+        } else {
+            array_push($requiredParams, 'email');
+        }
+
         self::validateParams($params, $requiredParams);
 
         $url = static::classUrl();

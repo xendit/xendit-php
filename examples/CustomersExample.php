@@ -21,7 +21,6 @@ $customerParams = [
     'reference_id' => '' . time(),
     'given_names' => 'customer 1',
     'email' => 'customer@website.com',
-    'mobile_number' => '+6281212345678',
     'description' => 'dummy customer',
     'middle_name' => 'middle',
     'surname' => 'surname',
