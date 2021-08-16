@@ -83,6 +83,7 @@ trait Request
 
         if (array_key_exists('api-version', $params)) {
             $headers['api-version'] = $params['api-version'];
+            unset($params['api-version']);
         }
 
         if (array_key_exists('X-API-VERSION', $params)) {

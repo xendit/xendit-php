@@ -49,7 +49,27 @@ class Customers
      */
     public static function createCustomer($params = [])
     {
-        $requiredParams = ['reference_id', 'given_names'];
+        $requiredParams = ['reference_id'];
+
+        if (array_key_exists('api-version', $params)
+            && $params['api-version'] == '2020-10-31'
+        ) {
+            array_push(
+                $requiredParams,
+                'type',
+                'identity_accounts',
+                'kyc_documents'
+            );
+        } else {
+            array_push($requiredParams, 'given_names');
+            if (!array_key_exists('mobile_number', $params)) {
+                array_push($requiredParams, 'email');
+            }
+
+            if (!array_key_exists('email', $params)) {
+                array_push($requiredParams, 'mobile_number');
+            }
+        }
 
         self::validateParams($params, $requiredParams);
 
@@ -62,16 +82,17 @@ class Customers
      * Get customer by reference ID
      *
      * @param string $reference_id reference ID
+     * @param array  $params       user's parameters
      *
      * @return array please check for responses parameters here
      * https://developers.xendit.co/api-reference/?bash#get-customer-by-reference-id
      * @throws Exceptions\ApiException
      */
-    public static function getCustomerByReferenceID($reference_id)
+    public static function getCustomerByReferenceID($reference_id, $params=[])
     {
         $url = static::classUrl()
             . '?reference_id=' . $reference_id;
 
-        return static::_request('GET', $url);
+        return static::_request('GET', $url, $params);
     }
 }
