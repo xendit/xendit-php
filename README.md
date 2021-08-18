@@ -20,6 +20,17 @@ This library is the abstraction of Xendit API for access from applications writt
     -   [Customers](#customers)
         -   [Create Customer](#create-customer)
         -   [Get Customer by Reference ID](#get-customer-by-reference-id)
+    -   [Direct Debit](#direct-debit)
+        -   [Initialize linked account tokenization](#initialize-linked-account-tokenization)
+        -   [Validate OTP for Linked Account Token](#validate-otp-for-linked-account-token)
+        -   [Retrieve accessible accounts by linked account token](#retrieve-accessible-accounts-by-linked-account-token)
+        -   [Unbind linked account token](#unbind-linked-account-token)
+        -   [Create payment method](#create-payment-method)
+        -   [Get payment methods by customer ID](#get-payment-methods-by-customer-id)
+        -   [Create direct debit payment](#create-direct-debit-payment)
+        -   [Validate OTP for direct debit payment](#validate-otp-for-direct-debit-payment)
+        -   [Get direct debit payment by ID](#get-direct-debit-payment-by-id)
+        -   [Get direct debit payment by reference ID](#get-direct-debit-payment-by-reference-id)
     -   [Disbursements](#disbursements)
         -   [Create Disbursement](#create-disbursement)
         -   [Create Batch Disbursement](#create-batch-disbursement)
@@ -395,6 +406,230 @@ Usage example:
 $reference_id = 'ref_id';
 $getCustomer = \Xendit\Customers::getCustomerByReferenceID($reference_id);
 var_dump($getCustomer);
+```
+
+### Direct Debit
+
+#### Initialize linked account tokenization
+
+```php
+\Xendit\DirectDebit::initializeLinkedAccountTokenization(array $params);
+```
+
+Usage example:
+
+```php
+$params = [
+    'customer_id' => '4b7b6050-0830-440a-903b-37d527dbbaa9',
+    'channel_code' => 'DC_BRI',
+    'properties' => [
+        'account_mobile_number' => '+62818555988',
+        'card_last_four' => '8888',
+        'card_expiry' => '06/24',
+        'account_email' => 'test.email@xendit.co'
+    ],
+    'metadata' => [
+        'meta' => 'data'
+    ]
+];
+
+$initializeTokenization = \Xendit\DirectDebit::initializeLinkedAccountTokenization($params);
+var_dump($initializeTokenization);
+```
+
+#### Validate OTP for Linked Account Token
+
+```php
+\Xendit\DirectDebit::validateOTPForLinkedAccount(string $linked_account_token_id, array $params);
+```
+
+Usage example:
+
+```php
+$params = [
+    'otp_code' => '333000'
+];
+
+$validateOTPForLinkedAccount = \Xendit\DirectDebit::validateOTPForLinkedAccount(
+    'lat-a08fba1b-100c-445b-b788-aaeaf8215e8f',
+    $params
+);
+var_dump($validateOTPForLinkedAccount);
+```
+
+#### Retrieve accessible accounts by linked account token
+
+```php
+\Xendit\DirectDebit::retrieveAccessibleLinkedAccounts(string $linked_account_token_id);
+```
+
+Usage example:
+
+```php
+$retrieveAccessibleLinkedAccounts = \Xendit\DirectDebit::retrieveAccessibleLinkedAccounts(
+    'lat-a08fba1b-100c-445b-b788-aaeaf8215e8f'
+);
+var_dump($retrieveAccessibleLinkedAccounts);
+```
+
+#### Unbind linked account token
+
+```php
+\Xendit\DirectDebit::unbindLinkedAccountToken(string $linked_account_token_id);
+```
+
+Usage example:
+
+```php
+$unbindLinkedAccountToken = \Xendit\DirectDebit::unbindLinkedAccountToken(
+    'lat-a08fba1b-100c-445b-b788-aaeaf8215e8f'
+);
+var_dump($unbindLinkedAccountToken);
+```
+
+#### Create payment method
+
+```php
+\Xendit\DirectDebit::createPaymentMethod(array $params);
+```
+
+Usage example:
+
+```php
+$params = [
+    'customer_id' => '4b7b6050-0830-440a-903b-37d527dbbaa9',
+    'type' => 'DEBIT_CARD',
+    'properties' => [
+        'id' => 'la-052d3e2d-bc4d-4c98-8072-8d232a552299'
+    ],
+    'metadata' => [
+        'meta' => 'data'
+    ]
+];
+
+$createPaymentMethod = \Xendit\DirectDebit::createPaymentMethod($params);
+var_dump($createPaymentMethod);
+```
+
+#### Get payment methods by customer ID
+
+```php
+\Xendit\DirectDebit::getPaymentMethodsByCustomerID(string $customer_id);
+```
+
+Usage example:
+
+```php
+$getPaymentMethods = \Xendit\DirectDebit::getPaymentMethodsByCustomerID('4b7b6050-0830-440a-903b-37d527dbbaa9');
+var_dump($getPaymentMethods);
+```
+
+#### Create direct debit payment
+
+```php
+\Xendit\DirectDebit::createDirectDebitPayment(array $params);
+```
+
+Usage example:
+
+```php
+$params = [
+    'reference_id' => 'test-direct-debit-ref',
+    'payment_method_id' => 'pm-ebb1c863-c7b5-4f20-b116-b3071b1d3aef',
+    'currency' => 'IDR',
+    'amount' => 15000,
+    'callback_url' => 'http://webhook.site/',
+    'enable_otp' => true,
+    'description' => 'test description',
+    'basket' => [
+        [
+            'reference_id' => 'basket-product-ref-id',
+            'name' => 'product name',
+            'category' => 'mechanics',
+            'market' => 'ID',
+            'price' => 50000,
+            'quantity' => 5,
+            'type' => 'product type',
+            'sub_category' => 'product sub category',
+            'description' => 'product description',
+            'url' => 'https://product.url'
+        ]
+    ],
+    'device' => [
+        'id' => 'device_id',
+        'ip_address' => '0.0.0.0',
+        'ad_id' => 'ad-id',
+        'imei' => '123a456b789c'
+    ],
+    'success_redirect_url' => 'https://success-redirect.url',
+    'failure_redirect_url' => 'https://failure-redirect.url',
+    'metadata' => [
+        'meta' => 'data'
+    ],
+    'Idempotency-key' => '' . time()
+];
+
+$createDirectDebitPayment = \Xendit\DirectDebit::createDirectDebitPayment(
+    $params
+);
+var_dump($createDirectDebitPayment);
+```
+
+#### Validate OTP for direct debit payment
+
+```php
+\Xendit\DirectDebit::validateOTPForDirectDebitPayment(
+    string $direct_debit_payment_id,
+    array $params
+);
+```
+
+Usage example:
+
+```php
+$params = [
+    'otp_code' => '222000'
+];
+
+$validateOTPForDirectDebitPayment = \Xendit\DirectDebit::validateOTPForDirectDebitPayment(
+    'ddpy-7e61b0a7-92f9-4762-a994-c2936306f44c',
+    $params
+);
+var_dump($validateOTPForDirectDebitPayment);
+```
+
+#### Get direct debit payment by ID
+
+```php
+\Xendit\DirectDebit::getDirectDebitPaymentByID(
+    string $direct_debit_payment_id
+);
+```
+
+Usage example:
+
+```php
+$getDirectDebitPaymentByID = \Xendit\DirectDebit::getDirectDebitPaymentByID(
+    'ddpy-7e61b0a7-92f9-4762-a994-c2936306f44c'
+);
+var_dump($getDirectDebitPaymentByID);
+```
+
+#### Get direct debit payment by reference ID
+
+```php
+\Xendit\DirectDebit::getDirectDebitPaymentByReferenceID(
+    string $reference_id
+);
+```
+
+Usage example:
+
+```php
+$getDirectDebitPaymentByReferenceID = \Xendit\DirectDebit::getDirectDebitPaymentByReferenceID(
+    'test-direct-debit-ref'
+);
+var_dump($getDirectDebitPaymentByReferenceID);
 ```
 
 ### Disbursements
