@@ -174,7 +174,7 @@ class Platform
 
         $payload = array();
         $payload['name'] = $params['name'];
-        if (isset($params['description']) && !empty($params['description']) && $params['description'] !== '') {
+        if (isset($params['description'])) {
             $payload['description'] = $params['description'];
         }
         $payload['routes'] = [
