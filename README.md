@@ -69,6 +69,13 @@ This library is the abstraction of Xendit API for access from applications writt
         -   [Get Fixed Virtual Account](#get-fixed-virtual-account)
         -   [Update Fixed Virtual Account](#update-fixed-virtual-account)
         -   [Get Fixed Virtual Account Payment](#get-fixed-virtual-account-payment)
+    -   [xenPlatform](#xenplatform)
+        -   [Create Account](#create-account)
+        -   [Get Account](#get-account)
+        -   [Update Account](#update-account)
+        -   [Create Transfers](#create-transfers)
+        -   [Create Fee Rule](#create-fee-rule)
+        -   [Set Callback URLs](#set-callback-urls)
 -   [Exceptions](#exceptions)
     -   [InvalidArgumentException](#invalidargumentexception)
     -   [ApiException](#apiexception)
@@ -1173,6 +1180,113 @@ Usage example:
 $paymentID = 'payment-ID';
 $getFVAPayment = \Xendit\VirtualAccounts::getFVAPayment($paymentID);
 var_dump($getFVAPayment);
+```
+
+### xenPlatform
+
+#### Create Account
+
+```php
+\Xendit\Platform::createAccount(array $params);
+```
+
+Usage example:
+
+```php
+$params = [
+    'email' => 'customer@website.com',
+    'type' => 'OWNED',
+    'public_profile' => ['business_name' => 'customer company']
+];
+
+$createAccount = \Xendit\Platform::createAccount(array $params);
+var_dump($createAccount);
+```
+
+#### Get Account
+
+```php
+\Xendit\Platform::getAccount(string $account_id);
+```
+
+Usage example:
+
+```php
+$getAccount = \Xendit\Platform::getAccount($accountId);
+var_dump($getAccount);
+```
+
+#### Update Account
+
+```php
+$updateAccount = \Xendit\Platform::updateAccount(string $account_id, array $params);
+```
+
+Usage example:
+
+```php
+$updateParams = [
+    'email' => 'customer@website.com',
+    'public_profile' => ['business_name' => 'customer company updated']
+];
+$updateAccount = \Xendit\Platform::updateAccount($accountId, $updateParams);
+var_dump($updateAccount);
+```
+
+#### Create Transfers
+
+```php
+$createTransfer = \Xendit\Platform::createTransfer(array $transferParams);
+```
+
+Usage example:
+
+```php
+$transferParams = [
+    'reference' => ''.time(),
+    'amount' => 50000,
+    'source_user_id' => '54afeb170a2b18519b1b8768',
+    'destination_user_id' => '5cafeb170a2b1851246b8768',
+];
+$createTransfer = \Xendit\Platform::createTransfer($transferParams);
+var_dump($createTransfer);
+```
+
+#### Create Fee Rule
+
+```php
+$createFeeRule = \Xendit\Platform::createFeeRule(array $feeRuleParams);
+```
+
+Usage example:
+
+```php
+$feeRuleParams = [
+    'name' => 'standard_platform_fee',
+    'description' => 'Fee charged to insurance agents based in Java',
+    'unit' => 'flat',
+    'amount' => 6500,
+    'currency' => 'IDR'
+];
+$createFeeRule = \Xendit\Platform::createFeeRule($feeRuleParams);
+var_dump($createFeeRule);
+```
+
+#### Set Callback URLs
+
+```php
+$setCallbackUrl = \Xendit\Platform::setCallbackUrl(string $callbackType, array $callbackUrlParams);
+```
+
+Usage example:
+
+```php
+$callbackUrlParams = [
+    'url' => 'https://webhook.site/c9c9140b-96b8-434c-9c59-7440eeae4d7f'
+];
+$callbackType = 'invoice';
+$setCallbackUrl = \Xendit\Platform::setCallbackUrl($callbackType, $callbackUrlParams);
+var_dump($setCallbackUrl);
 ```
 
 ## Exceptions
