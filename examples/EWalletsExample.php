@@ -101,7 +101,11 @@ $createEWalletCharge = \Xendit\EWallets::createEWalletCharge($ewalletChargeParam
 var_dump($createEWalletCharge);
 
 echo "Retrieving E-Wallet Charge Status with ID: {$createEWalletCharge['id']}...\n";
+$walletChargeStatusParams = [
+    'for-user-id' => 'test-user-id'
+];
 $getEWalletChargeStatus = \Xendit\EWallets::getEWalletChargeStatus(
-    $createEWalletCharge['id']
+    $createEWalletCharge['id'],
+    $walletChargeStatusParams
 );
 var_dump($getEWalletChargeStatus);
