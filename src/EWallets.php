@@ -121,7 +121,7 @@ class EWallets
      * https://developers.xendit.co/api-reference/?bash#get-ewallet-charge-status
      * @throws Exceptions\ApiException
      */
-    public static function getEWalletChargeStatus($charge_id, $params)
+    public static function getEWalletChargeStatus($charge_id, $params=[])
     {
         $url = static::classUrl()
             . '/charges/' . $charge_id;
