@@ -795,14 +795,17 @@ var_dump($createEWalletCharge);
 #### Get E-Wallet Charge Status
 
 ```php
-\Xendit\EWallets::getEWalletChargeStatus(string $charge_id);
+\Xendit\EWallets::getEWalletChargeStatus(string $charge_id, array $params);
 ```
 
 Usage example:
 
 ```php
 $charge_id = 'ewc_f3925450-5c54-4777-98c1-fcf22b0d1e1c';
-$getEWalletChargeStatus = \Xendit\EWallets::getEWalletChargeStatus($charge_id);
+$eWalletStatusParam = [
+	'for-user-id' => 'test-reference-user-id'
+]
+$getEWalletChargeStatus = \Xendit\EWallets::getEWalletChargeStatus($charge_id, $eWalletStatusParam);
 var_dump($getEWalletChargeStatus);
 ```
 
