@@ -1,7 +1,7 @@
 <?php
 
 /**
- * TransactionExample.php
+ * ReportExample.php
  * php version 7.4.0
  *
  * @category Example
@@ -17,8 +17,11 @@ require 'vendor/autoload.php';
 
 Xendit::setApiKey('SECRET_API_KEY');
 
-$list = \Xendit\Transaction::list();
-var_dump($list);
+$params = [
+    'type' => 'TRANSACTIONS'
+];
+$generate = \Xendit\Report::generate($params);
+var_dump($generate);
 
-$detail = \Xendit\Transaction::detail('txn_13dd178d-41fa-40b7-8fd3-f83675d6f413');
+$detail = \Xendit\Report::detail('report_5c1b34a2-6ceb-4c24-aba9-c836bac82b28');
 var_dump($detail);

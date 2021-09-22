@@ -14,7 +14,7 @@
 namespace Xendit;
 
 /**
- * Class Platform
+ * Class Transaction
  *
  * @category Class
  * @package  Xendit

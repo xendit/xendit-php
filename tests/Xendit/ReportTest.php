@@ -1,7 +1,7 @@
 <?php
 
 /**
- * TransactionTest.php
+ * ReportTest.php
  * php version 7.4.0
  *
  * @category Test
@@ -13,11 +13,11 @@
 
 namespace Xendit;
 
-use Xendit\Transaction;
+use Xendit\Report;
 use Xendit\TestCase;
 
 /**
- * Class TransactionTest
+ * Class ReportTest
  *
  * @category Class
  * @package  Xendit
@@ -25,35 +25,35 @@ use Xendit\TestCase;
  * @license  https://opensource.org/licenses/MIT MIT License
  * @link     https://api.xendit.co
  */
-class TransactionTest extends TestCase
+class ReportTest extends TestCase
 {
     /**
-     * Get list of transactions test
+     * Generate report test
      * Should pass
      *
      * @return void
      * @throws Exceptions\ApiException
      */
-    public function testListIsGettable()
+    public function testReportIsCreatetable()
     {
         $expectedResponse = [
-            'has_more' => false
+            'type' => 'TRANSACTIONS'
         ];
 
         $this->stubRequest(
-            'GET',
-            '/transactions',
-            [],
+            'POST',
+            '/reports',
+            $expectedResponse,
             [],
             $expectedResponse
         );
 
-        $result = Transaction::list();
-        $this->assertEquals($result['has_more'], $expectedResponse['has_more']);
+        $result = Report::generate($expectedResponse);
+        $this->assertEquals($result['type'], $expectedResponse['type']);
     }
 
     /**
-     * Get detail of transactions test
+     * Get detail of report test
      * Should pass
      *
      * @return void
@@ -62,35 +62,35 @@ class TransactionTest extends TestCase
     public function testDetailIsGettable()
     {
         $expectedResponse = [
-            'id' => 'txn_4b401a5f-47b1-4aab-8136-f7c4440d571f'
+            'id' => 'report_5c1b34a2-6ceb-4c24-aba9-c836bac82b28'
         ];
 
         $this->stubRequest(
             'GET',
-            '/transactions/txn_4b401a5f-47b1-4aab-8136-f7c4440d571f',
+            '/reports/report_5c1b34a2-6ceb-4c24-aba9-c836bac82b28',
             [],
             [],
             $expectedResponse
         );
 
-        $result = Transaction::detail('txn_4b401a5f-47b1-4aab-8136-f7c4440d571f');
+        $result = Report::detail('report_5c1b34a2-6ceb-4c24-aba9-c836bac82b28');
         $this->assertEquals($result['id'], $expectedResponse['id']);
     }
 
     /**
-     * Get list of transactions test
-     * Should throw ApiException
+     * Generate report test
+     * Should throw InvalidArgumentException
      *
      * @return void
      */
-    public function testListIsGettableThrowsException()
+    public function testReportIsCreatetableThrowsException()
     {
-        $this->expectException(\Xendit\Exceptions\ApiException::class);
-        Transaction::list();
+        $this->expectException(\Xendit\Exceptions\InvalidArgumentException::class);
+        Report::generate();
     }
 
     /**
-     * Get detail of transactions test
+     * Get detail of report test
      * Should throw ApiException
      *
      * @return void
@@ -98,6 +98,6 @@ class TransactionTest extends TestCase
     public function testDetailIsGettableThrowsException()
     {
         $this->expectException(\Xendit\Exceptions\ApiException::class);
-        Transaction::detail('txn_4b401a5f-47b1-4aab-8136-f7c4440d571f');
+        Report::detail('report_5c1b34a2-6ceb-4c24-aba9-c836bac82b28');
     }
 }

@@ -79,6 +79,9 @@ This library is the abstraction of Xendit API for access from applications writt
     -   [Transaction](#transaction)
         -   [List of transactions](#list-of-transactions)
         -   [Detail of transaction](#detail-of-transaction)
+    -   [Report](#report)
+        -   [Generate Report](#generate-report)
+        -   [Detail of Report](#detail-of-report)
 -   [Exceptions](#exceptions)
     -   [InvalidArgumentException](#invalidargumentexception)
     -   [ApiException](#apiexception)
@@ -1325,6 +1328,37 @@ Usage example:
 ```php
 $detailTransaction = \Xendit\Transaction::detail(string $transaction_id);
 var_dump($detailTransaction);
+```
+
+### Report
+
+#### Generate Report
+
+```php
+\Xendit\Report::generate(array $params);
+```
+
+Usage example:
+
+```php
+$params = [
+    'type' => 'TRANSACTIONS'
+];
+$generate = \Xendit\Report::generate($params);
+var_dump($generate);
+```
+
+#### Detail of Report
+
+```php
+\Xendit\Report::detail(string $report_id);
+```
+
+Usage example:
+
+```php
+$detailReport = \Xendit\Report::detail('report_5c1b34a2-6ceb-4c24-aba9-c836bac82b28');
+var_dump($detailReport);
 ```
 
 ## Exceptions
