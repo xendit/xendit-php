@@ -76,6 +76,9 @@ This library is the abstraction of Xendit API for access from applications writt
         -   [Create Transfers](#create-transfers)
         -   [Create Fee Rule](#create-fee-rule)
         -   [Set Callback URLs](#set-callback-urls)
+    -   [Transaction](#transaction)
+        -   [List of transactions](#list-of-transactions)
+        -   [Detail of transaction](#detail-of-transaction)
 -   [Exceptions](#exceptions)
     -   [InvalidArgumentException](#invalidargumentexception)
     -   [ApiException](#apiexception)
@@ -1290,6 +1293,38 @@ $callbackUrlParams = [
 $callbackType = 'invoice';
 $setCallbackUrl = \Xendit\Platform::setCallbackUrl($callbackType, $callbackUrlParams);
 var_dump($setCallbackUrl);
+```
+
+### Transaction
+
+#### List of Transactions
+
+```php
+\Xendit\Transaction::list(array $params);
+```
+
+Usage example:
+
+```php
+$params = [
+    'types' => 'DISBURSEMENT'
+];
+
+$transactions = \Xendit\Transaction::list(array $params);
+var_dump($transactions);
+```
+
+#### Detail of Transaction
+
+```php
+\Xendit\Transaction::detail(string $transaction_id);
+```
+
+Usage example:
+
+```php
+$detailTransaction = \Xendit\Transaction::detail(string $transaction_id);
+var_dump($detailTransaction);
 ```
 
 ## Exceptions
