@@ -51,16 +51,4 @@ class PaymentChannelsTest extends TestCase
         $result = PaymentChannels::list();
         $this->assertEquals($result['channel_code'], $expectedResponse['channel_code']);
     }
-
-    /**
-     * Get list of payment channel test
-     * Should throw ApiException
-     *
-     * @return void
-     */
-    public function testListIsGettableThrowsException()
-    {
-        $this->expectException(\Xendit\Exceptions\ApiException::class);
-        PaymentChannels::list();
-    }
 }
