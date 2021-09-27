@@ -8,6 +8,8 @@ This library is the abstraction of Xendit API for access from applications writt
 -   [Methods' Signature and Examples](#methods-signature-and-examples)
     -   [Balance](#balance)
         -   [Get Balance](#get-balance)
+    -   [Payment Channels](#payment-channels)
+        -   [Get Payment Channels](#get-payment-channels)
     -   [Cards](#cards)
         -   [Create Charge](#create-charge)
         -   [Reverse Authorization](#reverse-authorization)
@@ -151,6 +153,21 @@ Usage example:
 ```php
 $getBalance = \Xendit\Balance::getBalance('CASH');
 var_dump($getBalance);
+```
+
+### Payment Channels
+
+#### Get Payment Channels
+
+```php
+\Xendit\PaymentChannels::list();
+```
+
+Usage example:
+
+```php
+$getPaymentChannels = \Xendit\PaymentChannels::list();
+var_dump($getPaymentChannels);
 ```
 
 ### Cards
