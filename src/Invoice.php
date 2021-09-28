@@ -46,7 +46,7 @@ class Invoice
      */
     public static function createReqParams()
     {
-        return ['external_id', 'payer_email', 'description', 'amount'];
+        return ['external_id', 'amount'];
     }
 
     /**
