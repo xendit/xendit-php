@@ -114,6 +114,29 @@ class GuzzleClient implements ClientInterface
         try {
             if (count($params) > 0) {
                 if (strtoupper($opts['method']) === 'GET') {
+                    if (array_key_exists('for-user-id', $params)) {
+                        unset($params['for-user-id']);
+                    }
+
+                    if (array_key_exists('with-fee-rule', $params)) {
+                        unset($params['with-fee-rule']);
+                    }
+
+                    if (array_key_exists('Idempotency-key', $params)) {
+                        unset($params['Idempotency-key']);
+                    }
+
+                    if (array_key_exists('X-IDEMPOTENCY-KEY', $params)) {
+                        unset($params['X-IDEMPOTENCY-KEY']);
+                    }
+
+                    if (array_key_exists('api-version', $params)) {
+                        unset($params['api-version']);
+                    }
+
+                    if (array_key_exists('X-API-VERSION', $params)) {
+                        unset($params['X-API-VERSION']);
+                    }
                     $response =  $this->http->request(
                         $opts['method'], $url, [
                             'auth' => [$apiKey, ''],

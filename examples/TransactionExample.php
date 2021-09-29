@@ -15,7 +15,7 @@ use Xendit\Xendit;
 
 require 'vendor/autoload.php';
 
-Xendit::setApiKey('xnd_development_gpa2q6CoWVCjjGHpFDynTaizO6AkmvUrn1VrkMWAcsIujh2AfhC2PSlrceKOXS');
+Xendit::setApiKey('SECRET_API_KEY');
 
 $params = [
     'types' => 'DISBURSEMENT',
