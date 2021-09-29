@@ -24,5 +24,5 @@ $params = [
 $list = \Xendit\Transaction::list($params);
 var_dump($list);
 
-// $detail = \Xendit\Transaction::detail('txn_13dd178d-41fa-40b7-8fd3-f83675d6f413');
-// var_dump($detail);
+$detail = \Xendit\Transaction::detail('txn_13dd178d-41fa-40b7-8fd3-f83675d6f413');
+var_dump($detail);
