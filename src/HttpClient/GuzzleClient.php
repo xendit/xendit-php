@@ -113,13 +113,23 @@ class GuzzleClient implements ClientInterface
         $url = strval($url);
         try {
             if (count($params) > 0) {
-                $response =  $this->http->request(
-                    $opts['method'], $url, [
-                        'auth' => [$apiKey, ''],
-                        'headers' => $headers,
-                        RequestOptions::JSON => $params
-                    ]
-                );
+                if (strtoupper($opts['method']) === 'GET') {
+                    $response =  $this->http->request(
+                        $opts['method'], $url, [
+                            'auth' => [$apiKey, ''],
+                            'headers' => $headers,
+                            'query' => $params
+                        ]
+                    );
+                } else {
+                    $response =  $this->http->request(
+                        $opts['method'], $url, [
+                            'auth' => [$apiKey, ''],
+                            'headers' => $headers,
+                            RequestOptions::JSON => $params
+                        ]
+                    );
+                }
             } else {
                 $response =  $this->http->request(
                     $opts['method'], $url, [

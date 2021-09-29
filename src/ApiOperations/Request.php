@@ -67,18 +67,22 @@ trait Request
 
         if (array_key_exists('for-user-id', $params)) {
             $headers['for-user-id'] = $params['for-user-id'];
+            unset($params['for-user-id']);
         }
 
         if (array_key_exists('with-fee-rule', $params)) {
             $headers['with-fee-rule'] = $params['with-fee-rule'];
+            unset($params['with-fee-rule']);
         }
 
         if (array_key_exists('Idempotency-key', $params)) {
             $headers['Idempotency-key'] = $params['Idempotency-key'];
+            unset($params['Idempotency-key']);
         }
 
         if (array_key_exists('X-IDEMPOTENCY-KEY', $params)) {
             $headers['X-IDEMPOTENCY-KEY'] = $params['X-IDEMPOTENCY-KEY'];
+            unset($params['X-IDEMPOTENCY-KEY']);
         }
 
         if (array_key_exists('api-version', $params)) {
@@ -88,6 +92,7 @@ trait Request
 
         if (array_key_exists('X-API-VERSION', $params)) {
             $headers['X-API-VERSION'] = $params['X-API-VERSION'];
+            unset($params['X-API-VERSION']);
         }
 
         $requestor = new \Xendit\ApiRequestor();

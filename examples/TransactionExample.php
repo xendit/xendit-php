@@ -15,10 +15,14 @@ use Xendit\Xendit;
 
 require 'vendor/autoload.php';
 
-Xendit::setApiKey('SECRET_API_KEY');
+Xendit::setApiKey('xnd_development_gpa2q6CoWVCjjGHpFDynTaizO6AkmvUrn1VrkMWAcsIujh2AfhC2PSlrceKOXS');
 
-$list = \Xendit\Transaction::list();
+$params = [
+    'types' => 'DISBURSEMENT',
+    'for-user-id' => '6151d0a19770efbe7fb712b8',
+];
+$list = \Xendit\Transaction::list($params);
 var_dump($list);
 
-$detail = \Xendit\Transaction::detail('txn_13dd178d-41fa-40b7-8fd3-f83675d6f413');
-var_dump($detail);
+// $detail = \Xendit\Transaction::detail('txn_13dd178d-41fa-40b7-8fd3-f83675d6f413');
+// var_dump($detail);
