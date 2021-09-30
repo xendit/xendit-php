@@ -16,8 +16,12 @@ use Xendit\Xendit;
 require 'vendor/autoload.php';
 
 Xendit::setApiKey('SECRET_API_KEY');
-
-$list = \Xendit\Transaction::list();
+$params = [
+    'types' => 'DISBURSEMENT',
+    'for-user-id' => '<your user id>',
+    'query-param'=> 'true'
+];
+$list = \Xendit\Transaction::list($params);
 var_dump($list);
 
 $detail = \Xendit\Transaction::detail('txn_13dd178d-41fa-40b7-8fd3-f83675d6f413');

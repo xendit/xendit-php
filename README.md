@@ -1328,6 +1328,8 @@ Usage example:
 ```php
 $params = [
     'types' => 'DISBURSEMENT'
+    'for-user-id' => 'Your User Id', //Optional
+    'query-param'=> 'true' //This is to enable parameters as query strings
 ];
 
 $transactions = \Xendit\Transaction::list(array $params);
