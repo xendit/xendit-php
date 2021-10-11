@@ -47,6 +47,9 @@ This library is the abstraction of Xendit API for access from applications writt
         -   [Get Invoice](#get-invoice)
         -   [Get All Invoice](#get-all-invoice)
         -   [Expire Invoice](#expire-invoice)
+    -   [Paylater](#paylater)
+        -   [Initiate PayLater Plans](#initiate-paylater-plans)
+        -   [Create PayLater Charges](#create-paylater-charges)
     -   [Payouts](#payouts)
         -   [Create a Payout](#create-payout)
         -   [Get a Payout](#get-payout)
@@ -893,7 +896,75 @@ $id = 'invoice-id';
 $expireInvoice = \Xendit\Invoice::expireInvoice($id);
 var_dump($expireInvoice);
 ```
+### Paylater
 
+#### Initiate PayLater Plans
+
+```php
+
+\Xendit\PayLater::initiatePayLaterPlans(array $params);
+```
+
+Usage example:
+
+```php
+$params = [
+    'customer_id' => '<your-customer-id>',
+    'channel_code' => 'ID_KREDIVO',
+    'currency' => 'IDR',
+    'amount' => 6000000,
+    'order_items' => [
+        [
+            'type' => 'PHYSICAL_PRODUCT',
+            'reference_id' => '1533',
+            'name' => 'iPhone X - 64 GB - Space Gray',
+            'net_unit_amount' => 6000000,
+            'quantity' => 1,
+            'url' => '<your-url>',
+            'category' => 'Smartphone'
+        ]
+    ]
+];
+
+$payLaterPlan = \Xendit\PayLater::initiatePayLaterPlans($params);
+var_dump($payLaterPlan);
+```
+
+#### Create Paylater Charges
+
+```php
+\Xendit\PayLater::createPayLaterCharge(array $params);
+```
+
+Usage example:
+
+```php
+$params = [
+    'plan_id' => $payLaterPlan['id'],
+    'reference_id' => 'order_id_' . time(),
+    'checkout_method' => 'ONE_TIME_PAYMENT',
+    'success_redirect_url' => '<your-success-redirect-url>',
+    'failure_redirect_url' => '<your-failure-redirect-url>',
+];
+$payLaterCharge = \Xendit\PayLater::createPayLaterCharge($params);
+var_dump($payLaterCharge);
+
+```
+
+#### Void Payout
+
+```php
+\Xendit\Payouts::void(string $id);
+```
+
+Usage example:
+
+```php
+$id = 'payout-id';
+
+$voidPayout = \Xendit\Payouts::void($id);
+var_dump($voidPayout);
+```
 ### Payouts
 
 #### Create Payout
