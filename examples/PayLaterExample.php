@@ -26,7 +26,7 @@ $params = [
         [
             'type' => 'PHYSICAL_PRODUCT',
             'reference_id' => '1533',
-            'name' => 'iPhone X - 64 GB - Space Gray',
+            'name' => 'Mobile Phone',
             'net_unit_amount' => 6000000,
             'quantity' => 1,
             'url' => '<your-url>',
