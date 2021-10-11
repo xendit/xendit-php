@@ -26,10 +26,10 @@ $params = [
         [
             'type' => 'PHYSICAL_PRODUCT',
             'reference_id' => '1533',
-            'name' => 'iPhone X - 64 GB - Space Gray',
+            'name' => 'Mobile Phone',
             'net_unit_amount' => 6000000,
             'quantity' => 1,
-            'url' => 'https://jagofon.com/en/product/apple-iphone-x-64-gb-space-gray-1533',
+            'url' => '<your-url>',
             'category' => 'Smartphone'
         ]
     ]
@@ -42,7 +42,8 @@ $params = [
     'plan_id' => $payLaterPlan['id'],
     'reference_id' => 'order_id_' . time(),
     'checkout_method' => 'ONE_TIME_PAYMENT',
-    'success_redirect_url' => 'https://google.com',
-    'failure_redirect_url' => 'https://twitter.com',
+    'success_redirect_url' => 'https://your-site.com/redirect-success',
+    'failure_redirect_url' => 'https://your-site.com/redirect-failure',
 ];
 $payLaterCharge = \Xendit\PayLater::createPayLaterCharge($params);
+var_dump($payLaterCharge);
