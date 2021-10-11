@@ -37,3 +37,12 @@ $params = [
 
 $payLaterPlan = \Xendit\PayLater::initiatePayLaterPlans($params);
 var_dump($payLaterPlan);
+
+$params = [
+    'plan_id' => $payLaterPlan['id'],
+    'reference_id' => 'order_id_' . time(),
+    'checkout_method' => 'ONE_TIME_PAYMENT',
+    'success_redirect_url' => 'https://google.com',
+    'failure_redirect_url' => 'https://twitter.com',
+];
+$payLaterCharge = \Xendit\PayLater::createPayLaterCharge($params);

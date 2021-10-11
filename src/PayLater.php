@@ -63,4 +63,28 @@ class PayLater
 
         return static::_request('POST', $url, $params);
     }
+
+    /**
+     * Create PayLater transaction / generate checkout URL
+     *
+     * @param array $params
+     * @return array
+     * @throws InvalidArgumentException
+     * @throws ApiException
+     */
+    public static function createPayLaterCharge($params = [])
+    {
+        $requiredParams = [
+            'plan_id',
+            'reference_id',
+            'checkout_method',
+            'success_redirect_url',
+        ];
+
+        self::validateParams($params, $requiredParams);
+
+        $url = static::classUrl() . '/charges';
+
+        return static::_request('POST', $url, $params);
+    }
 }
