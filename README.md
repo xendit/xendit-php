@@ -145,7 +145,10 @@ Checkout [custom http client example](./examples/CustomHttpClient.php) for imple
 #### Get Balance
 
 ```php
-\Xendit\Balance::getBalance(string $account_type);
+$params = array(
+    'for-user-id' => '<sub account user id>' //The sub-account user-id that you want to make this transaction for (Optional).
+);
+\Xendit\Balance::getBalance(string $account_type, array $params);
 ```
 
 Usage example:
