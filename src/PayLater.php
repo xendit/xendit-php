@@ -91,7 +91,7 @@ class PayLater
     /**
      * Get PayLater Charge by ID
      *
-     * @param int $id
+     * @param string $id
      * @param array $params
      * @return array
      * @throws InvalidArgumentException
@@ -113,7 +113,7 @@ class PayLater
     /**
      * Create Paylater Refund
      *
-     * @param int $id
+     * @param string $id
      * @param array $params
      * @return array
      * @throws InvalidArgumentException
@@ -135,8 +135,8 @@ class PayLater
     /**
      * Get Refund by Refund ID
      *
-     * @param int $charge_id
-     * @param int $refund_id
+     * @param string $charge_id
+     * @param string $refund_id
      * @param array $params
      * @return array
      * @throws InvalidArgumentException

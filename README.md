@@ -50,6 +50,10 @@ This library is the abstraction of Xendit API for access from applications writt
     -   [Paylater](#paylater)
         -   [Initiate PayLater Plans](#initiate-paylater-plans)
         -   [Create PayLater Charges](#create-paylater-charges)
+        -   [Get PayLater Charge by ID](#get-paylater-charge-by-id)
+        -   [Refund PayLater Charge](#refund-paylater-charge)
+        -   [Get PayLater Refund by ID](#get-paylater-refund-by-id)
+        -   [List PayLater Refunds](#list-paylater-refunds)
     -   [Payouts](#payouts)
         -   [Create a Payout](#create-payout)
         -   [Get a Payout](#get-payout)
@@ -953,7 +957,67 @@ $payLaterCharge = \Xendit\PayLater::createPayLaterCharge($params);
 var_dump($payLaterCharge);
 
 ```
+#### Get PayLater Charge by ID
 
+```php
+\Xendit\PayLater::getPayLaterChargeStatus($id, array $params);
+```
+
+Usage example:
+
+```php
+$params = []; // Optional (You can put for-user-id if needed)
+$id = '<pay-later-charge-id>';
+$payLaterCharge = \Xendit\PayLater::getPayLaterChargeStatus($id, $params);
+var_dump($payLaterCharge);
+
+```
+#### Create Paylater Refund
+
+```php
+\Xendit\PayLater::createPayLaterRefund($id, array $params);
+```
+
+Usage example:
+
+```php
+$params = []; // Optional (You can put for-user-id if needed)
+$id = '<pay-later-charge-id>';
+$payLaterChargeRefundCreate = \Xendit\PayLater::createPayLaterRefund($id, $params);
+var_dump($payLaterChargeRefundCreate);
+
+```
+#### Get PayLater Refund by ID
+
+```php
+\Xendit\PayLater::getPayLaterRefund($charge_id, $refund_id, array $params);
+```
+
+Usage example:
+
+```php
+$params = []; // Optional (You can put for-user-id if needed)
+$charge_id = '<pay-later-charge-id>';
+$refund_id = '<pay-later-refund-id>';
+$payLaterChargeRefund = \Xendit\PayLater::getPayLaterRefund($charge_id, $refund_id, $params);
+var_dump($payLaterChargeRefund);
+
+```
+#### List PayLater Refunds
+
+```php
+\Xendit\PayLater::listPayLaterRefund($charge_id, array $params);
+```
+
+Usage example:
+
+```php
+$params = []; // Optional (You can put for-user-id if needed)
+$charge_id = '<pay-later-charge-id>';
+$payLaterChargeRefundList = \Xendit\PayLater::listPayLaterRefund($charge_id, $params);
+var_dump($payLaterChargeRefundList);
+
+```
 #### Void Payout
 
 ```php
