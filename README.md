@@ -42,6 +42,10 @@ This library is the abstraction of Xendit API for access from applications writt
     -   [E-Wallets](#e-wallets)
         -   [Create E-Wallet Charge](#create-e-wallet-charge)
         -   [Get E-Wallet Charge Status](#get-e-wallet-charge-status)
+        -   [Void E-Wallet Charge](#void-e-wallet-charge)
+        -   [Refund E-Wallet Charge](#refund-e-wallet-charge)
+        -   [Get Refund By ID](#get-refund-by-id)
+        -   [List Refunds](#list-refunds)
     -   [Invoice](#invoice)
         -   [Create Invoice](#create-invoice)
         -   [Get Invoice](#get-invoice)
@@ -837,7 +841,71 @@ $eWalletStatusParam = [
 $getEWalletChargeStatus = \Xendit\EWallets::getEWalletChargeStatus($charge_id, $eWalletStatusParam);
 var_dump($getEWalletChargeStatus);
 ```
+#### Void E-Wallet Charge
 
+```php
+\Xendit\EWallets::voidEwalletCharge(string $charge_id,array $params);
+```
+
+Usage example:
+
+```php
+$charge_id = 'ewc_f3925450-5c54-4777-98c1-fcf22b0d1e1c';
+$voidEwalletChargeParam = [
+    'for-user-id' => 'test-reference-user-id' // OPTIONAL
+]
+$voidEwalletCharge = \Xendit\EWallets::voidEwalletCharge($charge_id, $voidEwalletChargeParam);
+var_dump($voidEwalletCharge);
+```
+#### Refund E-Wallet Charge
+
+```php
+\Xendit\EWallets::refundEwalletCharge(string $charge_id,array $params);
+```
+
+Usage example:
+
+```php
+$charge_id = 'ewc_f3925450-5c54-4777-98c1-fcf22b0d1e1c';
+$refundEwalletChargeParam = [
+    'for-user-id' => 'test-reference-user-id' // OPTIONAL
+]
+$refundEwalletCharge = \Xendit\EWallets::refundEwalletCharge($charge_id, $refundEwalletChargeParam);
+var_dump($refundEwalletCharge);
+```
+#### Get Refund By ID
+
+```php
+\Xendit\EWallets::getRefund(string $charge_id,string $refund_id, array $params);
+```
+
+Usage example:
+
+```php
+$charge_id = 'ewc_f3925450-5c54-4777-98c1-fcf22b0d1e1c';
+$refund_id = 'ewr_532as23lew2321id';
+$getRefundEwalletChargeParam = [
+    'for-user-id' => 'test-reference-user-id' // OPTIONAL
+]
+$getRefundEwalletCharge = \Xendit\EWallets::getRefund($charge_id, $refund_id, $getRefundEwalletChargeParam);
+var_dump($getRefundEwalletCharge);
+```
+#### List Refunds
+
+```php
+\Xendit\EWallets::listRefund(string $charge_id, array $params);
+```
+
+Usage example:
+
+```php
+$charge_id = 'ewc_f3925450-5c54-4777-98c1-fcf22b0d1e1c';
+$listRefundEwalletChargeParam = [
+    'for-user-id' => 'test-reference-user-id' // OPTIONAL
+]
+$listRefundEwalletCharge = \Xendit\EWallets::listRefund($charge_id, $getRefundEwalletChargeParam);
+var_dump($listRefundEwalletCharge);
+```
 ### Invoice
 
 #### Create Invoice
