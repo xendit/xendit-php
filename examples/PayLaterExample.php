@@ -47,3 +47,26 @@ $params = [
 ];
 $payLaterCharge = \Xendit\PayLater::createPayLaterCharge($params);
 var_dump($payLaterCharge);
+
+
+$params = []; // Optional
+$id = 'plc_8cb12305-9bcf-4441-a087-ee0d446e297b';
+$payLaterCharge = \Xendit\PayLater::getPayLaterChargeStatus($id, $params);
+var_dump($payLaterCharge);
+
+
+$params = []; // Optional
+$id = 'plc_8cb12305-9bcf-4441-a087-ee0d446e297b';
+$payLaterChargeRefundCreate = \Xendit\PayLater::createPayLaterRefund($id, $params);
+var_dump($payLaterChargeRefundCreate);
+
+$params = []; // Optional
+$charge_id = 'plc_8cb12305-9bcf-4441-a087-ee0d446e297b';
+$refund_id = 'plr_2f2aa47f-2764-4b42-8712-c3fb1270b09e';
+$payLaterChargeRefund = \Xendit\PayLater::getPayLaterRefund($charge_id, $refund_id, $params);
+var_dump($payLaterChargeRefund);
+
+$params = []; // Optional
+$charge_id = 'plc_8cb12305-9bcf-4441-a087-ee0d446e297b';
+$payLaterChargeRefundList = \Xendit\PayLater::listPayLaterRefund($charge_id, $params);
+var_dump($payLaterChargeRefundList);
