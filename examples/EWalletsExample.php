@@ -109,3 +109,37 @@ $getEWalletChargeStatus = \Xendit\EWallets::getEWalletChargeStatus(
     $walletChargeStatusParams
 );
 var_dump($getEWalletChargeStatus);
+
+$eWalletChargeId = '<Ewallet Charge ID>';
+$voidEwalletChargeParam = [];
+$voidEwalletCharge = \Xendit\EWallets::voidEwalletCharge(
+    $eWalletChargeId,
+    $voidEwalletChargeParam
+    );
+var_dump($voidEwalletCharge);
+
+$eWalletChargeId = '<Ewallet Charge ID>';
+$refundEwalletChargeParam = [];
+$refundEwalletCharge = \Xendit\EWallets::refundEwalletCharge(
+    $eWalletChargeId,
+    $refundEwalletChargeParam
+    );
+var_dump($refundEwalletCharge);
+
+$eWalletChargeId = '<Ewallet Charge ID>';
+$refundEwalletChargeId = '<EWallet Refund Charge ID>';
+$getRefundEWalletParam = [];
+$getRefundEWallet = \Xendit\EWallets::getRefund(
+    $eWalletChargeId,
+    $refundEwalletChargeId,
+    $getRefundEWalletParam
+    );
+var_dump($getRefundEWallet);
+
+$eWalletChargeId = '<Ewallet Charge ID>';
+$listRefundParam = [];
+$listRefund = \Xendit\EWallets::listRefund(
+    $eWalletChargeId,
+    $listRefundParam
+    );
+var_dump($listRefund);
