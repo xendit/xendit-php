@@ -924,7 +924,8 @@ Usage example:
 $params = ['external_id' => 'demo_147580196270',
     'payer_email' => 'sample_email@xendit.co',
     'description' => 'Trip to Bali',
-    'amount' => 32000
+    'amount' => 32000,
+    'for-user-id' => '5c2323c67d6d305ac433ba20'
 ];
 
 $createInvoice = \Xendit\Invoice::create($params);
