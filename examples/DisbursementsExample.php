@@ -61,10 +61,13 @@ $external_id = $params['external_id'];
 $getDisbursementsBanks = \Xendit\Disbursements::getAvailableBanks();
 var_dump($getDisbursementsBanks);
 
-$getDisbursements = \Xendit\Disbursements::retrieve($id);
+$retrieveParams = [
+    'for-user-id' => '<enter user id>'
+];
+$getDisbursements = \Xendit\Disbursements::retrieve($id, $retrieveParams);
 var_dump($getDisbursements);
 
-$getDisbursementsByExt = \Xendit\Disbursements::retrieveExternal($external_id);
+$getDisbursementsByExt = \Xendit\Disbursements::retrieveExternal($external_id, $retrieveParams);
 var_dump($getDisbursementsByExt);
 
 $createBatchDisbursements = \Xendit\Disbursements::createBatch($batch_params);

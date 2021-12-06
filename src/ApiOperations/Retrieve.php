@@ -31,9 +31,9 @@ trait Retrieve
      *
      * @return array
      */
-    public static function retrieve($id)
+    public static function retrieve($id, $params = [])
     {
         $url = static::classUrl() . '/' . $id;
-        return static::_request('GET', $url, []);
+        return static::_request('GET', $url, $params);
     }
 }

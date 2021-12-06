@@ -34,5 +34,8 @@ var_dump($getInvoice);
 $expireInvoice = \Xendit\Invoice::expireInvoice($id);
 var_dump($expireInvoice);
 
-$getAllInvoice = \Xendit\Invoice::retrieveAll();
+$paramsRetrieveAll = [
+    'for-user-id' => '<enter user id>'
+];
+$getAllInvoice = \Xendit\Invoice::retrieveAll($paramsRetrieveAll);
 var_dump(($getAllInvoice));
