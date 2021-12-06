@@ -760,14 +760,17 @@ var_dump($createBatchDisbursements);
 #### Get Disbursement by ID
 
 ```php
-\Xendit\Disbursements::retrieve(string $id);
+\Xendit\Disbursements::retrieve(string $id, array $params);
 ```
 
 Usage example:
 
 ```php
 $id = 'disbursements-id';
-$getDisbursements = \Xendit\Disbursements::retrieve($id);
+$retrieveParams = [
+	'for-user-id' => 'test-reference-user-id'
+]
+$getDisbursements = \Xendit\Disbursements::retrieve($id, $retrieveParams);
 var_dump($getDisbursements);
 ```
 
@@ -935,27 +938,33 @@ var_dump($createInvoice);
 #### Get Invoice
 
 ```php
-\Xendit\Invoice::retrieve(string $id);
+\Xendit\Invoice::retrieve(string $id, array $params);
 ```
 
 Usage example:
 
 ```php
 $id = 'invoice-id';
-$getInvoice = \Xendit\Invoice::retrieve($id);
+$retrieveParam = [
+	'for-user-id' => 'test-reference-user-id' // OPTIONAL
+];
+$getInvoice = \Xendit\Invoice::retrieve($id, $retrieveParam);
 var_dump($getInvoice);
 ```
 
 #### Get All Invoice
 
 ```php
-\Xendit\Invoice::retrieveAll();
+\Xendit\Invoice::retrieveAll(array $params);
 ```
 
 Usage example:
 
 ```php
-$getAllInvoice = \Xendit\Invoice::retrieveAll();
+$retrieveAllParam = [
+	'for-user-id' => 'test-reference-user-id' // OPTIONAL
+];
+$getAllInvoice = \Xendit\Invoice::retrieveAll($retrieveAllParam);
 var_dump(($getAllInvoice));
 ```
 
@@ -1039,7 +1048,20 @@ $params = []; // Optional (You can put for-user-id if needed)
 $id = '<pay-later-charge-id>';
 $payLaterCharge = \Xendit\PayLater::getPayLaterChargeStatus($id, $params);
 var_dump($payLaterCharge);
+```
+#### Refund Paylater Charge
 
+```php
+\Xendit\PayLater::createPayLaterRefund($id, array $params);
+```
+
+Usage example:
+
+```php
+$params = []; // Optional (You can put for-user-id if needed)
+$id = '<pay-later-charge-id>';
+$payLaterCharge = \Xendit\PayLater::createPayLaterRefund($id, $params);
+var_dump($payLaterCharge);
 ```
 #### Create Paylater Refund
 
@@ -1124,15 +1146,17 @@ var_dump($createPayout);
 #### Get Payout
 
 ```php
-\Xendit\Payouts::retrieve(string $id);
+\Xendit\Payouts::retrieve(string $id, array $params);
 ```
 
 Usage example:
 
 ```php
 $id = 'payout-id';
-
-$getPayout = \Xendit\Payouts::retrieve($id);
+$params = [
+	'for-user-id' => 'test-reference-user-id' // OPTIONAL
+]
+$getPayout = \Xendit\Payouts::retrieve($id, $params);
 var_dump($getPayout);
 ```
 
@@ -1213,15 +1237,17 @@ var_dump($createRecurring);
 #### Get a Recurring Payment
 
 ```php
-\Xendit\Recurring::retrieve(string $id);
+\Xendit\Recurring::retrieve(string $id, array $params);
 ```
 
 Usage example:
 
 ```php
 $id = 'recurring-payment-id';
-
-$getRecurring = \Xendit\Recurring::retrieve($id);
+$params = [
+	'for-user-id' => 'test-reference-user-id' // OPTIONAL
+]
+$getRecurring = \Xendit\Recurring::retrieve($id, $params);
 var_dump($getRecurring);
 ```
 
@@ -1374,14 +1400,17 @@ var_dump($getVABanks);
 #### Get Fixed Virtual Account
 
 ```php
-\Xendit\VirtualAccounts::retrieve(string $id);
+\Xendit\VirtualAccounts::retrieve(string $id, array $params);
 ```
 
 Usage example:
 
 ```php
 $id = 'VA-id';
-$getVA = \Xendit\VirtualAccounts::retrieve($id);
+$params = [
+	'for-user-id' => 'test-reference-user-id' //OPTIONAL
+]
+$getVA = \Xendit\VirtualAccounts::retrieve($id, $params);
 var_dump($getVA);
 ```
 

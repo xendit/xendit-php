@@ -110,10 +110,10 @@ class Disbursements
      * ]
      * @throws Exceptions\ApiException
      */
-    public static function retrieveExternal($external_id)
+    public static function retrieveExternal($external_id, $params = [])
     {
         $url = static::classUrl() . '?external_id=' . $external_id;
-        return static::_request('GET', $url);
+        return static::_request('GET', $url, $params);
     }
 
     /**
