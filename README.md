@@ -1048,7 +1048,20 @@ $params = []; // Optional (You can put for-user-id if needed)
 $id = '<pay-later-charge-id>';
 $payLaterCharge = \Xendit\PayLater::getPayLaterChargeStatus($id, $params);
 var_dump($payLaterCharge);
+```
+#### Refund Paylater Charge
 
+```php
+\Xendit\PayLater::createPayLaterRefund($id, array $params);
+```
+
+Usage example:
+
+```php
+$params = []; // Optional (You can put for-user-id if needed)
+$id = '<pay-later-charge-id>';
+$payLaterCharge = \Xendit\PayLater::createPayLaterRefund($id, $params);
+var_dump($payLaterCharge);
 ```
 #### Create Paylater Refund
 
