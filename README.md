@@ -971,14 +971,17 @@ var_dump(($getAllInvoice));
 #### Expire Invoice
 
 ```php
-\Xendit\Invoice::expireInvoice(string $id);
+\Xendit\Invoice::expireInvoice(string $id, array $params);
 ```
 
 Usage example:
 
 ```php
 $id = 'invoice-id';
-$expireInvoice = \Xendit\Invoice::expireInvoice($id);
+$params = [
+	'for-user-id' => 'test-reference-user-id' // OPTIONAL
+];
+$expireInvoice = \Xendit\Invoice::expireInvoice($id, $params);
 var_dump($expireInvoice);
 ```
 ### Paylater
