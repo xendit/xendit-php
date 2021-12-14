@@ -74,10 +74,10 @@ class Invoice
      * ]
      * @throws Exceptions\ApiException
      */
-    public static function expireInvoice($id)
+    public static function expireInvoice($id, $params=[])
     {
         $url =  '/invoices/' . $id . '/expire!';
 
-        return static::_request('POST', $url);
+        return static::_request('POST', $url, $params);
     }
 }
