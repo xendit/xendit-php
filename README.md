@@ -174,11 +174,6 @@ var_dump($getBalance);
 #### Get Payment Channels
 GetPaymentChannels is in `maintenance mode`. Existing behavior on the endpoint will continue to work as before, but newer channels will be missing from the returned result.
 
-```html
-<span style="color:red;">
-    maintenance mode
-</span>
-```
 ```php
 \Xendit\PaymentChannels::list();
 ```
