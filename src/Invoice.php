@@ -80,4 +80,9 @@ class Invoice
 
         return static::_request('POST', $url, $params);
     }
+    public static function retrieveExternalId($external_id, $params = [])
+    {
+        $url = '/v2/invoices?external_id=' . $external_id;
+        return static::_request('GET', $url, $params);
+    }
 }
