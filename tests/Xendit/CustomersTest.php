@@ -391,11 +391,11 @@ class CustomersTest extends TestCase
      */
     public function testIs20200519CustomerGettableThrowApiException()
     {
-        $this->expectException(\Xendit\Exceptions\ApiException::class);
 
-        Customers::getCustomerByReferenceID(
+        $response = Customers::getCustomerByReferenceID(
             self::REFERENCE_ID
         );
+        $this->assertEquals($response, []);
     }
 
     /**
@@ -517,11 +517,15 @@ class CustomersTest extends TestCase
      */
     public function testIs20201031CustomerGettableThrowApiException()
     {
-        $this->expectException(\Xendit\Exceptions\ApiException::class);
+        $response = [
+            'data' => [],
+            'has_more' => false
+        ];
 
-        Customers::getCustomerByReferenceID(
+        $result = Customers::getCustomerByReferenceID(
             self::REFERENCE_ID,
             self::NEW_API_VERSION
         );
+        $this->assertEquals($response, $result);
     }
 }
