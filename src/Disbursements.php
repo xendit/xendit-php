@@ -45,12 +45,14 @@ class Disbursements
      */
     public static function createReqParams()
     {
-        return ['external_id',
+        return [
+            'external_id',
             'bank_code',
             'account_holder_name',
             'account_number',
             'description',
-            'amount'];
+            'amount'
+        ];
     }
 
     /**
@@ -142,5 +144,208 @@ class Disbursements
     {
         $url = '/available_disbursements_banks';
         return static::_request('GET', $url);
+    }
+
+    /**
+     * Instantiate required params for Create
+     *
+     * @return array
+     */
+    public static function createV1ReqParams()
+    {
+        return [
+            'xendit_idempotency_key',
+            'reference_id',
+            'currency',
+            'channel_code',
+            'account_name',
+            'account_number',
+            'description',
+            'amount'
+        ];
+    }
+
+    /**
+     * Send POST request to create disbursement
+     * @param array $params required parameters
+     *
+     * @return array[
+     * [
+     * 'id'=> 'disb-random-id',
+     * 'reference_id'=> 'random id',
+     * 'currency'=> 'PHP',
+     * 'amount'=> float
+     * 'channel_code'=> 'BRI',
+     * 'description'=> 'description',
+     * 'status'=> 'Pending',
+     * 'created'=> 'Date',
+     * 'updated'=> 'Date',
+     * 'email_to'=> ['test+to1@xendit.co','test+to2@xendit.co'],
+     * 'email_cc'=> ['test+bcc@xendit.co'],
+     * 'email_bcc'=> ['test+bcc@xendit.co']
+     * ]
+     * @throws Exceptions\ApiException
+     */
+    public static function createDisbursement($params = [])
+    {
+        self::validateParams($params, static::createV1ReqParams());
+        return static::_request('POST', static::classUrl(), $params);
+    }
+
+    /**
+     * Send GET request to get disbursement by id
+     *
+     * @param string $disbursement_id disbursement id
+     * @param array $params extra parameters
+     *
+     * @return array[
+     * 'id'=> 'disb-random-id',
+     * 'reference_id'=> 'random id',
+     * 'currency'=> 'PHP',
+     * 'amount'=> float
+     * 'channel_code'=> 'BRI',
+     * 'description'=> 'description',
+     * 'status'=> 'Pending',
+     * 'created'=> 'Date',
+     * 'updated'=> 'Date',
+     * 'email_to'=> ['test+to1@xendit.co','test+to2@xendit.co'],
+     * 'email_cc'=> ['test+bcc@xendit.co'],
+     * 'email_bcc'=> ['test+bcc@xendit.co']
+     * ]
+     * @throws Exceptions\ApiException
+     */
+    public static function getDisbursementByID($disbursement_id, $params = [])
+    {
+        $url = static::classUrl() . '/' . $disbursement_id;
+        return static::_request('GET', $url, $params);
+    }
+
+    /**
+     * Send GET request to get disbursement by reference_id
+     *
+     * @param string $reference_id reference_id id
+     * @param array $params extra parameters
+     *
+     * @return array[
+     * [
+     * 'id'=> 'disb-random-id',
+     * 'reference_id'=> 'random id',
+     * 'currency'=> 'PHP',
+     * 'amount'=> float,
+     * 'channel_code'=> 'BRI',
+     * 'description'=> 'description',
+     * 'status'=> 'Pending',
+     * 'created'=> 'Date',
+     * 'updated'=> 'Date',
+     * 'email_to'=> ['test+to1@xendit.co','test+to2@xendit.co'],
+     * 'email_cc'=> ['test+bcc@xendit.co'],
+     * 'email_bcc'=> ['test+bcc@xendit.co']
+     * ], [
+     *  'id'=> 'disb-random-id-2',
+     * 'reference_id'=> 'random-id-2',
+     * 'currency'=> 'PHP',
+     * 'amount'=> float,
+     * 'channel_code'=> 'BRI',
+     * 'description'=> 'description',
+     * 'status'=> 'Pending',
+     * 'created'=> 'Date',
+     * 'updated'=> 'Date',
+     * 'email_to'=> ['test+to1@xendit.co','test+to2@xendit.co'],
+     * 'email_cc'=> ['test+bcc@xendit.co'],
+     * 'email_bcc'=> ['test+bcc@xendit.co']
+     * ]]
+     * @throws Exceptions\ApiException
+     */
+    public static function getDisbursementsByReferenceID($reference_id, $params = [])
+    {
+        $url = static::classUrl() . '?reference_id=' . $reference_id;
+        return static::_request('GET', $url, $params);
+    }
+
+    /**
+     * Send GET request to Get Disbursement Channels
+     *
+     * @param none
+     *
+     * @return array[
+     * [
+     * 'channel_code'=> 'PH_CIMB',
+     * 'name'=> 'CIMB Bank Philippines Inc',
+     * 'channel_category'=> 'BANK',
+     * 'currency'=> 'PHP',
+     * 'minimum'=> 50000,
+     * 'maximum'=> 200000000,
+     * 'minimum_increment'=> 0.01
+     * ], [
+     * 'channel_code'=> 'PH_CITI',
+     * 'name'=> 'Citibank, N.A.',
+     * 'channel_category'=> 'BANK',
+     * 'currency'=> 'PHP',
+     * 'minimum'=> 1,
+     * 'maximum'=> 999999999,
+     * 'minimum_increment'=> 1
+     * ]]
+     * @throws Exceptions\ApiException
+     */
+    public static function getDisbursementChannels()
+    {
+        $url = '/disbursement-channels';
+        return static::_request('GET', $url);
+    }
+
+    /**
+     * Send GET request to Get Disbursement Channels by Channel Category
+     *
+     * @param string $channel_category channel category
+     * @param array $params extra parameters
+     *
+     * @return array[
+     * [
+     * 'channel_code'=> 'PH_CIMB',
+     * 'name'=> 'CIMB Bank Philippines Inc',
+     * 'channel_category'=> 'BANK',
+     * 'currency'=> 'PHP',
+     * 'minimum'=> 50000,
+     * 'maximum'=> 200000000,
+     * 'minimum_increment'=> 0.01
+     * ], [
+     * 'channel_code'=> 'PH_CITI',
+     * 'name'=> 'Citibank, N.A.',
+     * 'channel_category'=> 'BANK',
+     * 'currency'=> 'PHP',
+     * 'minimum'=> 1,
+     * 'maximum'=> 999999999,
+     * 'minimum_increment'=> 1
+     * ]]
+     * @throws Exceptions\ApiException
+     */
+    public static function getDisbursementChannelsByChannelCategory($channel_category, $params = [])
+    {
+        $url = '/disbursement-channels?channel_category=' . $channel_category;
+        return static::_request('GET', $url, $params);
+    }
+
+    /**
+     * Send GET request to Get Disbursement Channels by Channel Code
+     *
+     * @param string $channel_code channel Code
+     * @param array $params extra parameters
+     *
+     * @return array[
+     * [
+     * 'channel_code'=> 'PH_CIMB',
+     * 'name'=> 'CIMB Bank Philippines Inc',
+     * 'channel_category'=> 'BANK',
+     * 'currency'=> 'PHP',
+     * 'minimum'=> 50000,
+     * 'maximum'=> 200000000,
+     * 'minimum_increment'=> 0.01
+     * ]]
+     * @throws Exceptions\ApiException
+     */
+    public static function getDisbursementChannelsByChannelCode($channel_code, $params = [])
+    {
+        $url = '/disbursement-channels?channel_code=' . $channel_code;
+        return static::_request('GET', $url, $params);
     }
 }
