@@ -33,13 +33,13 @@ This library is the abstraction of Xendit API for access from applications writt
         -   [Validate OTP for direct debit payment](#validate-otp-for-direct-debit-payment)
         -   [Get direct debit payment by ID](#get-direct-debit-payment-by-id)
         -   [Get direct debit payment by reference ID](#get-direct-debit-payment-by-reference-id)
-    -   [IDR Disbursements](#idr-disbursements)
+    -   [IDR Disbursements for Indonesia](#idr-disbursements-for-indonesia)
         -   [Create an IDR Disbursement](#create-an-idr-disbursement)
         -   [Create an IDR Batch Disbursement](#create-an-idr-batch-disbursement)
         -   [Get an IDR Disbursement by ID](#get-an-idr-disbursement-by-id)
         -   [Get an IDR Disbursement by External ID](#get-an-idr-disbursement-by-external-id)
         -   [Get an IDR Disbursement Available Banks](#get-an-idr-disbursement-available-banks)
-    -   [PHP Disbursements](#php-disbursements)
+    -   [PHP Disbursements for Philippines](#php-disbursements-for-philippines)
         -   [Create a PHP Disbursement](#create-a-php-disbursement)
         -   [Get a PHP Disbursement by ID](#get-a-php-disbursement-by-id)
         -   [Get a PHP Disbursement by Reference ID](#get-a-php-disbursement-by-reference-id)
@@ -686,7 +686,7 @@ $getDirectDebitPaymentByReferenceID = \Xendit\DirectDebit::getDirectDebitPayment
 var_dump($getDirectDebitPaymentByReferenceID);
 ```
 
-### IDR Disbursements
+### IDR Disbursements for Indonesia
 
 #### Create an IDR Disbursement
 
@@ -811,7 +811,7 @@ $getDisbursementsBanks = \Xendit\Disbursements::getAvailableBanks();
 var_dump($getDisbursementsBanks);
 ```
 
-### PHP Disbursements
+### PHP Disbursements for Philippines
 
 #### Create a PHP Disbursement
 
