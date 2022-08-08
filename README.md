@@ -165,6 +165,7 @@ Checkout [custom http client example](./examples/CustomHttpClient.php) for imple
 
 ```php
 $params = array(
+    'currency' => 'IDR', // or PHP (required)
     'for-user-id' => '<sub account user id>' //The sub-account user-id that you want to make this transaction for (Optional).
 );
 \Xendit\Balance::getBalance(string $account_type, array $params);
@@ -173,7 +174,10 @@ $params = array(
 Usage example:
 
 ```php
-$getBalance = \Xendit\Balance::getBalance('CASH');
+$params = array(
+    'currency' => 'IDR'
+);
+$getBalance = \Xendit\Balance::getBalance('CASH', $params);
 var_dump($getBalance);
 ```
 

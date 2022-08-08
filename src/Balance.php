@@ -54,6 +54,31 @@ class Balance
     }
 
     /**
+     * Available currency
+     *
+     * @return array
+     */
+    public static function currency()
+    {
+        return ["IDR", "PHP"];
+    }
+
+    /**
+     * Validation for currency
+     *
+     * @param string $currency Currency
+     *
+     * @return void
+     */
+    public static function validateCurrency($currency = null)
+    {
+        if (!in_array($currency, self::currency())) {
+            $msg = "Currency is invalid. Available currencies: IDR, PHP";
+            throw new InvalidArgumentException($msg);
+        }
+    }
+
+    /**
      * Send GET request to retrieve data
      *
      * @param string $account_type account type (CASH|HOLDING|TAX)
@@ -66,7 +91,8 @@ class Balance
     public static function getBalance($account_type = null, $params = [])
     {
         self::validateAccountType($account_type);
-        $url = '/balance?account_type=' . $account_type;
+        self::validateCurrency($params['currency']);
+        $url = '/balance?account_type=' . $account_type . '&currency=' . $params['currency'];
         return static::_request('GET', $url, $params);
     }
 }
