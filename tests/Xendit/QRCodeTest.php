@@ -55,13 +55,11 @@ class QRCodeTest extends TestCase
       'updated' => '2020-01-08T18:18:18.661Z',
     ];
 
-    $expectedParams = array_merge($params, ['api-version' => '2020-07-01']);
-
     $this -> stubRequest(
       'POST',
       '/qr_codes',
-      $expectedParams,
-      [],
+      $params,
+      ['api-version' => '2020-07-01'],
       $expectedResult
     );
 
@@ -106,14 +104,14 @@ class QRCodeTest extends TestCase
             'updated' => '2020-01-08T18:18:18.661Z',
         ];
 
-        $expectedParams = array_merge($params, ['api-version' => '2022-07-31']);
+        $expectedParams = $params;
         unset($expectedParams['api_version']);
 
         $this -> stubRequest(
             'POST',
             '/qr_codes',
             $expectedParams,
-            [],
+            ['api-version' => '2022-07-31'],
             $expectedResult
         );
 
