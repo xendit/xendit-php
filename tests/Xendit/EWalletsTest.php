@@ -30,6 +30,7 @@ class EWalletsTest extends TestCase
     const TEST_ID = "123";
     const TEST_TYPE = "DANA";
     const TEST_CHARGE_ID = "ewc_f3925450-5c54-4777-98c1-fcf22b0d1e1c";
+    const TEST_REFUND_ID = "ewr_532as23lew2321id";
 
     /**
      * Create EWallet test
@@ -407,4 +408,313 @@ class EWalletsTest extends TestCase
             self::TEST_CHARGE_ID
         );
     }
+    
+    /**
+     * Void eWallet Charge test
+     * Should pass
+     *
+     * @return void
+     * @throws Exceptions\ApiException
+     */
+    public function testVoidEwalletChargeCreateable()
+    {
+        $response = [
+            "id" => "ewc_532as23lew2321id",
+            "business_id" => "5easfnn23aadlmnaa42",
+            "reference_id" => "test_reference_id",
+            "status" => "SUCCEEDED",
+            "currency" => "IDR",
+            "charge_amount" => 123456,
+            "capture_amount" => 123456,
+            "refunded_amount" => null,
+            "checkout_method" => "ONE_TIME_PAYMENT",
+            "channel_code" => "ID_OVO",
+            "channel_properties" =>
+            [
+                "mobile_number" => "+6287777771111"
+            ],
+            "actions" => null,
+            "is_redirect_required" => false,
+            "callback_url" => "https=>//webhook.me/gethooked",
+            "created" => "2020-04-20T16:23:52Z",
+            "updated" => "2020-04-20T16:23:52Z",
+            "void_status" => "PENDING",
+            "voided_at" => null,
+            "capture_now" => true,
+            "customer_id" => null,
+            "payment_method_id" => null,
+            "failure_code" => null,
+            "basket" => null,
+            "metadata" =>
+            [
+                "branch_code" => "senayan_372"
+            ]
+        ];
+        
+        $this->stubRequest(
+            'POST',
+            '/ewallets/charges/'.self::TEST_CHARGE_ID.'/void',
+            [],
+            [],
+            $response
+            );
+        
+        $result = EWallets::voidEwalletCharge(
+            self::TEST_CHARGE_ID
+            );
+        
+        $this->assertEquals(
+            $result['id'],
+            'ewc_532as23lew2321id'
+            );
+        $this->assertEquals(
+            $result['currency'],
+            'IDR'
+            );
+        $this->assertEquals(
+            $result['status'],
+            'SUCCEEDED'
+            );
+        $this->assertEquals(
+            $result['charge_amount'],
+            '123456'
+            );
+        $this->assertEquals(
+            $result['capture_amount'],
+            '123456'
+            );
+        $this->assertEquals(
+            $result['refunded_amount'],
+            null
+            );
+        $this->assertEquals(
+            $result['checkout_method'],
+            'ONE_TIME_PAYMENT'
+            );
+        $this->assertEquals(
+            $result['channel_code'],
+            'ID_OVO'
+            );
+    }
+    
+    /**
+     * Void EWallets Charge test
+     * Should throw ApiException
+     *
+     * @return void
+     * @throws Exceptions\ApiException
+     */
+    public function testVoidEwalletChargeCreateableThrowApiException()
+    {
+        $this->expectException(\Xendit\Exceptions\ApiException::class);
+        
+        EWallets::voidEwalletCharge(
+            self::TEST_CHARGE_ID
+            );
+    }
+    
+    /**
+     * Refund eWallet Charge test
+     * Should pass
+     *
+     * @return void
+     * @throws Exceptions\ApiException
+     */
+    public function testRefundEwalletChargeCreateable()
+    {
+        $response = [
+            "id" => "ewr_532as23lew2321id",
+            "charge_id" => self::TEST_CHARGE_ID,
+            "status" => "PENDING",
+            "currency" => "IDR",
+            "channel_code" => "ID_OVO",
+            "capture_amount" => 123456,
+            "refund_amount" => 123456,
+            "reason" => "REQUESTED_BY_CUSTOMER",
+            "failure_code" => null,
+            "created" => "2020-04-20T16:23:52Z",
+            "updated" => "2020-04-20T16:23:52Z"
+        ];
+        
+        $this->stubRequest(
+            'POST',
+            '/ewallets/charges/'.self::TEST_CHARGE_ID.'/refunds',
+            [],
+            [],
+            $response
+            );
+        
+        $result = EWallets::refundEwalletCharge(
+            self::TEST_CHARGE_ID
+            );
+        
+        $this->assertEquals(
+            $result['id'],
+            "ewr_532as23lew2321id"
+            );
+        $this->assertEquals(
+            $result['currency'],
+            'IDR'
+            );
+        $this->assertEquals(
+            $result['status'],
+            'PENDING'
+            );
+        $this->assertEquals(
+            $result['capture_amount'],
+            '123456'
+            );
+        $this->assertEquals(
+            $result['refund_amount'],
+            123456
+            );
+        $this->assertEquals(
+            $result['reason'],
+            'REQUESTED_BY_CUSTOMER'
+            );
+        $this->assertEquals(
+            $result['channel_code'],
+            'ID_OVO'
+            );
+    }
+    
+    /**
+     * Refund EWallets Charge test
+     * Should throw ApiException
+     *
+     * @return void
+     * @throws Exceptions\ApiException
+     */
+    public function testRefundEwalletChargeCreateableThrowApiException()
+    {
+        $this->expectException(\Xendit\Exceptions\ApiException::class);
+        
+        EWallets::refundEwalletCharge(
+            self::TEST_CHARGE_ID
+            );
+    }
+    
+    /**
+     * Get Refund Ewallet test
+     * Should pass
+     *
+     * @return void
+     * @throws Exceptions\ApiException
+     */
+    public function testGetRefundGettable()
+    {
+        $response = [
+            "id" => "ewr_532as23lew2321id",
+            "charge_id" => self::TEST_CHARGE_ID,
+            "status" => "SUCCEEDED",
+            "currency" => "IDR",
+            "channel_code" => "ID_OVO",
+            "capture_amount" => 123456,
+            "refund_amount" => 100000,
+            "reason" => "REQUESTED_BY_CUSTOMER",
+            "failure_code" => null,
+            "created" => "2020-04-20T16:23:52Z",
+            "updated" => "2020-04-20T16:23:52Z"
+        ];
+        
+        $this->stubRequest(
+            'GET',
+            '/ewallets/charges/'.self::TEST_CHARGE_ID.'/refunds/'.self::TEST_REFUND_ID,
+            [],
+            [],
+            $response
+            );
+        
+        $result = EWallets::getRefund(
+            self::TEST_CHARGE_ID,
+            self::TEST_REFUND_ID
+            );
+        $this->assertEquals(
+            $result['status'],
+            "SUCCEEDED"
+            );
+        $this->assertEquals(
+            $result['id'],
+            "ewr_532as23lew2321id"
+            );
+        $this->assertEquals(
+            $result['currency'],
+            'IDR'
+            );
+        $this->assertEquals(
+            $result['status'],
+            'SUCCEEDED'
+            );
+        $this->assertEquals(
+            $result['capture_amount'],
+            '123456'
+            );
+        $this->assertEquals(
+            $result['refund_amount'],
+            100000
+            );
+        $this->assertEquals(
+            $result['reason'],
+            'REQUESTED_BY_CUSTOMER'
+            );
+        $this->assertEquals(
+            $result['channel_code'],
+            'ID_OVO'
+            );
+    }
+    
+    /**
+     * Get Refund EWallets Charge test
+     * Should throw ApiException
+     *
+     * @return void
+     * @throws Exceptions\ApiException
+     */
+    public function testGetRefundGettableThrowApiException()
+    {
+        $this->expectException(\Xendit\Exceptions\ApiException::class);
+        
+        EWallets::getRefund(
+            self::TEST_CHARGE_ID,
+            self::TEST_REFUND_ID
+            );
+    }
+    
+    /**
+     * Get list of ewallet refund test
+     * Should pass
+     *
+     * @return void
+     * @throws Exceptions\ApiException
+     */
+    public function testListRefundIsGettable()
+    {
+        $expectedResponse = [
+            'has_more' => false
+        ];
+        
+        $this->stubRequest(
+            'GET',
+            '/ewallets/charges/'.self::TEST_CHARGE_ID.'/refunds/',
+            [],
+            [],
+            $expectedResponse
+            );
+        
+        $result = EWallets::listRefund(self::TEST_CHARGE_ID);
+        $this->assertEquals($result['has_more'], $expectedResponse['has_more']);
+    }
+    
+    /**
+     * Get Refund list test
+     * Should throw ApiException
+     *
+     * @return void
+     */
+    public function testListRefundIsGettableThrowsException()
+    {
+        $this->expectException(\Xendit\Exceptions\ApiException::class);
+        EWallets::listRefund(self::TEST_CHARGE_ID);
+    }
+    
 }

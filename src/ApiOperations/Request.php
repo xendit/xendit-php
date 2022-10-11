@@ -43,7 +43,7 @@ trait Request
         }
         if (count($currParams) > 0) {
             $message = "You must pass required parameters on your params. "
-            . "Check https://xendit.github.io/apireference/ for more information.";
+                . "Check https://xendit.github.io/apireference/ for more information.";
             throw new InvalidArgumentException($message);
         }
     }
@@ -73,12 +73,21 @@ trait Request
             $headers['with-fee-rule'] = $params['with-fee-rule'];
         }
 
+        if (array_key_exists('Idempotency-key', $params)) {
+            $headers['Idempotency-key'] = $params['Idempotency-key'];
+        }
+
         if (array_key_exists('X-IDEMPOTENCY-KEY', $params)) {
             $headers['X-IDEMPOTENCY-KEY'] = $params['X-IDEMPOTENCY-KEY'];
         }
 
+        if (array_key_exists('xendit-idempotency-key', $params)) {
+            $headers['xendit-idempotency-key'] = $params['xendit-idempotency-key'];
+        }
+
         if (array_key_exists('api-version', $params)) {
             $headers['api-version'] = $params['api-version'];
+            unset($params['api-version']);
         }
 
         if (array_key_exists('X-API-VERSION', $params)) {

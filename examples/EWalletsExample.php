@@ -101,7 +101,45 @@ $createEWalletCharge = \Xendit\EWallets::createEWalletCharge($ewalletChargeParam
 var_dump($createEWalletCharge);
 
 echo "Retrieving E-Wallet Charge Status with ID: {$createEWalletCharge['id']}...\n";
+$walletChargeStatusParams = [
+    'for-user-id' => 'test-user-id'
+];
 $getEWalletChargeStatus = \Xendit\EWallets::getEWalletChargeStatus(
-    $createEWalletCharge['id']
+    $createEWalletCharge['id'],
+    $walletChargeStatusParams
 );
 var_dump($getEWalletChargeStatus);
+
+$eWalletChargeId = '<Ewallet Charge ID>';
+$voidEwalletChargeParam = [];
+$voidEwalletCharge = \Xendit\EWallets::voidEwalletCharge(
+    $eWalletChargeId,
+    $voidEwalletChargeParam
+    );
+var_dump($voidEwalletCharge);
+
+$eWalletChargeId = '<Ewallet Charge ID>';
+$refundEwalletChargeParam = [];
+$refundEwalletCharge = \Xendit\EWallets::refundEwalletCharge(
+    $eWalletChargeId,
+    $refundEwalletChargeParam
+    );
+var_dump($refundEwalletCharge);
+
+$eWalletChargeId = '<Ewallet Charge ID>';
+$refundEwalletChargeId = '<EWallet Refund Charge ID>';
+$getRefundEWalletParam = [];
+$getRefundEWallet = \Xendit\EWallets::getRefund(
+    $eWalletChargeId,
+    $refundEwalletChargeId,
+    $getRefundEWalletParam
+    );
+var_dump($getRefundEWallet);
+
+$eWalletChargeId = '<Ewallet Charge ID>';
+$listRefundParam = [];
+$listRefund = \Xendit\EWallets::listRefund(
+    $eWalletChargeId,
+    $listRefundParam
+    );
+var_dump($listRefund);

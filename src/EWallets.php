@@ -115,17 +115,86 @@ class EWallets
     /**
      * Get e-wallet charge status
      *
-     * @param string $charge_id chargee ID
+     * @param string $charge_id charge ID
      *
      * @return array please check for responses parameters here
      * https://developers.xendit.co/api-reference/?bash#get-ewallet-charge-status
      * @throws Exceptions\ApiException
      */
-    public static function getEWalletChargeStatus($charge_id)
+    public static function getEWalletChargeStatus($charge_id, $params=[])
     {
         $url = static::classUrl()
             . '/charges/' . $charge_id;
 
-        return static::_request('GET', $url);
+        return static::_request('GET', $url, $params);
+    }
+    
+    /**
+     * Void eWallet Charge
+     *
+     * @param string $charge_id charge ID
+     *
+     * @return array please check for responses parameters here
+     * https://developers.xendit.co/api-reference/#void-ewallet-charge
+     * @throws Exceptions\ApiException
+     */
+    public static function voidEwalletCharge($charge_id, $params=[])
+    {
+        $url = static::classUrl()
+        . '/charges/' . $charge_id.'/void';
+        
+        return static::_request('POST', $url, $params);
+    }
+    
+    /**
+     * Refund eWallet Charge
+     *
+     * @param string $charge_id charge ID
+     *
+     * @return array please check for responses parameters here
+     * https://developers.xendit.co/api-reference/#refund-ewallet-charge
+     * @throws Exceptions\ApiException
+     */
+    public static function refundEwalletCharge($charge_id, $params=[])
+    {
+        $url = static::classUrl()
+        . '/charges/' . $charge_id.'/refunds';
+        
+        return static::_request('POST', $url, $params);
+    }
+    
+    /**
+     * Get eWallet Refund by Refund ID
+     *
+     * @param string $charge_id charge ID
+     * @param string $refund_id refund ID
+     *
+     * @return array please check for responses parameters here
+     * https://developers.xendit.co/api-reference/#refund-ewallet-charge
+     * @throws Exceptions\ApiException
+     */
+    public static function getRefund($charge_id, $refund_id, $params=[])
+    {
+        $url = static::classUrl()
+        . '/charges/' . $charge_id.'/refunds/'.$refund_id;
+        
+        return static::_request('GET', $url, $params);
+    }
+    
+    /**
+     * Get eWallet Refund by Refund ID
+     *
+     * @param string $charge_id charge ID
+     *
+     * @return array please check for responses parameters here
+     * https://developers.xendit.co/api-reference/#refund-ewallet-charge
+     * @throws Exceptions\ApiException
+     */
+    public static function listRefund($charge_id, $params=[])
+    {
+        $url = static::classUrl()
+        . '/charges/' . $charge_id.'/refunds/';
+        
+        return static::_request('GET', $url, $params);
     }
 }

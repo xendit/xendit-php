@@ -26,6 +26,8 @@ use Xendit\TestCase;
 class DisbursementsTest extends TestCase
 {
     const TEST_ID = "123";
+    const CHANNEL_CATEGORY = "BANK";
+    const CHANNEL_CODE = "PH_CIMB";
 
     /**
      * Create Disbursements test
@@ -36,12 +38,12 @@ class DisbursementsTest extends TestCase
     public function testIsCreatable()
     {
         $params = [
-            'external_id'=> 'disb-12345678',
-            'amount'=> 15000,
-            'bank_code'=> 'BCA',
-            'account_holder_name'=> 'Joe',
-            'account_number'=> '1234567890',
-            'description'=>'Disbursement from Example'
+            'external_id' => 'disb-12345678',
+            'amount' => 15000,
+            'bank_code' => 'BCA',
+            'account_holder_name' => 'Joe',
+            'account_number' => '1234567890',
+            'description' => 'Disbursement from Example'
         ];
 
         $this->stubRequest(
@@ -74,26 +76,26 @@ class DisbursementsTest extends TestCase
     public function testIsBatchCreatable()
     {
         $params = [
-            'reference'=> 'disb_batch-12345678',
-            'disbursements'=> [
+            'reference' => 'disb_batch-12345678',
+            'disbursements' => [
                 [
-                    'amount'=> 20000,
-                    'bank_code'=> 'BCA',
-                    'bank_account_name'=> 'Fadlan',
-                    'bank_account_number'=> '1234567890',
-                    'description'=> 'Batch Disbursement',
-                    'external_id'=> 'disbursement-1'
+                    'amount' => 20000,
+                    'bank_code' => 'BCA',
+                    'bank_account_name' => 'Fadlan',
+                    'bank_account_number' => '1234567890',
+                    'description' => 'Batch Disbursement',
+                    'external_id' => 'disbursement-1'
                 ],
                 [
-                    'amount'=> 30000,
-                    'bank_code'=> 'MANDIRI',
-                    'bank_account_name'=> 'Lutfi',
-                    'bank_account_number'=> '1234567891',
-                    'description'=> 'Batch Disbursement with email notifications',
-                    'external_id'=> 'disbursement-2',
-                    'email_to'=> ['test+to@xendit.co'],
-                    'email_cc'=> ['test+cc@xendit.co'],
-                    'email_bcc'=> ['test+bcc1@xendit.co', 'test+bcc2@xendit.co']
+                    'amount' => 30000,
+                    'bank_code' => 'MANDIRI',
+                    'bank_account_name' => 'Lutfi',
+                    'bank_account_number' => '1234567891',
+                    'description' => 'Batch Disbursement with email notifications',
+                    'external_id' => 'disbursement-2',
+                    'email_to' => ['test+to@xendit.co'],
+                    'email_cc' => ['test+cc@xendit.co'],
+                    'email_bcc' => ['test+bcc1@xendit.co', 'test+bcc2@xendit.co']
                 ]
             ]
         ];
@@ -124,7 +126,7 @@ class DisbursementsTest extends TestCase
             'name' => 'Bank Mandiri',
             'code' => 'MANDIRI',
             'can_disburse' => true,
-            'can_name_validate'=> true
+            'can_name_validate' => true
         ]];
         $this->stubRequest(
             'GET',
@@ -157,7 +159,7 @@ class DisbursementsTest extends TestCase
     {
         $this->stubRequest(
             'GET',
-            '/disbursements/'.self::TEST_ID,
+            '/disbursements/' . self::TEST_ID,
             [],
             [],
             [
@@ -180,7 +182,7 @@ class DisbursementsTest extends TestCase
     {
         $this->stubRequest(
             'GET',
-            '/disbursements?external_id='.self::TEST_ID,
+            '/disbursements?external_id=' . self::TEST_ID,
             [],
             [],
             [

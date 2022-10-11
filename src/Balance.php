@@ -63,10 +63,10 @@ class Balance
      * ]
      * @throws Exceptions\ApiException
      */
-    public static function getBalance($account_type = null)
+    public static function getBalance($account_type = null, $params = [])
     {
         self::validateAccountType($account_type);
         $url = '/balance?account_type=' . $account_type;
-        return static::_request('GET', $url);
+        return static::_request('GET', $url, $params);
     }
 }
