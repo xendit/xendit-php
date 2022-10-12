@@ -12,6 +12,7 @@
  */
 namespace Xendit;
 
+use Xendit\Exceptions\ApiException;
 use Xendit\Exceptions\InvalidArgumentException;
 
 /**
@@ -27,6 +28,9 @@ class QRCode
 {
     use ApiOperations\Request;
 
+    private static $apiVersion1 = '2020-07-01';
+    private static $apiVersion2 = '2022-07-31';
+
     /**
      * Instantiate base URL
      *
@@ -41,9 +45,9 @@ class QRCode
      * Send a create request
      *
      * Create a QR Code
-     * Required parameters: external_id, type, callback_url, amount.
-     * For DYNAMIC QR Code type, amount is required.
-     * For STATIC QR Code type, amount will be ignored.
+     * Required parameters:
+     * For API version 2020-07-01: external_id, type, callback_url, amount (only if type = DYNAMIC).
+     * For API version 2022-07-31: reference_id, type, currency, amount (only if type = DYNAMIC).
      *
      * To create QR Code for a Xenplatform sub-account,
      * include for-user-id in $params
@@ -55,36 +59,57 @@ class QRCode
      *
      * @return array [
      *   'id' =>  string,
-     *   'external_id' => string,
+     *   'external_id' => string, (only for API version 2020-07-01)
+     *   'callback_url' => string, (only for API version 2020-07-01)
      *   'amount' => int,
      *   'qr_string' => string,
-     *   'callback_url' => string,
+     *   'reference_id' => string, (only for API version 2022-07-31)
+     *   'currency' => string, (only for API version 2022-07-31)
+     *   'channel_code' => string, (only for API version 2022-07-31)
+     *   'expires_at' => date, (only for API version 2022-07-31)
      *   'type' => 'DYNAMIC' || 'STATIC',
      *   'status' => 'ACTIVE' || 'INACTIVE',
      *   'created' => date,
      *   'updated' => date,
      * ]
      *
-     * @throws Exception\InvalidArgumentException
-     * if type is not exist or not one of DYNAMIC or STATIC
-     *
-     * @throws Exception\ApiException if request status code is not 2xx
+     * @throws InvalidArgumentException if some parameters are missing or invalid
+     * @throws ApiException if request status code is not 2xx
      **/
     public static function create($params = [])
     {
-        $requiredParams = [];
-
         if (!array_key_exists('type', $params)) {
             $message = 'Please specify "type" inside your parameters.';
             throw new InvalidArgumentException($message);
         }
 
+        $requiredParams = ['type'];
+
         if ($params['type'] === 'DYNAMIC') {
-            $requiredParams = ['external_id', 'type', 'callback_url', 'amount'];
-        } elseif ($params['type'] === 'STATIC') {
-            $requiredParams = ['external_id', 'type', 'callback_url'];
-        } else {
+            array_push($requiredParams, 'amount');
+        } elseif ($params['type'] !== 'STATIC') {
             $message = 'Invalid QR Code type';
+            throw new InvalidArgumentException($message);
+        }
+
+        if (array_key_exists('api_version', $params)) {
+            $params['api-version'] = $params['api_version'];
+            unset($params['api_version']);
+        } else {
+            $params['api-version'] = QRCode::$apiVersion1;
+        }
+
+        if ($params['api-version'] === QRCode::$apiVersion1) {
+            array_push($requiredParams, 'external_id', 'callback_url');
+        } elseif ($params['api-version'] === QRCode::$apiVersion2) {
+            array_push($requiredParams, 'reference_id', 'currency');
+
+            if (array_key_exists('callback_url', $params)) {
+                $message = 'The API version 2022-07-31 does not support passing callback URL in the request. Please set the callback URL from your Xendit Dashboard instead.';
+                throw new InvalidArgumentException($message);
+            }
+        } else {
+            $message = 'Invalid API version';
             throw new InvalidArgumentException($message);
         }
 
@@ -98,31 +123,45 @@ class QRCode
     /**
      * Get QR Code
      *
-     * Get a QR Code by its external_id
+     * Get a QR Code detail
      *
      * Please refer to this documentation for more detailed info
      * https://xendit.github.io/apireference/#get-qr-code-by-external-id
      *
-     * @param string $external_id Merchant provided unique ID used to create QR code
+     * @param string $id ID of the QR Code.
+     *  For API Version 2022-07-31, this should be the ID with `qr_` prefix that is returned after creating the QR Code.
+     *  Otherwise, this ID should be the external ID that is provided during the creation of the QR Code.
+     * @param string|null $api_version The API version.
+     *  Valid values are:
+     *  - 2020-07-01 (default)
+     *  - 2022-07-31
      *
      * @return array [
      *   'id' =>  string,
-     *   'external_id' => string,
+     *   'external_id' => string, (only for API version 2020-07-01)
+     *   'callback_url' => string, (only for API version 2020-07-01)
      *   'amount' => int,
      *   'qr_string' => string,
-     *   'callback_url' => string,
+     *   'reference_id' => string, (only for API version 2022-07-31)
+     *   'currency' => string, (only for API version 2022-07-31)
+     *   'channel_code' => string, (only for API version 2022-07-31)
+     *   'expires_at' => date, (only for API version 2022-07-31)
      *   'type' => 'DYNAMIC' || 'STATIC',
      *   'status' => 'ACTIVE' || 'INACTIVE',
      *   'created' => date,
      *   'updated' => date,
      * ]
      *
-     * @throws Exception\ApiException
-     **/
-    public static function get(string $external_id)
+     * @throws ApiException
+     */
+    public static function get(string $id, string $api_version = null)
     {
-        $url = static::classUrl(). '/' . $external_id;
+        $params = [];
+        if ($api_version !== null) {
+            $params['api-version'] = $api_version;
+        }
 
-        return static::_request('GET', $url);
+        $url = static::classUrl(). '/' . $id;
+        return static::_request('GET', $url, $params);
     }
 }

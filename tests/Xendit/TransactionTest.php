@@ -78,18 +78,6 @@ class TransactionTest extends TestCase
     }
 
     /**
-     * Get list of transactions test
-     * Should throw ApiException
-     *
-     * @return void
-     */
-    public function testListIsGettableThrowsException()
-    {
-        $this->expectException(\Xendit\Exceptions\ApiException::class);
-        Transaction::list();
-    }
-
-    /**
      * Get detail of transactions test
      * Should throw ApiException
      *
