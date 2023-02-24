@@ -37,21 +37,12 @@ class PayoutsNew
         return [
             'reference_id',
             'channel_code',
-            'channel_properties'   => [
-                'account_number',
-                'account_holder_name'
-            ],
+            'channel_properties',
             'amount',
             'description',
             'currency',
-            'receipt_notification' => [
-                'email_to',
-                'email_cc',
-                'email_bcc',
-            ],
-            'metadata'             => [
-                'lotto_outlet'
-            ]
+            'receipt_notification',
+            'metadata'
         ];
     }
 
