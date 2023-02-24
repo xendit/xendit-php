@@ -33,6 +33,11 @@ This library is the abstraction of Xendit API for access from applications writt
         -   [Validate OTP for direct debit payment](#validate-otp-for-direct-debit-payment)
         -   [Get direct debit payment by ID](#get-direct-debit-payment-by-id)
         -   [Get direct debit payment by reference ID](#get-direct-debit-payment-by-reference-id)
+    -   [Payouts New (Disbursement)](#payouts-new)
+        -   [Create Payouts](#create-payouts-new)
+        -   [Get Payouts By ID / Reference](#retrieve-by-id)
+        -   [Cancel Payouts](#cancel-payouts)
+        -   [Get Payouts Channels](#get-payments-channels)
     -   [IDR Disbursements for Indonesia](#idr-disbursements-for-indonesia)
         -   [Create an IDR Disbursement](#create-an-idr-disbursement)
         -   [Create an IDR Batch Disbursement](#create-an-idr-batch-disbursement)
@@ -66,10 +71,10 @@ This library is the abstraction of Xendit API for access from applications writt
         -   [Refund PayLater Charge](#refund-paylater-charge)
         -   [Get PayLater Refund by ID](#get-paylater-refund-by-id)
         -   [List PayLater Refunds](#list-paylater-refunds)
-    -   [Payouts](#payouts)
-        -   [Create a Payout](#create-payout)
-        -   [Get a Payout](#get-payout)
-        -   [Void a Payout](#void-payout)
+    -   [Payout Links](#payout-links)
+        -   [Create a Payout Link](#create-payout-links)
+        -   [Get a Payout Link](#get-payout-links)
+        -   [Void a Payout Link](#void-payout-links)
     -   [QR Code](#qr-code)
         -   [Create a QR Code](#create-a-qr-code)
         -   [Get QR Code](#get-qr-code)
@@ -684,6 +689,55 @@ $getDirectDebitPaymentByReferenceID = \Xendit\DirectDebit::getDirectDebitPayment
     'test-direct-debit-ref'
 );
 var_dump($getDirectDebitPaymentByReferenceID);
+```
+
+### Payouts New
+
+```php
+\Xendit\PayoutsNew::create(array $params);
+```
+
+#### Create Payouts New
+Usage example
+```php
+\Xendit\PayoutsNew::create([
+    'reference_id'         => 'ref-823723232',
+    'channel_code'         => 'ID_BRI',
+    'channel_properties'   => [
+        'account_number'      => '0000000000',
+        'account_holder_name' => 'Yanuar'
+    ],
+    'amount'               => 1000,
+    'description'          => 'Sample Successful Create IDR Payout',
+    'currency'             => 'IDR',
+    'receipt_notification' => [
+        'email_to'  => ['someone@example.com'],
+        'email_cc'  => ['someone1@example.com'],
+        'email_bcc' => ['someone2@example.com'],
+    ],
+    'metadata'             => [
+        'lotto_outlet' => 24
+    ]
+])
+```
+
+#### Retrieve By ID
+```php
+## Using ID
+\Xendit\PayoutsNew::retrieve(string $id);
+
+## Using Reference ID
+\Xendit\PayoutsNew::retrieveReference(string $referenceID)
+```
+
+#### Cancel Payouts
+```php
+\Xendit\PayoutsNew::cancel(string $id);
+```
+
+#### Get Payouts Channel
+```php
+\Xendit\PayoutsNew::getPayoutsChannels()
 ```
 
 ### IDR Disbursements for Indonesia
@@ -1326,9 +1380,9 @@ $voidPayout = \Xendit\Payouts::void($id);
 var_dump($voidPayout);
 ```
 
-### Payouts
+### Payout Links
 
-#### Create Payout
+#### Create Payout Links
 
 ```php
 \Xendit\Payouts::create(array $params);
@@ -1346,7 +1400,7 @@ $createPayout = \Xendit\Payouts::create($params);
 var_dump($createPayout);
 ```
 
-#### Get Payout
+#### Get Payout Links
 
 ```php
 \Xendit\Payouts::retrieve(string $id, array $params);
@@ -1363,7 +1417,7 @@ $getPayout = \Xendit\Payouts::retrieve($id, $params);
 var_dump($getPayout);
 ```
 
-#### Void Payout
+#### Void Payout Links
 
 ```php
 \Xendit\Payouts::void(string $id);
