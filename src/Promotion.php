@@ -32,7 +32,7 @@ class Promotion
      *
      * @return string
      */
-    public static function classUrl()
+    public static function classUrl(): string
     {
         return "/promotions";
     }
@@ -69,7 +69,7 @@ class Promotion
      *
      * @throws Exceptions\ApiException if request status code is not 2xx
      **/
-    public static function create($params = [])
+    public static function create(array $params = []): array
     {
         if (!array_key_exists('promo_code', $params)
             && !array_key_exists('bin_list', $params)

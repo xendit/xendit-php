@@ -25,7 +25,7 @@ class HttpCliImp implements HttpClientInterface {
     {
         $this->_guzz = $guzz;
     }
-    public function request($method, $uri, array $options = [])
+    public function request(string $method, $uri, array $options = [])
     {
         return $this->_guzz->request($method, $uri, $options);
     }

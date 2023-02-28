@@ -33,7 +33,7 @@ class Platform
      *
      * @return array
      */
-    public static function accountType()
+    public static function accountType(): array
     {
         return ["MANAGED", "OWNED"];
     }
@@ -43,7 +43,7 @@ class Platform
      *
      * @return array
      */
-    public static function unitRoute()
+    public static function unitRoute(): array
     {
         return ["percent", "flat"];
     }
@@ -51,11 +51,11 @@ class Platform
     /**
      * Validation for account type
      *
-     * @param string $account_type Account type
+     * @param string|null $account_type Account type
      *
      * @return void
      */
-    public static function validateAccountType($account_type = null)
+    public static function validateAccountType(string $account_type = null)
     {
         if (!in_array($account_type, self::accountType())) {
             $msg = "Account type is invalid. Available types: MANAGED, OWNED";
@@ -66,11 +66,11 @@ class Platform
     /**
      * Validation for unit route
      *
-     * @param string $unit unit route
+     * @param string|null $unit unit route
      *
      * @return void
      */
-    public static function validateUnitRoute($unit = null)
+    public static function validateUnitRoute(string $unit = null)
     {
         if (!in_array($unit, self::unitRoute())) {
             $msg = "Unit value is invalid. Available values: percent, flat";
@@ -81,13 +81,13 @@ class Platform
     /**
      * Create account
      *
-     * @param array  $params user params
+     * @param array $params user params
      *
      * @return array
      * https://developers.xendit.co/api-reference/#create-account
      * @throws Exceptions\ApiException
      */
-    public static function createAccount($params = [])
+    public static function createAccount(array $params = []): array
     {
         $requiredParams = ['email', 'type'];
 
@@ -108,9 +108,9 @@ class Platform
      * https://developers.xendit.co/api-reference/#get-account-by-id
      * @throws Exceptions\ApiException
      */
-    public static function getAccount($account_id)
+    public static function getAccount(string $account_id): array
     {
-        $url = '/v2/accounts/'.$account_id;
+        $url = '/v2/accounts/' . $account_id;
 
         return static::_request('GET', $url);
     }
@@ -118,20 +118,20 @@ class Platform
     /**
      * Update account
      *
-     * @param string  $account_id
-     * @param array  $params user params
+     * @param string $account_id
+     * @param array $params user params
      *
      * @return array
      * https://developers.xendit.co/api-reference/#update-account
      * @throws Exceptions\ApiException
      */
-    public static function updateAccount($account_id, $params = [])
+    public static function updateAccount(string $account_id, array $params = []): array
     {
         $requiredParams = ['email'];
 
         self::validateParams($params, $requiredParams);
 
-        $url = '/v2/accounts/'.$account_id;
+        $url = '/v2/accounts/' . $account_id;
 
         return static::_request('PATCH', $url, $params);
     }
@@ -139,13 +139,13 @@ class Platform
     /**
      * Create transfer
      *
-     * @param array  $params user params
+     * @param array $params user params
      *
      * @return array
      * https://developers.xendit.co/api-reference/#create-transfers
      * @throws Exceptions\ApiException
      */
-    public static function createTransfer($params = [])
+    public static function createTransfer(array $params = []): array
     {
         $requiredParams = ['reference', 'amount', 'source_user_id', 'destination_user_id'];
 
@@ -159,28 +159,28 @@ class Platform
     /**
      * Create fee rule
      *
-     * @param array  $params user params
+     * @param array $params user params
      *
      * @return array
      * https://developers.xendit.co/api-reference/#create-fee-rule
      * @throws Exceptions\ApiException
      */
-    public static function createFeeRule($params = [])
+    public static function createFeeRule(array $params = []): array
     {
         $requiredParams = ['name', 'unit', 'amount', 'currency'];
 
         self::validateParams($params, $requiredParams);
         self::validateUnitRoute($params['unit']);
 
-        $payload = array();
+        $payload         = array();
         $payload['name'] = $params['name'];
         if (isset($params['description'])) {
             $payload['description'] = $params['description'];
         }
         $payload['routes'] = [
             array(
-                'unit' => $params['unit'],
-                'amount' => $params['amount'],
+                'unit'     => $params['unit'],
+                'amount'   => $params['amount'],
                 'currency' => $params['currency']
             )
         ];
@@ -193,20 +193,20 @@ class Platform
     /**
      * Set Callback URL
      *
-     * @param string  $type
-     * @param array  $params user params
+     * @param string $type
+     * @param array $params user params
      *
      * @return array
      * https://developers.xendit.co/api-reference/#set-callback-urls
      * @throws Exceptions\ApiException
      */
-    public static function setCallbackUrl($type, $params = [])
+    public static function setCallbackUrl(string $type, array $params = []): array
     {
         $requiredParams = ['url'];
 
         self::validateParams($params, $requiredParams);
 
-        $url = '/callback_urls/'.$type;
+        $url = '/callback_urls/' . $type;
 
         return static::_request('POST', $url, $params);
     }

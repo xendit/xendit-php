@@ -14,6 +14,7 @@
 namespace Xendit;
 
 use Dotenv\Dotenv;
+use Xendit\HttpClient\GuzzleClient;
 
 /**
  * Class Xendit
@@ -35,6 +36,9 @@ class Xendit
     private static $_httpClient;
 
     const VERSION = "2.18.0";
+
+    public function __construct() {
+    }
 
     /**
      * ApiBase getter
@@ -63,7 +67,7 @@ class Xendit
      *
      * @return string Secret API key
      */
-    public static function getApiKey()
+    public static function getApiKey(): string
     {
         return self::$apiKey;
     }
@@ -75,7 +79,7 @@ class Xendit
      *
      * @return void
      */
-    public static function setApiKey($apiKey)
+    public static function setApiKey(string $apiKey)
     {
         self::$apiKey = $apiKey;
     }
@@ -96,11 +100,11 @@ class Xendit
     /**
      * Set library version
      *
-     * @param string $libVersion library version
+     * @param string|null $libVersion library version
      *
      * @return void
      */
-    public static function setLibVersion($libVersion = null): void
+    public static function setLibVersion(string $libVersion = null): void
     {
         self::$libVersion = $libVersion;
     }
@@ -112,7 +116,7 @@ class Xendit
      *
      * @return void
      */
-    public static function setHttpClient(HttpClientInterface $client): void
+    public static function setHttpClient($client): void
     {
         self::$_httpClient = $client;
     }

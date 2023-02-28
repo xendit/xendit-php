@@ -29,6 +29,8 @@ class PlatformTest extends TestCase
 {
     const ACCOUNT_TYPE = 'OWNED';
     const ACCOUNT_EMAIL = 'customer@website.com';
+
+    const ACCOUNT_ID = "5cafeb170a2b18519b1b8761";
     const ACCOUNT_BUSINESS_NAME = 'customer company';
 
     /**
@@ -41,8 +43,8 @@ class PlatformTest extends TestCase
     public function testAccountIsCreatable()
     {
         $expected = [
-            'email' => self::ACCOUNT_EMAIL,
-            'type' => self::ACCOUNT_TYPE,
+            'email'          => self::ACCOUNT_EMAIL,
+            'type'           => self::ACCOUNT_TYPE,
             'public_profile' => ['business_name' => self::ACCOUNT_BUSINESS_NAME]
         ];
 
@@ -70,12 +72,12 @@ class PlatformTest extends TestCase
     public function testAccountIsGettable()
     {
         $expectedResponse = [
-            'id' => '5cafeb170a2b18519b1b8761',
+            'id'      => '5cafeb170a2b18519b1b8761',
             'created' => '2021-01-01T10:00:00Z',
             'updated' => '2021-01-01T10:00:00Z',
-            'type'=> 'OWNED',
-            'email'=> 'angie@pinkpanther.com',
-            'status'=> 'LIVE',
+            'type'    => 'OWNED',
+            'email'   => 'angie@pinkpanther.com',
+            'status'  => 'LIVE',
         ];
         $this->stubRequest(
             'GET',
@@ -85,7 +87,7 @@ class PlatformTest extends TestCase
             $expectedResponse
         );
 
-        $result = Platform::getAccount('5cafeb170a2b18519b1b8761');
+        $result = Platform::getAccount(self::ACCOUNT_ID);
         $this->assertEquals($result['id'], $expectedResponse['id']);
         $this->assertEquals($result['type'], $expectedResponse['type']);
     }
@@ -100,8 +102,8 @@ class PlatformTest extends TestCase
     public function testAccountIsUpdatable()
     {
         $expected = [
-            'email' => self::ACCOUNT_EMAIL,
-            'public_profile' => ['business_name' => self::ACCOUNT_BUSINESS_NAME.' Updated']
+            'email'          => self::ACCOUNT_EMAIL,
+            'public_profile' => ['business_name' => self::ACCOUNT_BUSINESS_NAME . ' Updated']
         ];
 
         $this->stubRequest(
@@ -127,9 +129,9 @@ class PlatformTest extends TestCase
     public function testTransferIsCreatable()
     {
         $expected = [
-            'reference' => ''.time(),
-            'amount' => 50000,
-            'source_user_id' => '54afeb170a2b18519b1b8768',
+            'reference'           => '' . time(),
+            'amount'              => 50000,
+            'source_user_id'      => '54afeb170a2b18519b1b8768',
             'destination_user_id' => '5cafeb170a2b1851246b8768',
         ];
 
@@ -157,20 +159,20 @@ class PlatformTest extends TestCase
     public function testFeeRuleIsCreatable()
     {
         $params = [
-            'name' => 'standard_platform_fee',
+            'name'        => 'standard_platform_fee',
             'description' => 'Fee charged to insurance agents based in Java',
-            'unit' => 'flat',
-            'amount' => 6500,
-            'currency' => 'IDR'
+            'unit'        => 'flat',
+            'amount'      => 6500,
+            'currency'    => 'IDR'
         ];
 
         $expected = [
-            'name' => 'standard_platform_fee',
+            'name'        => 'standard_platform_fee',
             'description' => 'Fee charged to insurance agents based in Java',
-            'routes' => [
+            'routes'      => [
                 array(
-                    'unit' => 'flat',
-                    'amount' => 6500,
+                    'unit'     => 'flat',
+                    'amount'   => 6500,
                     'currency' => 'IDR'
                 )
             ]
@@ -198,14 +200,14 @@ class PlatformTest extends TestCase
      */
     public function testCallbackUrlIsCreatable()
     {
-        $expected = [
+        $expected     = [
             'url' => 'https://webhook.site/c9c9140b-96b8-434c-9c59-7440eeae4d7f'
         ];
         $callbackType = 'invoice';
 
         $this->stubRequest(
             'POST',
-            '/callback_urls/'.$callbackType,
+            '/callback_urls/' . $callbackType,
             $expected,
             [],
             $expected
@@ -254,11 +256,11 @@ class PlatformTest extends TestCase
     public function testAccountIsUpdatetableThrowsException()
     {
         $expected = [
-            'public_profile' => ['business_name' => self::ACCOUNT_BUSINESS_NAME.' Updated']
+            'public_profile' => ['business_name' => self::ACCOUNT_BUSINESS_NAME . ' Updated']
         ];
 
         $this->expectException(\Xendit\Exceptions\InvalidArgumentException::class);
-        Platform::updateAccount($expected);
+        Platform::updateAccount(self::ACCOUNT_ID, $expected);
     }
 
     /**
@@ -301,7 +303,7 @@ class PlatformTest extends TestCase
      */
     public function testCallbackurlIsCreatableThrowsException()
     {
-        $expected = [];
+        $expected     = [];
         $callbackType = 'invoice';
 
         $this->expectException(\Xendit\Exceptions\InvalidArgumentException::class);

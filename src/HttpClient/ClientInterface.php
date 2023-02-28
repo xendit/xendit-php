@@ -32,14 +32,14 @@ interface ClientInterface
      * @param string $method         request method
      * @param string $url            url
      * @param array  $defaultHeaders request headers
-     * @param array  $params         parameters
+     * @param array $params         parameters
      *
      * @return array
      * @throws ApiException
      */
-    public function sendRequest($method,
-        string $url,
-        array $defaultHeaders,
-        $params
-    );
+    public function sendRequest(string $method,
+                                string $url,
+                                array  $defaultHeaders,
+                                array $params
+    ): array;
 }

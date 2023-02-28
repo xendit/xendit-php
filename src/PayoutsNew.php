@@ -1,5 +1,15 @@
 <?php
 
+/**
+ * PayoutsNew.php
+ * php version 7.3.0
+ *
+ * @category Class
+ * @package  Xendit
+ * @author   Yanuar <yanuaraditia@outlook.com>
+ * @license  https://opensource.org/licenses/MIT MIT License
+ * @link     https://api.xendit.co
+ */
 namespace Xendit;
 
 /**
@@ -92,7 +102,7 @@ class PayoutsNew
      * ]
      * @throws \Xendit\Exceptions\ApiException
      */
-    public static function retrieveReference($referenceId, array $params = [])
+    public static function retrieveReference($referenceId, array $params = []): array
     {
         $url = static::classUrl() . '?reference_id=' . $referenceId;
         return static::_request('GET', $url, $params);
@@ -127,7 +137,7 @@ class PayoutsNew
      * ]
      * @throws Exceptions\ApiException
      */
-    public static function getPayoutsChannels()
+    public static function getPayoutsChannels(): array
     {
         $url = '/payouts_channels';
         return static::_request('GET', $url);
@@ -174,7 +184,7 @@ class PayoutsNew
      * ]
      * @throws \Xendit\Exceptions\ApiException
      */
-    public static function cancel(string $id)
+    public static function cancel(string $id): array
     {
         $url = static::classUrl() . '/' . $id . '/cancel';
         return static::_request('GET', $url);

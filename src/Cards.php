@@ -33,7 +33,7 @@ class Cards
      *
      * @return string
      */
-    public static function classUrl()
+    public static function classUrl(): string
     {
         return "/credit_card_charges";
     }
@@ -43,7 +43,7 @@ class Cards
      * for more details
      *
      * @param string $id     charge ID
-     * @param array  $params user parameters
+     * @param array $params user parameters
      *
      * @return array [
      *  'created' => string,
@@ -64,7 +64,7 @@ class Cards
      * ]
      * @throws Exceptions\ApiException
      */
-    public static function capture($id, $params = [])
+    public static function capture(string $id, array $params = []): array
     {
         $url = self::classUrl() . '/' . $id . '/capture';
         $requiredParams = ['amount'];
@@ -79,7 +79,7 @@ class Cards
      *
      * @return array
      */
-    public static function createReqParams()
+    public static function createReqParams(): array
     {
         return ['token_id', 'external_id', 'amount'];
     }
@@ -88,7 +88,7 @@ class Cards
      * Reverse authorized charge
      *
      * @param string $id     charge ID
-     * @param array  $params user params
+     * @param array $params user params
      *
      * @return array [
      *  'created' => string,
@@ -101,7 +101,7 @@ class Cards
      * ]
      * @throws Exceptions\ApiException
      */
-    public static function reverseAuthorization($id, $params = [])
+    public static function reverseAuthorization(string $id, array $params = []): array
     {
         $url = self::classUrl() . '/' . $id . '/auth_reversal';
         $requiredParams = ['external_id'];
@@ -116,7 +116,7 @@ class Cards
      * for more details
      *
      * @param string $id     charge ID
-     * @param array  $params user parameters
+     * @param array $params user parameters
      *
      * @return array [
      *  'updated' => string,
@@ -131,7 +131,7 @@ class Cards
      * ]
      * @throws Exceptions\ApiException
      */
-    public static function createRefund($id, $params = [])
+    public static function createRefund(string $id, array $params = []): array
     {
         $url = self::classUrl() . '/' . $id . '/refunds';
         $requiredParams = ['amount', 'external_id'];

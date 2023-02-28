@@ -34,7 +34,7 @@ trait Request
      *
      * @return void
      */
-    protected static function validateParams($params = [], $requiredParams = [])
+    protected static function validateParams(array $params = [], array $requiredParams = [])
     {
         $currParams = array_diff_key(array_flip($requiredParams), $params);
         if ($params && !is_array($params)) {
@@ -59,10 +59,11 @@ trait Request
      * @throws \Xendit\Exceptions\ApiException
      */
     protected static function _request(
-        $method,
-        $url,
-        $params = []
-    ) {
+        string $method,
+        string $url,
+        array $params = []
+    ): array
+    {
         $headers = [];
 
         if (array_key_exists('for-user-id', $params)) {
@@ -94,7 +95,7 @@ trait Request
             $headers['X-API-VERSION'] = $params['X-API-VERSION'];
         }
 
-        $requestor = new \Xendit\ApiRequestor();
-        return $requestor->request($method, $url, $params, $headers);
+        $requester = new \Xendit\ApiRequestor();
+        return $requester->request($method, $url, $params, $headers);
     }
 }

@@ -33,7 +33,7 @@ class Disbursements
      *
      * @return string
      */
-    public static function classUrl()
+    public static function classUrl(): string
     {
         return '/disbursements';
     }
@@ -43,7 +43,7 @@ class Disbursements
      *
      * @return array
      */
-    public static function createReqParams()
+    public static function createReqParams(): array
     {
         return [
             'external_id',
@@ -70,7 +70,7 @@ class Disbursements
      * ]
      * @throws Exceptions\ApiException
      */
-    public static function createBatch($params = [])
+    public static function createBatch(array $params = []): array
     {
         $requiredParams = ['reference', 'disbursements'];
 
@@ -112,7 +112,7 @@ class Disbursements
      * ]
      * @throws Exceptions\ApiException
      */
-    public static function retrieveExternal($external_id, $params = [])
+    public static function retrieveExternal(string $external_id, array $params = []): array
     {
         $url = static::classUrl() . '?external_id=' . $external_id;
         return static::_request('GET', $url, $params);
@@ -140,7 +140,7 @@ class Disbursements
      * ]]
      * @throws Exceptions\ApiException
      */
-    public static function getAvailableBanks()
+    public static function getAvailableBanks(): array
     {
         $url = '/available_disbursements_banks';
         return static::_request('GET', $url);

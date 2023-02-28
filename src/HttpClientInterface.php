@@ -14,6 +14,10 @@
 namespace Xendit;
 
 
+use GuzzleHttp\Exception\GuzzleException;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\UriInterface;
+
 /**
  * Interface HttpClientInterface
  *
@@ -32,12 +36,12 @@ interface HttpClientInterface
      * relative path to append to the base path of the client. The URL can
      * contain the query string as well.
      *
-     * @param string              $method  HTTP method.
+     * @param string $method  HTTP method.
      * @param string|UriInterface $uri     URI object or string.
      * @param array               $options Request options to apply.
      *
      * @return ResponseInterface
      * @throws GuzzleException
      */
-    public function request($method, $uri, array $options = []);
+    public function request(string $method, $uri, array $options = []): ResponseInterface;
 }

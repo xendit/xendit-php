@@ -97,20 +97,20 @@ class TestCase extends \PHPUnit\Framework\TestCase
      *
      * @param string $method   HTTP method
      * @param string $path     relative url
-     * @param array  $params   user params
-     * @param array  $headers  request headers
-     * @param array  $response response
-     * @param int    $rcode    response code
+     * @param array $params   user params
+     * @param array $headers  request headers
+     * @param array $response response
+     * @param int $rcode    response code
      *
      * @return void
      */
     protected function stubRequest(
-        $method,
-        $path,
-        $params = [],
-        $headers = [],
-        $response = [],
-        $rcode = 200
+        string $method,
+        string $path,
+        array  $params = [],
+        array  $headers = [],
+        array  $response = [],
+        int $rcode = 200
     ) {
         $this->_prepareRequestMock($method, $path, $params, $headers)
             ->willReturn([json_encode($response), $rcode, []]);

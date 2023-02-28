@@ -152,11 +152,11 @@ class DisbursementsChannelsTest extends TestCase
      * Should throw ApiException
      *
      * @return void
-     * @throws \Xendit\Exceptions\ApiException
+     * @throws \Xendit\Exceptions\ApiException | \TypeError
      */
     public function testIsGettableDisbursementChannelsByChannelCategoryThrowApiException()
     {
-        $this->expectException(\Xendit\Exceptions\ApiException::class);
+        $this->expectException(TypeError::class);
         DisbursementChannels::getDisbursementChannelsByChannelCategory(null);
     }
 
@@ -207,11 +207,11 @@ class DisbursementsChannelsTest extends TestCase
      * Should throw ApiException
      *
      * @return void
-     * @throws \Xendit\Exceptions\ApiException
+     * @throws \Xendit\Exceptions\ApiException | \TypeError
      */
     public function testIsGettableDisbursementChannelsByChannelCodeThrowApiException()
     {
-        $this->expectException(\Xendit\Exceptions\ApiException::class);
+        $this->expectException(TypeError::class);
         DisbursementChannels::getDisbursementChannelsByChannelCode(null);
     }
 }

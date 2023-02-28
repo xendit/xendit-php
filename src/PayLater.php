@@ -34,7 +34,7 @@ class PayLater
      *
      * @return string
      */
-    public static function classUrl()
+    public static function classUrl(): string
     {
         return "/paylater";
     }
@@ -47,7 +47,7 @@ class PayLater
      * @throws InvalidArgumentException
      * @throws ApiException
      */
-    public static function initiatePayLaterPlans($params = [])
+    public static function initiatePayLaterPlans(array $params = []): array
     {
         $requiredParams = [
             'customer_id',
@@ -72,7 +72,7 @@ class PayLater
      * @throws InvalidArgumentException
      * @throws ApiException
      */
-    public static function createPayLaterCharge($params = [])
+    public static function createPayLaterCharge(array $params = []): array
     {
         $requiredParams = [
             'plan_id',
@@ -87,7 +87,7 @@ class PayLater
 
         return static::_request('POST', $url, $params);
     }
-    
+
     /**
      * Get PayLater Charge by ID
      *
@@ -97,19 +97,19 @@ class PayLater
      * @throws InvalidArgumentException
      * @throws ApiException
      */
-    public static function getPayLaterChargeStatus($id, $params = [])
+    public static function getPayLaterChargeStatus(string $id, array $params = []): array
     {
         $requiredParams = [
-            
+
         ];
-        
+
         self::validateParams($params, $requiredParams);
-        
+
         $url = static::classUrl() . '/charges/'.$id;
-        
+
         return static::_request('GET', $url, $params);
     }
-    
+
     /**
      * Create Paylater Refund
      *
@@ -119,19 +119,19 @@ class PayLater
      * @throws InvalidArgumentException
      * @throws ApiException
      */
-    public static function createPayLaterRefund($id, $params = [])
+    public static function createPayLaterRefund(string $id, array $params = []): array
     {
         $requiredParams = [
-            
+
         ];
-        
+
         self::validateParams($params, $requiredParams);
-        
+
         $url = static::classUrl() . '/charges/'.$id.'/refunds';
-        
+
         return static::_request('POST', $url, $params);
     }
-    
+
     /**
      * Get Refund by Refund ID
      *
@@ -142,34 +142,35 @@ class PayLater
      * @throws InvalidArgumentException
      * @throws ApiException
      */
-    public static function getPayLaterRefund($charge_id, $refund_id, $params = [])
+    public static function getPayLaterRefund(string $charge_id, string $refund_id, array $params = []): array
     {
         $requiredParams = [
-            
+
         ];
-        
+
         self::validateParams($params, $requiredParams);
-        
+
         $url = static::classUrl() . '/charges/'.$charge_id.'/refunds/'.$refund_id;
-        
+
         return static::_request('GET', $url, $params);
     }
-    
+
     /**
      * List Paylater Refunds
      *
-     * @param array  $params Paylater Refunds params
+     * @param string $charge_id
+     * @param array $params Paylater Refunds params
      *
      * @return array
      * https://developers.xendit.co/api-reference/#list-paylater-refunds
      * @throws Exceptions\ApiException
      */
-    public static function listPayLaterRefund($charge_id, $params = [])
+    public static function listPayLaterRefund(string $charge_id, array $params = []): array
     {
         $url = static::classUrl() . '/charges/'.$charge_id.'/refunds/';
-        
+
         return static::_request('GET', $url, $params);
     }
-    
-    
+
+
 }

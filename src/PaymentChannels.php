@@ -34,7 +34,7 @@ class PaymentChannels
      * @throws Exceptions\ApiException
      * * GetPaymentChannels is in maintenance mode. Existing behavior on the endpoint will continue to work as before, but newer channels will be missing from the returned result.
      */
-    public static function list()
+    public static function list(): array
     {
         $url = '/payment_channels';
 

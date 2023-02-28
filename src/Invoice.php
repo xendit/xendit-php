@@ -34,7 +34,7 @@ class Invoice
      *
      * @return string
      */
-    public static function classUrl()
+    public static function classUrl(): string
     {
         return "/v2/invoices";
     }
@@ -44,7 +44,7 @@ class Invoice
      *
      * @return array
      */
-    public static function createReqParams()
+    public static function createReqParams(): array
     {
         return ['external_id', 'amount'];
     }
@@ -74,9 +74,9 @@ class Invoice
      * ]
      * @throws Exceptions\ApiException
      */
-    public static function expireInvoice($id, $params=[])
+    public static function expireInvoice(string $id, array $params = []): array
     {
-        $url =  '/invoices/' . $id . '/expire!';
+        $url = '/invoices/' . $id . '/expire!';
 
         return static::_request('POST', $url, $params);
     }

@@ -34,7 +34,7 @@ class Recurring
      *
      * @return string
      */
-    public static function classUrl()
+    public static function classUrl(): string
     {
         return "/recurring_payments";
     }
@@ -44,7 +44,7 @@ class Recurring
      *
      * @return array
      */
-    public static function createReqParams()
+    public static function createReqParams(): array
     {
         return [
             'external_id',
@@ -61,7 +61,7 @@ class Recurring
      *
      * @return array
      */
-    public static function updateReqParams()
+    public static function updateReqParams(): array
     {
         return [];
     }
@@ -91,7 +91,7 @@ class Recurring
      * ]
      * @throws Exceptions\ApiException
      */
-    public static function stop($id)
+    public static function stop(string $id): array
     {
         $url = '/recurring_payments/' . $id . '/stop!';
 
@@ -123,7 +123,7 @@ class Recurring
      * ]
      * @throws Exceptions\ApiException
      */
-    public static function pause($id)
+    public static function pause(string $id): array
     {
         $url = '/recurring_payments/' . $id . '/pause!';
 
@@ -155,7 +155,7 @@ class Recurring
      * ]
      * @throws Exceptions\ApiException
      */
-    public static function resume($id)
+    public static function resume(string $id): array
     {
         $url = '/recurring_payments/' . $id . '/resume!';
 
