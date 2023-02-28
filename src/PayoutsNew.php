@@ -1,5 +1,15 @@
 <?php
 
+/**
+ * PayoutsNew.php
+ * php version 7.3.0
+ *
+ * @category Class
+ * @package  Xendit
+ * @author   Yanuar <yanuaraditia@outlook.com>
+ * @license  https://opensource.org/licenses/MIT MIT License
+ * @link     https://api.xendit.co
+ */
 namespace Xendit;
 
 /**
