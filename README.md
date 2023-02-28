@@ -63,6 +63,7 @@ This library is the abstraction of Xendit API for access from applications writt
         -   [Create Invoice](#create-invoice)
         -   [Get Invoice](#get-invoice)
         -   [Get All Invoice](#get-all-invoice)
+        -   [Get Invoice by External ID](#get-invoice-by-external-id)
         -   [Expire Invoice](#expire-invoice)
     -   [Paylater](#paylater)
         -   [Initiate PayLater Plans](#initiate-paylater-plans)
@@ -1212,6 +1213,20 @@ $retrieveAllParam = [
 ];
 $getAllInvoice = \Xendit\Invoice::retrieveAll($retrieveAllParam);
 var_dump(($getAllInvoice));
+```
+
+#### Get Invoice by External ID
+
+```php
+\Xendit\Invoice::retrieveExternalId(string $external_id, array $params);
+```
+
+Usage example:
+
+```php
+$external_id = 'external_id';
+$getInvoice = \Xendit\Invoice::retrieveExternalId($external_id);
+var_dump(($getInvoice));
 ```
 
 #### Expire Invoice
