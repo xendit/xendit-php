@@ -206,7 +206,7 @@ class DisbursementsPHPTest extends TestCase
      * 'updated'=> 'Date',
      * receipt_notification => Array
      * beneficiary => Array]
-     * @throws Exceptions\ApiException
+     * @throws \Xendit\Exceptions\ApiException
      */
     public function testIsGettablePHPDisbursementsByReferenceID()
     {
@@ -253,7 +253,7 @@ class DisbursementsPHPTest extends TestCase
      */
     public function testIsGettablePHPDisbursementsByReferenceIDThrowApiException()
     {
-        $this->expectException(\Xendit\Exceptions\ApiException::class);
+        $this->expectException(TypeError::class);
 
         $result = DisbursementsPHP::getPHPDisbursementsByReferenceID(null);
         var_dump($result);
