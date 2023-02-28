@@ -35,7 +35,7 @@ class DisbursementsPHP
      *
      * @return string
      */
-    public static function classUrl()
+    public static function classUrl(): string
     {
         return '/disbursements';
     }
@@ -45,7 +45,7 @@ class DisbursementsPHP
      *
      * @return array
      */
-    public static function createPHPReqParams()
+    public static function createPHPReqParams(): array
     {
         return [
             'xendit-idempotency-key',
@@ -64,7 +64,7 @@ class DisbursementsPHP
      *
      * @return array
      */
-    public static function beneficiaryReqParams()
+    public static function beneficiaryReqParams(): array
     {
         return [
             'type',
@@ -90,7 +90,7 @@ class DisbursementsPHP
      *
      * @return array
      */
-    public static function receiptNotificationReqParams()
+    public static function receiptNotificationReqParams(): array
     {
         return [
             'email_to',
@@ -118,7 +118,7 @@ class DisbursementsPHP
      * beneficiary => Array
      * @throws Exceptions\ApiException
      */
-    public static function createPHPDisbursement($params = [])
+    public static function createPHPDisbursement(array $params = []): array
     {
         self::validateParams($params, static::createPHPReqParams());
         if (array_key_exists('beneficiary', $params)) {
@@ -151,7 +151,7 @@ class DisbursementsPHP
      * beneficiary => Array
      * @throws Exceptions\ApiException
      */
-    public static function getPHPDisbursementByID($disbursement_id, $params = [])
+    public static function getPHPDisbursementByID(string $disbursement_id, array $params = []): array
     {
         $url = static::classUrl() . '/' . $disbursement_id;
         return static::_request('GET', $url, $params);
@@ -191,7 +191,7 @@ class DisbursementsPHP
      * ]]
      * @throws Exceptions\ApiException
      */
-    public static function getPHPDisbursementsByReferenceID($reference_id, $params = [])
+    public static function getPHPDisbursementsByReferenceID(string $reference_id, array $params = []): array
     {
         $url = static::classUrl() . '?reference_id=' . $reference_id;
         return static::_request('GET', $url, $params);

@@ -13,6 +13,8 @@
 
 namespace Xendit;
 
+use PhpOption\None;
+
 /**
  * Class DisbursementChannels
  *
@@ -33,15 +35,13 @@ class DisbursementChannels
      *
      * @return string
      */
-    public static function classUrl()
+    public static function classUrl(): string
     {
         return '/disbursement-channels';
     }
 
     /**
      * Send GET request to Get Disbursement Channels
-     *
-     * @param none
      *
      * @return array[
      * [
@@ -63,9 +63,8 @@ class DisbursementChannels
      * ]]
      * @throws Exceptions\ApiException
      */
-    public static function getDisbursementChannels()
+    public static function getDisbursementChannels(): array
     {
-        $url = '/disbursement-channels';
         return static::_request('GET', static::classUrl());
     }
 
@@ -95,7 +94,7 @@ class DisbursementChannels
      * ]]
      * @throws Exceptions\ApiException
      */
-    public static function getDisbursementChannelsByChannelCategory($channel_category, $params = [])
+    public static function getDisbursementChannelsByChannelCategory(string $channel_category, array $params = []): array
     {
         $url = static::classUrl() . '?channel_category=' . $channel_category;
         return static::_request('GET', $url, $params);
@@ -119,7 +118,7 @@ class DisbursementChannels
      * ]]
      * @throws Exceptions\ApiException
      */
-    public static function getDisbursementChannelsByChannelCode($channel_code, $params = [])
+    public static function getDisbursementChannelsByChannelCode(string $channel_code, array $params = []): array
     {
         $url = static::classUrl() . '?channel_code=' . $channel_code;
         return static::_request('GET', $url, $params);

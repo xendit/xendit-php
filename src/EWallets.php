@@ -33,7 +33,7 @@ class EWallets
      *
      * @return string
      */
-    public static function classUrl()
+    public static function classUrl(): string
     {
         return "/ewallets";
     }
@@ -47,7 +47,7 @@ class EWallets
      * https://xendit.github.io/apireference/?bash#create-payment
      * @throws Exceptions\ApiException
      */
-    public static function create($params = [])
+    public static function create(array $params = []): array
     {
         $requiredParams = [];
 
@@ -76,14 +76,14 @@ class EWallets
     /**
      * Get Payment Status
      *
-     * @param string $external_id  external ID
+     * @param string $external_id external ID
      * @param string $ewallet_type E-wallet type (OVO, DANA, LINKAJA
      *
      * @return array please check for responses for each e-wallet type
      * https://xendit.github.io/apireference/?bash#get-payment-status
      * @throws Exceptions\ApiException
      */
-    public static function getPaymentStatus($external_id, $ewallet_type)
+    public static function getPaymentStatus(string $external_id, string $ewallet_type): array
     {
         $url = static::classUrl()
             . '?external_id=' . $external_id
@@ -101,7 +101,7 @@ class EWallets
      * https://developers.xendit.co/api-reference/?bash#create-ewallet-charge
      * @throws Exceptions\ApiException
      */
-    public static function createEWalletCharge($params = [])
+    public static function createEWalletCharge(array $params = []): array
     {
         $requiredParams = ['reference_id', 'currency', 'amount', 'checkout_method'];
 
@@ -121,14 +121,14 @@ class EWallets
      * https://developers.xendit.co/api-reference/?bash#get-ewallet-charge-status
      * @throws Exceptions\ApiException
      */
-    public static function getEWalletChargeStatus($charge_id, $params=[])
+    public static function getEWalletChargeStatus(string $charge_id, array $params = []): array
     {
         $url = static::classUrl()
             . '/charges/' . $charge_id;
 
         return static::_request('GET', $url, $params);
     }
-    
+
     /**
      * Void eWallet Charge
      *
@@ -138,14 +138,14 @@ class EWallets
      * https://developers.xendit.co/api-reference/#void-ewallet-charge
      * @throws Exceptions\ApiException
      */
-    public static function voidEwalletCharge($charge_id, $params=[])
+    public static function voidEwalletCharge(string $charge_id, array $params = []): array
     {
         $url = static::classUrl()
-        . '/charges/' . $charge_id.'/void';
-        
+            . '/charges/' . $charge_id . '/void';
+
         return static::_request('POST', $url, $params);
     }
-    
+
     /**
      * Refund eWallet Charge
      *
@@ -155,14 +155,14 @@ class EWallets
      * https://developers.xendit.co/api-reference/#refund-ewallet-charge
      * @throws Exceptions\ApiException
      */
-    public static function refundEwalletCharge($charge_id, $params=[])
+    public static function refundEwalletCharge(string $charge_id, array $params = []): array
     {
         $url = static::classUrl()
-        . '/charges/' . $charge_id.'/refunds';
-        
+            . '/charges/' . $charge_id . '/refunds';
+
         return static::_request('POST', $url, $params);
     }
-    
+
     /**
      * Get eWallet Refund by Refund ID
      *
@@ -173,14 +173,14 @@ class EWallets
      * https://developers.xendit.co/api-reference/#refund-ewallet-charge
      * @throws Exceptions\ApiException
      */
-    public static function getRefund($charge_id, $refund_id, $params=[])
+    public static function getRefund(string $charge_id, string $refund_id, array $params = []): array
     {
         $url = static::classUrl()
-        . '/charges/' . $charge_id.'/refunds/'.$refund_id;
-        
+            . '/charges/' . $charge_id . '/refunds/' . $refund_id;
+
         return static::_request('GET', $url, $params);
     }
-    
+
     /**
      * Get eWallet Refund by Refund ID
      *
@@ -190,11 +190,11 @@ class EWallets
      * https://developers.xendit.co/api-reference/#refund-ewallet-charge
      * @throws Exceptions\ApiException
      */
-    public static function listRefund($charge_id, $params=[])
+    public static function listRefund($charge_id, $params = [])
     {
         $url = static::classUrl()
-        . '/charges/' . $charge_id.'/refunds/';
-        
+            . '/charges/' . $charge_id . '/refunds/';
+
         return static::_request('GET', $url, $params);
     }
 }

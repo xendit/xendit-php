@@ -31,13 +31,13 @@ class ApiRequestor
      *
      * @param string $method  request method (get, post, patch, etc)
      * @param string $url     base url
-     * @param array  $params  user's params
-     * @param array  $headers user's additional headers
+     * @param array $params  user's params
+     * @param array $headers user's additional headers
      *
      * @return array
      * @throws Exceptions\ApiException
      */
-    public function request($method, $url, $params = [], $headers = [])
+    public function request(string $method, string $url, array $params = [], array $headers = []): array
     {
         list($rbody, $rcode, $rheaders)
             = $this->_requestRaw($method, $url, $params, $headers);

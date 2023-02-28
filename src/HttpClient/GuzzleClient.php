@@ -58,7 +58,7 @@ class GuzzleClient implements ClientInterface
      *
      * @return GuzzleClient
      */
-    public static function instance()
+    public static function instance(): GuzzleClient
     {
         if (!self::$_instance) {
             self::$_instance = new self();
@@ -72,12 +72,12 @@ class GuzzleClient implements ClientInterface
      * @param string $method         request method
      * @param string $url            url
      * @param array  $defaultHeaders request headers
-     * @param array  $params         parameters
+     * @param array $params         parameters
      *
      * @return array
      * @throws ApiException
      */
-    public function sendRequest($method, string $url, array $defaultHeaders, $params)
+    public function sendRequest(string $method, string $url, array $defaultHeaders, array $params): array
     {
         $method = strtoupper($method);
 
@@ -88,14 +88,14 @@ class GuzzleClient implements ClientInterface
         $opts['params'] = $params;
 
         $response = $this->_executeRequest($opts, $url);
-        
+
         $rbody = $response[0];
         $rcode = $response[1];
         $rheader = $response[2];
 
         return [$rbody, $rcode, $rheader];
     }
-    
+
     /**
      * Execute request
      *
@@ -103,9 +103,9 @@ class GuzzleClient implements ClientInterface
      * @param string $url  request url
      *
      * @return array
-     * @throws ApiException
+     * @throws ApiException|\GuzzleHttp\Exception\GuzzleException
      */
-    private function _executeRequest(array $opts, string $url)
+    private function _executeRequest(array $opts, string $url): array
     {
         $headers = $opts['headers'];
         $params = $opts['params'];
@@ -114,9 +114,9 @@ class GuzzleClient implements ClientInterface
         try {
             if (count($params) > 0) {
                 $isQueryParam = isset($params['query-param']) && $params['query-param'] === 'true'; // additional condition to check if the requestor is imposing query param, otherwise default json
-                
+
                 if($isQueryParam) unset($params['query-param']);
-                
+
                 $response =  $this->http->request(
                     $opts['method'], $url, [
                         'auth' => [$apiKey, ''],
@@ -137,7 +137,7 @@ class GuzzleClient implements ClientInterface
             $rbody = json_decode($response->getBody()->getContents(), true);
             $rcode = $response->getStatusCode();
             $rheader = $response->getHeaders();
-    
+
             self::_handleAPIError(
                 array('body' => $rbody,
                       'code' => $rcode,
@@ -160,10 +160,10 @@ class GuzzleClient implements ClientInterface
      * @return void
      * @throws ApiException
      */
-    private static function _handleAPIError($response)
+    private static function _handleAPIError(array $response)
     {
         $rbody = $response['body'];
-        
+
         $rhttp = strval($response['code']);
         $message = $rbody['message'];
         $rcode = $rbody['error_code'];

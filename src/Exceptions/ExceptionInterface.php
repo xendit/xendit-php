@@ -26,8 +26,8 @@ interface ExceptionInterface extends \Throwable
 {
     /**
      * Get error code for the exception instance
-     * 
+     *
      * @return string
      */
-    public function getErrorCode();
+    public function getErrorCode(): string;
 }

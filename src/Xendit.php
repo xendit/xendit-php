@@ -63,7 +63,7 @@ class Xendit
      *
      * @return string Secret API key
      */
-    public static function getApiKey()
+    public static function getApiKey(): string
     {
         return self::$apiKey;
     }
@@ -75,7 +75,7 @@ class Xendit
      *
      * @return void
      */
-    public static function setApiKey($apiKey)
+    public static function setApiKey(string $apiKey)
     {
         self::$apiKey = $apiKey;
     }
@@ -96,11 +96,11 @@ class Xendit
     /**
      * Set library version
      *
-     * @param string $libVersion library version
+     * @param string|null $libVersion library version
      *
      * @return void
      */
-    public static function setLibVersion($libVersion = null): void
+    public static function setLibVersion(string $libVersion = null): void
     {
         self::$libVersion = $libVersion;
     }
@@ -122,7 +122,7 @@ class Xendit
      *
      * @return HttpClientInterface
      */
-    public static function getHttpClient()
+    public static function getHttpClient(): HttpClientInterface
     {
         return self::$_httpClient;
     }

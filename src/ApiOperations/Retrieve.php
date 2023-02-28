@@ -28,10 +28,10 @@ trait Retrieve
      * Send GET request to retrieve data
      *
      * @param string|null $id ID
-     *
+     * @param array $params
      * @return array
      */
-    public static function retrieve($id, $params = [])
+    public static function retrieve(?string $id, array $params = []): array
     {
         $url = static::classUrl() . '/' . $id;
         return static::_request('GET', $url, $params);

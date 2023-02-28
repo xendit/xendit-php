@@ -36,7 +36,7 @@ class QRCode
      *
      * @return string
      */
-    public static function classUrl()
+    public static function classUrl(): string
     {
         return "/qr_codes";
     }
@@ -76,7 +76,7 @@ class QRCode
      * @throws InvalidArgumentException if some parameters are missing or invalid
      * @throws ApiException if request status code is not 2xx
      **/
-    public static function create($params = [])
+    public static function create(array $params = []): array
     {
         if (!array_key_exists('type', $params)) {
             $message = 'Please specify "type" inside your parameters.';
@@ -86,7 +86,7 @@ class QRCode
         $requiredParams = ['type'];
 
         if ($params['type'] === 'DYNAMIC') {
-            array_push($requiredParams, 'amount');
+            $requiredParams[] = 'amount';
         } elseif ($params['type'] !== 'STATIC') {
             $message = 'Invalid QR Code type';
             throw new InvalidArgumentException($message);
@@ -100,9 +100,11 @@ class QRCode
         }
 
         if ($params['api-version'] === QRCode::$apiVersion1) {
-            array_push($requiredParams, 'external_id', 'callback_url');
+            $requiredParams[] = 'external_id';
+            $requiredParams[] = 'callback_url';
         } elseif ($params['api-version'] === QRCode::$apiVersion2) {
-            array_push($requiredParams, 'reference_id', 'currency');
+            $requiredParams[] = 'reference_id';
+            $requiredParams[] = 'currency';
 
             if (array_key_exists('callback_url', $params)) {
                 $message = 'The API version 2022-07-31 does not support passing callback URL in the request. Please set the callback URL from your Xendit Dashboard instead.';
@@ -154,7 +156,7 @@ class QRCode
      *
      * @throws ApiException
      */
-    public static function get(string $id, string $api_version = null)
+    public static function get(string $id, string $api_version = null): array
     {
         $params = [];
         if ($api_version !== null) {

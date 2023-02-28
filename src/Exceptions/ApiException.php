@@ -28,23 +28,24 @@ class ApiException extends \Exception implements ExceptionInterface
 
     /**
      * Get error code for the exception instance
-     * 
+     *
      * @return string
      */
-    public function getErrorCode() 
+    public function getErrorCode(): string
     {
         return $this->errorCode;
     }
 
     /**
      * Create new instance of ApiException
-     * 
-     * @param string $message   corresponds to message field in Xendit's HTTP error
-     * @param string $code      corresponds to http status in Xendit's HTTP response
-     * @param string $errorCode corresponds to error_code field in Xendit's HTTP 
+     *
+     * @param string $message corresponds to message field in Xendit's HTTP error
+     * @param string $code corresponds to http status in Xendit's HTTP response
+     * @param string $errorCode corresponds to error_code field in Xendit's HTTP
      *                          error
+     * @throws \Xendit\Exceptions\ApiException
      */
-    public function __construct($message, $code, $errorCode)
+    public function __construct(string $message, string $code, string $errorCode)
     {
         if (!$message) {
             throw new $this('Unknown '. get_class($this));

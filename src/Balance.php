@@ -33,7 +33,7 @@ class Balance
      *
      * @return array
      */
-    public static function accountType()
+    public static function accountType(): array
     {
         return ["CASH", "HOLDING", "TAX"];
     }
@@ -41,11 +41,11 @@ class Balance
     /**
      * Validation for account type
      *
-     * @param string $account_type Account type
+     * @param string|null $account_type Account type
      *
      * @return void
      */
-    public static function validateAccountType($account_type = null)
+    public static function validateAccountType(string $account_type = null)
     {
         if (!in_array($account_type, self::accountType())) {
             $msg = "Account type is invalid. Available types: CASH, TAX, HOLDING";
@@ -56,14 +56,14 @@ class Balance
     /**
      * Send GET request to retrieve data
      *
-     * @param string $account_type account type (CASH|HOLDING|TAX)
+     * @param string|null $account_type account type (CASH|HOLDING|TAX)
      *
      * @return array[
      *  'balance' => int
      * ]
      * @throws Exceptions\ApiException
      */
-    public static function getBalance($account_type = null, $params = [])
+    public static function getBalance(string $account_type = null, $params = []): array
     {
         self::validateAccountType($account_type);
         $url = '/balance?account_type=' . $account_type;

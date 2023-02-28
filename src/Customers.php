@@ -33,7 +33,7 @@ class Customers
      *
      * @return string
      */
-    public static function classUrl()
+    public static function classUrl(): string
     {
         return "/customers";
     }
@@ -47,7 +47,7 @@ class Customers
      * https://developers.xendit.co/api-reference/?bash#create-customer
      * @throws Exceptions\ApiException
      */
-    public static function createCustomer($params = [])
+    public static function createCustomer(array $params = []): array
     {
         $requiredParams = ['reference_id'];
 
@@ -61,13 +61,13 @@ class Customers
                 'kyc_documents'
             );
         } else {
-            array_push($requiredParams, 'given_names');
+            $requiredParams[] = 'given_names';
             if (!array_key_exists('mobile_number', $params)) {
-                array_push($requiredParams, 'email');
+                $requiredParams[] = 'email';
             }
 
             if (!array_key_exists('email', $params)) {
-                array_push($requiredParams, 'mobile_number');
+                $requiredParams[] = 'mobile_number';
             }
         }
 
@@ -82,13 +82,13 @@ class Customers
      * Get customer by reference ID
      *
      * @param string $reference_id reference ID
-     * @param array  $params       user's parameters
+     * @param array $params user's parameters
      *
      * @return array please check for responses parameters here
      * https://developers.xendit.co/api-reference/?bash#get-customer-by-reference-id
      * @throws Exceptions\ApiException
      */
-    public static function getCustomerByReferenceID($reference_id, $params=[])
+    public static function getCustomerByReferenceID(string $reference_id, array $params = []): array
     {
         $url = static::classUrl()
             . '?reference_id=' . $reference_id;

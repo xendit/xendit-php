@@ -32,7 +32,7 @@ class CardlessCredit
      *
      * @return string
      */
-    public static function classUrl()
+    public static function classUrl(): string
     {
         return "/cardless-credit";
     }
@@ -42,7 +42,7 @@ class CardlessCredit
      *
      * @return array
      */
-    public static function createReqParams()
+    public static function createReqParams(): array
     {
         return [
             'cardless_credit_type',
@@ -64,9 +64,9 @@ class CardlessCredit
      *
      * @return array
      *
-     * @throws ApiException
+     * @throws ApiException|\Xendit\Exceptions\ApiException
      */
-    public static function calculatePaymentTypes($params = [])
+    public static function calculatePaymentTypes(array $params = []): array
     {
         $requiredParams = [
             'cardless_credit_type',

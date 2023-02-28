@@ -28,11 +28,11 @@ trait Update
      * Send an update request
      *
      * @param string $id     data ID
-     * @param array  $params user's params
+     * @param array $params user's params
      *
      * @return array
      */
-    public static function update($id, $params = [])
+    public static function update(string $id, array $params = []): array
     {
         self::validateParams($params, static::updateReqParams());
 

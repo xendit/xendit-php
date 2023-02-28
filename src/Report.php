@@ -34,7 +34,7 @@ class Report
      *
      * @return array
      */
-    public static function reportType()
+    public static function reportType(): array
     {
         return ["BALANCE_HISTORY", "TRANSACTIONS", "UPCOMING_TRANSACTIONS"];
     }
@@ -42,11 +42,11 @@ class Report
     /**
      * Validation for report type
      *
-     * @param string $report_type Report type
+     * @param string|null $report_type Report type
      *
      * @return void
      */
-    public static function validateReportType($report_type = null)
+    public static function validateReportType(string $report_type = null)
     {
         if (!in_array($report_type, self::reportType())) {
             $msg = "Report type is invalid. Available types: MANAGED, OWNED";
@@ -57,13 +57,13 @@ class Report
     /**
      * Generate report
      *
-     * @param array  $params reports params
+     * @param array $params reports params
      *
      * @return array
      * https://developers.xendit.co/api-reference/#generate-report
      * @throws Exceptions\ApiException
      */
-    public static function generate($params = [])
+    public static function generate(array $params = []): array
     {
         $requiredParams = ['type'];
 
@@ -84,7 +84,7 @@ class Report
      * https://developers.xendit.co/api-reference/#get-report
      * @throws Exceptions\ApiException
      */
-    public static function detail(string $report_id)
+    public static function detail(string $report_id): array
     {
         $url = '/reports/'.$report_id;
 

@@ -33,7 +33,7 @@ class Payouts
      *
      * @return string
      */
-    public static function classUrl()
+    public static function classUrl(): string
     {
         return "/payouts";
     }
@@ -43,7 +43,7 @@ class Payouts
      *
      * @return array
      */
-    public static function createReqParams()
+    public static function createReqParams(): array
     {
         return ['external_id', 'amount', 'email'];
     }
@@ -67,7 +67,7 @@ class Payouts
      * ]
      * @throws Exceptions\ApiException
      */
-    public static function void($id)
+    public static function void(string $id): array
     {
         $url = static::classUrl() . '/' . $id . '/void';
 

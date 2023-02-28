@@ -34,7 +34,7 @@ class VirtualAccounts
      *
      * @return string
      */
-    public static function classUrl()
+    public static function classUrl(): string
     {
         return "/callback_virtual_accounts";
     }
@@ -44,7 +44,7 @@ class VirtualAccounts
      *
      * @return array
      */
-    public static function createReqParams()
+    public static function createReqParams(): array
     {
         return ['external_id', 'bank_code', 'name'];
     }
@@ -54,7 +54,7 @@ class VirtualAccounts
      *
      * @return array
      */
-    public static function updateReqParams()
+    public static function updateReqParams(): array
     {
         return [];
     }
@@ -68,7 +68,7 @@ class VirtualAccounts
      * ]
      * @throws Exceptions\ApiException
      */
-    public static function getVABanks()
+    public static function getVABanks(): array
     {
         $url = '/available_virtual_account_banks';
 
@@ -93,7 +93,7 @@ class VirtualAccounts
      * ]
      * @throws Exceptions\ApiException
      */
-    public static function getFVAPayment($payment_id)
+    public static function getFVAPayment(string $payment_id): array
     {
         $url = '/callback_virtual_account_payments/payment_id=' . $payment_id;
 

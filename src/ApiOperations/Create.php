@@ -31,7 +31,7 @@ trait Create
      *
      * @return array
      */
-    public static function create($params = [])
+    public static function create(array $params = []): array
     {
         self::validateParams($params, static::createReqParams());
 

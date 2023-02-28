@@ -33,7 +33,7 @@ class DirectDebit
      *
      * @return string
      */
-    public static function linkedAccountUrl()
+    public static function linkedAccountUrl(): string
     {
         return "/linked_account_tokens/";
     }
@@ -43,7 +43,7 @@ class DirectDebit
      *
      * @return string
      */
-    public static function paymentMethodUrl()
+    public static function paymentMethodUrl(): string
     {
         return "/payment_methods";
     }
@@ -53,13 +53,13 @@ class DirectDebit
      *
      * @return string
      */
-    public static function directDebitPaymentUrl()
+    public static function directDebitPaymentUrl(): string
     {
         return "/direct_debits";
     }
 
     /**
-     * Send a initialize linked account tokenization request
+     * Send an initialize linked account tokenization request
      *
      * @param array $params user's parameters
      *
@@ -67,7 +67,7 @@ class DirectDebit
      * https://developers.xendit.co/api-reference/?bash#initialize-linked-account-tokenization
      * @throws Exceptions\ApiException
      */
-    public static function initializeLinkedAccountTokenization($params = [])
+    public static function initializeLinkedAccountTokenization(array $params = []): array
     {
         $requiredParams = ['customer_id', 'channel_code'];
 
@@ -79,19 +79,20 @@ class DirectDebit
     }
 
     /**
-     * Send a validate OTP for linked account request
+     * Send a validated OTP for linked account request
      *
      * @param string $linked_account_token_id linked account token ID
-     * @param array  $params                  user's parameters
+     * @param array $params                  user's parameters
      *
      * @return array please check for responses parameters here
      * https://developers.xendit.co/api-reference/?bash#validate-otp-for-linked-account-token
      * @throws Exceptions\ApiException
      */
     public static function validateOTPForLinkedAccount(
-        $linked_account_token_id,
-        $params = []
-    ) {
+        string $linked_account_token_id,
+        array $params = []
+    ): array
+    {
         $requiredParams = ['otp_code'];
 
         self::validateParams($params, $requiredParams);
@@ -111,7 +112,7 @@ class DirectDebit
      * https://developers.xendit.co/api-reference/?bash#retrieve-accessible-accounts-by-linked-account-token
      * @throws Exceptions\ApiException
      */
-    public static function retrieveAccessibleLinkedAccounts($linked_account_token_id)
+    public static function retrieveAccessibleLinkedAccounts(string $linked_account_token_id): array
     {
         $url = static::linkedAccountUrl() . $linked_account_token_id . "/accounts";
 
@@ -127,7 +128,7 @@ class DirectDebit
      * https://developers.xendit.co/api-reference/?bash#unbind-a-linked-account-token
      * @throws Exceptions\ApiException
      */
-    public static function unbindLinkedAccountToken($linked_account_token_id)
+    public static function unbindLinkedAccountToken(string $linked_account_token_id): array
     {
         $url = static::linkedAccountUrl() . $linked_account_token_id;
 
@@ -143,7 +144,7 @@ class DirectDebit
      * https://developers.xendit.co/api-reference/?bash#create-payment-method
      * @throws Exceptions\ApiException
      */
-    public static function createPaymentMethod($params = [])
+    public static function createPaymentMethod(array $params = []): array
     {
         $requiredParams = ['type', 'properties'];
 
@@ -163,7 +164,7 @@ class DirectDebit
      * https://developers.xendit.co/api-reference/?bash#list-payment-methods
      * @throws Exceptions\ApiException
      */
-    public static function getPaymentMethodsByCustomerID($customer_id)
+    public static function getPaymentMethodsByCustomerID(string $customer_id): array
     {
         $url = static::paymentMethodUrl() . "?customer_id=" . $customer_id;
 
@@ -179,7 +180,7 @@ class DirectDebit
      * https://developers.xendit.co/api-reference/?bash#create-direct-debit-payment
      * @throws Exceptions\ApiException
      */
-    public static function createDirectDebitPayment($params = [])
+    public static function createDirectDebitPayment(array $params = []): array
     {
         $requiredParams = [
             'reference_id',
@@ -199,16 +200,17 @@ class DirectDebit
      * Send a validate OTP for direct debit payment
      *
      * @param string $direct_debit_payment_id direct debit payment ID
-     * @param array  $params                  user's parameters
+     * @param array $params                  user's parameters
      *
      * @return array please check for responses parameters here
      * https://developers.xendit.co/api-reference/?bash#validate-otp-for-direct-debit-payment
      * @throws Exceptions\ApiException
      */
     public static function validateOTPForDirectDebitPayment(
-        $direct_debit_payment_id,
-        $params = []
-    ) {
+        string $direct_debit_payment_id,
+        array $params = []
+    ): array
+    {
         $requiredParams = ['otp_code'];
 
         self::validateParams($params, $requiredParams);
@@ -228,7 +230,7 @@ class DirectDebit
      * https://developers.xendit.co/api-reference/?bash#get-payment-by-id
      * @throws Exceptions\ApiException
      */
-    public static function getDirectDebitPaymentByID($direct_debit_payment_id)
+    public static function getDirectDebitPaymentByID(string $direct_debit_payment_id): array
     {
         $url = static::directDebitPaymentUrl() . "/" . $direct_debit_payment_id .
                "/";
@@ -245,7 +247,7 @@ class DirectDebit
      * https://developers.xendit.co/api-reference/?bash#get-payment-by-reference-id
      * @throws Exceptions\ApiException
      */
-    public static function getDirectDebitPaymentByReferenceID($reference_id)
+    public static function getDirectDebitPaymentByReferenceID(string $reference_id): array
     {
         $url = static::directDebitPaymentUrl() . "?reference_id=" . $reference_id;
 

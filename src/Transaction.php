@@ -29,13 +29,13 @@ class Transaction
     /**
      * List transactions
      *
-     * @param array  $params transaction params
+     * @param array $params transaction params
      *
      * @return array
      * https://developers.xendit.co/api-reference/#get-transaction
      * @throws Exceptions\ApiException
      */
-    public static function list($params = [])
+    public static function list(array $params = []): array
     {
         $url = '/transactions';
 
@@ -51,7 +51,7 @@ class Transaction
      * https://developers.xendit.co/api-reference/#get-transaction
      * @throws Exceptions\ApiException
      */
-    public static function detail(string $transaction_id)
+    public static function detail(string $transaction_id): array
     {
         $url = '/transactions/'.$transaction_id;
 

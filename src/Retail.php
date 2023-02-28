@@ -34,7 +34,7 @@ class Retail
      *
      * @return string
      */
-    public static function classUrl()
+    public static function classUrl(): string
     {
         return "/fixed_payment_code";
     }
@@ -44,7 +44,7 @@ class Retail
      *
      * @return array
      */
-    public static function createReqParams()
+    public static function createReqParams(): array
     {
         return ['external_id', 'retail_outlet_name', 'name', 'expected_amount'];
     }
@@ -54,7 +54,7 @@ class Retail
      *
      * @return array
      */
-    public static function updateReqParams()
+    public static function updateReqParams(): array
     {
         return [];
     }
