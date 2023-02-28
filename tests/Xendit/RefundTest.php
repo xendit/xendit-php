@@ -3,7 +3,7 @@
 namespace Xendit;
 
 /**
- * Class InvoiceTest
+ * Class RefundTest
  *
  * @category Class
  * @package  Xendit
@@ -82,7 +82,7 @@ class RefundTest extends TestCase
     {
         $this->stubRequest(
             'GET',
-            '/v2/invoices',
+            '/refunds',
             [],
             [],
             [
