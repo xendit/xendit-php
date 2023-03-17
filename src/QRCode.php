@@ -164,4 +164,30 @@ class QRCode
         $url = static::classUrl(). '/' . $id;
         return static::_request('GET', $url, $params);
     }
+
+
+
+    /**
+     *
+     * Simulate Payment (for completion of payment in test mode)
+     *
+     * @param string $external_id Merchant provided unique ID used to create QR code
+     *
+     * @return array [
+     *  'id' => string
+     *  'amount'  => number
+     *  'created' => date
+     *  'qr_code' => object
+     *  'status'  => 'COMPLETED'
+     *  'payment_details' => object
+     * ]
+     *
+     * @throws Exception\ApiException
+     **/
+    public static function simulate(string $external_id)
+    {
+        $url = static::classUrl(). '/' . $external_id.'/payments/simulate';
+
+        return static::_request('POST', $url);
+    }
 }

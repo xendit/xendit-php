@@ -29,3 +29,6 @@ var_dump($created_qr_code);
 
 $qr_code = \Xendit\QRCode::get('external_123');
 var_dump($qr_code);
+
+$simulatePayment = \Xendit\QRCode::simulate('external_123');
+var_dump($simulatePayment);
