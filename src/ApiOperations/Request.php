@@ -73,6 +73,11 @@ trait Request
             $headers['with-fee-rule'] = $params['with-fee-rule'];
         }
 
+        if (array_key_exists('callback-url'), $params) {
+            $headers['callback-url'] = $params ['callback-url'];
+            unset($params['callback-url']);
+        }
+
         if (array_key_exists('Idempotency-key', $params)) {
             $headers['Idempotency-key'] = $params['Idempotency-key'];
         }
@@ -92,10 +97,6 @@ trait Request
 
         if (array_key_exists('X-API-VERSION', $params)) {
             $headers['X-API-VERSION'] = $params['X-API-VERSION'];
-        }
-
-        if (array_key_exists('callback-url'), $params) {
-            $headers['callback-url'] = $params ['callback-url']
         }
 
         $requestor = new \Xendit\ApiRequestor();
