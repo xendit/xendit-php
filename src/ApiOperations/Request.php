@@ -94,6 +94,10 @@ trait Request
             $headers['X-API-VERSION'] = $params['X-API-VERSION'];
         }
 
+        if (array_key_exists('callback-url'), $params) {
+            $headers['callback-url'] = $params ['callback-url']
+        }
+
         $requestor = new \Xendit\ApiRequestor();
         return $requestor->request($method, $url, $params, $headers);
     }
