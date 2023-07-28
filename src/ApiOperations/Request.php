@@ -74,7 +74,7 @@ trait Request
         }
 
         if (array_key_exists('callback-url', $params)) {
-            $headers['callback-url'] = $params ['callback-url'];
+            $headers['callback-url'] = $params['callback-url'];
             unset($params['callback-url']);
         }
 
