@@ -73,7 +73,7 @@ trait Request
             $headers['with-fee-rule'] = $params['with-fee-rule'];
         }
 
-        if (array_key_exists('callback-url'), $params) {
+        if (array_key_exists('callback-url', $params)) {
             $headers['callback-url'] = $params ['callback-url'];
             unset($params['callback-url']);
         }
