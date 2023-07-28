@@ -73,6 +73,11 @@ trait Request
             $headers['with-fee-rule'] = $params['with-fee-rule'];
         }
 
+        if (array_key_exists('callback-url', $params)) {
+            $headers['callback-url'] = $params['callback-url'];
+            unset($params['callback-url']);
+        }
+
         if (array_key_exists('Idempotency-key', $params)) {
             $headers['Idempotency-key'] = $params['Idempotency-key'];
         }
