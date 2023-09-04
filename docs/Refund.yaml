@@ -1,0 +1,479 @@
+openapi: 3.0.0
+info:
+  description: This API is used for the unified refund service
+  title: Refund Service
+  version: 1.2.3
+servers:
+- description: Xendit API Server
+  url: https://api.xendit.co
+paths:
+  /refunds:
+    post:
+      operationId: createRefund
+      parameters:
+      - explode: false
+        in: header
+        name: idempotency-key
+        required: false
+        schema:
+          example: 9797b5a6-54ad-4511-80a4-ec451346808b
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateRefund'
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Refund'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/createRefund_400_response'
+          description: Bad request
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/createRefund_403_response'
+          description: Forbidden due to permissions
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/createRefund_404_response'
+          description: Data not found
+        "409":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/createRefund_409_response'
+          description: Request causes conflict
+        "503":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/createRefund_503_response'
+          description: Service is unavailable due to dependencies
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/createRefund_default_response'
+          description: Internal server error
+      tags:
+      - refund
+  /refunds/{refundID}:
+    get:
+      operationId: getRefund
+      parameters:
+      - explode: false
+        in: path
+        name: refundID
+        required: true
+        schema:
+          example: rfd-1fdaf346-dd2e-4b6c-b938-124c7167a822
+          type: string
+        style: simple
+      - explode: false
+        in: header
+        name: idempotency-key
+        required: false
+        schema:
+          example: 9797b5a6-54ad-4511-80a4-ec451346808b
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Refund'
+          description: OK
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/createRefund_default_response'
+          description: Internal server error
+      tags:
+      - refund
+  /refunds/{refundID}/cancel:
+    post:
+      operationId: cancelRefund
+      parameters:
+      - explode: false
+        in: path
+        name: refundID
+        required: true
+        schema:
+          example: rfd-1fdaf346-dd2e-4b6c-b938-124c7167a822
+          type: string
+        style: simple
+      - explode: false
+        in: header
+        name: idempotency-key
+        required: false
+        schema:
+          example: 9797b5a6-54ad-4511-80a4-ec451346808b
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Refund'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/createRefund_400_response'
+          description: Bad request
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/createRefund_403_response'
+          description: Forbidden due to permissions
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/createRefund_404_response'
+          description: Data not found
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/createRefund_default_response'
+          description: Internal server error
+      tags:
+      - refund
+  /refunds/:
+    get:
+      operationId: getAllRefunds
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RefundList'
+          description: OK
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/createRefund_default_response'
+          description: Internal server error
+      tags:
+      - refund
+components:
+  parameters:
+    RefundID:
+      explode: false
+      in: path
+      name: refundID
+      required: true
+      schema:
+        example: rfd-1fdaf346-dd2e-4b6c-b938-124c7167a822
+        type: string
+      style: simple
+    IdempotencyKey:
+      explode: false
+      in: header
+      name: idempotency-key
+      required: false
+      schema:
+        example: 9797b5a6-54ad-4511-80a4-ec451346808b
+        type: string
+      style: simple
+  responses:
+    InternalServerError:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/createRefund_default_response'
+      description: Internal server error
+    StatusBadRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/createRefund_400_response'
+      description: Bad request
+    StatusForbidden:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/createRefund_403_response'
+      description: Forbidden due to permissions
+    StatusNotFound:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/createRefund_404_response'
+      description: Data not found
+    StatusConflict:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/createRefund_409_response'
+      description: Request causes conflict
+    StatusServiceUnavailable:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/createRefund_503_response'
+      description: Service is unavailable due to dependencies
+  schemas:
+    Refund:
+      example:
+        country: PH
+        amount: 1500
+        failure_code: REFUND_FAILED
+        metadata: "{}"
+        reference_id: order-1234
+        refund_fee_amount: 0.8008281904610115
+        created: 2023-01-24T07:05:07.859363326Z
+        currency: PHP
+        id: rfd-3ece8615-41b7-4983-a3f0-a037430b6036
+        payment_request_id: pr-f4a6f77c-4835-4630-9617-2cdc34ee26ee
+        channel_code: SHOPEEPAY
+        updated: 2023-01-24T07:05:07.859363326Z
+      properties:
+        id:
+          example: rfd-3ece8615-41b7-4983-a3f0-a037430b6036
+          type: string
+        payment_request_id:
+          example: pr-f4a6f77c-4835-4630-9617-2cdc34ee26ee
+          type: string
+        amount:
+          example: 1500
+          format: double
+          type: number
+        channel_code:
+          example: SHOPEEPAY
+          type: string
+        country:
+          example: PH
+          type: string
+        currency:
+          example: PHP
+          type: string
+        reference_id:
+          example: order-1234
+          nullable: true
+          type: string
+        failure_code:
+          example: REFUND_FAILED
+          nullable: true
+          type: string
+        refund_fee_amount:
+          format: double
+          nullable: true
+          type: number
+          example: null
+        created:
+          example: 2023-01-24T07:05:07.859363326Z
+          type: string
+        updated:
+          example: 2023-01-24T07:05:07.859363326Z
+          type: string
+        metadata:
+          nullable: true
+          type: object
+          example: null
+      type: object
+    RefundList:
+      example:
+        data:
+        - id: rfd-1fdaf346-dd2e-4b6c-b938-124c7167a822'
+          payment_request_id: pr-f4a6f77c-4835-4630-9617-2cdc34ee26ee
+          amount: 1500
+          channel_code: SHOPEEPAY
+          country: PH
+          currency: PHP
+          reference_id: order-1234
+          failure_code: null
+          refund_fee_amount: null
+          created: 2023-01-24T07:05:07.859363326Z
+          updated: 2023-01-24T07:05:07.859363326Z
+          metadata: null
+        - id: rfd-db61bc21-8686-49d9-9be1-168cbf45d83f'
+          payment_request_id: pr-3af41122-a608-4356-a0fe-1f67f5cf4637
+          amount: 1500
+          channel_code: GRABPAY
+          country: PH
+          currency: PHP
+          reference_id: order-5678
+          failure_code: null
+          refund_fee_amount: null
+          created: 2023-01-24T07:05:07.859363326Z
+          updated: 2023-01-24T07:05:07.859363326Z
+          metadata: null
+        has_more: false
+      nullable: false
+      properties:
+        data:
+          example:
+          - id: rfd-1fdaf346-dd2e-4b6c-b938-124c7167a822'
+            payment_request_id: pr-f4a6f77c-4835-4630-9617-2cdc34ee26ee
+            amount: 1500
+            channel_code: SHOPEEPAY
+            country: PH
+            currency: PHP
+            reference_id: order-1234
+            failure_code: null
+            refund_fee_amount: null
+            created: 2023-01-24T07:05:07.859363326Z
+            updated: 2023-01-24T07:05:07.859363326Z
+            metadata: null
+          - id: rfd-db61bc21-8686-49d9-9be1-168cbf45d83f'
+            payment_request_id: pr-3af41122-a608-4356-a0fe-1f67f5cf4637
+            amount: 1500
+            channel_code: GRABPAY
+            country: PH
+            currency: PHP
+            reference_id: order-5678
+            failure_code: null
+            refund_fee_amount: null
+            created: 2023-01-24T07:05:07.859363326Z
+            updated: 2023-01-24T07:05:07.859363326Z
+            metadata: null
+          items:
+            $ref: '#/components/schemas/Refund'
+          type: array
+        has_more:
+          example: false
+          type: boolean
+      required:
+      - data
+      type: object
+    CreateRefund:
+      example:
+        reason: CANCELLATION
+        amount: 1500
+        metadata:
+          foo: bar
+        reference_id: order-1234
+        invoice_id: 7a2c81d4f9e052a870bf37d2
+        currency: PHP
+        payment_request_id: pr-3ece8615-41b7-4983-a3f0-a037430b6036
+      nullable: false
+      properties:
+        payment_request_id:
+          example: pr-3ece8615-41b7-4983-a3f0-a037430b6036
+          type: string
+        invoice_id:
+          example: 7a2c81d4f9e052a870bf37d2
+          type: string
+        reference_id:
+          example: order-1234
+          type: string
+        amount:
+          example: 1500
+          format: double
+          type: number
+        currency:
+          example: PHP
+          type: string
+        reason:
+          enum:
+          - FRAUDULENT
+          - DUPLICATE
+          - REQUESTED_BY_CUSTOMER
+          - CANCELLATION
+          - OTHERS
+          example: CANCELLATION
+          type: string
+        metadata:
+          example:
+            foo: bar
+          nullable: true
+          type: object
+      type: object
+    createRefund_400_response:
+      properties:
+        error_code:
+          enum:
+          - API_VALIDATION_ERROR
+          - INELIGIBLE_TRANSACTION
+          - INSUFFICIENT_BALANCE
+          - MAXIMUM_REFUND_AMOUNT_REACHED
+          - PARTIAL_REFUND_NOT_SUPPORTED
+          - REFUND_NOT_SUPPORTED
+          - TRANSACTION_NOT_FOUND
+          example: MAXIMUM_REFUND_AMOUNT_REACHED
+          type: string
+        message:
+          example: Error because the provided amount is greater than the allowed refund
+            amount.
+          type: string
+      type: object
+    createRefund_403_response:
+      properties:
+        error_code:
+          enum:
+          - UNAUTHORIZED
+          example: UNAUTHORIZED
+          type: string
+        message:
+          example: No valid API key provided
+          type: string
+      type: object
+    createRefund_404_response:
+      properties:
+        error_code:
+          enum:
+          - DATA_NOT_FOUND
+          example: DATA_NOT_FOUND
+          type: string
+        message:
+          example: Data not found
+          type: string
+      type: object
+    createRefund_409_response:
+      properties:
+        error_code:
+          enum:
+          - DUPLICATE_ERROR
+          - IDEMPOTENCY_ERROR
+          example: DUPLICATE_ERROR
+          type: string
+        message:
+          example: "duplicate value on idempotency_key, try again with a new key"
+          type: string
+      type: object
+    createRefund_503_response:
+      properties:
+        error_code:
+          enum:
+          - CHANNEL_UNAVAILABLE
+          - OTP_DELIVERY_ERROR
+          example: CHANNEL_UNAVAILABLE
+          type: string
+        message:
+          example: The payment channel requested is currently experiencing unexpected
+            issues.
+          type: string
+      type: object
+    createRefund_default_response:
+      example:
+        error_code: SERVER_ERROR
+        message: An unexpected error occured. Our team has been notified and will
+          troubleshoot the issue.
+      properties:
+        error_code:
+          type: string
+        message:
+          example: An unexpected error occured. Our team has been notified and will
+            troubleshoot the issue.
+          type: string
+      type: object

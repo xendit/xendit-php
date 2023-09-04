@@ -1,0 +1,81 @@
+<?php
+/**
+ * DirectDebitType
+ *
+ * PHP version 7.4
+ *
+ * @category Class
+ * @package  Xendit
+ */
+
+/**
+ * Payment Requests
+ *
+ * The version of the OpenAPI document: 1.41.0
+ */
+
+/**
+ * NOTE: This class is auto generated.
+ * Do not edit the class manually.
+ */
+
+namespace Xendit\PaymentRequest;
+
+use \Xendit\ObjectSerializer;
+use \Xendit\Model\ModelInterface;
+
+/**
+ * DirectDebitType Class Doc Comment
+ *
+ * @category Class
+ * @package  Xendit
+ */
+class DirectDebitType
+{
+    /**
+     * Possible values of this enum
+     */
+    
+    public const DEBIT_CARD = 'DEBIT_CARD';
+    
+    public const BANK_ACCOUNT = 'BANK_ACCOUNT';
+    
+    public const BANK_REDIRECT = 'BANK_REDIRECT';
+    
+
+    private $value;
+
+    public function __construct($value = null) {
+        $this->value = $value;
+    }
+
+    public function getValue() {
+        return $this->value;
+    }
+
+    public function setValue($value) {
+        if (!self::isValid($value)) {
+            throw new \InvalidArgumentException(sprintf('Invalid value for enum DirectDebitType: %s', $value));
+        }
+        $this->value = $value;
+    }
+
+    public function __toString() {
+        return (string)$this->value;
+    }
+
+    /**
+     * Gets allowable values of the enum
+     * @return string[]
+     */
+    public static function getAllowableEnumValues()
+    {
+        return [
+            self::DEBIT_CARD,
+            self::BANK_ACCOUNT,
+            self::BANK_REDIRECT
+        ];
+    }
+}
+
+

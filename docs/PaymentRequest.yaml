@@ -1,0 +1,2500 @@
+openapi: 3.0.0
+info:
+  description: This API is used for Payment Requests
+  title: Payment Requests
+  version: 1.41.0
+servers:
+- description: Xendit API Server
+  url: https://api.xendit.co
+paths:
+  /payment_requests:
+    get:
+      description: Get all payment requests by filter
+      operationId: getAllPaymentRequests
+      parameters:
+      - explode: true
+        in: query
+        name: reference_id
+        required: false
+        schema:
+          items:
+            type: string
+          type: array
+        style: form
+      - explode: true
+        in: query
+        name: id
+        required: false
+        schema:
+          items:
+            type: string
+          type: array
+        style: form
+      - explode: true
+        in: query
+        name: customer_id
+        required: false
+        schema:
+          items:
+            type: string
+          type: array
+        style: form
+      - explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          type: integer
+        style: form
+      - explode: true
+        in: query
+        name: before_id
+        required: false
+        schema:
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: after_id
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaymentRequestListResponse'
+          description: Request successful
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Errors
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Errors
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Errors
+      summary: Get all payment requests by filter
+      tags:
+      - payment_request
+    post:
+      description: Create Payment Request
+      operationId: createPaymentRequest
+      parameters:
+      - explode: false
+        in: header
+        name: idempotency-key
+        required: false
+        schema:
+          example: 5f9a3fbd571a1c4068aa40ce
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PaymentRequestParameters'
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaymentRequest'
+          description: Request successful
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Errors
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Errors
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Errors
+      summary: Create Payment Request
+      tags:
+      - payment_request
+  /payment_requests/{paymentRequestId}:
+    get:
+      description: Get payment request by ID
+      operationId: getPaymentRequestByID
+      parameters:
+      - explode: false
+        in: path
+        name: paymentRequestId
+        required: true
+        schema:
+          example: pr-1fdaf346-dd2e-4b6c-b938-124c7167a822
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaymentRequest'
+          description: Request successful
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Errors
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Errors
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Errors
+      summary: Get payment request by ID
+      tags:
+      - payment_request
+  /payment_requests/{paymentRequestId}/auth:
+    post:
+      description: Payment Request Authorize
+      operationId: authorizePaymentRequest
+      parameters:
+      - explode: false
+        in: path
+        name: paymentRequestId
+        required: true
+        schema:
+          example: pr-1fdaf346-dd2e-4b6c-b938-124c7167a822
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PaymentRequestAuthParameters'
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaymentRequest'
+          description: Request successful
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Errors
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Errors
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Errors
+      summary: Payment Request Authorize
+      tags:
+      - payment_request
+  /payment_requests/{paymentRequestId}/auth/resend:
+    post:
+      description: Payment Request Resend Auth
+      operationId: resendPaymentRequestAuth
+      parameters:
+      - explode: false
+        in: path
+        name: paymentRequestId
+        required: true
+        schema:
+          example: pr-1fdaf346-dd2e-4b6c-b938-124c7167a822
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaymentRequest'
+          description: Request successful
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Errors
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Errors
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Errors
+      summary: Payment Request Resend Auth
+      tags:
+      - payment_request
+  /payment_requests/{paymentRequestId}/captures:
+    get:
+      description: Get Payment Request Capture
+      operationId: getPaymentRequestCaptures
+      parameters:
+      - explode: false
+        in: path
+        name: paymentRequestId
+        required: true
+        schema:
+          example: pr-1fdaf346-dd2e-4b6c-b938-124c7167a822
+          type: string
+        style: simple
+      - explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          type: integer
+        style: form
+      - explode: true
+        in: query
+        name: after_id
+        required: false
+        schema:
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: before_id
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CaptureListResponse'
+          description: Request successful
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Errors
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Errors
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Errors
+      summary: Get Payment Request Capture
+      tags:
+      - payment_request
+    post:
+      description: Payment Request Capture
+      operationId: capturePaymentRequest
+      parameters:
+      - explode: false
+        in: path
+        name: paymentRequestId
+        required: true
+        schema:
+          example: pr-1fdaf346-dd2e-4b6c-b938-124c7167a822
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CaptureParameters'
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Capture'
+          description: Capture created
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Errors
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Errors
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Errors
+      summary: Payment Request Capture
+      tags:
+      - payment_request
+components:
+  parameters:
+    IdempotencyKey:
+      explode: false
+      in: header
+      name: idempotency-key
+      required: false
+      schema:
+        example: 5f9a3fbd571a1c4068aa40ce
+        type: string
+      style: simple
+    PaymentRequestID:
+      explode: false
+      in: path
+      name: paymentRequestId
+      required: true
+      schema:
+        example: pr-1fdaf346-dd2e-4b6c-b938-124c7167a822
+        type: string
+      style: simple
+  responses:
+    UnexpectedError:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Errors
+  schemas:
+    Error:
+      properties:
+        error_code:
+          enum:
+          - ACCOUNT_ACCESS_BLOCKED
+          - ADDRESS_VALIDATION_FAILED
+          - AMOUNT_MISMATCHED
+          - API_VALIDATION_ERROR
+          - AUTHENTICATION_FAILED
+          - AUTHENTICATION_REQUIRED
+          - CARD_DECLINED
+          - CHANNEL_CODE_NOT_SUPPORTED_ERROR
+          - CHANNEL_NOT_ACTIVATED
+          - CHANNEL_UNAVAILABLE
+          - COF_COMBINATION_NOT_ALLOWED_ERROR
+          - CURRENCY_MISMATCHED
+          - CUSTOMER_NOT_FOUND_ERROR
+          - CUSTOMER_PAYMENT_METHOD_MISMATCHED
+          - DATA_NOT_FOUND
+          - DATA_NOT_FOUND_ERROR
+          - DECLINED_BY_ISSUER
+          - DECLINED_BY_PROCESSOR
+          - DENIED_PERSON_LIST_MATCHED
+          - DUPLICATE_ERROR
+          - DUPLICATE_REFERENCE
+          - EXCEEDS_CAPTURABLE_AMOUNT
+          - EXPIRED_CARD
+          - EXPIRED_OTP_ERROR
+          - FEATURE_NOT_ACTIVATED
+          - IDEMPOTENCY_ERROR
+          - INACTIVE_OR_UNAUTHORIZED_CARD
+          - INSUFFICIENT_BALANCE
+          - INVALID_ACCOUNT_DETAILS
+          - INVALID_CVV
+          - INVALID_OTP_ERROR
+          - INVALID_PAYMENT_METHOD
+          - ISSUER_UNAVAILABLE
+          - MANUAL_CAPTURE_NOT_SUPPORTED
+          - MAX_ACCOUNT_LINKING
+          - MAX_AMOUNT_LIMIT_ERROR
+          - MAX_OTP_ATTEMPTS_ERROR
+          - OPERATION_NOT_ALLOWED
+          - OTP_DELIVERY_ERROR
+          - PAYMENT_METHOD_NOT_FOUND_ERROR
+          - PAYMENT_REQUEST_ALREADY_COMPLETED
+          - PAYMENT_REQUEST_ALREADY_FAILED
+          - PAYMENT_REQUEST_ALREADY_FULLY_CAPTURED
+          - PAYMENT_STATUS_FAILED
+          - PROCESSOR_CONFIGURATION_ERROR
+          - PROCESSOR_ERROR
+          - PROCESSOR_TEMPORARILY_UNAVAILABLE
+          - PROCESSOR_TIMEOUT
+          - REJECTED_BY_ACQUIRER
+          - SERVER_ERROR
+          - STOLEN_CARD
+          - STRONG_CUSTOMER_AUTHENTICATION_REQUIRED
+          - SUSPECTED_FRAUDULENT
+          - UNAUTHORIZED
+          - DUPLICATED_FIXED_PAYMENT_INSTRUMENT
+          nullable: true
+          type: string
+        message:
+          example: An internal server error occurred
+          nullable: true
+          type: string
+      type: object
+    PaymentRequestCountry:
+      enum:
+      - ID
+      - PH
+      - VN
+      - TH
+      - MY
+      type: string
+    PaymentRequestCurrency:
+      enum:
+      - IDR
+      - PHP
+      - VND
+      - THB
+      - MYR
+      type: string
+    PaymentMethodType:
+      enum:
+      - CARD
+      - DIRECT_DEBIT
+      - EWALLET
+      - OVER_THE_COUNTER
+      - QR_CODE
+      - VIRTUAL_ACCOUNT
+      type: string
+    CardChannelProperties:
+      description: Card Channel Properties
+      example:
+        cardonfile_type: UNSCHEDULED
+        success_return_url: https://redirect.me/good
+        failure_return_url: https://redirect.me/bad
+      nullable: false
+      properties:
+        skip_three_d_secure:
+          description: To indicate whether to perform 3DS during the linking phase
+          example: false
+          nullable: true
+          type: boolean
+        success_return_url:
+          description: URL where the end-customer is redirected if the authorization
+            is successful
+          example: https://webhook.site/f4b755f5-4770-4a11-8c72-cc0b3cc6b882
+          nullable: true
+          pattern: "^\\S{1,255}:\\/\\/\\S{0,1000}$"
+          type: string
+        failure_return_url:
+          description: URL where the end-customer is redirected if the authorization
+            failed
+          example: https://webhook.site/f4b755f5-4770-4a11-8c72-cc0b3cc6b882
+          nullable: true
+          pattern: "^\\S{1,255}:\\/\\/\\S{0,1000}$"
+          type: string
+        cardonfile_type:
+          description: Type of “credential-on-file” / “card-on-file” payment being
+            made. Indicate that this payment uses a previously linked Payment Method
+            for charging.
+          example: RECURRING
+          nullable: true
+          type: string
+        merchant_id_tag:
+          description: Tag for a Merchant ID that you want to associate this payment
+            with. For merchants using their own MIDs to specify which MID they want
+            to use
+          type: string
+      type: object
+    CardInformation:
+      description: Card Information
+      example:
+        expiry_month: expiry_month
+        country: country
+        token_id: token_id
+        fingerprint: fingerprint
+        masked_card_number: masked_card_number
+        cardholder_name: cardholder_name
+        type: type
+        expiry_year: expiry_year
+        issuer: issuer
+        network: VISA
+      nullable: false
+      properties:
+        token_id:
+          type: string
+        masked_card_number:
+          description: 1st 6 and last 4 digits of the card
+          type: string
+        expiry_month:
+          description: Card expiry month in MM format
+          type: string
+        expiry_year:
+          description: Card expiry month in YY format
+          type: string
+        cardholder_name:
+          description: Cardholder name
+          nullable: true
+          type: string
+        fingerprint:
+          type: string
+        type:
+          type: string
+        network:
+          enum:
+          - VISA
+          - MASTERCARD
+          - JCB
+          - AMEX
+          - DISCOVER
+          type: string
+        country:
+          type: string
+        issuer:
+          type: string
+      required:
+      - expiry_month
+      - expiry_year
+      - masked_card_number
+      - token_id
+      type: object
+    CardVerificationResultsThreeDSecure:
+      example:
+        eci_code: eci_code
+        three_d_secure_version: three_d_secure_version
+        three_d_secure_flow: CHALLENGE
+        three_d_secure_result: three_d_secure_result
+        three_d_secure_result_reason: three_d_secure_result_reason
+      properties:
+        three_d_secure_flow:
+          enum:
+          - CHALLENGE
+          - FRICTIONLESS
+          nullable: true
+          type: string
+        eci_code:
+          nullable: true
+          type: string
+        three_d_secure_result:
+          nullable: true
+          type: string
+        three_d_secure_result_reason:
+          nullable: true
+          type: string
+        three_d_secure_version:
+          nullable: true
+          type: string
+      type: object
+    CardVerificationResults:
+      example:
+        cvv_result: cvv_result
+        address_verification_result: address_verification_result
+        three_d_secure:
+          eci_code: eci_code
+          three_d_secure_version: three_d_secure_version
+          three_d_secure_flow: CHALLENGE
+          three_d_secure_result: three_d_secure_result
+          three_d_secure_result_reason: three_d_secure_result_reason
+      nullable: true
+      properties:
+        three_d_secure:
+          $ref: '#/components/schemas/CardVerificationResultsThreeDSecure'
+        cvv_result:
+          nullable: true
+          type: string
+        address_verification_result:
+          nullable: true
+          type: string
+      type: object
+    Card:
+      example:
+        currency: null
+        channel_properties:
+          cardonfile_type: UNSCHEDULED
+          success_return_url: https://redirect.me/good
+          failure_return_url: https://redirect.me/bad
+        card_information:
+          expiry_month: expiry_month
+          country: country
+          token_id: token_id
+          fingerprint: fingerprint
+          masked_card_number: masked_card_number
+          cardholder_name: cardholder_name
+          type: type
+          expiry_year: expiry_year
+          issuer: issuer
+          network: VISA
+        card_verification_results:
+          cvv_result: cvv_result
+          address_verification_result: address_verification_result
+          three_d_secure:
+            eci_code: eci_code
+            three_d_secure_version: three_d_secure_version
+            three_d_secure_flow: CHALLENGE
+            three_d_secure_result: three_d_secure_result
+            three_d_secure_result_reason: three_d_secure_result_reason
+      nullable: true
+      properties:
+        currency:
+          $ref: '#/components/schemas/PaymentRequestCurrency'
+        channel_properties:
+          $ref: '#/components/schemas/CardChannelProperties'
+        card_information:
+          $ref: '#/components/schemas/CardInformation'
+        card_verification_results:
+          $ref: '#/components/schemas/CardVerificationResults'
+      required:
+      - card_information
+      - channel_properties
+      - currency
+      type: object
+    DirectDebitChannelCode:
+      description: Direct Debit Channel Code
+      enum:
+      - BCA_KLIKPAY
+      - BCA_ONEKLIK
+      - BRI
+      - BNI
+      - MANDIRI
+      - BPI
+      - BDO
+      - CIMBNIAGA
+      - MTB
+      - RCBC
+      - UBP
+      - AUTODEBIT_UBP
+      - CHINABANK
+      - BAY
+      - KTB
+      - BBL
+      - SCB
+      - KBANK_MB
+      - BAY_MB
+      - KTB_MB
+      - BBL_MB
+      - SCB_MB
+      - BDO_EPAY
+      - AFFIN_FPX
+      - AGRO_FPX
+      - ALLIANCE_FPX
+      - AMBANK_FPX
+      - ISLAM_FPX
+      - MUAMALAT_FPX
+      - BOC_FPX
+      - RAKYAT_FPX
+      - BSN_FPX
+      - CIMB_FPX
+      - HLB_FPX
+      - HSBC_FPX
+      - KFH_FPX
+      - MAYB2E_FPX
+      - MAYB2U_FPX
+      - OCBC_FPX
+      - PUBLIC_FPX
+      - RHB_FPX
+      - SCH_FPX
+      - UOB_FPX
+      - AFFIN_FPX_BUSINESS
+      - AGRO_FPX_BUSINESS
+      - ALLIANCE_FPX_BUSINESS
+      - AMBANK_FPX_BUSINESS
+      - ISLAM_FPX_BUSINESS
+      - MUAMALAT_FPX_BUSINESS
+      - BNP_FPX_BUSINESS
+      - CIMB_FPX_BUSINESS
+      - CITIBANK_FPX_BUSINESS
+      - DEUTSCHE_FPX_BUSINESS
+      - HLB_FPX_BUSINESS
+      - HSBC_FPX_BUSINESS
+      - RAKYAT_FPX_BUSINESS
+      - KFH_FPX_BUSINESS
+      - MAYB2E_FPX_BUSINESS
+      - OCBC_FPX_BUSINESS
+      - PUBLIC_FPX_BUSINESS
+      - RHB_FPX_BUSINESS
+      - SCH_FPX_BUSINESS
+      - UOB_FPX_BUSINESS
+      example: BRI
+      type: string
+    DirectDebitChannelPropertiesBankRedirect:
+      description: Direct Debit Bank Account Channel Properties
+      example:
+        mobile_number: "0812345678"
+        success_return_url: https://redirect.me/good
+        failure_return_url: https://redirect.me/bad
+      properties:
+        mobile_number:
+          description: Mobile number of the customer that is registered to channel
+          type: string
+        success_return_url:
+          format: uri
+          type: string
+        failure_return_url:
+          format: uri
+          type: string
+      type: object
+    DirectDebitChannelPropertiesBankAccount:
+      description: Direct Debit Bank Account Channel Properties
+      example:
+        success_return_url: https://redirect.me/good
+        failure_return_url: https://redirect.me/bad
+      properties:
+        success_return_url:
+          format: uri
+          type: string
+        failure_return_url:
+          format: uri
+          type: string
+        mobile_number:
+          type: string
+        identity_document_number:
+          type: string
+      type: object
+    DirectDebitChannelPropertiesDebitCard:
+      description: Direct Debit Debit Card Channel Properties
+      example:
+        mobile_number: +62818555988
+        card_last_four: "8888"
+        card_expiry: 06/24
+        email: test.email@xendit.co
+      properties:
+        mobile_number:
+          description: Mobile number of the customer registered to the partner channel
+          example: +62818555988
+          type: string
+        account_number:
+          example: "1234567890"
+          type: string
+        card_last_four:
+          description: Last four digits of the debit card
+          example: "8888"
+          type: string
+        card_expiry:
+          description: Expiry month and year of the debit card (in MM/YY format)
+          example: 06/24
+          type: string
+        email:
+          description: Email address of the customer that is registered to the partner
+            channel
+          example: test.email@xendit.co
+          type: string
+      type: object
+    DirectDebitChannelProperties:
+      anyOf:
+      - $ref: '#/components/schemas/DirectDebitChannelPropertiesBankRedirect'
+      - $ref: '#/components/schemas/DirectDebitChannelPropertiesBankAccount'
+      - $ref: '#/components/schemas/DirectDebitChannelPropertiesDebitCard'
+      nullable: true
+    DirectDebitType:
+      enum:
+      - DEBIT_CARD
+      - BANK_ACCOUNT
+      - BANK_REDIRECT
+      type: string
+    DirectDebitParameters:
+      example:
+        channel_properties: null
+        channel_code: BRI
+        type: null
+      nullable: true
+      properties:
+        channel_code:
+          $ref: '#/components/schemas/DirectDebitChannelCode'
+        channel_properties:
+          $ref: '#/components/schemas/DirectDebitChannelProperties'
+        type:
+          $ref: '#/components/schemas/DirectDebitType'
+      required:
+      - channel_code
+      - channel_properties
+      type: object
+    DirectDebitBankAccount:
+      nullable: true
+      properties:
+        masked_bank_account_number:
+          example: 233eca40ff303ba15bf39052ca3102c6
+          nullable: true
+          type: string
+        bank_account_hash:
+          example: 233eca40ff303ba15bf39052ca3102c6
+          nullable: true
+          type: string
+      type: object
+    DirectDebitDebitCard:
+      nullable: true
+      properties:
+        mobile_number:
+          description: Mobile number of the customer registered to the partner channel
+          example: +62818555988
+          nullable: true
+          type: string
+        account_number:
+          example: "1234567890"
+          type: string
+        card_last_four:
+          description: Last four digits of the debit card
+          example: "8888"
+          nullable: true
+          type: string
+        card_expiry:
+          description: Expiry month and year of the debit card (in MM/YY format)
+          example: 06/24
+          nullable: true
+          type: string
+        email:
+          description: Email address of the customer that is registered to the partner
+            channel
+          example: test.email@xendit.co
+          format: email
+          nullable: true
+          type: string
+      type: object
+    DirectDebit:
+      allOf:
+      - $ref: '#/components/schemas/DirectDebitParameters'
+      - $ref: '#/components/schemas/DirectDebit_allOf'
+      description: Direct Debit Payment Method Details
+      nullable: true
+      type: object
+    EWalletChannelCode:
+      description: Ewallet Channel Code
+      enum:
+      - GCASH
+      - GRABPAY
+      - PAYMAYA
+      - DANA
+      - OVO
+      - LINKAJA
+      - SHOPEEPAY
+      - NEXCASH
+      - ASTRAPAY
+      - JENIUSPAY
+      - APPOTA
+      - MOMO
+      - VNPTWALLET
+      - VIETTELPAY
+      - ZALOPAY
+      - WECHATPAY
+      - LINEPAY
+      - TRUEMONEY
+      - ALIPAY
+      example: PAYMAYA
+      type: string
+    EWalletChannelProperties:
+      description: Ewallet Channel Properties
+      example:
+        success_return_url: https://redirect.me/good
+        failure_return_url: https://redirect.me/bad
+        cancel_return_url: https://redirect.me/cancel
+      nullable: false
+      properties:
+        success_return_url:
+          description: URL where the end-customer is redirected if the authorization
+            is successful
+          example: https://webhook.site/f4b755f5-4770-4a11-8c72-cc0b3cc6b882
+          pattern: "^\\S{1,255}:\\/\\/\\S{0,1000}$"
+          type: string
+        failure_return_url:
+          description: URL where the end-customer is redirected if the authorization
+            failed
+          example: https://webhook.site/f4b755f5-4770-4a11-8c72-cc0b3cc6b882
+          pattern: "^\\S{1,255}:\\/\\/\\S{0,1000}$"
+          type: string
+        cancel_return_url:
+          description: URL where the end-customer is redirected if the authorization
+            cancelled
+          example: https://webhook.site/f4b755f5-4770-4a11-8c72-cc0b3cc6b882
+          pattern: "^\\S{1,255}:\\/\\/\\S{0,1000}$"
+          type: string
+        redeem_points:
+          description: "REDEEM_NONE will not use any point, REDEEM_ALL will use all\
+            \ available points before cash balance is used. For OVO and ShopeePay\
+            \ tokenized payment use only."
+          example: REDEEM_NONE
+          type: string
+        mobile:number:
+          type: string
+        cashtag:
+          type: string
+      type: object
+    EWalletParameters:
+      example:
+        channel_properties:
+          success_return_url: https://redirect.me/good
+          failure_return_url: https://redirect.me/bad
+          cancel_return_url: https://redirect.me/cancel
+        channel_code: PAYMAYA
+      nullable: true
+      properties:
+        channel_code:
+          $ref: '#/components/schemas/EWalletChannelCode'
+        channel_properties:
+          $ref: '#/components/schemas/EWalletChannelProperties'
+      type: object
+    EWalletAccount:
+      description: EWallet Account Properties
+      example:
+        name: John Peter Doe
+        account_details: +63(2)123456XXXX
+        balance: null
+        point_balance: null
+      nullable: false
+      properties:
+        name:
+          description: Name of the eWallet account holder. The value is null if unavailableName
+            of the eWallet account holder. The value is null if unavailable
+          nullable: true
+          type: string
+        account_details:
+          description: Identifier from eWallet provider e.g. phone number. The value
+            is null if unavailable
+          nullable: true
+          type: string
+        balance:
+          description: The main balance amount on eWallet account provided from eWallet
+            provider. The value is null if unavailable
+          format: double
+          nullable: true
+          type: number
+        point_balance:
+          description: The point balance amount on eWallet account. Applicable only
+            on some eWallet provider that has point system. The value is null if unavailabl
+          format: double
+          nullable: true
+          type: number
+      type: object
+    EWallet:
+      allOf:
+      - $ref: '#/components/schemas/EWalletParameters'
+      - $ref: '#/components/schemas/EWallet_allOf'
+      description: Ewallet Payment Method Details
+      nullable: true
+      type: object
+    OverTheCounterChannelCode:
+      description: Over The Counter Channel Code
+      enum:
+      - 7ELEVEN
+      - 7ELEVEN_CLIQQ
+      - CEBUANA
+      - ECPAY
+      - PALAWAN
+      - MLHUILLIER
+      - ECPAY_DRAGONLOAN
+      - LBC
+      - ECPAY_SCHOOL
+      - RD_PAWNSHOP
+      - CVM
+      - USSC
+      - SM_BILLS
+      - ROBINSONS_BILLS
+      - ALFAMART
+      - INDOMARET
+      example: 7ELEVEN_CLIQQ
+      type: string
+    OverTheCounterChannelProperties:
+      description: Over The Counter Channel Properties
+      example:
+        payment_code: "12345"
+        customer_name: Rika Sutanto
+        expires_at: 2022-01-01T00:00:00Z
+      properties:
+        payment_code:
+          description: "The payment code that you want to assign, e.g 12345. If you\
+            \ do not send one, one will be picked at random."
+          example: "12345"
+          type: string
+        customer_name:
+          description: Name of customer.
+          example: Rika Sutanto
+          type: string
+        expires_at:
+          description: The time when the payment code will be expired. The minimum
+            is 2 hours and the maximum is 9 days for 7ELEVEN. Default expired date
+            will be 2 days from payment code generated.
+          example: 2022-01-01T00:00:00Z
+          format: date-time
+          type: string
+      required:
+      - customer_name
+      type: object
+    OverTheCounterParameters:
+      example:
+        amount: 6.027456183070403
+        currency: null
+        channel_properties:
+          payment_code: "12345"
+          customer_name: Rika Sutanto
+          expires_at: 2022-01-01T00:00:00Z
+        channel_code: 7ELEVEN_CLIQQ
+      nullable: true
+      properties:
+        amount:
+          format: double
+          nullable: true
+          type: number
+        currency:
+          $ref: '#/components/schemas/PaymentRequestCurrency'
+        channel_code:
+          $ref: '#/components/schemas/OverTheCounterChannelCode'
+        channel_properties:
+          $ref: '#/components/schemas/OverTheCounterChannelProperties'
+      required:
+      - channel_code
+      - channel_properties
+      type: object
+    OverTheCounter:
+      allOf:
+      - $ref: '#/components/schemas/OverTheCounterParameters'
+      description: Over the Counter Payment Method Details
+      nullable: true
+      type: object
+    VirtualAccountChannelCode:
+      description: Virtual Account Channel Code
+      enum:
+      - BCA
+      - BJB
+      - BNI
+      - BRI
+      - MANDIRI
+      - PERMATA
+      - BSI
+      - CIMB
+      - SAHABAT_SAMPOERNA
+      - ARTAJASA
+      - PV
+      - VIETCAPITAL
+      - WOORI
+      - MSB
+      example: BCA
+      type: string
+    VirtualAccountChannelProperties:
+      description: Virtual Account Channel Properties
+      example:
+        customer_name: Rika Sutanto
+        description: Payment for SSS
+        expires_at: 2022-01-01T00:00:00Z
+      properties:
+        customer_name:
+          description: Name of customer.
+          example: Rika Sutanto
+          type: string
+        virtual_account_number:
+          description: "You can assign specific Virtual Account number using this\
+            \ parameter. If you do not send one, one will be picked at random. Make\
+            \ sure the number you specify is within your Virtual Account range."
+          example: "262159999999999"
+          type: string
+        expires_at:
+          description: "The date and time in ISO 8601 UTC+0 when the virtual account\
+            \ number will be expired. Default: The default expiration date will be\
+            \ 31 years from creation date."
+          example: 2022-01-01T00:00:00Z
+          format: date-time
+          type: string
+        suggested_amount:
+          description: "The suggested amount you want to assign. Note: Suggested amounts\
+            \ is the amounts that can see as a suggestion, but user can still put\
+            \ any numbers (only supported for Mandiri and BRI)"
+          example: 100000
+          format: double
+          type: number
+      required:
+      - customer_name
+      type: object
+    VirtualAccountParameters:
+      example:
+        amount: 5.637376656633329
+        min_amount: 1.4658129805029452
+        alternative_display_types:
+        - QR_STRING
+        - QR_STRING
+        max_amount: 5.962133916683182
+        currency: null
+        channel_properties:
+          customer_name: Rika Sutanto
+          description: Payment for SSS
+          expires_at: 2022-01-01T00:00:00Z
+        channel_code: BCA
+      nullable: true
+      properties:
+        min_amount:
+          format: double
+          nullable: true
+          type: number
+        max_amount:
+          format: double
+          nullable: true
+          type: number
+        amount:
+          format: double
+          nullable: true
+          type: number
+        currency:
+          $ref: '#/components/schemas/PaymentRequestCurrency'
+        channel_code:
+          $ref: '#/components/schemas/VirtualAccountChannelCode'
+        channel_properties:
+          $ref: '#/components/schemas/VirtualAccountChannelProperties'
+        alternative_display_types:
+          description: Alternative display requested for the virtual account
+          items:
+            enum:
+            - QR_STRING
+            type: string
+          type: array
+      required:
+      - channel_code
+      - channel_properties
+      type: object
+    VirtualAccountAlternativeDisplay:
+      description: Alternative Display Object
+      properties:
+        type:
+          description: Type of the alternative display
+          enum:
+          - QR_STRING
+          readOnly: true
+          type: string
+        data:
+          description: Data payload of the given alternative display
+          type: string
+      type: object
+    VirtualAccount:
+      allOf:
+      - $ref: '#/components/schemas/VirtualAccountParameters'
+      - $ref: '#/components/schemas/VirtualAccount_allOf'
+      description: Virtual Account Payment Method Details
+      nullable: true
+      type: object
+    QRCodeChannelCode:
+      description: QR Code Channel Code
+      enum:
+      - DANA
+      - RCBC
+      - LINKAJA
+      - PROMPTPAY
+      example: RCBC
+      nullable: true
+      type: string
+    QRCodeChannelProperties:
+      description: QR Code Channel Properties
+      example:
+        qr_string: 0002010102##########CO.XENDIT.WWW011893600#######14220002152#####414220010303TTT####015CO.XENDIT.WWW02180000000000000000000TTT52045######ID5911XenditQRIS6007Jakarta6105121606##########3k1mOnF73h11111111#3k1mOnF73h6v53033605401163040BDB
+        expires_at: 2022-01-01T00:00:00Z
+      nullable: false
+      properties:
+        qr_string:
+          type: string
+        expires_at:
+          example: 2022-01-01T00:00:00Z
+          format: date-time
+          type: string
+      type: object
+    QRCodeParameters:
+      example:
+        channel_properties:
+          qr_string: 0002010102##########CO.XENDIT.WWW011893600#######14220002152#####414220010303TTT####015CO.XENDIT.WWW02180000000000000000000TTT52045######ID5911XenditQRIS6007Jakarta6105121606##########3k1mOnF73h11111111#3k1mOnF73h6v53033605401163040BDB
+          expires_at: 2022-01-01T00:00:00Z
+        channel_code: RCBC
+      nullable: true
+      properties:
+        channel_code:
+          $ref: '#/components/schemas/QRCodeChannelCode'
+        channel_properties:
+          $ref: '#/components/schemas/QRCodeChannelProperties'
+      type: object
+    QRCode:
+      allOf:
+      - $ref: '#/components/schemas/QRCodeParameters'
+      description: QRCode Payment Method Details
+      nullable: true
+      type: object
+    PaymentMethodReusability:
+      enum:
+      - MULTIPLE_USE
+      - ONE_TIME_USE
+      type: string
+    PaymentMethodStatus:
+      enum:
+      - ACTIVE
+      - INACTIVE
+      - PENDING
+      - EXPIRED
+      - FAILED
+      type: string
+    Object:
+      nullable: true
+      type: object
+    PaymentMethod:
+      example:
+        metadata: "{}"
+        reference_id: reference_id
+        created: created
+        over_the_counter: null
+        description: description
+        reusability: null
+        type: null
+        direct_debit: null
+        ewallet: null
+        virtual_account: null
+        qr_code: null
+        id: id
+        updated: updated
+        card:
+          currency: null
+          channel_properties:
+            cardonfile_type: UNSCHEDULED
+            success_return_url: https://redirect.me/good
+            failure_return_url: https://redirect.me/bad
+          card_information:
+            expiry_month: expiry_month
+            country: country
+            token_id: token_id
+            fingerprint: fingerprint
+            masked_card_number: masked_card_number
+            cardholder_name: cardholder_name
+            type: type
+            expiry_year: expiry_year
+            issuer: issuer
+            network: VISA
+          card_verification_results:
+            cvv_result: cvv_result
+            address_verification_result: address_verification_result
+            three_d_secure:
+              eci_code: eci_code
+              three_d_secure_version: three_d_secure_version
+              three_d_secure_flow: CHALLENGE
+              three_d_secure_result: three_d_secure_result
+              three_d_secure_result_reason: three_d_secure_result_reason
+        status: null
+      nullable: false
+      properties:
+        id:
+          type: string
+        type:
+          $ref: '#/components/schemas/PaymentMethodType'
+        created:
+          type: string
+        updated:
+          type: string
+        description:
+          nullable: true
+          type: string
+        reference_id:
+          type: string
+        card:
+          $ref: '#/components/schemas/Card'
+        direct_debit:
+          $ref: '#/components/schemas/DirectDebit'
+        ewallet:
+          $ref: '#/components/schemas/EWallet'
+        over_the_counter:
+          $ref: '#/components/schemas/OverTheCounter'
+        virtual_account:
+          $ref: '#/components/schemas/VirtualAccount'
+        qr_code:
+          $ref: '#/components/schemas/QRCode'
+        reusability:
+          $ref: '#/components/schemas/PaymentMethodReusability'
+        status:
+          $ref: '#/components/schemas/PaymentMethodStatus'
+        metadata:
+          nullable: true
+          type: object
+      required:
+      - id
+      - reusability
+      - status
+      - type
+      type: object
+    PaymentRequestCaptureMethod:
+      enum:
+      - AUTOMATIC
+      - MANUAL
+      nullable: true
+      type: string
+    PaymentRequestInitiator:
+      enum:
+      - CUSTOMER
+      - MERCHANT
+      nullable: true
+      type: string
+    PaymentRequestCardVerificationResultsThreeDeeSecure:
+      example:
+        eci_code: eci_code
+        three_d_secure_version: three_d_secure_version
+        three_d_secure_flow: three_d_secure_flow
+        three_d_secure_result: three_d_secure_result
+        three_d_secure_result_reason: three_d_secure_result_reason
+      nullable: true
+      properties:
+        three_d_secure_flow:
+          type: string
+        eci_code:
+          type: string
+        three_d_secure_result:
+          type: string
+        three_d_secure_result_reason:
+          nullable: true
+          type: string
+        three_d_secure_version:
+          type: string
+      type: object
+    PaymentRequestCardVerificationResults:
+      example:
+        cvv_result: cvv_result
+        address_verification_result: address_verification_result
+        three_d_secure:
+          eci_code: eci_code
+          three_d_secure_version: three_d_secure_version
+          three_d_secure_flow: three_d_secure_flow
+          three_d_secure_result: three_d_secure_result
+          three_d_secure_result_reason: three_d_secure_result_reason
+      nullable: true
+      properties:
+        three_d_secure:
+          $ref: '#/components/schemas/PaymentRequestCardVerificationResultsThreeDeeSecure'
+        cvv_result:
+          nullable: true
+          type: string
+        address_verification_result:
+          nullable: true
+          type: string
+      required:
+      - three_d_secure
+      type: object
+    PaymentRequestStatus:
+      enum:
+      - PENDING
+      - REQUIRES_ACTION
+      - CANCELED
+      - SUCCEEDED
+      - FAILED
+      - VOIDED
+      - UNKNOWN
+      - AWAITING_CAPTURE
+      type: string
+    PaymentRequestAction:
+      example:
+        method: method
+        url_type: API
+        action: AUTH
+        qr_code: qr_code
+        url: url
+      properties:
+        action:
+          enum:
+          - AUTH
+          - RESEND_AUTH
+          - CAPTURE
+          - CANCEL
+          - PRESENT_TO_CUSTOMER
+          type: string
+        url_type:
+          enum:
+          - API
+          - WEB
+          - MOBILE
+          - DEEPLINK
+          type: string
+        method:
+          nullable: true
+          type: string
+        url:
+          nullable: true
+          type: string
+        qr_code:
+          nullable: true
+          type: string
+      required:
+      - action
+      - method
+      - qr_code
+      - url
+      - url_type
+      type: object
+    PaymentRequestShippingInformation:
+      example:
+        country: country
+        city: city
+        province_state: province_state
+        street_line2: street_line2
+        street_line1: street_line1
+        postal_code: postal_code
+      nullable: true
+      properties:
+        country:
+          type: string
+        street_line1:
+          type: string
+        street_line2:
+          type: string
+        city:
+          type: string
+        province_state:
+          type: string
+        postal_code:
+          type: string
+      required:
+      - country
+      type: object
+    PaymentRequestBasketItem:
+      example:
+        metadata: "{}"
+        quantity: 5.962133916683182
+        reference_id: reference_id
+        sub_category: sub_category
+        description: description
+        type: type
+        url: url
+        price: 5.637376656633329
+        name: name
+        payer_charged_price: 2.3021358869347655
+        currency: currency
+        payer_charged_currency: payer_charged_currency
+        category: category
+      nullable: true
+      properties:
+        reference_id:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        type:
+          type: string
+        category:
+          type: string
+        sub_category:
+          type: string
+        currency:
+          type: string
+        quantity:
+          format: double
+          type: number
+        price:
+          format: double
+          type: number
+        payer_charged_currency:
+          type: string
+        payer_charged_price:
+          format: double
+          type: number
+        url:
+          type: string
+        metadata:
+          type: object
+      required:
+      - category
+      - currency
+      - name
+      - price
+      - quantity
+      type: object
+    PaymentRequestBasket:
+      items:
+        $ref: '#/components/schemas/PaymentRequestBasketItem'
+      nullable: true
+      type: array
+    PaymentRequest:
+      example:
+        capture_method: null
+        country: null
+        amount: 0.8008281904610115
+        failure_code: failure_code
+        metadata: "{}"
+        reference_id: reference_id
+        created: created
+        min_amount: 6.027456183070403
+        initiator: null
+        description: description
+        shipping_information:
+          country: country
+          city: city
+          province_state: province_state
+          street_line2: street_line2
+          street_line1: street_line1
+          postal_code: postal_code
+        max_amount: 1.4658129805029452
+        currency: null
+        id: id
+        customer_id: customer_id
+        card_verification_results:
+          cvv_result: cvv_result
+          address_verification_result: address_verification_result
+          three_d_secure:
+            eci_code: eci_code
+            three_d_secure_version: three_d_secure_version
+            three_d_secure_flow: three_d_secure_flow
+            three_d_secure_result: three_d_secure_result
+            three_d_secure_result_reason: three_d_secure_result_reason
+        updated: updated
+        business_id: business_id
+        actions:
+        - method: method
+          url_type: API
+          action: AUTH
+          qr_code: qr_code
+          url: url
+        - method: method
+          url_type: API
+          action: AUTH
+          qr_code: qr_code
+          url: url
+        items:
+        - metadata: "{}"
+          quantity: 5.962133916683182
+          reference_id: reference_id
+          sub_category: sub_category
+          description: description
+          type: type
+          url: url
+          price: 5.637376656633329
+          name: name
+          payer_charged_price: 2.3021358869347655
+          currency: currency
+          payer_charged_currency: payer_charged_currency
+          category: category
+        - metadata: "{}"
+          quantity: 5.962133916683182
+          reference_id: reference_id
+          sub_category: sub_category
+          description: description
+          type: type
+          url: url
+          price: 5.637376656633329
+          name: name
+          payer_charged_price: 2.3021358869347655
+          currency: currency
+          payer_charged_currency: payer_charged_currency
+          category: category
+        payment_method:
+          metadata: "{}"
+          reference_id: reference_id
+          created: created
+          over_the_counter: null
+          description: description
+          reusability: null
+          type: null
+          direct_debit: null
+          ewallet: null
+          virtual_account: null
+          qr_code: null
+          id: id
+          updated: updated
+          card:
+            currency: null
+            channel_properties:
+              cardonfile_type: UNSCHEDULED
+              success_return_url: https://redirect.me/good
+              failure_return_url: https://redirect.me/bad
+            card_information:
+              expiry_month: expiry_month
+              country: country
+              token_id: token_id
+              fingerprint: fingerprint
+              masked_card_number: masked_card_number
+              cardholder_name: cardholder_name
+              type: type
+              expiry_year: expiry_year
+              issuer: issuer
+              network: VISA
+            card_verification_results:
+              cvv_result: cvv_result
+              address_verification_result: address_verification_result
+              three_d_secure:
+                eci_code: eci_code
+                three_d_secure_version: three_d_secure_version
+                three_d_secure_flow: CHALLENGE
+                three_d_secure_result: three_d_secure_result
+                three_d_secure_result_reason: three_d_secure_result_reason
+          status: null
+        customer: "{}"
+        status: null
+      nullable: false
+      properties:
+        id:
+          type: string
+        created:
+          type: string
+        updated:
+          type: string
+        reference_id:
+          type: string
+        business_id:
+          type: string
+        customer_id:
+          nullable: true
+          type: string
+        customer:
+          nullable: true
+          type: object
+        amount:
+          format: double
+          type: number
+        min_amount:
+          format: double
+          nullable: true
+          type: number
+        max_amount:
+          format: double
+          nullable: true
+          type: number
+        country:
+          $ref: '#/components/schemas/PaymentRequestCountry'
+        currency:
+          $ref: '#/components/schemas/PaymentRequestCurrency'
+        payment_method:
+          $ref: '#/components/schemas/PaymentMethod'
+        description:
+          nullable: true
+          type: string
+        failure_code:
+          nullable: true
+          type: string
+        capture_method:
+          $ref: '#/components/schemas/PaymentRequestCaptureMethod'
+        initiator:
+          $ref: '#/components/schemas/PaymentRequestInitiator'
+        card_verification_results:
+          $ref: '#/components/schemas/PaymentRequestCardVerificationResults'
+        status:
+          $ref: '#/components/schemas/PaymentRequestStatus'
+        actions:
+          items:
+            $ref: '#/components/schemas/PaymentRequestAction'
+          type: array
+        metadata:
+          nullable: true
+          type: object
+        shipping_information:
+          $ref: '#/components/schemas/PaymentRequestShippingInformation'
+        items:
+          items:
+            $ref: '#/components/schemas/PaymentRequestBasketItem'
+          nullable: true
+          type: array
+      required:
+      - business_id
+      - created
+      - currency
+      - id
+      - payment_method
+      - reference_id
+      - status
+      - updated
+      type: object
+    PaymentRequestListResponse:
+      example:
+        data:
+        - capture_method: null
+          country: null
+          amount: 0.8008281904610115
+          failure_code: failure_code
+          metadata: "{}"
+          reference_id: reference_id
+          created: created
+          min_amount: 6.027456183070403
+          initiator: null
+          description: description
+          shipping_information:
+            country: country
+            city: city
+            province_state: province_state
+            street_line2: street_line2
+            street_line1: street_line1
+            postal_code: postal_code
+          max_amount: 1.4658129805029452
+          currency: null
+          id: id
+          customer_id: customer_id
+          card_verification_results:
+            cvv_result: cvv_result
+            address_verification_result: address_verification_result
+            three_d_secure:
+              eci_code: eci_code
+              three_d_secure_version: three_d_secure_version
+              three_d_secure_flow: three_d_secure_flow
+              three_d_secure_result: three_d_secure_result
+              three_d_secure_result_reason: three_d_secure_result_reason
+          updated: updated
+          business_id: business_id
+          actions:
+          - method: method
+            url_type: API
+            action: AUTH
+            qr_code: qr_code
+            url: url
+          - method: method
+            url_type: API
+            action: AUTH
+            qr_code: qr_code
+            url: url
+          items:
+          - metadata: "{}"
+            quantity: 5.962133916683182
+            reference_id: reference_id
+            sub_category: sub_category
+            description: description
+            type: type
+            url: url
+            price: 5.637376656633329
+            name: name
+            payer_charged_price: 2.3021358869347655
+            currency: currency
+            payer_charged_currency: payer_charged_currency
+            category: category
+          - metadata: "{}"
+            quantity: 5.962133916683182
+            reference_id: reference_id
+            sub_category: sub_category
+            description: description
+            type: type
+            url: url
+            price: 5.637376656633329
+            name: name
+            payer_charged_price: 2.3021358869347655
+            currency: currency
+            payer_charged_currency: payer_charged_currency
+            category: category
+          payment_method:
+            metadata: "{}"
+            reference_id: reference_id
+            created: created
+            over_the_counter: null
+            description: description
+            reusability: null
+            type: null
+            direct_debit: null
+            ewallet: null
+            virtual_account: null
+            qr_code: null
+            id: id
+            updated: updated
+            card:
+              currency: null
+              channel_properties:
+                cardonfile_type: UNSCHEDULED
+                success_return_url: https://redirect.me/good
+                failure_return_url: https://redirect.me/bad
+              card_information:
+                expiry_month: expiry_month
+                country: country
+                token_id: token_id
+                fingerprint: fingerprint
+                masked_card_number: masked_card_number
+                cardholder_name: cardholder_name
+                type: type
+                expiry_year: expiry_year
+                issuer: issuer
+                network: VISA
+              card_verification_results:
+                cvv_result: cvv_result
+                address_verification_result: address_verification_result
+                three_d_secure:
+                  eci_code: eci_code
+                  three_d_secure_version: three_d_secure_version
+                  three_d_secure_flow: CHALLENGE
+                  three_d_secure_result: three_d_secure_result
+                  three_d_secure_result_reason: three_d_secure_result_reason
+            status: null
+          customer: "{}"
+          status: null
+        - capture_method: null
+          country: null
+          amount: 0.8008281904610115
+          failure_code: failure_code
+          metadata: "{}"
+          reference_id: reference_id
+          created: created
+          min_amount: 6.027456183070403
+          initiator: null
+          description: description
+          shipping_information:
+            country: country
+            city: city
+            province_state: province_state
+            street_line2: street_line2
+            street_line1: street_line1
+            postal_code: postal_code
+          max_amount: 1.4658129805029452
+          currency: null
+          id: id
+          customer_id: customer_id
+          card_verification_results:
+            cvv_result: cvv_result
+            address_verification_result: address_verification_result
+            three_d_secure:
+              eci_code: eci_code
+              three_d_secure_version: three_d_secure_version
+              three_d_secure_flow: three_d_secure_flow
+              three_d_secure_result: three_d_secure_result
+              three_d_secure_result_reason: three_d_secure_result_reason
+          updated: updated
+          business_id: business_id
+          actions:
+          - method: method
+            url_type: API
+            action: AUTH
+            qr_code: qr_code
+            url: url
+          - method: method
+            url_type: API
+            action: AUTH
+            qr_code: qr_code
+            url: url
+          items:
+          - metadata: "{}"
+            quantity: 5.962133916683182
+            reference_id: reference_id
+            sub_category: sub_category
+            description: description
+            type: type
+            url: url
+            price: 5.637376656633329
+            name: name
+            payer_charged_price: 2.3021358869347655
+            currency: currency
+            payer_charged_currency: payer_charged_currency
+            category: category
+          - metadata: "{}"
+            quantity: 5.962133916683182
+            reference_id: reference_id
+            sub_category: sub_category
+            description: description
+            type: type
+            url: url
+            price: 5.637376656633329
+            name: name
+            payer_charged_price: 2.3021358869347655
+            currency: currency
+            payer_charged_currency: payer_charged_currency
+            category: category
+          payment_method:
+            metadata: "{}"
+            reference_id: reference_id
+            created: created
+            over_the_counter: null
+            description: description
+            reusability: null
+            type: null
+            direct_debit: null
+            ewallet: null
+            virtual_account: null
+            qr_code: null
+            id: id
+            updated: updated
+            card:
+              currency: null
+              channel_properties:
+                cardonfile_type: UNSCHEDULED
+                success_return_url: https://redirect.me/good
+                failure_return_url: https://redirect.me/bad
+              card_information:
+                expiry_month: expiry_month
+                country: country
+                token_id: token_id
+                fingerprint: fingerprint
+                masked_card_number: masked_card_number
+                cardholder_name: cardholder_name
+                type: type
+                expiry_year: expiry_year
+                issuer: issuer
+                network: VISA
+              card_verification_results:
+                cvv_result: cvv_result
+                address_verification_result: address_verification_result
+                three_d_secure:
+                  eci_code: eci_code
+                  three_d_secure_version: three_d_secure_version
+                  three_d_secure_flow: CHALLENGE
+                  three_d_secure_result: three_d_secure_result
+                  three_d_secure_result_reason: three_d_secure_result_reason
+            status: null
+          customer: "{}"
+          status: null
+        has_more: true
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/PaymentRequest'
+          nullable: false
+          type: array
+        has_more:
+          type: boolean
+      required:
+      - data
+      - has_more
+      type: object
+    PaymentMethodParameters:
+      example:
+        ewallet:
+          channel_properties:
+            success_return_url: https://redirect.me/good
+            failure_return_url: https://redirect.me/bad
+            cancel_return_url: https://redirect.me/cancel
+          channel_code: PAYMAYA
+        reference_id: reference_id
+        over_the_counter:
+          amount: 6.027456183070403
+          currency: null
+          channel_properties:
+            payment_code: "12345"
+            customer_name: Rika Sutanto
+            expires_at: 2022-01-01T00:00:00Z
+          channel_code: 7ELEVEN_CLIQQ
+        virtual_account:
+          amount: 5.637376656633329
+          min_amount: 1.4658129805029452
+          alternative_display_types:
+          - QR_STRING
+          - QR_STRING
+          max_amount: 5.962133916683182
+          currency: null
+          channel_properties:
+            customer_name: Rika Sutanto
+            description: Payment for SSS
+            expires_at: 2022-01-01T00:00:00Z
+          channel_code: BCA
+        reusability: null
+        description: description
+        qr_code:
+          channel_properties:
+            qr_string: 0002010102##########CO.XENDIT.WWW011893600#######14220002152#####414220010303TTT####015CO.XENDIT.WWW02180000000000000000000TTT52045######ID5911XenditQRIS6007Jakarta6105121606##########3k1mOnF73h11111111#3k1mOnF73h6v53033605401163040BDB
+            expires_at: 2022-01-01T00:00:00Z
+          channel_code: RCBC
+        type: null
+        direct_debit:
+          channel_properties: null
+          channel_code: BRI
+          type: null
+      nullable: false
+      properties:
+        type:
+          $ref: '#/components/schemas/PaymentMethodType'
+        reusability:
+          $ref: '#/components/schemas/PaymentMethodReusability'
+        description:
+          nullable: true
+          type: string
+        reference_id:
+          type: string
+        direct_debit:
+          $ref: '#/components/schemas/DirectDebitParameters'
+        ewallet:
+          $ref: '#/components/schemas/EWalletParameters'
+        over_the_counter:
+          $ref: '#/components/schemas/OverTheCounterParameters'
+        virtual_account:
+          $ref: '#/components/schemas/VirtualAccountParameters'
+        qr_code:
+          $ref: '#/components/schemas/QRCodeParameters'
+      required:
+      - reusability
+      - type
+      type: object
+    PaymentRequestChannelProperties:
+      nullable: true
+      properties:
+        success_return_url:
+          description: URL where the end-customer is redirected if the authorization
+            is successful
+          example: https://webhook.site/f4b755f5-4770-4a11-8c72-cc0b3cc6b882
+          pattern: "^\\S{1,255}:\\/\\/\\S{0,1000}$"
+          type: string
+        failure_return_url:
+          description: URL where the end-customer is redirected if the authorization
+            failed
+          example: https://webhook.site/f4b755f5-4770-4a11-8c72-cc0b3cc6b882
+          pattern: "^\\S{1,255}:\\/\\/\\S{0,1000}$"
+          type: string
+        cancel_return_url:
+          description: URL where the end-customer is redirected if the authorization
+            cancelled
+          example: https://webhook.site/f4b755f5-4770-4a11-8c72-cc0b3cc6b882
+          pattern: "^\\S{1,255}:\\/\\/\\S{0,1000}$"
+          type: string
+        redeem_points:
+          description: "REDEEM_NONE will not use any point, REDEEM_ALL will use all\
+            \ available points before cash balance is used. For OVO and ShopeePay\
+            \ tokenized payment use only."
+          example: REDEEM_NONE
+          type: string
+        require_auth:
+          description: "Toggle used to require end-customer to input undergo OTP validation\
+            \ before completing a payment. OTP will always be required for transactions\
+            \ greater than 1,000,000 IDR. For BRI tokenized payment use only."
+          example: false
+          type: boolean
+        merchant_id_tag:
+          description: 'Tag for a Merchant ID that you want to associate this payment
+            with. For merchants using their own MIDs to specify which MID they want
+            to use '
+          type: string
+        cardonfile_type:
+          description: Type of “credential-on-file” / “card-on-file” payment being
+            made. Indicate that this payment uses a previously linked Payment Method
+            for charging.
+          example: RECURRING
+          nullable: true
+          type: string
+      type: object
+    PaymentRequestParameters:
+      example:
+        capture_method: null
+        amount: 0.8008281904610115
+        metadata: "{}"
+        reference_id: reference_id
+        initiator: null
+        description: description
+        payment_method_id: payment_method_id
+        shipping_information:
+          country: country
+          city: city
+          province_state: province_state
+          street_line2: street_line2
+          street_line1: street_line1
+          postal_code: postal_code
+        currency: null
+        channel_properties: null
+        customer_id: customer_id
+        items:
+        - metadata: "{}"
+          quantity: 5.962133916683182
+          reference_id: reference_id
+          sub_category: sub_category
+          description: description
+          type: type
+          url: url
+          price: 5.637376656633329
+          name: name
+          payer_charged_price: 2.3021358869347655
+          currency: currency
+          payer_charged_currency: payer_charged_currency
+          category: category
+        - metadata: "{}"
+          quantity: 5.962133916683182
+          reference_id: reference_id
+          sub_category: sub_category
+          description: description
+          type: type
+          url: url
+          price: 5.637376656633329
+          name: name
+          payer_charged_price: 2.3021358869347655
+          currency: currency
+          payer_charged_currency: payer_charged_currency
+          category: category
+        payment_method:
+          ewallet:
+            channel_properties:
+              success_return_url: https://redirect.me/good
+              failure_return_url: https://redirect.me/bad
+              cancel_return_url: https://redirect.me/cancel
+            channel_code: PAYMAYA
+          reference_id: reference_id
+          over_the_counter:
+            amount: 6.027456183070403
+            currency: null
+            channel_properties:
+              payment_code: "12345"
+              customer_name: Rika Sutanto
+              expires_at: 2022-01-01T00:00:00Z
+            channel_code: 7ELEVEN_CLIQQ
+          virtual_account:
+            amount: 5.637376656633329
+            min_amount: 1.4658129805029452
+            alternative_display_types:
+            - QR_STRING
+            - QR_STRING
+            max_amount: 5.962133916683182
+            currency: null
+            channel_properties:
+              customer_name: Rika Sutanto
+              description: Payment for SSS
+              expires_at: 2022-01-01T00:00:00Z
+            channel_code: BCA
+          reusability: null
+          description: description
+          qr_code:
+            channel_properties:
+              qr_string: 0002010102##########CO.XENDIT.WWW011893600#######14220002152#####414220010303TTT####015CO.XENDIT.WWW02180000000000000000000TTT52045######ID5911XenditQRIS6007Jakarta6105121606##########3k1mOnF73h11111111#3k1mOnF73h6v53033605401163040BDB
+              expires_at: 2022-01-01T00:00:00Z
+            channel_code: RCBC
+          type: null
+          direct_debit:
+            channel_properties: null
+            channel_code: BRI
+            type: null
+        customer: "{}"
+      nullable: false
+      properties:
+        reference_id:
+          type: string
+        amount:
+          format: double
+          type: number
+        currency:
+          $ref: '#/components/schemas/PaymentRequestCurrency'
+        payment_method:
+          $ref: '#/components/schemas/PaymentMethodParameters'
+        description:
+          nullable: true
+          type: string
+        capture_method:
+          $ref: '#/components/schemas/PaymentRequestCaptureMethod'
+        initiator:
+          $ref: '#/components/schemas/PaymentRequestInitiator'
+        payment_method_id:
+          type: string
+        channel_properties:
+          $ref: '#/components/schemas/PaymentRequestParameters_channel_properties'
+        shipping_information:
+          $ref: '#/components/schemas/PaymentRequestShippingInformation'
+        items:
+          items:
+            $ref: '#/components/schemas/PaymentRequestBasketItem'
+          nullable: true
+          type: array
+        customer_id:
+          nullable: true
+          type: string
+        customer:
+          nullable: true
+          type: object
+        metadata:
+          nullable: true
+          type: object
+      required:
+      - currency
+      type: object
+    PaymentRequestAuthParameters:
+      example:
+        auth_code: auth_code
+      nullable: false
+      properties:
+        auth_code:
+          type: string
+      required:
+      - auth_code
+      type: object
+    Capture:
+      example:
+        failure_code: failure_code
+        metadata: "{}"
+        reference_id: reference_id
+        created: created
+        payment_request_id: payment_request_id
+        payment_id: payment_id
+        captured_amount: 6.027456183070403
+        authorized_amount: 0.8008281904610115
+        currency: currency
+        channel_properties: "{}"
+        id: id
+        customer_id: customer_id
+        updated: updated
+        payment_method:
+          metadata: "{}"
+          reference_id: reference_id
+          created: created
+          over_the_counter: null
+          description: description
+          reusability: null
+          type: null
+          direct_debit: null
+          ewallet: null
+          virtual_account: null
+          qr_code: null
+          id: id
+          updated: updated
+          card:
+            currency: null
+            channel_properties:
+              cardonfile_type: UNSCHEDULED
+              success_return_url: https://redirect.me/good
+              failure_return_url: https://redirect.me/bad
+            card_information:
+              expiry_month: expiry_month
+              country: country
+              token_id: token_id
+              fingerprint: fingerprint
+              masked_card_number: masked_card_number
+              cardholder_name: cardholder_name
+              type: type
+              expiry_year: expiry_year
+              issuer: issuer
+              network: VISA
+            card_verification_results:
+              cvv_result: cvv_result
+              address_verification_result: address_verification_result
+              three_d_secure:
+                eci_code: eci_code
+                three_d_secure_version: three_d_secure_version
+                three_d_secure_flow: CHALLENGE
+                three_d_secure_result: three_d_secure_result
+                three_d_secure_result_reason: three_d_secure_result_reason
+          status: null
+        status: SUCCEEDED
+      nullable: false
+      properties:
+        id:
+          type: string
+        payment_request_id:
+          type: string
+        payment_id:
+          type: string
+        reference_id:
+          type: string
+        currency:
+          type: string
+        authorized_amount:
+          format: double
+          type: number
+        captured_amount:
+          format: double
+          type: number
+        status:
+          enum:
+          - SUCCEEDED
+          - FAILED
+          type: string
+        payment_method:
+          $ref: '#/components/schemas/PaymentMethod'
+        failure_code:
+          nullable: true
+          type: string
+        customer_id:
+          nullable: true
+          type: string
+        metadata:
+          nullable: true
+          type: object
+        channel_properties:
+          nullable: true
+          type: object
+        created:
+          type: string
+        updated:
+          type: string
+      required:
+      - authorized_amount
+      - captured_amount
+      - channel_properties
+      - created
+      - currency
+      - customer_id
+      - failure_code
+      - id
+      - metadata
+      - payment_id
+      - payment_method
+      - payment_request_id
+      - reference_id
+      - status
+      - updated
+      type: object
+    CaptureList:
+      items:
+        $ref: '#/components/schemas/Capture'
+      nullable: false
+      type: array
+    CaptureListResponse:
+      example:
+        data:
+        - failure_code: failure_code
+          metadata: "{}"
+          reference_id: reference_id
+          created: created
+          payment_request_id: payment_request_id
+          payment_id: payment_id
+          captured_amount: 6.027456183070403
+          authorized_amount: 0.8008281904610115
+          currency: currency
+          channel_properties: "{}"
+          id: id
+          customer_id: customer_id
+          updated: updated
+          payment_method:
+            metadata: "{}"
+            reference_id: reference_id
+            created: created
+            over_the_counter: null
+            description: description
+            reusability: null
+            type: null
+            direct_debit: null
+            ewallet: null
+            virtual_account: null
+            qr_code: null
+            id: id
+            updated: updated
+            card:
+              currency: null
+              channel_properties:
+                cardonfile_type: UNSCHEDULED
+                success_return_url: https://redirect.me/good
+                failure_return_url: https://redirect.me/bad
+              card_information:
+                expiry_month: expiry_month
+                country: country
+                token_id: token_id
+                fingerprint: fingerprint
+                masked_card_number: masked_card_number
+                cardholder_name: cardholder_name
+                type: type
+                expiry_year: expiry_year
+                issuer: issuer
+                network: VISA
+              card_verification_results:
+                cvv_result: cvv_result
+                address_verification_result: address_verification_result
+                three_d_secure:
+                  eci_code: eci_code
+                  three_d_secure_version: three_d_secure_version
+                  three_d_secure_flow: CHALLENGE
+                  three_d_secure_result: three_d_secure_result
+                  three_d_secure_result_reason: three_d_secure_result_reason
+            status: null
+          status: SUCCEEDED
+        - failure_code: failure_code
+          metadata: "{}"
+          reference_id: reference_id
+          created: created
+          payment_request_id: payment_request_id
+          payment_id: payment_id
+          captured_amount: 6.027456183070403
+          authorized_amount: 0.8008281904610115
+          currency: currency
+          channel_properties: "{}"
+          id: id
+          customer_id: customer_id
+          updated: updated
+          payment_method:
+            metadata: "{}"
+            reference_id: reference_id
+            created: created
+            over_the_counter: null
+            description: description
+            reusability: null
+            type: null
+            direct_debit: null
+            ewallet: null
+            virtual_account: null
+            qr_code: null
+            id: id
+            updated: updated
+            card:
+              currency: null
+              channel_properties:
+                cardonfile_type: UNSCHEDULED
+                success_return_url: https://redirect.me/good
+                failure_return_url: https://redirect.me/bad
+              card_information:
+                expiry_month: expiry_month
+                country: country
+                token_id: token_id
+                fingerprint: fingerprint
+                masked_card_number: masked_card_number
+                cardholder_name: cardholder_name
+                type: type
+                expiry_year: expiry_year
+                issuer: issuer
+                network: VISA
+              card_verification_results:
+                cvv_result: cvv_result
+                address_verification_result: address_verification_result
+                three_d_secure:
+                  eci_code: eci_code
+                  three_d_secure_version: three_d_secure_version
+                  three_d_secure_flow: CHALLENGE
+                  three_d_secure_result: three_d_secure_result
+                  three_d_secure_result_reason: three_d_secure_result_reason
+            status: null
+          status: SUCCEEDED
+        has_more: true
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/Capture'
+          nullable: false
+          type: array
+        has_more:
+          type: boolean
+      required:
+      - data
+      - has_more
+      type: object
+    CaptureParameters:
+      example:
+        reference_id: reference_id
+        capture_amount: 0.8008281904610115
+      nullable: false
+      properties:
+        reference_id:
+          nullable: true
+          type: string
+        capture_amount:
+          format: double
+          type: number
+      required:
+      - capture_amount
+      type: object
+    DirectDebit_allOf:
+      properties:
+        type:
+          $ref: '#/components/schemas/DirectDebitType'
+        bank_account:
+          $ref: '#/components/schemas/DirectDebitBankAccount'
+        debit_card:
+          $ref: '#/components/schemas/DirectDebitDebitCard'
+      required:
+      - type
+      type: object
+      example: null
+    EWallet_allOf:
+      properties:
+        account:
+          $ref: '#/components/schemas/EWalletAccount'
+      type: object
+      example: null
+    VirtualAccount_allOf:
+      properties:
+        alternative_displays:
+          items:
+            $ref: '#/components/schemas/VirtualAccountAlternativeDisplay'
+          type: array
+      type: object
+      example: null
+    PaymentRequestParameters_channel_properties_allOf:
+      properties:
+        cvv:
+          description: Three digit code written on the back of the card (usually called
+            CVV/CVN).
+          example: "123"
+          type: string
+      type: object
+    PaymentRequestParameters_channel_properties:
+      allOf:
+      - $ref: '#/components/schemas/PaymentRequestChannelProperties'
+      - $ref: '#/components/schemas/PaymentRequestParameters_channel_properties_allOf'
