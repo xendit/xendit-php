@@ -11,7 +11,7 @@
 /**
  * xendit-invoice-service
  *
- * The version of the OpenAPI document: 1.4.2
+ * The version of the OpenAPI document: 1.5.0
  */
 
 /**

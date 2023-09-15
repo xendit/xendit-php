@@ -5,9 +5,14 @@
 use Xendit\Invoice\InvoiceCurrency;
 ```
 
-## Properties
+    ## Enum
 
-Name | Type | Description | Examples | Notes
------------- | ------------- | ------------- | ------------- | ------------- 
+    
+        * `IDR` (value: `'IDR'`)
+    
+        * `USD` (value: `'USD'`)
+    
+        * `PHP` (value: `'PHP'`)
+    
 
 [[Back to README]](../../README.md)

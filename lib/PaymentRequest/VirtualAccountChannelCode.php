@@ -11,7 +11,7 @@
 /**
  * Payment Requests
  *
- * The version of the OpenAPI document: 1.41.0
+ * The version of the OpenAPI document: 1.42.3
  */
 
 /**
@@ -65,6 +65,8 @@ class VirtualAccountChannelCode
     
     public const MSB = 'MSB';
     
+    public const STANDARD_CHARTERED = 'STANDARD_CHARTERED';
+    
 
     private $value;
 
@@ -107,7 +109,8 @@ class VirtualAccountChannelCode
             self::PV,
             self::VIETCAPITAL,
             self::WOORI,
-            self::MSB
+            self::MSB,
+            self::STANDARD_CHARTERED
         ];
     }
 }

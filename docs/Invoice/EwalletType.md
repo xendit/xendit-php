@@ -5,9 +5,22 @@
 use Xendit\Invoice\EwalletType;
 ```
 
-## Properties
+    ## Enum
 
-Name | Type | Description | Examples | Notes
------------- | ------------- | ------------- | ------------- | ------------- 
+    
+        * `OVO` (value: `'OVO'`)
+    
+        * `DANA` (value: `'DANA'`)
+    
+        * `LINKAJA` (value: `'LINKAJA'`)
+    
+        * `PAYMAYA` (value: `'PAYMAYA'`)
+    
+        * `SHOPEEPAY` (value: `'SHOPEEPAY'`)
+    
+        * `GCASH` (value: `'GCASH'`)
+    
+        * `GRABPAY` (value: `'GRABPAY'`)
+    
 
 [[Back to README]](../../README.md)

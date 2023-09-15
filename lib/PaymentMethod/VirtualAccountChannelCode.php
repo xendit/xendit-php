@@ -11,7 +11,7 @@
 /**
  * Payment Method Service v2
  *
- * The version of the OpenAPI document: 2.86.1
+ * The version of the OpenAPI document: 2.87.2
  */
 
 /**
@@ -65,6 +65,8 @@ class VirtualAccountChannelCode
     
     public const MSB = 'MSB';
     
+    public const STANDARD_CHARTERED = 'STANDARD_CHARTERED';
+    
 
     private $value;
 
@@ -107,7 +109,8 @@ class VirtualAccountChannelCode
             self::PV,
             self::VIETCAPITAL,
             self::WOORI,
-            self::MSB
+            self::MSB,
+            self::STANDARD_CHARTERED
         ];
     }
 }

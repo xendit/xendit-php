@@ -5,9 +5,18 @@
 use Xendit\PaymentRequest\PaymentMethodStatus;
 ```
 
-## Properties
+    ## Enum
 
-Name | Type | Description | Examples | Notes
------------- | ------------- | ------------- | ------------- | ------------- 
+    
+        * `ACTIVE` (value: `'ACTIVE'`)
+    
+        * `INACTIVE` (value: `'INACTIVE'`)
+    
+        * `PENDING` (value: `'PENDING'`)
+    
+        * `EXPIRED` (value: `'EXPIRED'`)
+    
+        * `FAILED` (value: `'FAILED'`)
+    
 
 [[Back to README]](../../README.md)

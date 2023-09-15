@@ -5,9 +5,18 @@
 use Xendit\PaymentMethod\QRCodeChannelCode;
 ```
 
-## Properties
+    ## Enum
 
-Name | Type | Description | Examples | Notes
------------- | ------------- | ------------- | ------------- | ------------- 
+    
+        * `QRIS` (value: `'QRIS'`)
+    
+        * `DANA` (value: `'DANA'`)
+    
+        * `RCBC` (value: `'RCBC'`)
+    
+        * `PROMPTPAY` (value: `'PROMPTPAY'`)
+    
+        * `LINKAJA` (value: `'LINKAJA'`)
+    
 
 [[Back to README]](../../README.md)

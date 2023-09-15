@@ -587,6 +587,7 @@ components:
       enum:
       - BANK
       - EWALLET
+      - OTC
       example: BANK
       type: string
     Channel:

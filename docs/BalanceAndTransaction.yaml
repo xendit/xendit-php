@@ -118,7 +118,7 @@ info:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
   title: Transaction Service V4 API
-  version: 3.4.1
+  version: 3.4.2
   x-logo:
     url: https://dashboard.xendit.co/assets/images/xendit-blue-logo.svg
 servers:

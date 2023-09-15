@@ -5,9 +5,20 @@
 use Xendit\Invoice\PaylaterType;
 ```
 
-## Properties
+    ## Enum
 
-Name | Type | Description | Examples | Notes
------------- | ------------- | ------------- | ------------- | ------------- 
+    
+        * `KREDIVO` (value: `'KREDIVO'`)
+    
+        * `AKULAKU` (value: `'AKULAKU'`)
+    
+        * `UANGME` (value: `'UANGME'`)
+    
+        * `BILLEASE` (value: `'BILLEASE'`)
+    
+        * `CASHALO` (value: `'CASHALO'`)
+    
+        * `ATOME` (value: `'ATOME'`)
+    
 
 [[Back to README]](../../README.md)

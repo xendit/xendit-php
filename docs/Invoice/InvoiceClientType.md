@@ -5,9 +5,20 @@
 use Xendit\Invoice\InvoiceClientType;
 ```
 
-## Properties
+    ## Enum
 
-Name | Type | Description | Examples | Notes
------------- | ------------- | ------------- | ------------- | ------------- 
+    
+        * `DASHBOARD` (value: `'DASHBOARD'`)
+    
+        * `API_GATEWAY` (value: `'API_GATEWAY'`)
+    
+        * `INTEGRATION` (value: `'INTEGRATION'`)
+    
+        * `ON_DEMAND` (value: `'ON_DEMAND'`)
+    
+        * `RECURRING` (value: `'RECURRING'`)
+    
+        * `MOBILE` (value: `'MOBILE'`)
+    
 
 [[Back to README]](../../README.md)

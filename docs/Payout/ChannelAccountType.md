@@ -5,9 +5,18 @@
 use Xendit\Payout\ChannelAccountType;
 ```
 
-## Properties
+    ## Enum
 
-Name | Type | Description | Examples | Notes
------------- | ------------- | ------------- | ------------- | ------------- 
+    
+        * `NATIONAL_ID` (value: `'NATIONAL_ID'`)
+    
+        * `MOBILE_NO` (value: `'MOBILE_NO'`)
+    
+        * `PASSPORT` (value: `'PASSPORT'`)
+    
+        * `BUSINESS_REGISTRATION` (value: `'BUSINESS_REGISTRATION'`)
+    
+        * `BANK_ACCOUNT` (value: `'BANK_ACCOUNT'`)
+    
 
 [[Back to README]](../../README.md)

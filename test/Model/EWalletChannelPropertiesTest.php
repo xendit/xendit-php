@@ -9,9 +9,9 @@
  */
 
 /**
- * Payment Requests
+ * Payment Method Service v2
  *
- * The version of the OpenAPI document: 1.41.0
+ * The version of the OpenAPI document: 2.87.2
  */
 
 /**
@@ -27,7 +27,7 @@ use PHPUnit\Framework\TestCase;
  * EWalletChannelPropertiesTest Class Doc Comment
  *
  * @category    Class
- * @description Ewallet Channel Properties
+ * @description EWallet Channel Properties
  * @package     Xendit
  * @author      OpenAPI Generator team
  * @link        https://openapi-generator.tech
@@ -100,18 +100,18 @@ class EWalletChannelPropertiesTest extends TestCase
     }
 
     /**
-     * Test attribute "redeem_points"
+     * Test attribute "mobile_number"
      */
-    public function testPropertyRedeemPoints()
+    public function testPropertyMobileNumber()
     {
         // TODO: implement
         $this->markTestIncomplete('Not implemented');
     }
 
     /**
-     * Test attribute "mobilenumber"
+     * Test attribute "redeem_points"
      */
-    public function testPropertyMobilenumber()
+    public function testPropertyRedeemPoints()
     {
         // TODO: implement
         $this->markTestIncomplete('Not implemented');

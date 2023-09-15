@@ -5,9 +5,16 @@
 use Xendit\Invoice\NotificationChannel;
 ```
 
-## Properties
+    ## Enum
 
-Name | Type | Description | Examples | Notes
------------- | ------------- | ------------- | ------------- | ------------- 
+    
+        * `EMAIL` (value: `'email'`)
+    
+        * `SMS` (value: `'sms'`)
+    
+        * `WHATSAPP` (value: `'whatsapp'`)
+    
+        * `VIBER` (value: `'viber'`)
+    
 
 [[Back to README]](../../README.md)

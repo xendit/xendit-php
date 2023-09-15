@@ -11,7 +11,7 @@
 /**
  * xendit-invoice-service
  *
- * The version of the OpenAPI document: 1.4.2
+ * The version of the OpenAPI document: 1.5.0
  */
 
 /**
@@ -103,15 +103,6 @@ class CreateInvoiceRequestTest extends TestCase
      * Test attribute "description"
      */
     public function testPropertyDescription()
-    {
-        // TODO: implement
-        $this->markTestIncomplete('Not implemented');
-    }
-
-    /**
-     * Test attribute "client_type"
-     */
-    public function testPropertyClientType()
     {
         // TODO: implement
         $this->markTestIncomplete('Not implemented');

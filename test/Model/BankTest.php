@@ -11,7 +11,7 @@
 /**
  * xendit-invoice-service
  *
- * The version of the OpenAPI document: 1.4.2
+ * The version of the OpenAPI document: 1.5.0
  */
 
 /**
@@ -121,6 +121,15 @@ class BankTest extends TestCase
      * Test attribute "transfer_amount"
      */
     public function testPropertyTransferAmount()
+    {
+        // TODO: implement
+        $this->markTestIncomplete('Not implemented');
+    }
+
+    /**
+     * Test attribute "alternative_displays"
+     */
+    public function testPropertyAlternativeDisplays()
     {
         // TODO: implement
         $this->markTestIncomplete('Not implemented');

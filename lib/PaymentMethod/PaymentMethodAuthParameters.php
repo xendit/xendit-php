@@ -11,7 +11,7 @@
 /**
  * Payment Method Service v2
  *
- * The version of the OpenAPI document: 2.86.1
+ * The version of the OpenAPI document: 2.87.2
  */
 
 /**

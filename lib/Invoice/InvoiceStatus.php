@@ -11,7 +11,7 @@
 /**
  * xendit-invoice-service
  *
- * The version of the OpenAPI document: 1.4.2
+ * The version of the OpenAPI document: 1.5.0
  */
 
 /**
@@ -39,15 +39,11 @@ class InvoiceStatus
     
     public const PENDING = 'PENDING';
     
-    public const COMPLETING = 'COMPLETING';
-    
     public const PAID = 'PAID';
     
     public const SETTLED = 'SETTLED';
     
     public const EXPIRED = 'EXPIRED';
-    
-    public const REMINDER = 'REMINDER';
     
 
     private $value;
@@ -79,11 +75,9 @@ class InvoiceStatus
     {
         return [
             self::PENDING,
-            self::COMPLETING,
             self::PAID,
             self::SETTLED,
-            self::EXPIRED,
-            self::REMINDER
+            self::EXPIRED
         ];
     }
 }

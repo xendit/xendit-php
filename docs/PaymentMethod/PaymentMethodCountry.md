@@ -5,9 +5,18 @@
 use Xendit\PaymentMethod\PaymentMethodCountry;
 ```
 
-## Properties
+    ## Enum
 
-Name | Type | Description | Examples | Notes
------------- | ------------- | ------------- | ------------- | ------------- 
+    
+        * `PH` (value: `'PH'`)
+    
+        * `ID` (value: `'ID'`)
+    
+        * `VN` (value: `'VN'`)
+    
+        * `TH` (value: `'TH'`)
+    
+        * `MY` (value: `'MY'`)
+    
 
 [[Back to README]](../../README.md)

@@ -490,7 +490,7 @@ class RefundApi
         
         // Xendit's custom headers
         $defaultHeaders['xendit-lib'] = 'php';
-        $defaultHeaders['xendit-lib-ver'] = '3.0.0-beta.0';
+        $defaultHeaders['xendit-lib-ver'] = '3.0.0-beta.2';
 
         if ($this->config->getUserAgent()) {
             $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
@@ -912,7 +912,7 @@ class RefundApi
         
         // Xendit's custom headers
         $defaultHeaders['xendit-lib'] = 'php';
-        $defaultHeaders['xendit-lib-ver'] = '3.0.0-beta.0';
+        $defaultHeaders['xendit-lib-ver'] = '3.0.0-beta.2';
 
         if ($this->config->getUserAgent()) {
             $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
@@ -1196,7 +1196,7 @@ class RefundApi
         
         // Xendit's custom headers
         $defaultHeaders['xendit-lib'] = 'php';
-        $defaultHeaders['xendit-lib-ver'] = '3.0.0-beta.0';
+        $defaultHeaders['xendit-lib-ver'] = '3.0.0-beta.2';
 
         if ($this->config->getUserAgent()) {
             $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
@@ -1510,7 +1510,7 @@ class RefundApi
         
         // Xendit's custom headers
         $defaultHeaders['xendit-lib'] = 'php';
-        $defaultHeaders['xendit-lib-ver'] = '3.0.0-beta.0';
+        $defaultHeaders['xendit-lib-ver'] = '3.0.0-beta.2';
 
         if ($this->config->getUserAgent()) {
             $defaultHeaders['User-Agent'] = $this->config->getUserAgent();

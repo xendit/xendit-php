@@ -5,9 +5,14 @@
 use Xendit\Payout\ChannelCategory;
 ```
 
-## Properties
+    ## Enum
 
-Name | Type | Description | Examples | Notes
------------- | ------------- | ------------- | ------------- | ------------- 
+    
+        * `BANK` (value: `'BANK'`)
+    
+        * `EWALLET` (value: `'EWALLET'`)
+    
+        * `OTC` (value: `'OTC'`)
+    
 
 [[Back to README]](../../README.md)

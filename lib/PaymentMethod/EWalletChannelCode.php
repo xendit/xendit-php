@@ -11,7 +11,7 @@
 /**
  * Payment Method Service v2
  *
- * The version of the OpenAPI document: 2.86.1
+ * The version of the OpenAPI document: 2.87.2
  */
 
 /**
@@ -69,6 +69,14 @@ class EWalletChannelCode
     
     public const ZALOPAY = 'ZALOPAY';
     
+    public const WECHATPAY = 'WECHATPAY';
+    
+    public const LINEPAY = 'LINEPAY';
+    
+    public const TRUEMONEY = 'TRUEMONEY';
+    
+    public const ALIPAY = 'ALIPAY';
+    
 
     private $value;
 
@@ -113,7 +121,11 @@ class EWalletChannelCode
             self::MOMO,
             self::VNPTWALLET,
             self::VIETTELPAY,
-            self::ZALOPAY
+            self::ZALOPAY,
+            self::WECHATPAY,
+            self::LINEPAY,
+            self::TRUEMONEY,
+            self::ALIPAY
         ];
     }
 }

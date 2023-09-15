@@ -5,9 +5,12 @@
 use Xendit\Invoice\QrCodeType;
 ```
 
-## Properties
+    ## Enum
 
-Name | Type | Description | Examples | Notes
------------- | ------------- | ------------- | ------------- | ------------- 
+    
+        * `QRIS` (value: `'QRIS'`)
+    
+        * `PROMPTPAY` (value: `'PROMPTPAY'`)
+    
 
 [[Back to README]](../../README.md)

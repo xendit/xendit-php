@@ -11,7 +11,7 @@
 /**
  * xendit-invoice-service
  *
- * The version of the OpenAPI document: 1.4.2
+ * The version of the OpenAPI document: 1.5.0
  */
 
 /**
@@ -55,7 +55,6 @@ class CreateInvoiceRequest implements ModelInterface, ArrayAccess, \JsonSerializ
         'amount' => 'float',
         'payer_email' => 'string',
         'description' => 'string',
-        'client_type' => 'string',
         'invoice_duration' => 'string',
         'callback_virtual_account_id' => 'string',
         'should_send_email' => 'bool',
@@ -86,7 +85,6 @@ class CreateInvoiceRequest implements ModelInterface, ArrayAccess, \JsonSerializ
         'amount' => null,
         'payer_email' => null,
         'description' => null,
-        'client_type' => null,
         'invoice_duration' => null,
         'callback_virtual_account_id' => null,
         'should_send_email' => null,
@@ -115,7 +113,6 @@ class CreateInvoiceRequest implements ModelInterface, ArrayAccess, \JsonSerializ
 		'amount' => false,
 		'payer_email' => false,
 		'description' => false,
-		'client_type' => false,
 		'invoice_duration' => false,
 		'callback_virtual_account_id' => false,
 		'should_send_email' => false,
@@ -224,7 +221,6 @@ class CreateInvoiceRequest implements ModelInterface, ArrayAccess, \JsonSerializ
         'amount' => 'amount',
         'payer_email' => 'payer_email',
         'description' => 'description',
-        'client_type' => 'client_type',
         'invoice_duration' => 'invoice_duration',
         'callback_virtual_account_id' => 'callback_virtual_account_id',
         'should_send_email' => 'should_send_email',
@@ -253,7 +249,6 @@ class CreateInvoiceRequest implements ModelInterface, ArrayAccess, \JsonSerializ
         'amount' => 'setAmount',
         'payer_email' => 'setPayerEmail',
         'description' => 'setDescription',
-        'client_type' => 'setClientType',
         'invoice_duration' => 'setInvoiceDuration',
         'callback_virtual_account_id' => 'setCallbackVirtualAccountId',
         'should_send_email' => 'setShouldSendEmail',
@@ -282,7 +277,6 @@ class CreateInvoiceRequest implements ModelInterface, ArrayAccess, \JsonSerializ
         'amount' => 'getAmount',
         'payer_email' => 'getPayerEmail',
         'description' => 'getDescription',
-        'client_type' => 'getClientType',
         'invoice_duration' => 'getInvoiceDuration',
         'callback_virtual_account_id' => 'getCallbackVirtualAccountId',
         'should_send_email' => 'getShouldSendEmail',
@@ -362,7 +356,6 @@ class CreateInvoiceRequest implements ModelInterface, ArrayAccess, \JsonSerializ
         $this->setIfExists('amount', $data ?? [], null);
         $this->setIfExists('payer_email', $data ?? [], null);
         $this->setIfExists('description', $data ?? [], null);
-        $this->setIfExists('client_type', $data ?? [], null);
         $this->setIfExists('invoice_duration', $data ?? [], null);
         $this->setIfExists('callback_virtual_account_id', $data ?? [], null);
         $this->setIfExists('should_send_email', $data ?? [], null);
@@ -533,33 +526,6 @@ class CreateInvoiceRequest implements ModelInterface, ArrayAccess, \JsonSerializ
             throw new \InvalidArgumentException('non-nullable description cannot be null');
         }
         $this->container['description'] = $description;
-
-        return $this;
-    }
-
-    /**
-     * Gets client_type
-     *
-     * @return string|null
-     */
-    public function getClientType()
-    {
-        return $this->container['client_type'];
-    }
-
-    /**
-     * Sets client_type
-     *
-     * @param string|null $client_type The client type (internal use).
-     *
-     * @return self
-     */
-    public function setClientType($client_type)
-    {
-        if (is_null($client_type)) {
-            throw new \InvalidArgumentException('non-nullable client_type cannot be null');
-        }
-        $this->container['client_type'] = $client_type;
 
         return $this;
     }

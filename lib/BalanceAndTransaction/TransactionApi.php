@@ -10,7 +10,7 @@
 /**
  * Transaction Service V4 API
  *
- * The version of the OpenAPI document: 3.4.1
+ * The version of the OpenAPI document: 3.4.2
  */
 
 /**
@@ -630,7 +630,7 @@ class TransactionApi
         
         // Xendit's custom headers
         $defaultHeaders['xendit-lib'] = 'php';
-        $defaultHeaders['xendit-lib-ver'] = '3.0.0-beta.0';
+        $defaultHeaders['xendit-lib-ver'] = '3.0.0-beta.2';
 
         if ($this->config->getUserAgent()) {
             $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
@@ -978,7 +978,7 @@ class TransactionApi
         
         // Xendit's custom headers
         $defaultHeaders['xendit-lib'] = 'php';
-        $defaultHeaders['xendit-lib-ver'] = '3.0.0-beta.0';
+        $defaultHeaders['xendit-lib-ver'] = '3.0.0-beta.2';
 
         if ($this->config->getUserAgent()) {
             $defaultHeaders['User-Agent'] = $this->config->getUserAgent();

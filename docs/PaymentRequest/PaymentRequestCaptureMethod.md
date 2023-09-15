@@ -5,9 +5,12 @@
 use Xendit\PaymentRequest\PaymentRequestCaptureMethod;
 ```
 
-## Properties
+    ## Enum
 
-Name | Type | Description | Examples | Notes
------------- | ------------- | ------------- | ------------- | ------------- 
+    
+        * `AUTOMATIC` (value: `'AUTOMATIC'`)
+    
+        * `MANUAL` (value: `'MANUAL'`)
+    
 
 [[Back to README]](../../README.md)

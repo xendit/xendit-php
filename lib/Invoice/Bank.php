@@ -11,7 +11,7 @@
 /**
  * xendit-invoice-service
  *
- * The version of the OpenAPI document: 1.4.2
+ * The version of the OpenAPI document: 1.5.0
  */
 
 /**
@@ -56,7 +56,8 @@ class Bank implements ModelInterface, ArrayAccess, \JsonSerializable
         'bank_branch' => 'string',
         'bank_account_number' => 'string',
         'account_holder_name' => 'string',
-        'transfer_amount' => 'float'
+        'transfer_amount' => 'float',
+        'alternative_displays' => '\Xendit\Invoice\AlternativeDisplayItem[]'
     ];
 
     /**
@@ -72,7 +73,8 @@ class Bank implements ModelInterface, ArrayAccess, \JsonSerializable
         'bank_branch' => null,
         'bank_account_number' => null,
         'account_holder_name' => null,
-        'transfer_amount' => null
+        'transfer_amount' => null,
+        'alternative_displays' => null
     ];
 
     /**
@@ -86,7 +88,8 @@ class Bank implements ModelInterface, ArrayAccess, \JsonSerializable
 		'bank_branch' => false,
 		'bank_account_number' => false,
 		'account_holder_name' => false,
-		'transfer_amount' => false
+		'transfer_amount' => false,
+		'alternative_displays' => false
     ];
 
     /**
@@ -180,7 +183,8 @@ class Bank implements ModelInterface, ArrayAccess, \JsonSerializable
         'bank_branch' => 'bank_branch',
         'bank_account_number' => 'bank_account_number',
         'account_holder_name' => 'account_holder_name',
-        'transfer_amount' => 'transfer_amount'
+        'transfer_amount' => 'transfer_amount',
+        'alternative_displays' => 'alternative_displays'
     ];
 
     /**
@@ -194,7 +198,8 @@ class Bank implements ModelInterface, ArrayAccess, \JsonSerializable
         'bank_branch' => 'setBankBranch',
         'bank_account_number' => 'setBankAccountNumber',
         'account_holder_name' => 'setAccountHolderName',
-        'transfer_amount' => 'setTransferAmount'
+        'transfer_amount' => 'setTransferAmount',
+        'alternative_displays' => 'setAlternativeDisplays'
     ];
 
     /**
@@ -208,7 +213,8 @@ class Bank implements ModelInterface, ArrayAccess, \JsonSerializable
         'bank_branch' => 'getBankBranch',
         'bank_account_number' => 'getBankAccountNumber',
         'account_holder_name' => 'getAccountHolderName',
-        'transfer_amount' => 'getTransferAmount'
+        'transfer_amount' => 'getTransferAmount',
+        'alternative_displays' => 'getAlternativeDisplays'
     ];
 
     /**
@@ -274,6 +280,7 @@ class Bank implements ModelInterface, ArrayAccess, \JsonSerializable
         $this->setIfExists('bank_account_number', $data ?? [], null);
         $this->setIfExists('account_holder_name', $data ?? [], null);
         $this->setIfExists('transfer_amount', $data ?? [], null);
+        $this->setIfExists('alternative_displays', $data ?? [], null);
     }
 
     /**
@@ -485,6 +492,33 @@ class Bank implements ModelInterface, ArrayAccess, \JsonSerializable
             throw new \InvalidArgumentException('non-nullable transfer_amount cannot be null');
         }
         $this->container['transfer_amount'] = $transfer_amount;
+
+        return $this;
+    }
+
+    /**
+     * Gets alternative_displays
+     *
+     * @return \Invoice\AlternativeDisplayItem[]|null
+     */
+    public function getAlternativeDisplays()
+    {
+        return $this->container['alternative_displays'];
+    }
+
+    /**
+     * Sets alternative_displays
+     *
+     * @param \Invoice\AlternativeDisplayItem[]|null $alternative_displays alternative_displays
+     *
+     * @return self
+     */
+    public function setAlternativeDisplays($alternative_displays)
+    {
+        if (is_null($alternative_displays)) {
+            throw new \InvalidArgumentException('non-nullable alternative_displays cannot be null');
+        }
+        $this->container['alternative_displays'] = $alternative_displays;
 
         return $this;
     }

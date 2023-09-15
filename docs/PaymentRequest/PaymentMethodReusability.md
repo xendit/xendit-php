@@ -5,9 +5,12 @@
 use Xendit\PaymentRequest\PaymentMethodReusability;
 ```
 
-## Properties
+    ## Enum
 
-Name | Type | Description | Examples | Notes
------------- | ------------- | ------------- | ------------- | ------------- 
+    
+        * `MULTIPLE_USE` (value: `'MULTIPLE_USE'`)
+    
+        * `ONE_TIME_USE` (value: `'ONE_TIME_USE'`)
+    
 
 [[Back to README]](../../README.md)

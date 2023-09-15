@@ -184,7 +184,7 @@ Configuration::setXenditKey("YOUR_API_KEY_HERE");
 
 $apiInstance = new InvoiceApi();
 $external_id = "test-external"; // string
-$statuses = ["PENDING","SETTLED"]; // string[]
+$statuses = ["PENDING","SETTLED"]; // \Invoice\InvoiceStatus[]
 $limit = 10; // float
 $created_after = new \DateTime("2013-10-20T19:20:30+01:00"); // \DateTime
 $created_before = new \DateTime("2013-10-20T19:20:30+01:00"); // \DateTime
@@ -193,7 +193,7 @@ $paid_before = new \DateTime("2013-10-20T19:20:30+01:00"); // \DateTime
 $expired_after = new \DateTime("2013-10-20T19:20:30+01:00"); // \DateTime
 $expired_before = new \DateTime("2013-10-20T19:20:30+01:00"); // \DateTime
 $last_invoice = "62efe4c33e45294d63f585f2"; // string
-$client_types = ["API_GATEWAY","DASHBOARD"]; // string[]
+$client_types = ["API_GATEWAY","DASHBOARD"]; // \Invoice\InvoiceClientType[]
 $payment_channels = ["BNI","BRI"]; // string[]
 $on_demand_link = "test-link"; // string
 $recurring_payment_id = "62efe4c33e45294d63f585f2"; // string
@@ -211,7 +211,7 @@ try {
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
 | **external_id** | **string**|  | [optional] |
-| **statuses** | **string[]**|  | [optional] |
+| **statuses** | [**InvoiceStatus**](InvoiceStatus.md)|  | [optional] |
 | **limit** | **float**|  | [optional] |
 | **created_after** | **\DateTime**|  | [optional] |
 | **created_before** | **\DateTime**|  | [optional] |
@@ -220,7 +220,7 @@ try {
 | **expired_after** | **\DateTime**|  | [optional] |
 | **expired_before** | **\DateTime**|  | [optional] |
 | **last_invoice** | **string**|  | [optional] |
-| **client_types** | **string[]**|  | [optional] |
+| **client_types** | [**InvoiceClientType**](InvoiceClientType.md)|  | [optional] |
 | **payment_channels** | **string[]**|  | [optional] |
 | **on_demand_link** | **string**|  | [optional] |
 | **recurring_payment_id** | **string**|  | [optional] |

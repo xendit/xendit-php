@@ -10,7 +10,7 @@
 /**
  * xendit-invoice-service
  *
- * The version of the OpenAPI document: 1.4.2
+ * The version of the OpenAPI document: 1.5.0
  */
 
 /**
@@ -487,7 +487,7 @@ class InvoiceApi
         
         // Xendit's custom headers
         $defaultHeaders['xendit-lib'] = 'php';
-        $defaultHeaders['xendit-lib-ver'] = '3.0.0-beta.0';
+        $defaultHeaders['xendit-lib-ver'] = '3.0.0-beta.2';
 
         if ($this->config->getUserAgent()) {
             $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
@@ -822,7 +822,7 @@ class InvoiceApi
         
         // Xendit's custom headers
         $defaultHeaders['xendit-lib'] = 'php';
-        $defaultHeaders['xendit-lib-ver'] = '3.0.0-beta.0';
+        $defaultHeaders['xendit-lib-ver'] = '3.0.0-beta.2';
 
         if ($this->config->getUserAgent()) {
             $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
@@ -1180,7 +1180,7 @@ class InvoiceApi
         
         // Xendit's custom headers
         $defaultHeaders['xendit-lib'] = 'php';
-        $defaultHeaders['xendit-lib-ver'] = '3.0.0-beta.0';
+        $defaultHeaders['xendit-lib-ver'] = '3.0.0-beta.2';
 
         if ($this->config->getUserAgent()) {
             $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
@@ -1208,7 +1208,7 @@ class InvoiceApi
      * Get all Invoices
      *
      * @param  string $external_id external_id (optional)
-     * @param  string[] $statuses statuses (optional)
+     * @param  \Invoice\InvoiceStatus[] $statuses statuses (optional)
      * @param  float $limit limit (optional)
      * @param  \DateTime $created_after created_after (optional)
      * @param  \DateTime $created_before created_before (optional)
@@ -1217,7 +1217,7 @@ class InvoiceApi
      * @param  \DateTime $expired_after expired_after (optional)
      * @param  \DateTime $expired_before expired_before (optional)
      * @param  string $last_invoice last_invoice (optional)
-     * @param  string[] $client_types client_types (optional)
+     * @param  \Invoice\InvoiceClientType[] $client_types client_types (optional)
      * @param  string[] $payment_channels payment_channels (optional)
      * @param  string $on_demand_link on_demand_link (optional)
      * @param  string $recurring_payment_id recurring_payment_id (optional)
@@ -1239,7 +1239,7 @@ class InvoiceApi
      * Get all Invoices
      *
      * @param  string $external_id (optional)
-     * @param  string[] $statuses (optional)
+     * @param  \Invoice\InvoiceStatus[] $statuses (optional)
      * @param  float $limit (optional)
      * @param  \DateTime $created_after (optional)
      * @param  \DateTime $created_before (optional)
@@ -1248,7 +1248,7 @@ class InvoiceApi
      * @param  \DateTime $expired_after (optional)
      * @param  \DateTime $expired_before (optional)
      * @param  string $last_invoice (optional)
-     * @param  string[] $client_types (optional)
+     * @param  \Invoice\InvoiceClientType[] $client_types (optional)
      * @param  string[] $payment_channels (optional)
      * @param  string $on_demand_link (optional)
      * @param  string $recurring_payment_id (optional)
@@ -1398,7 +1398,7 @@ class InvoiceApi
      * Get all Invoices
      *
      * @param  Xenditstring $external_id (optional)
-     * @param  Xenditstring[] $statuses (optional)
+     * @param  Xendit\Invoice\InvoiceStatus[] $statuses (optional)
      * @param  Xenditfloat $limit (optional)
      * @param  Xendit\DateTime $created_after (optional)
      * @param  Xendit\DateTime $created_before (optional)
@@ -1407,7 +1407,7 @@ class InvoiceApi
      * @param  Xendit\DateTime $expired_after (optional)
      * @param  Xendit\DateTime $expired_before (optional)
      * @param  Xenditstring $last_invoice (optional)
-     * @param  Xenditstring[] $client_types (optional)
+     * @param  Xendit\Invoice\InvoiceClientType[] $client_types (optional)
      * @param  Xenditstring[] $payment_channels (optional)
      * @param  Xenditstring $on_demand_link (optional)
      * @param  Xenditstring $recurring_payment_id (optional)
@@ -1432,7 +1432,7 @@ class InvoiceApi
      * Get all Invoices
      *
      * @param  Xenditstring $external_id (optional)
-     * @param  Xenditstring[] $statuses (optional)
+     * @param  Xendit\Invoice\InvoiceStatus[] $statuses (optional)
      * @param  Xenditfloat $limit (optional)
      * @param  Xendit\DateTime $created_after (optional)
      * @param  Xendit\DateTime $created_before (optional)
@@ -1441,7 +1441,7 @@ class InvoiceApi
      * @param  Xendit\DateTime $expired_after (optional)
      * @param  Xendit\DateTime $expired_before (optional)
      * @param  Xenditstring $last_invoice (optional)
-     * @param  Xenditstring[] $client_types (optional)
+     * @param  Xendit\Invoice\InvoiceClientType[] $client_types (optional)
      * @param  Xenditstring[] $payment_channels (optional)
      * @param  Xenditstring $on_demand_link (optional)
      * @param  Xenditstring $recurring_payment_id (optional)
@@ -1495,7 +1495,7 @@ class InvoiceApi
      * Create request for operation 'getInvoices'
      *
      * @param  string $external_id (optional)
-     * @param  string[] $statuses (optional)
+     * @param  \Invoice\InvoiceStatus[] $statuses (optional)
      * @param  float $limit (optional)
      * @param  \DateTime $created_after (optional)
      * @param  \DateTime $created_before (optional)
@@ -1504,7 +1504,7 @@ class InvoiceApi
      * @param  \DateTime $expired_after (optional)
      * @param  \DateTime $expired_before (optional)
      * @param  string $last_invoice (optional)
-     * @param  string[] $client_types (optional)
+     * @param  \Invoice\InvoiceClientType[] $client_types (optional)
      * @param  string[] $payment_channels (optional)
      * @param  string $on_demand_link (optional)
      * @param  string $recurring_payment_id (optional)
@@ -1705,7 +1705,7 @@ class InvoiceApi
         
         // Xendit's custom headers
         $defaultHeaders['xendit-lib'] = 'php';
-        $defaultHeaders['xendit-lib-ver'] = '3.0.0-beta.0';
+        $defaultHeaders['xendit-lib-ver'] = '3.0.0-beta.2';
 
         if ($this->config->getUserAgent()) {
             $defaultHeaders['User-Agent'] = $this->config->getUserAgent();

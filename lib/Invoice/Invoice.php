@@ -11,7 +11,7 @@
 /**
  * xendit-invoice-service
  *
- * The version of the OpenAPI document: 1.4.2
+ * The version of the OpenAPI document: 1.5.0
  */
 
 /**
@@ -54,7 +54,6 @@ class Invoice implements ModelInterface, ArrayAccess, \JsonSerializable
         'id' => 'string',
         'external_id' => 'string',
         'user_id' => 'string',
-        'is_high' => 'bool',
         'payer_email' => 'string',
         'description' => 'string',
         'payment_method' => '\Xendit\Invoice\InvoicePaymentMethod',
@@ -73,7 +72,6 @@ class Invoice implements ModelInterface, ArrayAccess, \JsonSerializable
         'available_paylaters' => '\Xendit\Invoice\Paylater[]',
         'should_exclude_credit_card' => 'bool',
         'should_send_email' => 'bool',
-        'client_type' => '\Xendit\Invoice\InvoiceClientType',
         'created' => '\DateTime',
         'updated' => '\DateTime',
         'success_redirect_url' => 'string',
@@ -99,7 +97,6 @@ class Invoice implements ModelInterface, ArrayAccess, \JsonSerializable
         'id' => null,
         'external_id' => null,
         'user_id' => null,
-        'is_high' => null,
         'payer_email' => null,
         'description' => null,
         'payment_method' => null,
@@ -118,7 +115,6 @@ class Invoice implements ModelInterface, ArrayAccess, \JsonSerializable
         'available_paylaters' => null,
         'should_exclude_credit_card' => null,
         'should_send_email' => null,
-        'client_type' => null,
         'created' => 'date-time',
         'updated' => 'date-time',
         'success_redirect_url' => null,
@@ -142,7 +138,6 @@ class Invoice implements ModelInterface, ArrayAccess, \JsonSerializable
         'id' => false,
 		'external_id' => false,
 		'user_id' => false,
-		'is_high' => false,
 		'payer_email' => false,
 		'description' => false,
 		'payment_method' => false,
@@ -161,7 +156,6 @@ class Invoice implements ModelInterface, ArrayAccess, \JsonSerializable
 		'available_paylaters' => false,
 		'should_exclude_credit_card' => false,
 		'should_send_email' => false,
-		'client_type' => false,
 		'created' => false,
 		'updated' => false,
 		'success_redirect_url' => false,
@@ -265,7 +259,6 @@ class Invoice implements ModelInterface, ArrayAccess, \JsonSerializable
         'id' => 'id',
         'external_id' => 'external_id',
         'user_id' => 'user_id',
-        'is_high' => 'is_high',
         'payer_email' => 'payer_email',
         'description' => 'description',
         'payment_method' => 'payment_method',
@@ -284,7 +277,6 @@ class Invoice implements ModelInterface, ArrayAccess, \JsonSerializable
         'available_paylaters' => 'available_paylaters',
         'should_exclude_credit_card' => 'should_exclude_credit_card',
         'should_send_email' => 'should_send_email',
-        'client_type' => 'client_type',
         'created' => 'created',
         'updated' => 'updated',
         'success_redirect_url' => 'success_redirect_url',
@@ -308,7 +300,6 @@ class Invoice implements ModelInterface, ArrayAccess, \JsonSerializable
         'id' => 'setId',
         'external_id' => 'setExternalId',
         'user_id' => 'setUserId',
-        'is_high' => 'setIsHigh',
         'payer_email' => 'setPayerEmail',
         'description' => 'setDescription',
         'payment_method' => 'setPaymentMethod',
@@ -327,7 +318,6 @@ class Invoice implements ModelInterface, ArrayAccess, \JsonSerializable
         'available_paylaters' => 'setAvailablePaylaters',
         'should_exclude_credit_card' => 'setShouldExcludeCreditCard',
         'should_send_email' => 'setShouldSendEmail',
-        'client_type' => 'setClientType',
         'created' => 'setCreated',
         'updated' => 'setUpdated',
         'success_redirect_url' => 'setSuccessRedirectUrl',
@@ -351,7 +341,6 @@ class Invoice implements ModelInterface, ArrayAccess, \JsonSerializable
         'id' => 'getId',
         'external_id' => 'getExternalId',
         'user_id' => 'getUserId',
-        'is_high' => 'getIsHigh',
         'payer_email' => 'getPayerEmail',
         'description' => 'getDescription',
         'payment_method' => 'getPaymentMethod',
@@ -370,7 +359,6 @@ class Invoice implements ModelInterface, ArrayAccess, \JsonSerializable
         'available_paylaters' => 'getAvailablePaylaters',
         'should_exclude_credit_card' => 'getShouldExcludeCreditCard',
         'should_send_email' => 'getShouldSendEmail',
-        'client_type' => 'getClientType',
         'created' => 'getCreated',
         'updated' => 'getUpdated',
         'success_redirect_url' => 'getSuccessRedirectUrl',
@@ -445,7 +433,6 @@ class Invoice implements ModelInterface, ArrayAccess, \JsonSerializable
         $this->setIfExists('id', $data ?? [], null);
         $this->setIfExists('external_id', $data ?? [], null);
         $this->setIfExists('user_id', $data ?? [], null);
-        $this->setIfExists('is_high', $data ?? [], null);
         $this->setIfExists('payer_email', $data ?? [], null);
         $this->setIfExists('description', $data ?? [], null);
         $this->setIfExists('payment_method', $data ?? [], null);
@@ -464,7 +451,6 @@ class Invoice implements ModelInterface, ArrayAccess, \JsonSerializable
         $this->setIfExists('available_paylaters', $data ?? [], null);
         $this->setIfExists('should_exclude_credit_card', $data ?? [], null);
         $this->setIfExists('should_send_email', $data ?? [], null);
-        $this->setIfExists('client_type', $data ?? [], null);
         $this->setIfExists('created', $data ?? [], null);
         $this->setIfExists('updated', $data ?? [], null);
         $this->setIfExists('success_redirect_url', $data ?? [], null);
@@ -512,9 +498,6 @@ class Invoice implements ModelInterface, ArrayAccess, \JsonSerializable
         if ($this->container['user_id'] === null) {
             $invalidProperties[] = "'user_id' can't be null";
         }
-        if ($this->container['is_high'] === null) {
-            $invalidProperties[] = "'is_high' can't be null";
-        }
         if ($this->container['status'] === null) {
             $invalidProperties[] = "'status' can't be null";
         }
@@ -553,9 +536,6 @@ class Invoice implements ModelInterface, ArrayAccess, \JsonSerializable
         }
         if ($this->container['should_send_email'] === null) {
             $invalidProperties[] = "'should_send_email' can't be null";
-        }
-        if ($this->container['client_type'] === null) {
-            $invalidProperties[] = "'client_type' can't be null";
         }
         if ($this->container['created'] === null) {
             $invalidProperties[] = "'created' can't be null";
@@ -655,33 +635,6 @@ class Invoice implements ModelInterface, ArrayAccess, \JsonSerializable
             throw new \InvalidArgumentException('non-nullable user_id cannot be null');
         }
         $this->container['user_id'] = $user_id;
-
-        return $this;
-    }
-
-    /**
-     * Gets is_high
-     *
-     * @return bool
-     */
-    public function getIsHigh()
-    {
-        return $this->container['is_high'];
-    }
-
-    /**
-     * Sets is_high
-     *
-     * @param bool $is_high Indicates if it's a high-value invoice.
-     *
-     * @return self
-     */
-    public function setIsHigh($is_high)
-    {
-        if (is_null($is_high)) {
-            throw new \InvalidArgumentException('non-nullable is_high cannot be null');
-        }
-        $this->container['is_high'] = $is_high;
 
         return $this;
     }
@@ -1168,33 +1121,6 @@ class Invoice implements ModelInterface, ArrayAccess, \JsonSerializable
             throw new \InvalidArgumentException('non-nullable should_send_email cannot be null');
         }
         $this->container['should_send_email'] = $should_send_email;
-
-        return $this;
-    }
-
-    /**
-     * Gets client_type
-     *
-     * @return \Invoice\InvoiceClientType
-     */
-    public function getClientType()
-    {
-        return $this->container['client_type'];
-    }
-
-    /**
-     * Sets client_type
-     *
-     * @param \Invoice\InvoiceClientType $client_type client_type
-     *
-     * @return self
-     */
-    public function setClientType($client_type)
-    {
-        if (is_null($client_type)) {
-            throw new \InvalidArgumentException('non-nullable client_type cannot be null');
-        }
-        $this->container['client_type'] = $client_type;
 
         return $this;
     }

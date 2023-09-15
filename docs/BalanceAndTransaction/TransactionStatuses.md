@@ -5,9 +5,18 @@
 use Xendit\BalanceAndTransaction\TransactionStatuses;
 ```
 
-## Properties
+    ## Enum
 
-Name | Type | Description | Examples | Notes
------------- | ------------- | ------------- | ------------- | ------------- 
+    
+        * `SUCCESS` (value: `'SUCCESS'`)
+    
+        * `PENDING` (value: `'PENDING'`)
+    
+        * `FAILED` (value: `'FAILED'`)
+    
+        * `REVERSED` (value: `'REVERSED'`)
+    
+        * `VOIDED` (value: `'VOIDED'`)
+    
 
 [[Back to README]](../../README.md)

@@ -5,9 +5,16 @@
 use Xendit\Invoice\InvoiceStatus;
 ```
 
-## Properties
+    ## Enum
 
-Name | Type | Description | Examples | Notes
------------- | ------------- | ------------- | ------------- | ------------- 
+    
+        * `PENDING` (value: `'PENDING'`)
+    
+        * `PAID` (value: `'PAID'`)
+    
+        * `SETTLED` (value: `'SETTLED'`)
+    
+        * `EXPIRED` (value: `'EXPIRED'`)
+    
 
 [[Back to README]](../../README.md)

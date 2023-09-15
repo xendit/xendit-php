@@ -41,6 +41,8 @@ class ChannelCategory
     
     public const EWALLET = 'EWALLET';
     
+    public const OTC = 'OTC';
+    
 
     private $value;
 
@@ -71,7 +73,8 @@ class ChannelCategory
     {
         return [
             self::BANK,
-            self::EWALLET
+            self::EWALLET,
+            self::OTC
         ];
     }
 }

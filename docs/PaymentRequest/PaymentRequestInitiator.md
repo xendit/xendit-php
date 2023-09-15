@@ -5,9 +5,12 @@
 use Xendit\PaymentRequest\PaymentRequestInitiator;
 ```
 
-## Properties
+    ## Enum
 
-Name | Type | Description | Examples | Notes
------------- | ------------- | ------------- | ------------- | ------------- 
+    
+        * `CUSTOMER` (value: `'CUSTOMER'`)
+    
+        * `MERCHANT` (value: `'MERCHANT'`)
+    
 
 [[Back to README]](../../README.md)

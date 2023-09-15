@@ -9,9 +9,9 @@
  */
 
 /**
- * Payment Requests
+ * Payment Method Service v2
  *
- * The version of the OpenAPI document: 1.41.0
+ * The version of the OpenAPI document: 2.87.2
  */
 
 /**

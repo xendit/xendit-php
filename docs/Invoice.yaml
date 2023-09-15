@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   description: xendit-invoice-service descriptions
   title: xendit-invoice-service
-  version: 1.4.2
+  version: 1.5.0
 servers:
 - description: Xendit API Server
   url: https://api.xendit.co
@@ -202,12 +202,7 @@ paths:
           - PENDING
           - SETTLED
           items:
-            enum:
-            - PENDING
-            - PAID
-            - SETTLED
-            - EXPIRED
-            type: string
+            $ref: '#/components/schemas/InvoiceStatus'
           type: array
         style: form
       - explode: true
@@ -277,14 +272,7 @@ paths:
           - API_GATEWAY
           - DASHBOARD
           items:
-            enum:
-            - API_GATEWAY
-            - DASHBOARD
-            - INTEGRATION
-            - ON_DEMAND
-            - RECURRING
-            - MOBILE
-            type: string
+            $ref: '#/components/schemas/InvoiceClientType'
           type: array
         style: form
       - explode: true
@@ -593,11 +581,9 @@ components:
       description: Representing the status of an invoice.
       enum:
       - PENDING
-      - COMPLETING
       - PAID
       - SETTLED
       - EXPIRED
-      - REMINDER
       type: string
     InvoiceCurrency:
       description: Representing the currency used for an invoice.
@@ -615,7 +601,6 @@ components:
       - ON_DEMAND
       - RECURRING
       - MOBILE
-      - STOREFRONT
       type: string
     InvoicePaymentMethod:
       description: Representing the payment method used for an invoice.
@@ -846,6 +831,19 @@ components:
             $ref: '#/components/schemas/NotificationChannel'
           type: array
       type: object
+    AlternativeDisplayItem:
+      description: An object representing alternative display of a VA.
+      example:
+        type: type
+        value: value
+      properties:
+        type:
+          description: Represent type of alternative display.
+          type: string
+        value:
+          description: Represent value of alternative display value.
+          type: string
+      type: object
     Bank:
       description: An object representing bank details for invoices.
       example:
@@ -854,6 +852,11 @@ components:
         bank_account_number: bank_account_number
         transfer_amount: 6.027456183070403
         account_holder_name: account_holder_name
+        alternative_displays:
+        - type: type
+          value: value
+        - type: type
+          value: value
         collection_type: collection_type
       properties:
         bank_code:
@@ -873,6 +876,10 @@ components:
         transfer_amount:
           description: The transfer amount.
           type: number
+        alternative_displays:
+          items:
+            $ref: '#/components/schemas/AlternativeDisplayItem'
+          type: array
       required:
       - account_holder_name
       - bank_code
@@ -1000,7 +1007,6 @@ components:
     Invoice:
       description: An object representing details for an invoice.
       example:
-        is_high: true
         available_paylaters:
         - paylater_type: null
           should_exclude: true
@@ -1015,7 +1021,6 @@ components:
         reminder_date: 2016-08-29T09:12:33.001Z
         description: description
         external_id: external_id
-        client_type: null
         locale: locale
         should_send_email: true
         customer_notification_preference:
@@ -1042,12 +1047,22 @@ components:
           bank_account_number: bank_account_number
           transfer_amount: 6.027456183070403
           account_holder_name: account_holder_name
+          alternative_displays:
+          - type: type
+            value: value
+          - type: type
+            value: value
           collection_type: collection_type
         - bank_code: null
           bank_branch: bank_branch
           bank_account_number: bank_account_number
           transfer_amount: 6.027456183070403
           account_holder_name: account_holder_name
+          alternative_displays:
+          - type: type
+            value: value
+          - type: type
+            value: value
           collection_type: collection_type
         available_ewallets:
         - ewallet_type: null
@@ -1125,9 +1140,6 @@ components:
         user_id:
           description: The user ID associated with the invoice.
           type: string
-        is_high:
-          description: Indicates if it's a high-value invoice.
-          type: boolean
         payer_email:
           description: The email address of the payer.
           type: string
@@ -1194,8 +1206,6 @@ components:
         should_send_email:
           description: Indicates whether email notifications should be sent.
           type: boolean
-        client_type:
-          $ref: '#/components/schemas/InvoiceClientType'
         created:
           description: Representing a date and time in ISO 8601 format.
           example: 2016-08-29T09:12:33.001Z
@@ -1247,12 +1257,10 @@ components:
       - available_paylaters
       - available_qr_codes
       - available_retail_outlets
-      - client_type
       - created
       - expiry_date
       - external_id
       - invoice_url
-      - is_high
       - merchant_name
       - merchant_profile_picture_url
       - should_send_email
@@ -1267,7 +1275,6 @@ components:
         external_id: invoice-external-id-1
         amount: 10000
         description: Payment for PSN subscription
-        client_type: API_GATEWAY
       properties:
         external_id:
           description: The external ID of the invoice.
@@ -1280,9 +1287,6 @@ components:
           type: string
         description:
           description: A description of the payment.
-          type: string
-        client_type:
-          description: The client type (internal use).
           type: string
         invoice_duration:
           description: The duration of the invoice.

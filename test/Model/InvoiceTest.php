@@ -11,7 +11,7 @@
 /**
  * xendit-invoice-service
  *
- * The version of the OpenAPI document: 1.4.2
+ * The version of the OpenAPI document: 1.5.0
  */
 
 /**
@@ -94,15 +94,6 @@ class InvoiceTest extends TestCase
      * Test attribute "user_id"
      */
     public function testPropertyUserId()
-    {
-        // TODO: implement
-        $this->markTestIncomplete('Not implemented');
-    }
-
-    /**
-     * Test attribute "is_high"
-     */
-    public function testPropertyIsHigh()
     {
         // TODO: implement
         $this->markTestIncomplete('Not implemented');
@@ -265,15 +256,6 @@ class InvoiceTest extends TestCase
      * Test attribute "should_send_email"
      */
     public function testPropertyShouldSendEmail()
-    {
-        // TODO: implement
-        $this->markTestIncomplete('Not implemented');
-    }
-
-    /**
-     * Test attribute "client_type"
-     */
-    public function testPropertyClientType()
     {
         // TODO: implement
         $this->markTestIncomplete('Not implemented');
