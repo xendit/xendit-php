@@ -1,33 +1,15 @@
-# File created using '.gitignore Generator' for Visual Studio Code: https://bit.ly/vscode-gig
-
-# Created by https://www.gitignore.io/api/visualstudiocode
-# Edit at https://www.gitignore.io/?templates=visualstudiocode
-
-### VisualStudioCode ###
-.vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
-
-### VisualStudioCode Patch ###
-# Ignore all local history of files
-.history
-
-# End of https://www.gitignore.io/api/visualstudiocode
-
-# Custom rules (everything added below won't be overriden by 'Generate .gitignore File' if you use 'Update' option)
-
-# For people using composer
-/vendor/
-
-.idea/*
-
-.phpunit.result.cache
-clover.xml
-
-.env
+# ref: https://github.com/github/gitignore/blob/master/Composer.gitignore
 
 composer.phar
-composer-setup.php
-bin/
+/vendor/
+
+# Commit your application's lock file https://getcomposer.org/doc/01-basic-usage.md#commit-your-composer-lock-file-to-version-control
+# You may choose to ignore a library lock file http://getcomposer.org/doc/02-libraries.md#lock-file
+# composer.lock
+
+# php-cs-fixer cache
+.php_cs.cache
+.php-cs-fixer.cache
+
+# PHPUnit cache
+.phpunit.result.cache
