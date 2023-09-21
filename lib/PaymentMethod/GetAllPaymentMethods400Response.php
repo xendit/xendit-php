@@ -241,6 +241,7 @@ class GetAllPaymentMethods400Response implements ModelInterface, ArrayAccess, \J
     public const ERROR_CODE_PAYMENT_METHOD_NOT_SUPPORTED = 'PAYMENT_METHOD_NOT_SUPPORTED';
     public const ERROR_CODE_INCORRECT_AMOUNT = 'INCORRECT_AMOUNT';
     public const ERROR_CODE_DUPLICATED_FIXED_PAYMENT_INSTRUMENT = 'DUPLICATED_FIXED_PAYMENT_INSTRUMENT';
+    public const ERROR_CODE_CURRENCY_MISMATCHED = 'CURRENCY_MISMATCHED';
 
     /**
      * Gets allowable values of the enum
@@ -264,6 +265,7 @@ class GetAllPaymentMethods400Response implements ModelInterface, ArrayAccess, \J
             self::ERROR_CODE_PAYMENT_METHOD_NOT_SUPPORTED,
             self::ERROR_CODE_INCORRECT_AMOUNT,
             self::ERROR_CODE_DUPLICATED_FIXED_PAYMENT_INSTRUMENT,
+            self::ERROR_CODE_CURRENCY_MISMATCHED,
         ];
     }
 

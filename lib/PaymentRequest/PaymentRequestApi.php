@@ -10,7 +10,7 @@
 /**
  * Payment Requests
  *
- * The version of the OpenAPI document: 1.42.3
+ * The version of the OpenAPI document: 1.44.0
  */
 
 /**
@@ -487,7 +487,7 @@ class PaymentRequestApi
         
         // Xendit's custom headers
         $defaultHeaders['xendit-lib'] = 'php';
-        $defaultHeaders['xendit-lib-ver'] = '3.0.0';
+        $defaultHeaders['xendit-lib-ver'] = '3.1.0';
 
         if ($this->config->getUserAgent()) {
             $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
@@ -858,7 +858,7 @@ class PaymentRequestApi
         
         // Xendit's custom headers
         $defaultHeaders['xendit-lib'] = 'php';
-        $defaultHeaders['xendit-lib-ver'] = '3.0.0';
+        $defaultHeaders['xendit-lib-ver'] = '3.1.0';
 
         if ($this->config->getUserAgent()) {
             $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
@@ -891,7 +891,7 @@ class PaymentRequestApi
      *
      * @throws \Xendit\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return Xendit\PaymentRequest\PaymentRequest|Xendit\PaymentRequest\Error|Xendit\PaymentRequest\Error|Xendit\PaymentRequest\Error
+     * @return Xendit\PaymentRequest\PaymentRequest|Xendit\PaymentRequest\PaymentRequest|Xendit\PaymentRequest\Error|Xendit\PaymentRequest\Error|Xendit\PaymentRequest\Error
      */
     public function createPaymentRequest($idempotency_key = null, $payment_request_parameters = null, string $contentType = self::contentTypes['createPaymentRequest'][0])
     {
@@ -910,7 +910,7 @@ class PaymentRequestApi
      *
      * @throws \Xendit\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of Xendit\PaymentRequest\PaymentRequest|Xendit\PaymentRequest\Error|Xendit\PaymentRequest\Error|Xendit\PaymentRequest\Error, HTTP status code, HTTP response headers (array of strings)
+     * @return array of Xendit\PaymentRequest\PaymentRequest|Xendit\PaymentRequest\PaymentRequest|Xendit\PaymentRequest\Error|Xendit\PaymentRequest\Error|Xendit\PaymentRequest\Error, HTTP status code, HTTP response headers (array of strings)
      */
     public function createPaymentRequestWithHttpInfo($idempotency_key = null, $payment_request_parameters = null, string $contentType = self::contentTypes['createPaymentRequest'][0])
     {
@@ -953,6 +953,21 @@ class PaymentRequestApi
 
             switch($statusCode) {
                 case 200:
+                    if ('Xendit\PaymentRequest\PaymentRequest' === '\SplFileObject') {
+                        $content = $response->getBody(); //stream goes to serializer
+                    } else {
+                        $content = (string) $response->getBody();
+                        if ('Xendit\PaymentRequest\PaymentRequest' !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, 'Xendit\PaymentRequest\PaymentRequest', []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                case 201:
                     if ('Xendit\PaymentRequest\PaymentRequest' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
                     } else {
@@ -1033,6 +1048,14 @@ class PaymentRequestApi
         } catch (ApiException $e) {
             switch ($e->getCode()) {
                 case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        'Xendit\PaymentRequest\PaymentRequest',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 201:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
                         'Xendit\PaymentRequest\PaymentRequest',
@@ -1219,7 +1242,7 @@ class PaymentRequestApi
         
         // Xendit's custom headers
         $defaultHeaders['xendit-lib'] = 'php';
-        $defaultHeaders['xendit-lib-ver'] = '3.0.0';
+        $defaultHeaders['xendit-lib-ver'] = '3.1.0';
 
         if ($this->config->getUserAgent()) {
             $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
@@ -1647,7 +1670,7 @@ class PaymentRequestApi
         
         // Xendit's custom headers
         $defaultHeaders['xendit-lib'] = 'php';
-        $defaultHeaders['xendit-lib-ver'] = '3.0.0';
+        $defaultHeaders['xendit-lib-ver'] = '3.1.0';
 
         if ($this->config->getUserAgent()) {
             $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
@@ -2005,7 +2028,7 @@ class PaymentRequestApi
         
         // Xendit's custom headers
         $defaultHeaders['xendit-lib'] = 'php';
-        $defaultHeaders['xendit-lib-ver'] = '3.0.0';
+        $defaultHeaders['xendit-lib-ver'] = '3.1.0';
 
         if ($this->config->getUserAgent()) {
             $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
@@ -2408,7 +2431,7 @@ class PaymentRequestApi
         
         // Xendit's custom headers
         $defaultHeaders['xendit-lib'] = 'php';
-        $defaultHeaders['xendit-lib-ver'] = '3.0.0';
+        $defaultHeaders['xendit-lib-ver'] = '3.1.0';
 
         if ($this->config->getUserAgent()) {
             $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
@@ -2766,7 +2789,7 @@ class PaymentRequestApi
         
         // Xendit's custom headers
         $defaultHeaders['xendit-lib'] = 'php';
-        $defaultHeaders['xendit-lib-ver'] = '3.0.0';
+        $defaultHeaders['xendit-lib-ver'] = '3.1.0';
 
         if ($this->config->getUserAgent()) {
             $defaultHeaders['User-Agent'] = $this->config->getUserAgent();

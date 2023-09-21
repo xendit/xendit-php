@@ -9,9 +9,9 @@
  */
 
 /**
- * Payment Method Service v2
+ * Payment Requests
  *
- * The version of the OpenAPI document: 2.87.2
+ * The version of the OpenAPI document: 1.44.0
  */
 
 /**
@@ -73,15 +73,6 @@ class VirtualAccountTest extends TestCase
     }
 
     /**
-     * Test attribute "amount"
-     */
-    public function testPropertyAmount()
-    {
-        // TODO: implement
-        $this->markTestIncomplete('Not implemented');
-    }
-
-    /**
      * Test attribute "min_amount"
      */
     public function testPropertyMinAmount()
@@ -94,6 +85,15 @@ class VirtualAccountTest extends TestCase
      * Test attribute "max_amount"
      */
     public function testPropertyMaxAmount()
+    {
+        // TODO: implement
+        $this->markTestIncomplete('Not implemented');
+    }
+
+    /**
+     * Test attribute "amount"
+     */
+    public function testPropertyAmount()
     {
         // TODO: implement
         $this->markTestIncomplete('Not implemented');

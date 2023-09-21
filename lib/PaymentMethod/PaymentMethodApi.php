@@ -562,7 +562,7 @@ class PaymentMethodApi
         
         // Xendit's custom headers
         $defaultHeaders['xendit-lib'] = 'php';
-        $defaultHeaders['xendit-lib-ver'] = '3.0.0';
+        $defaultHeaders['xendit-lib-ver'] = '3.1.0';
 
         if ($this->config->getUserAgent()) {
             $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
@@ -982,7 +982,7 @@ class PaymentMethodApi
         
         // Xendit's custom headers
         $defaultHeaders['xendit-lib'] = 'php';
-        $defaultHeaders['xendit-lib-ver'] = '3.0.0';
+        $defaultHeaders['xendit-lib-ver'] = '3.1.0';
 
         if ($this->config->getUserAgent()) {
             $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
@@ -1399,7 +1399,7 @@ class PaymentMethodApi
         
         // Xendit's custom headers
         $defaultHeaders['xendit-lib'] = 'php';
-        $defaultHeaders['xendit-lib-ver'] = '3.0.0';
+        $defaultHeaders['xendit-lib-ver'] = '3.1.0';
 
         if ($this->config->getUserAgent()) {
             $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
@@ -1767,7 +1767,7 @@ class PaymentMethodApi
         
         // Xendit's custom headers
         $defaultHeaders['xendit-lib'] = 'php';
-        $defaultHeaders['xendit-lib-ver'] = '3.0.0';
+        $defaultHeaders['xendit-lib-ver'] = '3.1.0';
 
         if ($this->config->getUserAgent()) {
             $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
@@ -2266,7 +2266,7 @@ class PaymentMethodApi
         
         // Xendit's custom headers
         $defaultHeaders['xendit-lib'] = 'php';
-        $defaultHeaders['xendit-lib-ver'] = '3.0.0';
+        $defaultHeaders['xendit-lib-ver'] = '3.1.0';
 
         if ($this->config->getUserAgent()) {
             $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
@@ -2647,7 +2647,7 @@ class PaymentMethodApi
         
         // Xendit's custom headers
         $defaultHeaders['xendit-lib'] = 'php';
-        $defaultHeaders['xendit-lib-ver'] = '3.0.0';
+        $defaultHeaders['xendit-lib-ver'] = '3.1.0';
 
         if ($this->config->getUserAgent()) {
             $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
@@ -2687,17 +2687,15 @@ class PaymentMethodApi
      * @param  \DateTime $updated_gte updated_gte (optional)
      * @param  \DateTime $updated_lte updated_lte (optional)
      * @param  int $limit limit (optional)
-     * @param  string $after_id after_id (optional)
-     * @param  string $before_id before_id (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getPaymentsByPaymentMethodId'] to see the possible values for this operation
      *
      * @throws \Xendit\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return Xenditobject|Xendit\PaymentMethod\GetAllPaymentMethods400Response|Xendit\PaymentMethod\GetAllPaymentMethods403Response|Xendit\PaymentMethod\GetAllPaymentMethods404Response|Xendit\PaymentMethod\CreatePaymentMethod503Response|Xendit\PaymentMethod\GetAllPaymentMethodsDefaultResponse
      */
-    public function getPaymentsByPaymentMethodId($payment_method_id, $payment_request_id = null, $payment_method_id2 = null, $reference_id = null, $payment_method_type = null, $channel_code = null, $status = null, $currency = null, $created_gte = null, $created_lte = null, $updated_gte = null, $updated_lte = null, $limit = null, $after_id = null, $before_id = null, string $contentType = self::contentTypes['getPaymentsByPaymentMethodId'][0])
+    public function getPaymentsByPaymentMethodId($payment_method_id, $payment_request_id = null, $payment_method_id2 = null, $reference_id = null, $payment_method_type = null, $channel_code = null, $status = null, $currency = null, $created_gte = null, $created_lte = null, $updated_gte = null, $updated_lte = null, $limit = null, string $contentType = self::contentTypes['getPaymentsByPaymentMethodId'][0])
     {
-        list($response) = $this->getPaymentsByPaymentMethodIdWithHttpInfo($payment_method_id, $payment_request_id, $payment_method_id2, $reference_id, $payment_method_type, $channel_code, $status, $currency, $created_gte, $created_lte, $updated_gte, $updated_lte, $limit, $after_id, $before_id, $contentType);
+        list($response) = $this->getPaymentsByPaymentMethodIdWithHttpInfo($payment_method_id, $payment_request_id, $payment_method_id2, $reference_id, $payment_method_type, $channel_code, $status, $currency, $created_gte, $created_lte, $updated_gte, $updated_lte, $limit, $contentType);
         return $response;
     }
 
@@ -2719,17 +2717,15 @@ class PaymentMethodApi
      * @param  \DateTime $updated_gte (optional)
      * @param  \DateTime $updated_lte (optional)
      * @param  int $limit (optional)
-     * @param  string $after_id (optional)
-     * @param  string $before_id (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getPaymentsByPaymentMethodId'] to see the possible values for this operation
      *
      * @throws \Xendit\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of Xenditobject|Xendit\PaymentMethod\GetAllPaymentMethods400Response|Xendit\PaymentMethod\GetAllPaymentMethods403Response|Xendit\PaymentMethod\GetAllPaymentMethods404Response|Xendit\PaymentMethod\CreatePaymentMethod503Response|Xendit\PaymentMethod\GetAllPaymentMethodsDefaultResponse, HTTP status code, HTTP response headers (array of strings)
      */
-    public function getPaymentsByPaymentMethodIdWithHttpInfo($payment_method_id, $payment_request_id = null, $payment_method_id2 = null, $reference_id = null, $payment_method_type = null, $channel_code = null, $status = null, $currency = null, $created_gte = null, $created_lte = null, $updated_gte = null, $updated_lte = null, $limit = null, $after_id = null, $before_id = null, string $contentType = self::contentTypes['getPaymentsByPaymentMethodId'][0])
+    public function getPaymentsByPaymentMethodIdWithHttpInfo($payment_method_id, $payment_request_id = null, $payment_method_id2 = null, $reference_id = null, $payment_method_type = null, $channel_code = null, $status = null, $currency = null, $created_gte = null, $created_lte = null, $updated_gte = null, $updated_lte = null, $limit = null, string $contentType = self::contentTypes['getPaymentsByPaymentMethodId'][0])
     {
-        $request = $this->getPaymentsByPaymentMethodIdRequest($payment_method_id, $payment_request_id, $payment_method_id2, $reference_id, $payment_method_type, $channel_code, $status, $currency, $created_gte, $created_lte, $updated_gte, $updated_lte, $limit, $after_id, $before_id, $contentType);
+        $request = $this->getPaymentsByPaymentMethodIdRequest($payment_method_id, $payment_request_id, $payment_method_id2, $reference_id, $payment_method_type, $channel_code, $status, $currency, $created_gte, $created_lte, $updated_gte, $updated_lte, $limit, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -2948,16 +2944,14 @@ class PaymentMethodApi
      * @param  Xendit\DateTime $updated_gte (optional)
      * @param  Xendit\DateTime $updated_lte (optional)
      * @param  Xenditint $limit (optional)
-     * @param  Xenditstring $after_id (optional)
-     * @param  Xenditstring $before_id (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getPaymentsByPaymentMethodId'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function getPaymentsByPaymentMethodIdAsync($payment_method_id, $payment_request_id = null, $payment_method_id2 = null, $reference_id = null, $payment_method_type = null, $channel_code = null, $status = null, $currency = null, $created_gte = null, $created_lte = null, $updated_gte = null, $updated_lte = null, $limit = null, $after_id = null, $before_id = null, string $contentType = self::contentTypes['getPaymentsByPaymentMethodId'][0])
+    public function getPaymentsByPaymentMethodIdAsync($payment_method_id, $payment_request_id = null, $payment_method_id2 = null, $reference_id = null, $payment_method_type = null, $channel_code = null, $status = null, $currency = null, $created_gte = null, $created_lte = null, $updated_gte = null, $updated_lte = null, $limit = null, string $contentType = self::contentTypes['getPaymentsByPaymentMethodId'][0])
     {
-        return $this->getPaymentsByPaymentMethodIdAsyncWithHttpInfo($payment_method_id, $payment_request_id, $payment_method_id2, $reference_id, $payment_method_type, $channel_code, $status, $currency, $created_gte, $created_lte, $updated_gte, $updated_lte, $limit, $after_id, $before_id, $contentType)
+        return $this->getPaymentsByPaymentMethodIdAsyncWithHttpInfo($payment_method_id, $payment_request_id, $payment_method_id2, $reference_id, $payment_method_type, $channel_code, $status, $currency, $created_gte, $created_lte, $updated_gte, $updated_lte, $limit, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -2983,17 +2977,15 @@ class PaymentMethodApi
      * @param  Xendit\DateTime $updated_gte (optional)
      * @param  Xendit\DateTime $updated_lte (optional)
      * @param  Xenditint $limit (optional)
-     * @param  Xenditstring $after_id (optional)
-     * @param  Xenditstring $before_id (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getPaymentsByPaymentMethodId'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function getPaymentsByPaymentMethodIdAsyncWithHttpInfo($payment_method_id, $payment_request_id = null, $payment_method_id2 = null, $reference_id = null, $payment_method_type = null, $channel_code = null, $status = null, $currency = null, $created_gte = null, $created_lte = null, $updated_gte = null, $updated_lte = null, $limit = null, $after_id = null, $before_id = null, string $contentType = self::contentTypes['getPaymentsByPaymentMethodId'][0])
+    public function getPaymentsByPaymentMethodIdAsyncWithHttpInfo($payment_method_id, $payment_request_id = null, $payment_method_id2 = null, $reference_id = null, $payment_method_type = null, $channel_code = null, $status = null, $currency = null, $created_gte = null, $created_lte = null, $updated_gte = null, $updated_lte = null, $limit = null, string $contentType = self::contentTypes['getPaymentsByPaymentMethodId'][0])
     {
         $returnType = 'object';
-        $request = $this->getPaymentsByPaymentMethodIdRequest($payment_method_id, $payment_request_id, $payment_method_id2, $reference_id, $payment_method_type, $channel_code, $status, $currency, $created_gte, $created_lte, $updated_gte, $updated_lte, $limit, $after_id, $before_id, $contentType);
+        $request = $this->getPaymentsByPaymentMethodIdRequest($payment_method_id, $payment_request_id, $payment_method_id2, $reference_id, $payment_method_type, $channel_code, $status, $currency, $created_gte, $created_lte, $updated_gte, $updated_lte, $limit, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -3047,14 +3039,12 @@ class PaymentMethodApi
      * @param  \DateTime $updated_gte (optional)
      * @param  \DateTime $updated_lte (optional)
      * @param  int $limit (optional)
-     * @param  string $after_id (optional)
-     * @param  string $before_id (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getPaymentsByPaymentMethodId'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function getPaymentsByPaymentMethodIdRequest($payment_method_id, $payment_request_id = null, $payment_method_id2 = null, $reference_id = null, $payment_method_type = null, $channel_code = null, $status = null, $currency = null, $created_gte = null, $created_lte = null, $updated_gte = null, $updated_lte = null, $limit = null, $after_id = null, $before_id = null, string $contentType = self::contentTypes['getPaymentsByPaymentMethodId'][0])
+    public function getPaymentsByPaymentMethodIdRequest($payment_method_id, $payment_request_id = null, $payment_method_id2 = null, $reference_id = null, $payment_method_type = null, $channel_code = null, $status = null, $currency = null, $created_gte = null, $created_lte = null, $updated_gte = null, $updated_lte = null, $limit = null, string $contentType = self::contentTypes['getPaymentsByPaymentMethodId'][0])
     {
 
         // verify the required parameter 'payment_method_id' is set
@@ -3063,8 +3053,6 @@ class PaymentMethodApi
                 'Missing the required parameter $payment_method_id when calling getPaymentsByPaymentMethodId'
             );
         }
-
-
 
 
 
@@ -3194,24 +3182,6 @@ class PaymentMethodApi
             true, // explode
             false // required
         ) ?? []);
-        // query params
-        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
-            $after_id,
-            'after_id', // param base name
-            'string', // openApiType
-            'form', // style
-            true, // explode
-            false // required
-        ) ?? []);
-        // query params
-        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
-            $before_id,
-            'before_id', // param base name
-            'string', // openApiType
-            'form', // style
-            true, // explode
-            false // required
-        ) ?? []);
 
         // path params
         if ($payment_method_id !== null) {
@@ -3261,7 +3231,7 @@ class PaymentMethodApi
         
         // Xendit's custom headers
         $defaultHeaders['xendit-lib'] = 'php';
-        $defaultHeaders['xendit-lib-ver'] = '3.0.0';
+        $defaultHeaders['xendit-lib-ver'] = '3.1.0';
 
         if ($this->config->getUserAgent()) {
             $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
@@ -3655,7 +3625,7 @@ class PaymentMethodApi
         
         // Xendit's custom headers
         $defaultHeaders['xendit-lib'] = 'php';
-        $defaultHeaders['xendit-lib-ver'] = '3.0.0';
+        $defaultHeaders['xendit-lib-ver'] = '3.1.0';
 
         if ($this->config->getUserAgent()) {
             $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
@@ -3943,7 +3913,7 @@ class PaymentMethodApi
         
         // Xendit's custom headers
         $defaultHeaders['xendit-lib'] = 'php';
-        $defaultHeaders['xendit-lib-ver'] = '3.0.0';
+        $defaultHeaders['xendit-lib-ver'] = '3.1.0';
 
         if ($this->config->getUserAgent()) {
             $defaultHeaders['User-Agent'] = $this->config->getUserAgent();

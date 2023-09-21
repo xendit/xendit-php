@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   description: This API is used for Payment Requests
   title: Payment Requests
-  version: 1.42.3
+  version: 1.44.0
 servers:
 - description: Xendit API Server
   url: https://api.xendit.co
@@ -107,6 +107,12 @@ paths:
               $ref: '#/components/schemas/PaymentRequestParameters'
       responses:
         "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaymentRequest'
+          description: Request successful
+        "201":
           content:
             application/json:
               schema:

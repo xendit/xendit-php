@@ -358,7 +358,7 @@ No authorization required
 ## `getPaymentsByPaymentMethodId()`
 
 ```php
-getPaymentsByPaymentMethodId($payment_method_id, $payment_request_id, $payment_method_id2, $reference_id, $payment_method_type, $channel_code, $status, $currency, $created_gte, $created_lte, $updated_gte, $updated_lte, $limit, $after_id, $before_id): object
+getPaymentsByPaymentMethodId($payment_method_id, $payment_request_id, $payment_method_id2, $reference_id, $payment_method_type, $channel_code, $status, $currency, $created_gte, $created_lte, $updated_gte, $updated_lte, $limit): object
 ```
 
 Returns payments with matching PaymentMethodID.
@@ -390,11 +390,9 @@ $created_lte = new \DateTime("2013-10-20T19:20:30+01:00"); // \DateTime
 $updated_gte = new \DateTime("2013-10-20T19:20:30+01:00"); // \DateTime
 $updated_lte = new \DateTime("2013-10-20T19:20:30+01:00"); // \DateTime
 $limit = 56; // int
-$after_id = "'after_id_example'"; // string
-$before_id = "'before_id_example'"; // string
 
 try {
-    $result = $apiInstance->getPaymentsByPaymentMethodId($payment_method_id, $payment_request_id, $payment_method_id2, $reference_id, $payment_method_type, $channel_code, $status, $currency, $created_gte, $created_lte, $updated_gte, $updated_lte, $limit, $after_id, $before_id);
+    $result = $apiInstance->getPaymentsByPaymentMethodId($payment_method_id, $payment_request_id, $payment_method_id2, $reference_id, $payment_method_type, $channel_code, $status, $currency, $created_gte, $created_lte, $updated_gte, $updated_lte, $limit);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling PaymentMethodApi->getPaymentsByPaymentMethodId: ', $e->getMessage(), PHP_EOL;
@@ -418,8 +416,6 @@ try {
 | **updated_gte** | **\DateTime**|  | [optional] |
 | **updated_lte** | **\DateTime**|  | [optional] |
 | **limit** | **int**|  | [optional] |
-| **after_id** | **string**|  | [optional] |
-| **before_id** | **string**|  | [optional] |
 
 ### Return type
 

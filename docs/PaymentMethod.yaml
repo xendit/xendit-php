@@ -541,20 +541,6 @@ paths:
         schema:
           type: integer
         style: form
-      - explode: true
-        in: query
-        name: after_id
-        required: false
-        schema:
-          type: string
-        style: form
-      - explode: true
-        in: query
-        name: before_id
-        required: false
-        schema:
-          type: string
-        style: form
       responses:
         "200":
           content:
@@ -2203,6 +2189,7 @@ components:
           - PAYMENT_METHOD_NOT_SUPPORTED
           - INCORRECT_AMOUNT
           - DUPLICATED_FIXED_PAYMENT_INSTRUMENT
+          - CURRENCY_MISMATCHED
           type: string
         message:
           example: An internal server error occurred

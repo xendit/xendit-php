@@ -5,13 +5,13 @@
  * PHP version 7.4
  *
  * @category Class
- * @package  PaymentMethod
+ * @package  Payout
  */
 
 /**
- * Payment Method Service v2
+ * Payout Service
  *
- * The version of the OpenAPI document: 2.87.2
+ * The version of the OpenAPI document: 1.0.0
  */
 
 /**
@@ -24,7 +24,7 @@ namespace Xendit\Model;
 /**
  * Interface abstracting model access.
  *
- * @package PaymentMethod
+ * @package Payout
  * @author  OpenAPI Generator team
  */
 interface ModelInterface
