@@ -51,6 +51,12 @@ class EwalletType
     
     public const GRABPAY = 'GRABPAY';
     
+    public const ASTRAPAY = 'ASTRAPAY';
+    
+    public const NEXCASH = 'NEXCASH';
+    
+    public const JENIUSPAY = 'JENIUSPAY';
+    
 
     private $value;
 

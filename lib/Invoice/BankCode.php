@@ -50,8 +50,13 @@ class BankCode
     public const BSI = 'BSI';
     
     public const BJB = 'BJB';
-    
 
+    public const SAHABAT_SAMPOERNA = 'SAHABAT_SAMPOERNA';
+    
+    public const CIMB = 'CIMB';
+    
+    public const BNC = 'BNC';
+    
     private $value;
 
     public function __construct($value = null) {
