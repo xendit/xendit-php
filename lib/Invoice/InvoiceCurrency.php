@@ -41,6 +41,10 @@ class InvoiceCurrency
     
     public const USD = 'USD';
     
+    public const THB = 'THB';
+    
+    public const VND = 'VND';
+    
     public const PHP = 'PHP';
     
 
@@ -74,6 +78,8 @@ class InvoiceCurrency
         return [
             self::IDR,
             self::USD,
+            self::THB,
+            self::VND,
             self::PHP
         ];
     }

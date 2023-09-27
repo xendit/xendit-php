@@ -35,8 +35,9 @@ $create_invoice_request = {"external_id":"test1234","description":"Test Invoice"
 try {
     $result = $apiInstance->createInvoice($create_invoice_request);
     print_r($result);
-} catch (Exception $e) {
+} catch (\Xendit\XenditSdkException $e) {
     echo 'Exception when calling InvoiceApi->createInvoice: ', $e->getMessage(), PHP_EOL;
+    echo 'Full Error: ', json_encode($e->getFullError()), PHP_EOL;
 }
 ```
 
@@ -86,8 +87,9 @@ $invoice_id = "5f4708b7bd394b0400b96276"; // string | Invoice ID to be expired
 try {
     $result = $apiInstance->expireInvoice($invoice_id);
     print_r($result);
-} catch (Exception $e) {
+} catch (\Xendit\XenditSdkException $e) {
     echo 'Exception when calling InvoiceApi->expireInvoice: ', $e->getMessage(), PHP_EOL;
+    echo 'Full Error: ', json_encode($e->getFullError()), PHP_EOL;
 }
 ```
 
@@ -137,8 +139,9 @@ $invoice_id = "62efe4c33e45294d63f585f2"; // string | Invoice ID
 try {
     $result = $apiInstance->getInvoiceById($invoice_id);
     print_r($result);
-} catch (Exception $e) {
+} catch (\Xendit\XenditSdkException $e) {
     echo 'Exception when calling InvoiceApi->getInvoiceById: ', $e->getMessage(), PHP_EOL;
+    echo 'Full Error: ', json_encode($e->getFullError()), PHP_EOL;
 }
 ```
 
@@ -201,8 +204,9 @@ $recurring_payment_id = "62efe4c33e45294d63f585f2"; // string
 try {
     $result = $apiInstance->getInvoices($external_id, $statuses, $limit, $created_after, $created_before, $paid_after, $paid_before, $expired_after, $expired_before, $last_invoice, $client_types, $payment_channels, $on_demand_link, $recurring_payment_id);
     print_r($result);
-} catch (Exception $e) {
+} catch (\Xendit\XenditSdkException $e) {
     echo 'Exception when calling InvoiceApi->getInvoices: ', $e->getMessage(), PHP_EOL;
+    echo 'Full Error: ', json_encode($e->getFullError()), PHP_EOL;
 }
 ```
 

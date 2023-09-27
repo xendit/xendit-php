@@ -9,9 +9,9 @@
  */
 
 /**
- * Payment Method Service v2
+ * Payment Requests
  *
- * The version of the OpenAPI document: 2.87.2
+ * The version of the OpenAPI document: 1.44.0
  */
 
 /**
@@ -85,6 +85,15 @@ class DirectDebitParametersTest extends TestCase
      * Test attribute "channel_properties"
      */
     public function testPropertyChannelProperties()
+    {
+        // TODO: implement
+        $this->markTestIncomplete('Not implemented');
+    }
+
+    /**
+     * Test attribute "type"
+     */
+    public function testPropertyType()
     {
         // TODO: implement
         $this->markTestIncomplete('Not implemented');

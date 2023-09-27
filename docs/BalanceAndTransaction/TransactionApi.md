@@ -48,8 +48,9 @@ $before_id = "'before_id_example'"; // string
 try {
     $result = $apiInstance->getAllTransactions($for_user_id, $types, $statuses, $channel_categories, $reference_id, $product_id, $account_identifier, $amount, $currency, $created, $updated, $limit, $after_id, $before_id);
     print_r($result);
-} catch (Exception $e) {
+} catch (\Xendit\XenditSdkException $e) {
     echo 'Exception when calling TransactionApi->getAllTransactions: ', $e->getMessage(), PHP_EOL;
+    echo 'Full Error: ', json_encode($e->getFullError()), PHP_EOL;
 }
 ```
 
@@ -115,8 +116,9 @@ $for_user_id = "5dbf20d7c8eb0c0896f811b6"; // string | The sub-account user-id t
 try {
     $result = $apiInstance->getTransactionByID($id, $for_user_id);
     print_r($result);
-} catch (Exception $e) {
+} catch (\Xendit\XenditSdkException $e) {
     echo 'Exception when calling TransactionApi->getTransactionByID: ', $e->getMessage(), PHP_EOL;
+    echo 'Full Error: ', json_encode($e->getFullError()), PHP_EOL;
 }
 ```
 

@@ -36,8 +36,9 @@ $for_user_id = "5dbf20d7c8eb0c0896f811b6"; // string | The sub-account user-id t
 try {
     $result = $apiInstance->getBalance($account_type, $currency, $for_user_id);
     print_r($result);
-} catch (Exception $e) {
+} catch (\Xendit\XenditSdkException $e) {
     echo 'Exception when calling BalanceApi->getBalance: ', $e->getMessage(), PHP_EOL;
+    echo 'Full Error: ', json_encode($e->getFullError()), PHP_EOL;
 }
 ```
 

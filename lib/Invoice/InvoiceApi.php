@@ -28,7 +28,7 @@ use GuzzleHttp\Psr7\MultipartStream;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\RequestOptions;
 use Xendit\Model;
-use Xendit\ApiException;
+use Xendit\XenditSdkException;
 use Xendit\Configuration;
 use Xendit\HeaderSelector;
 use Xendit\ObjectSerializer;
@@ -137,9 +137,9 @@ class InvoiceApi
      * @param  \Xendit\Invoice\CreateInvoiceRequest $create_invoice_request create_invoice_request (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createInvoice'] to see the possible values for this operation
      *
-     * @throws \Xendit\ApiException on non-2xx response
+     * @throws \Xendit\XenditSdkException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return Xendit\Invoice\Invoice|Xendit\Invoice\BadRequestError|Xendit\Invoice\UnauthorizedError|Xendit\Invoice\ForbiddenError|Xendit\Invoice\InvoiceNotFoundError
+     * @return \Xendit\Invoice\Invoice
      */
     public function createInvoice($create_invoice_request, string $contentType = self::contentTypes['createInvoice'][0])
     {
@@ -155,188 +155,63 @@ class InvoiceApi
      * @param  \Xendit\Invoice\CreateInvoiceRequest $create_invoice_request (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createInvoice'] to see the possible values for this operation
      *
-     * @throws \Xendit\ApiException on non-2xx response
+     * @throws \Xendit\XenditSdkException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of Xendit\Invoice\Invoice|Xendit\Invoice\BadRequestError|Xendit\Invoice\UnauthorizedError|Xendit\Invoice\ForbiddenError|Xendit\Invoice\InvoiceNotFoundError, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Xendit\Invoice\Invoice, HTTP status code, HTTP response headers (array of strings)
      */
     public function createInvoiceWithHttpInfo($create_invoice_request, string $contentType = self::contentTypes['createInvoice'][0])
     {
         $request = $this->createInvoiceRequest($create_invoice_request, $contentType);
 
+        $options = $this->createHttpClientOption();
         try {
-            $options = $this->createHttpClientOption();
-            try {
-                $response = $this->client->send($request, $options);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    (int) $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
-                );
-            } catch (ConnectException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    (int) $e->getCode(),
-                    null,
-                    null
-                );
-            }
-
-            $statusCode = $response->getStatusCode();
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    sprintf(
-                        '[%d] Error connecting to the API (%s)',
-                        $statusCode,
-                        (string) $request->getUri()
-                    ),
-                    $statusCode,
-                    $response->getHeaders(),
-                    (string) $response->getBody()
-                );
-            }
-
-            switch($statusCode) {
-                case 200:
-                    if ('Xendit\Invoice\Invoice' === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
-                    } else {
-                        $content = (string) $response->getBody();
-                        if ('Xendit\Invoice\Invoice' !== 'string') {
-                            $content = json_decode($content);
-                        }
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, 'Xendit\Invoice\Invoice', []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-                case 400:
-                    if ('Xendit\Invoice\BadRequestError' === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
-                    } else {
-                        $content = (string) $response->getBody();
-                        if ('Xendit\Invoice\BadRequestError' !== 'string') {
-                            $content = json_decode($content);
-                        }
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, 'Xendit\Invoice\BadRequestError', []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-                case 401:
-                    if ('Xendit\Invoice\UnauthorizedError' === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
-                    } else {
-                        $content = (string) $response->getBody();
-                        if ('Xendit\Invoice\UnauthorizedError' !== 'string') {
-                            $content = json_decode($content);
-                        }
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, 'Xendit\Invoice\UnauthorizedError', []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-                case 403:
-                    if ('Xendit\Invoice\ForbiddenError' === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
-                    } else {
-                        $content = (string) $response->getBody();
-                        if ('Xendit\Invoice\ForbiddenError' !== 'string') {
-                            $content = json_decode($content);
-                        }
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, 'Xendit\Invoice\ForbiddenError', []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-                case 404:
-                    if ('Xendit\Invoice\InvoiceNotFoundError' === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
-                    } else {
-                        $content = (string) $response->getBody();
-                        if ('Xendit\Invoice\InvoiceNotFoundError' !== 'string') {
-                            $content = json_decode($content);
-                        }
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, 'Xendit\Invoice\InvoiceNotFoundError', []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-            }
-
-            $returnType = '\Invoice\Invoice';
-            if ($returnType === '\SplFileObject') {
-                $content = $response->getBody(); //stream goes to serializer
-            } else {
-                $content = (string) $response->getBody();
-                if ($returnType !== 'string') {
-                    $content = json_decode($content);
-                }
-            }
-
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 200:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        'Xendit\Invoice\Invoice',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                case 400:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        'Xendit\Invoice\BadRequestError',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                case 401:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        'Xendit\Invoice\UnauthorizedError',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                case 403:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        'Xendit\Invoice\ForbiddenError',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                case 404:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        'Xendit\Invoice\InvoiceNotFoundError',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-            }
-            throw $e;
+            $response = $this->client->send($request, $options);
+        } catch (RequestException $e) {
+            throw new XenditSdkException(
+                $e->getResponse() && $e->getResponse()->getBody() ? json_decode((string) $e->getResponse()->getBody()) : null,
+                (string) $e->getCode(),
+                $e->getMessage() ? $e->getMessage() : sprintf('Error connecting to the API (%s)', "createInvoiceRequest")
+            );
+        } catch (ConnectException $e) {
+            throw new XenditSdkException(
+                null,
+                (string) $e->getCode(),
+                $e->getMessage() ? $e->getMessage() : sprintf('Error connecting to the API (%s)', "createInvoiceRequest")
+            );
+        }  catch (GuzzleException $e) {
+            throw new XenditSdkException(
+                null,
+                (string) $e->getCode(),
+                $e->getMessage() ? $e->getMessage() : sprintf('Error instantiating client for API (%s)', "createInvoiceRequest")
+            );
         }
+
+        $statusCode = $response->getStatusCode();
+
+        if ($statusCode < 200 || $statusCode > 299) {
+            $errBodyContent = $response->getBody() ? json_decode((string) $response->getBody()) : null;
+
+            throw new XenditSdkException(
+                $errBodyContent,
+                (string) $statusCode,
+                $response->getReasonPhrase()
+            );
+        }
+        $returnType = '\Xendit\Invoice\Invoice';
+        if ($returnType === '\SplFileObject') {
+            $content = $response->getBody(); //stream goes to serializer
+        } else {
+            $content = (string) $response->getBody();
+            if ($returnType !== 'string') {
+                $content = json_decode($content);
+            }
+        }
+
+        return [
+            ObjectSerializer::deserialize($content, $returnType, []),
+            $response->getStatusCode(),
+            $response->getHeaders()
+        ];
     }
 
     /**
@@ -344,7 +219,7 @@ class InvoiceApi
      *
      * Create an invoice
      *
-     * @param  Xendit\Xendit\Invoice\CreateInvoiceRequest $create_invoice_request (required)
+     * @param  \Xendit\Invoice\CreateInvoiceRequest $create_invoice_request (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createInvoice'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -365,7 +240,7 @@ class InvoiceApi
      *
      * Create an invoice
      *
-     * @param  Xendit\Xendit\Invoice\CreateInvoiceRequest $create_invoice_request (required)
+     * @param  \Xendit\Invoice\CreateInvoiceRequest $create_invoice_request (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createInvoice'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -373,7 +248,7 @@ class InvoiceApi
      */
     public function createInvoiceAsyncWithHttpInfo($create_invoice_request, string $contentType = self::contentTypes['createInvoice'][0])
     {
-        $returnType = '\Invoice\Invoice';
+        $returnType = '\Xendit\Invoice\Invoice';
         $request = $this->createInvoiceRequest($create_invoice_request, $contentType);
 
         return $this->client
@@ -395,18 +270,11 @@ class InvoiceApi
                         $response->getHeaders()
                     ];
                 },
-                function ($exception) {
-                    $response = $exception->getResponse();
-                    $statusCode = $response->getStatusCode();
-                    throw new ApiException(
-                        sprintf(
-                            '[%d] Error connecting to the API (%s)',
-                            $statusCode,
-                            $exception->getRequest()->getUri()
-                        ),
-                        $statusCode,
-                        $response->getHeaders(),
-                        (string) $response->getBody()
+                function ($e) {
+                    throw new XenditSdkException(
+                        $e->getResponse() && $e->getResponse()->getBody() ? json_decode((string) $e->getResponse()->getBody()) : null,
+                        (string) $e->getCode(),
+                        $e->getMessage() ? $e->getMessage() : sprintf('Error connecting to the API (%s)', "createInvoiceRequest")
                     );
                 }
             );
@@ -487,7 +355,7 @@ class InvoiceApi
         
         // Xendit's custom headers
         $defaultHeaders['xendit-lib'] = 'php';
-        $defaultHeaders['xendit-lib-ver'] = '3.1.0';
+        $defaultHeaders['xendit-lib-ver'] = '3.2.0';
 
         if ($this->config->getUserAgent()) {
             $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
@@ -517,9 +385,9 @@ class InvoiceApi
      * @param  string $invoice_id Invoice ID to be expired (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['expireInvoice'] to see the possible values for this operation
      *
-     * @throws \Xendit\ApiException on non-2xx response
+     * @throws \Xendit\XenditSdkException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return Xendit\Invoice\Invoice|Xendit\Invoice\InvoiceNotFoundError|Xendit\Invoice\ServerError
+     * @return \Xendit\Invoice\Invoice
      */
     public function expireInvoice($invoice_id, string $contentType = self::contentTypes['expireInvoice'][0])
     {
@@ -535,142 +403,63 @@ class InvoiceApi
      * @param  string $invoice_id Invoice ID to be expired (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['expireInvoice'] to see the possible values for this operation
      *
-     * @throws \Xendit\ApiException on non-2xx response
+     * @throws \Xendit\XenditSdkException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of Xendit\Invoice\Invoice|Xendit\Invoice\InvoiceNotFoundError|Xendit\Invoice\ServerError, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Xendit\Invoice\Invoice, HTTP status code, HTTP response headers (array of strings)
      */
     public function expireInvoiceWithHttpInfo($invoice_id, string $contentType = self::contentTypes['expireInvoice'][0])
     {
         $request = $this->expireInvoiceRequest($invoice_id, $contentType);
 
+        $options = $this->createHttpClientOption();
         try {
-            $options = $this->createHttpClientOption();
-            try {
-                $response = $this->client->send($request, $options);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    (int) $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
-                );
-            } catch (ConnectException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    (int) $e->getCode(),
-                    null,
-                    null
-                );
-            }
-
-            $statusCode = $response->getStatusCode();
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    sprintf(
-                        '[%d] Error connecting to the API (%s)',
-                        $statusCode,
-                        (string) $request->getUri()
-                    ),
-                    $statusCode,
-                    $response->getHeaders(),
-                    (string) $response->getBody()
-                );
-            }
-
-            switch($statusCode) {
-                case 200:
-                    if ('Xendit\Invoice\Invoice' === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
-                    } else {
-                        $content = (string) $response->getBody();
-                        if ('Xendit\Invoice\Invoice' !== 'string') {
-                            $content = json_decode($content);
-                        }
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, 'Xendit\Invoice\Invoice', []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-                case 404:
-                    if ('Xendit\Invoice\InvoiceNotFoundError' === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
-                    } else {
-                        $content = (string) $response->getBody();
-                        if ('Xendit\Invoice\InvoiceNotFoundError' !== 'string') {
-                            $content = json_decode($content);
-                        }
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, 'Xendit\Invoice\InvoiceNotFoundError', []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-                case 500:
-                    if ('Xendit\Invoice\ServerError' === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
-                    } else {
-                        $content = (string) $response->getBody();
-                        if ('Xendit\Invoice\ServerError' !== 'string') {
-                            $content = json_decode($content);
-                        }
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, 'Xendit\Invoice\ServerError', []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-            }
-
-            $returnType = '\Invoice\Invoice';
-            if ($returnType === '\SplFileObject') {
-                $content = $response->getBody(); //stream goes to serializer
-            } else {
-                $content = (string) $response->getBody();
-                if ($returnType !== 'string') {
-                    $content = json_decode($content);
-                }
-            }
-
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 200:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        'Xendit\Invoice\Invoice',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                case 404:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        'Xendit\Invoice\InvoiceNotFoundError',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                case 500:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        'Xendit\Invoice\ServerError',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-            }
-            throw $e;
+            $response = $this->client->send($request, $options);
+        } catch (RequestException $e) {
+            throw new XenditSdkException(
+                $e->getResponse() && $e->getResponse()->getBody() ? json_decode((string) $e->getResponse()->getBody()) : null,
+                (string) $e->getCode(),
+                $e->getMessage() ? $e->getMessage() : sprintf('Error connecting to the API (%s)', "expireInvoiceRequest")
+            );
+        } catch (ConnectException $e) {
+            throw new XenditSdkException(
+                null,
+                (string) $e->getCode(),
+                $e->getMessage() ? $e->getMessage() : sprintf('Error connecting to the API (%s)', "expireInvoiceRequest")
+            );
+        }  catch (GuzzleException $e) {
+            throw new XenditSdkException(
+                null,
+                (string) $e->getCode(),
+                $e->getMessage() ? $e->getMessage() : sprintf('Error instantiating client for API (%s)', "expireInvoiceRequest")
+            );
         }
+
+        $statusCode = $response->getStatusCode();
+
+        if ($statusCode < 200 || $statusCode > 299) {
+            $errBodyContent = $response->getBody() ? json_decode((string) $response->getBody()) : null;
+
+            throw new XenditSdkException(
+                $errBodyContent,
+                (string) $statusCode,
+                $response->getReasonPhrase()
+            );
+        }
+        $returnType = '\Xendit\Invoice\Invoice';
+        if ($returnType === '\SplFileObject') {
+            $content = $response->getBody(); //stream goes to serializer
+        } else {
+            $content = (string) $response->getBody();
+            if ($returnType !== 'string') {
+                $content = json_decode($content);
+            }
+        }
+
+        return [
+            ObjectSerializer::deserialize($content, $returnType, []),
+            $response->getStatusCode(),
+            $response->getHeaders()
+        ];
     }
 
     /**
@@ -678,7 +467,7 @@ class InvoiceApi
      *
      * Manually expire an invoice
      *
-     * @param  Xenditstring $invoice_id Invoice ID to be expired (required)
+     * @param  string $invoice_id Invoice ID to be expired (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['expireInvoice'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -699,7 +488,7 @@ class InvoiceApi
      *
      * Manually expire an invoice
      *
-     * @param  Xenditstring $invoice_id Invoice ID to be expired (required)
+     * @param  string $invoice_id Invoice ID to be expired (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['expireInvoice'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -707,7 +496,7 @@ class InvoiceApi
      */
     public function expireInvoiceAsyncWithHttpInfo($invoice_id, string $contentType = self::contentTypes['expireInvoice'][0])
     {
-        $returnType = '\Invoice\Invoice';
+        $returnType = '\Xendit\Invoice\Invoice';
         $request = $this->expireInvoiceRequest($invoice_id, $contentType);
 
         return $this->client
@@ -729,18 +518,11 @@ class InvoiceApi
                         $response->getHeaders()
                     ];
                 },
-                function ($exception) {
-                    $response = $exception->getResponse();
-                    $statusCode = $response->getStatusCode();
-                    throw new ApiException(
-                        sprintf(
-                            '[%d] Error connecting to the API (%s)',
-                            $statusCode,
-                            $exception->getRequest()->getUri()
-                        ),
-                        $statusCode,
-                        $response->getHeaders(),
-                        (string) $response->getBody()
+                function ($e) {
+                    throw new XenditSdkException(
+                        $e->getResponse() && $e->getResponse()->getBody() ? json_decode((string) $e->getResponse()->getBody()) : null,
+                        (string) $e->getCode(),
+                        $e->getMessage() ? $e->getMessage() : sprintf('Error connecting to the API (%s)', "expireInvoiceRequest")
                     );
                 }
             );
@@ -822,7 +604,7 @@ class InvoiceApi
         
         // Xendit's custom headers
         $defaultHeaders['xendit-lib'] = 'php';
-        $defaultHeaders['xendit-lib-ver'] = '3.1.0';
+        $defaultHeaders['xendit-lib-ver'] = '3.2.0';
 
         if ($this->config->getUserAgent()) {
             $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
@@ -852,9 +634,9 @@ class InvoiceApi
      * @param  string $invoice_id Invoice ID (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getInvoiceById'] to see the possible values for this operation
      *
-     * @throws \Xendit\ApiException on non-2xx response
+     * @throws \Xendit\XenditSdkException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return Xendit\Invoice\Invoice|Xendit\Invoice\UnauthorizedError|Xendit\Invoice\InvoiceError404ResponseDefinition|Xendit\Invoice\ServerError
+     * @return \Xendit\Invoice\Invoice
      */
     public function getInvoiceById($invoice_id, string $contentType = self::contentTypes['getInvoiceById'][0])
     {
@@ -870,165 +652,63 @@ class InvoiceApi
      * @param  string $invoice_id Invoice ID (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getInvoiceById'] to see the possible values for this operation
      *
-     * @throws \Xendit\ApiException on non-2xx response
+     * @throws \Xendit\XenditSdkException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of Xendit\Invoice\Invoice|Xendit\Invoice\UnauthorizedError|Xendit\Invoice\InvoiceError404ResponseDefinition|Xendit\Invoice\ServerError, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Xendit\Invoice\Invoice, HTTP status code, HTTP response headers (array of strings)
      */
     public function getInvoiceByIdWithHttpInfo($invoice_id, string $contentType = self::contentTypes['getInvoiceById'][0])
     {
         $request = $this->getInvoiceByIdRequest($invoice_id, $contentType);
 
+        $options = $this->createHttpClientOption();
         try {
-            $options = $this->createHttpClientOption();
-            try {
-                $response = $this->client->send($request, $options);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    (int) $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
-                );
-            } catch (ConnectException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    (int) $e->getCode(),
-                    null,
-                    null
-                );
-            }
-
-            $statusCode = $response->getStatusCode();
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    sprintf(
-                        '[%d] Error connecting to the API (%s)',
-                        $statusCode,
-                        (string) $request->getUri()
-                    ),
-                    $statusCode,
-                    $response->getHeaders(),
-                    (string) $response->getBody()
-                );
-            }
-
-            switch($statusCode) {
-                case 200:
-                    if ('Xendit\Invoice\Invoice' === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
-                    } else {
-                        $content = (string) $response->getBody();
-                        if ('Xendit\Invoice\Invoice' !== 'string') {
-                            $content = json_decode($content);
-                        }
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, 'Xendit\Invoice\Invoice', []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-                case 401:
-                    if ('Xendit\Invoice\UnauthorizedError' === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
-                    } else {
-                        $content = (string) $response->getBody();
-                        if ('Xendit\Invoice\UnauthorizedError' !== 'string') {
-                            $content = json_decode($content);
-                        }
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, 'Xendit\Invoice\UnauthorizedError', []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-                case 404:
-                    if ('Xendit\Invoice\InvoiceError404ResponseDefinition' === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
-                    } else {
-                        $content = (string) $response->getBody();
-                        if ('Xendit\Invoice\InvoiceError404ResponseDefinition' !== 'string') {
-                            $content = json_decode($content);
-                        }
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, 'Xendit\Invoice\InvoiceError404ResponseDefinition', []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-                case 500:
-                    if ('Xendit\Invoice\ServerError' === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
-                    } else {
-                        $content = (string) $response->getBody();
-                        if ('Xendit\Invoice\ServerError' !== 'string') {
-                            $content = json_decode($content);
-                        }
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, 'Xendit\Invoice\ServerError', []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-            }
-
-            $returnType = '\Invoice\Invoice';
-            if ($returnType === '\SplFileObject') {
-                $content = $response->getBody(); //stream goes to serializer
-            } else {
-                $content = (string) $response->getBody();
-                if ($returnType !== 'string') {
-                    $content = json_decode($content);
-                }
-            }
-
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 200:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        'Xendit\Invoice\Invoice',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                case 401:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        'Xendit\Invoice\UnauthorizedError',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                case 404:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        'Xendit\Invoice\InvoiceError404ResponseDefinition',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                case 500:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        'Xendit\Invoice\ServerError',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-            }
-            throw $e;
+            $response = $this->client->send($request, $options);
+        } catch (RequestException $e) {
+            throw new XenditSdkException(
+                $e->getResponse() && $e->getResponse()->getBody() ? json_decode((string) $e->getResponse()->getBody()) : null,
+                (string) $e->getCode(),
+                $e->getMessage() ? $e->getMessage() : sprintf('Error connecting to the API (%s)', "getInvoiceByIdRequest")
+            );
+        } catch (ConnectException $e) {
+            throw new XenditSdkException(
+                null,
+                (string) $e->getCode(),
+                $e->getMessage() ? $e->getMessage() : sprintf('Error connecting to the API (%s)', "getInvoiceByIdRequest")
+            );
+        }  catch (GuzzleException $e) {
+            throw new XenditSdkException(
+                null,
+                (string) $e->getCode(),
+                $e->getMessage() ? $e->getMessage() : sprintf('Error instantiating client for API (%s)', "getInvoiceByIdRequest")
+            );
         }
+
+        $statusCode = $response->getStatusCode();
+
+        if ($statusCode < 200 || $statusCode > 299) {
+            $errBodyContent = $response->getBody() ? json_decode((string) $response->getBody()) : null;
+
+            throw new XenditSdkException(
+                $errBodyContent,
+                (string) $statusCode,
+                $response->getReasonPhrase()
+            );
+        }
+        $returnType = '\Xendit\Invoice\Invoice';
+        if ($returnType === '\SplFileObject') {
+            $content = $response->getBody(); //stream goes to serializer
+        } else {
+            $content = (string) $response->getBody();
+            if ($returnType !== 'string') {
+                $content = json_decode($content);
+            }
+        }
+
+        return [
+            ObjectSerializer::deserialize($content, $returnType, []),
+            $response->getStatusCode(),
+            $response->getHeaders()
+        ];
     }
 
     /**
@@ -1036,7 +716,7 @@ class InvoiceApi
      *
      * Get invoice by invoice id
      *
-     * @param  Xenditstring $invoice_id Invoice ID (required)
+     * @param  string $invoice_id Invoice ID (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getInvoiceById'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -1057,7 +737,7 @@ class InvoiceApi
      *
      * Get invoice by invoice id
      *
-     * @param  Xenditstring $invoice_id Invoice ID (required)
+     * @param  string $invoice_id Invoice ID (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getInvoiceById'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -1065,7 +745,7 @@ class InvoiceApi
      */
     public function getInvoiceByIdAsyncWithHttpInfo($invoice_id, string $contentType = self::contentTypes['getInvoiceById'][0])
     {
-        $returnType = '\Invoice\Invoice';
+        $returnType = '\Xendit\Invoice\Invoice';
         $request = $this->getInvoiceByIdRequest($invoice_id, $contentType);
 
         return $this->client
@@ -1087,18 +767,11 @@ class InvoiceApi
                         $response->getHeaders()
                     ];
                 },
-                function ($exception) {
-                    $response = $exception->getResponse();
-                    $statusCode = $response->getStatusCode();
-                    throw new ApiException(
-                        sprintf(
-                            '[%d] Error connecting to the API (%s)',
-                            $statusCode,
-                            $exception->getRequest()->getUri()
-                        ),
-                        $statusCode,
-                        $response->getHeaders(),
-                        (string) $response->getBody()
+                function ($e) {
+                    throw new XenditSdkException(
+                        $e->getResponse() && $e->getResponse()->getBody() ? json_decode((string) $e->getResponse()->getBody()) : null,
+                        (string) $e->getCode(),
+                        $e->getMessage() ? $e->getMessage() : sprintf('Error connecting to the API (%s)', "getInvoiceByIdRequest")
                     );
                 }
             );
@@ -1180,7 +853,7 @@ class InvoiceApi
         
         // Xendit's custom headers
         $defaultHeaders['xendit-lib'] = 'php';
-        $defaultHeaders['xendit-lib-ver'] = '3.1.0';
+        $defaultHeaders['xendit-lib-ver'] = '3.2.0';
 
         if ($this->config->getUserAgent()) {
             $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
@@ -1223,9 +896,9 @@ class InvoiceApi
      * @param  string $recurring_payment_id recurring_payment_id (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getInvoices'] to see the possible values for this operation
      *
-     * @throws \Xendit\ApiException on non-2xx response
+     * @throws \Xendit\XenditSdkException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return Xendit\Invoice\Invoice[]|Xendit\Invoice\UnauthorizedError|Xendit\Invoice\ServerError
+     * @return \Xendit\Invoice\Invoice[]
      */
     public function getInvoices($external_id = null, $statuses = null, $limit = null, $created_after = null, $created_before = null, $paid_after = null, $paid_before = null, $expired_after = null, $expired_before = null, $last_invoice = null, $client_types = null, $payment_channels = null, $on_demand_link = null, $recurring_payment_id = null, string $contentType = self::contentTypes['getInvoices'][0])
     {
@@ -1254,142 +927,63 @@ class InvoiceApi
      * @param  string $recurring_payment_id (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getInvoices'] to see the possible values for this operation
      *
-     * @throws \Xendit\ApiException on non-2xx response
+     * @throws \Xendit\XenditSdkException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of Xendit\Invoice\Invoice[]|Xendit\Invoice\UnauthorizedError|Xendit\Invoice\ServerError, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Xendit\Invoice\Invoice[], HTTP status code, HTTP response headers (array of strings)
      */
     public function getInvoicesWithHttpInfo($external_id = null, $statuses = null, $limit = null, $created_after = null, $created_before = null, $paid_after = null, $paid_before = null, $expired_after = null, $expired_before = null, $last_invoice = null, $client_types = null, $payment_channels = null, $on_demand_link = null, $recurring_payment_id = null, string $contentType = self::contentTypes['getInvoices'][0])
     {
         $request = $this->getInvoicesRequest($external_id, $statuses, $limit, $created_after, $created_before, $paid_after, $paid_before, $expired_after, $expired_before, $last_invoice, $client_types, $payment_channels, $on_demand_link, $recurring_payment_id, $contentType);
 
+        $options = $this->createHttpClientOption();
         try {
-            $options = $this->createHttpClientOption();
-            try {
-                $response = $this->client->send($request, $options);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    (int) $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
-                );
-            } catch (ConnectException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    (int) $e->getCode(),
-                    null,
-                    null
-                );
-            }
-
-            $statusCode = $response->getStatusCode();
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    sprintf(
-                        '[%d] Error connecting to the API (%s)',
-                        $statusCode,
-                        (string) $request->getUri()
-                    ),
-                    $statusCode,
-                    $response->getHeaders(),
-                    (string) $response->getBody()
-                );
-            }
-
-            switch($statusCode) {
-                case 200:
-                    if ('Xendit\Invoice\Invoice[]' === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
-                    } else {
-                        $content = (string) $response->getBody();
-                        if ('Xendit\Invoice\Invoice[]' !== 'string') {
-                            $content = json_decode($content);
-                        }
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, 'Xendit\Invoice\Invoice[]', []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-                case 401:
-                    if ('Xendit\Invoice\UnauthorizedError' === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
-                    } else {
-                        $content = (string) $response->getBody();
-                        if ('Xendit\Invoice\UnauthorizedError' !== 'string') {
-                            $content = json_decode($content);
-                        }
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, 'Xendit\Invoice\UnauthorizedError', []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-                case 500:
-                    if ('Xendit\Invoice\ServerError' === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
-                    } else {
-                        $content = (string) $response->getBody();
-                        if ('Xendit\Invoice\ServerError' !== 'string') {
-                            $content = json_decode($content);
-                        }
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, 'Xendit\Invoice\ServerError', []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-            }
-
-            $returnType = '\Invoice\Invoice[]';
-            if ($returnType === '\SplFileObject') {
-                $content = $response->getBody(); //stream goes to serializer
-            } else {
-                $content = (string) $response->getBody();
-                if ($returnType !== 'string') {
-                    $content = json_decode($content);
-                }
-            }
-
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 200:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        'Xendit\Invoice\Invoice[]',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                case 401:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        'Xendit\Invoice\UnauthorizedError',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                case 500:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        'Xendit\Invoice\ServerError',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-            }
-            throw $e;
+            $response = $this->client->send($request, $options);
+        } catch (RequestException $e) {
+            throw new XenditSdkException(
+                $e->getResponse() && $e->getResponse()->getBody() ? json_decode((string) $e->getResponse()->getBody()) : null,
+                (string) $e->getCode(),
+                $e->getMessage() ? $e->getMessage() : sprintf('Error connecting to the API (%s)', "getInvoicesRequest")
+            );
+        } catch (ConnectException $e) {
+            throw new XenditSdkException(
+                null,
+                (string) $e->getCode(),
+                $e->getMessage() ? $e->getMessage() : sprintf('Error connecting to the API (%s)', "getInvoicesRequest")
+            );
+        }  catch (GuzzleException $e) {
+            throw new XenditSdkException(
+                null,
+                (string) $e->getCode(),
+                $e->getMessage() ? $e->getMessage() : sprintf('Error instantiating client for API (%s)', "getInvoicesRequest")
+            );
         }
+
+        $statusCode = $response->getStatusCode();
+
+        if ($statusCode < 200 || $statusCode > 299) {
+            $errBodyContent = $response->getBody() ? json_decode((string) $response->getBody()) : null;
+
+            throw new XenditSdkException(
+                $errBodyContent,
+                (string) $statusCode,
+                $response->getReasonPhrase()
+            );
+        }
+        $returnType = '\Xendit\Invoice\Invoice[]';
+        if ($returnType === '\SplFileObject') {
+            $content = $response->getBody(); //stream goes to serializer
+        } else {
+            $content = (string) $response->getBody();
+            if ($returnType !== 'string') {
+                $content = json_decode($content);
+            }
+        }
+
+        return [
+            ObjectSerializer::deserialize($content, $returnType, []),
+            $response->getStatusCode(),
+            $response->getHeaders()
+        ];
     }
 
     /**
@@ -1397,20 +991,20 @@ class InvoiceApi
      *
      * Get all Invoices
      *
-     * @param  Xenditstring $external_id (optional)
-     * @param  Xendit\Invoice\InvoiceStatus[] $statuses (optional)
-     * @param  Xenditfloat $limit (optional)
-     * @param  Xendit\DateTime $created_after (optional)
-     * @param  Xendit\DateTime $created_before (optional)
-     * @param  Xendit\DateTime $paid_after (optional)
-     * @param  Xendit\DateTime $paid_before (optional)
-     * @param  Xendit\DateTime $expired_after (optional)
-     * @param  Xendit\DateTime $expired_before (optional)
-     * @param  Xenditstring $last_invoice (optional)
-     * @param  Xendit\Invoice\InvoiceClientType[] $client_types (optional)
-     * @param  Xenditstring[] $payment_channels (optional)
-     * @param  Xenditstring $on_demand_link (optional)
-     * @param  Xenditstring $recurring_payment_id (optional)
+     * @param  string $external_id (optional)
+     * @param  \Invoice\InvoiceStatus[] $statuses (optional)
+     * @param  float $limit (optional)
+     * @param  \DateTime $created_after (optional)
+     * @param  \DateTime $created_before (optional)
+     * @param  \DateTime $paid_after (optional)
+     * @param  \DateTime $paid_before (optional)
+     * @param  \DateTime $expired_after (optional)
+     * @param  \DateTime $expired_before (optional)
+     * @param  string $last_invoice (optional)
+     * @param  \Invoice\InvoiceClientType[] $client_types (optional)
+     * @param  string[] $payment_channels (optional)
+     * @param  string $on_demand_link (optional)
+     * @param  string $recurring_payment_id (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getInvoices'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -1431,20 +1025,20 @@ class InvoiceApi
      *
      * Get all Invoices
      *
-     * @param  Xenditstring $external_id (optional)
-     * @param  Xendit\Invoice\InvoiceStatus[] $statuses (optional)
-     * @param  Xenditfloat $limit (optional)
-     * @param  Xendit\DateTime $created_after (optional)
-     * @param  Xendit\DateTime $created_before (optional)
-     * @param  Xendit\DateTime $paid_after (optional)
-     * @param  Xendit\DateTime $paid_before (optional)
-     * @param  Xendit\DateTime $expired_after (optional)
-     * @param  Xendit\DateTime $expired_before (optional)
-     * @param  Xenditstring $last_invoice (optional)
-     * @param  Xendit\Invoice\InvoiceClientType[] $client_types (optional)
-     * @param  Xenditstring[] $payment_channels (optional)
-     * @param  Xenditstring $on_demand_link (optional)
-     * @param  Xenditstring $recurring_payment_id (optional)
+     * @param  string $external_id (optional)
+     * @param  \Invoice\InvoiceStatus[] $statuses (optional)
+     * @param  float $limit (optional)
+     * @param  \DateTime $created_after (optional)
+     * @param  \DateTime $created_before (optional)
+     * @param  \DateTime $paid_after (optional)
+     * @param  \DateTime $paid_before (optional)
+     * @param  \DateTime $expired_after (optional)
+     * @param  \DateTime $expired_before (optional)
+     * @param  string $last_invoice (optional)
+     * @param  \Invoice\InvoiceClientType[] $client_types (optional)
+     * @param  string[] $payment_channels (optional)
+     * @param  string $on_demand_link (optional)
+     * @param  string $recurring_payment_id (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getInvoices'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -1452,7 +1046,7 @@ class InvoiceApi
      */
     public function getInvoicesAsyncWithHttpInfo($external_id = null, $statuses = null, $limit = null, $created_after = null, $created_before = null, $paid_after = null, $paid_before = null, $expired_after = null, $expired_before = null, $last_invoice = null, $client_types = null, $payment_channels = null, $on_demand_link = null, $recurring_payment_id = null, string $contentType = self::contentTypes['getInvoices'][0])
     {
-        $returnType = '\Invoice\Invoice[]';
+        $returnType = '\Xendit\Invoice\Invoice[]';
         $request = $this->getInvoicesRequest($external_id, $statuses, $limit, $created_after, $created_before, $paid_after, $paid_before, $expired_after, $expired_before, $last_invoice, $client_types, $payment_channels, $on_demand_link, $recurring_payment_id, $contentType);
 
         return $this->client
@@ -1474,18 +1068,11 @@ class InvoiceApi
                         $response->getHeaders()
                     ];
                 },
-                function ($exception) {
-                    $response = $exception->getResponse();
-                    $statusCode = $response->getStatusCode();
-                    throw new ApiException(
-                        sprintf(
-                            '[%d] Error connecting to the API (%s)',
-                            $statusCode,
-                            $exception->getRequest()->getUri()
-                        ),
-                        $statusCode,
-                        $response->getHeaders(),
-                        (string) $response->getBody()
+                function ($e) {
+                    throw new XenditSdkException(
+                        $e->getResponse() && $e->getResponse()->getBody() ? json_decode((string) $e->getResponse()->getBody()) : null,
+                        (string) $e->getCode(),
+                        $e->getMessage() ? $e->getMessage() : sprintf('Error connecting to the API (%s)', "getInvoicesRequest")
                     );
                 }
             );
@@ -1705,7 +1292,7 @@ class InvoiceApi
         
         // Xendit's custom headers
         $defaultHeaders['xendit-lib'] = 'php';
-        $defaultHeaders['xendit-lib-ver'] = '3.1.0';
+        $defaultHeaders['xendit-lib-ver'] = '3.2.0';
 
         if ($this->config->getUserAgent()) {
             $defaultHeaders['User-Agent'] = $this->config->getUserAgent();

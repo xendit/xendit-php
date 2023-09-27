@@ -51,6 +51,12 @@ class BankCode
     
     public const BJB = 'BJB';
     
+    public const SAHABAT_SAMPOERNA = 'SAHABAT_SAMPOERNA';
+    
+    public const CIMB = 'CIMB';
+    
+    public const BNC = 'BNC';
+    
 
     private $value;
 
@@ -86,7 +92,10 @@ class BankCode
             self::MANDIRI,
             self::PERMATA,
             self::BSI,
-            self::BJB
+            self::BJB,
+            self::SAHABAT_SAMPOERNA,
+            self::CIMB,
+            self::BNC
         ];
     }
 }

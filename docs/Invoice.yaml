@@ -590,6 +590,8 @@ components:
       enum:
       - IDR
       - USD
+      - THB
+      - VND
       - PHP
       type: string
     InvoiceClientType:
@@ -627,6 +629,9 @@ components:
       - PERMATA
       - BSI
       - BJB
+      - SAHABAT_SAMPOERNA
+      - CIMB
+      - BNC
       type: string
     RetailOutletName:
       description: Representing the available retail outlet channels used for invoice-related
@@ -653,6 +658,9 @@ components:
       - SHOPEEPAY
       - GCASH
       - GRABPAY
+      - ASTRAPAY
+      - NEXCASH
+      - JENIUSPAY
       type: string
     QrCodeType:
       description: Representing the available QR Code channels used for invoice-related
@@ -679,6 +687,11 @@ components:
       - BA_BCA_KLIKPAY
       - DC_BCA_KLIKPAY
       - DD_BCA_KLIKPAY
+      - DD_BDO_EPAY
+      - DD_RCBC
+      - DD_CHINABANK
+      - BA_CHINABANK
+      - DC_CHINABANK
       type: string
     PaylaterType:
       description: Representing the available paylater channels used for invoice-related

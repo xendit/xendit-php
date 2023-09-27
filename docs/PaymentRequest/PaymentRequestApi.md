@@ -41,8 +41,9 @@ $payment_request_auth_parameters = new \Xendit\PaymentRequest\PaymentRequestAuth
 try {
     $result = $apiInstance->authorizePaymentRequest($payment_request_id, $payment_request_auth_parameters);
     print_r($result);
-} catch (Exception $e) {
+} catch (\Xendit\XenditSdkException $e) {
     echo 'Exception when calling PaymentRequestApi->authorizePaymentRequest: ', $e->getMessage(), PHP_EOL;
+    echo 'Full Error: ', json_encode($e->getFullError()), PHP_EOL;
 }
 ```
 
@@ -96,8 +97,9 @@ $capture_parameters = new \Xendit\PaymentRequest\CaptureParameters(); // \Xendit
 try {
     $result = $apiInstance->capturePaymentRequest($payment_request_id, $capture_parameters);
     print_r($result);
-} catch (Exception $e) {
+} catch (\Xendit\XenditSdkException $e) {
     echo 'Exception when calling PaymentRequestApi->capturePaymentRequest: ', $e->getMessage(), PHP_EOL;
+    echo 'Full Error: ', json_encode($e->getFullError()), PHP_EOL;
 }
 ```
 
@@ -146,13 +148,14 @@ Configuration::setXenditKey("YOUR_API_KEY_HERE");
 
 $apiInstance = new PaymentRequestApi();
 $idempotency_key = "5f9a3fbd571a1c4068aa40ce"; // string
-$payment_request_parameters = new \Xendit\PaymentRequest\PaymentRequestParameters(); // \Xendit\PaymentRequest\PaymentRequestParameters
+$payment_request_parameters = {"reference_id":"example-ref-1234","amount":15000,"currency":"IDR","country":"ID","payment_method":{"type":"EWALLET","ewallet":{"channel_code":"SHOPEEPAY","channel_properties":{"success_return_url":"https://redirect.me/success"}},"reusability":"ONE_TIME_USE"}}; // \Xendit\PaymentRequest\PaymentRequestParameters
 
 try {
     $result = $apiInstance->createPaymentRequest($idempotency_key, $payment_request_parameters);
     print_r($result);
-} catch (Exception $e) {
+} catch (\Xendit\XenditSdkException $e) {
     echo 'Exception when calling PaymentRequestApi->createPaymentRequest: ', $e->getMessage(), PHP_EOL;
+    echo 'Full Error: ', json_encode($e->getFullError()), PHP_EOL;
 }
 ```
 
@@ -210,8 +213,9 @@ $after_id = "'after_id_example'"; // string
 try {
     $result = $apiInstance->getAllPaymentRequests($reference_id, $id, $customer_id, $limit, $before_id, $after_id);
     print_r($result);
-} catch (Exception $e) {
+} catch (\Xendit\XenditSdkException $e) {
     echo 'Exception when calling PaymentRequestApi->getAllPaymentRequests: ', $e->getMessage(), PHP_EOL;
+    echo 'Full Error: ', json_encode($e->getFullError()), PHP_EOL;
 }
 ```
 
@@ -268,8 +272,9 @@ $payment_request_id = "pr-1fdaf346-dd2e-4b6c-b938-124c7167a822"; // string
 try {
     $result = $apiInstance->getPaymentRequestByID($payment_request_id);
     print_r($result);
-} catch (Exception $e) {
+} catch (\Xendit\XenditSdkException $e) {
     echo 'Exception when calling PaymentRequestApi->getPaymentRequestByID: ', $e->getMessage(), PHP_EOL;
+    echo 'Full Error: ', json_encode($e->getFullError()), PHP_EOL;
 }
 ```
 
@@ -297,7 +302,7 @@ No authorization required
 ## `getPaymentRequestCaptures()`
 
 ```php
-getPaymentRequestCaptures($payment_request_id, $limit, $after_id, $before_id): \PaymentRequest\CaptureListResponse
+getPaymentRequestCaptures($payment_request_id, $limit): \PaymentRequest\CaptureListResponse
 ```
 
 Get Payment Request Capture
@@ -318,14 +323,13 @@ Configuration::setXenditKey("YOUR_API_KEY_HERE");
 $apiInstance = new PaymentRequestApi();
 $payment_request_id = "pr-1fdaf346-dd2e-4b6c-b938-124c7167a822"; // string
 $limit = 56; // int
-$after_id = "'after_id_example'"; // string
-$before_id = "'before_id_example'"; // string
 
 try {
-    $result = $apiInstance->getPaymentRequestCaptures($payment_request_id, $limit, $after_id, $before_id);
+    $result = $apiInstance->getPaymentRequestCaptures($payment_request_id, $limit);
     print_r($result);
-} catch (Exception $e) {
+} catch (\Xendit\XenditSdkException $e) {
     echo 'Exception when calling PaymentRequestApi->getPaymentRequestCaptures: ', $e->getMessage(), PHP_EOL;
+    echo 'Full Error: ', json_encode($e->getFullError()), PHP_EOL;
 }
 ```
 
@@ -335,8 +339,6 @@ try {
 | ------------- | ------------- | ------------- | ------------- |
 | **payment_request_id** | **string**|  | |
 | **limit** | **int**|  | [optional] |
-| **after_id** | **string**|  | [optional] |
-| **before_id** | **string**|  | [optional] |
 
 ### Return type
 
@@ -380,8 +382,9 @@ $payment_request_id = "pr-1fdaf346-dd2e-4b6c-b938-124c7167a822"; // string
 try {
     $result = $apiInstance->resendPaymentRequestAuth($payment_request_id);
     print_r($result);
-} catch (Exception $e) {
+} catch (\Xendit\XenditSdkException $e) {
     echo 'Exception when calling PaymentRequestApi->resendPaymentRequestAuth: ', $e->getMessage(), PHP_EOL;
+    echo 'Full Error: ', json_encode($e->getFullError()), PHP_EOL;
 }
 ```
 

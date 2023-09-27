@@ -9,9 +9,9 @@
  */
 
 /**
- * Payment Method Service v2
+ * Payment Requests
  *
- * The version of the OpenAPI document: 2.87.2
+ * The version of the OpenAPI document: 1.44.0
  */
 
 /**
@@ -76,6 +76,15 @@ class DirectDebitDebitCardTest extends TestCase
      * Test attribute "mobile_number"
      */
     public function testPropertyMobileNumber()
+    {
+        // TODO: implement
+        $this->markTestIncomplete('Not implemented');
+    }
+
+    /**
+     * Test attribute "account_number"
+     */
+    public function testPropertyAccountNumber()
     {
         // TODO: implement
         $this->markTestIncomplete('Not implemented');

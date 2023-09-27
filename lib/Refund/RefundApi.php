@@ -28,7 +28,7 @@ use GuzzleHttp\Psr7\MultipartStream;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\RequestOptions;
 use Xendit\Model;
-use Xendit\ApiException;
+use Xendit\XenditSdkException;
 use Xendit\Configuration;
 use Xendit\HeaderSelector;
 use Xendit\ObjectSerializer;
@@ -136,9 +136,9 @@ class RefundApi
      * @param  string $idempotency_key idempotency_key (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['cancelRefund'] to see the possible values for this operation
      *
-     * @throws \Xendit\ApiException on non-2xx response
+     * @throws \Xendit\XenditSdkException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return Xendit\Refund\Refund|Xendit\Refund\CreateRefund400Response|Xendit\Refund\CreateRefund403Response|Xendit\Refund\CreateRefund404Response|Xendit\Refund\CreateRefundDefaultResponse
+     * @return \Xendit\Refund\Refund
      */
     public function cancelRefund($refund_id, $idempotency_key = null, string $contentType = self::contentTypes['cancelRefund'][0])
     {
@@ -153,195 +153,70 @@ class RefundApi
      * @param  string $idempotency_key (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['cancelRefund'] to see the possible values for this operation
      *
-     * @throws \Xendit\ApiException on non-2xx response
+     * @throws \Xendit\XenditSdkException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of Xendit\Refund\Refund|Xendit\Refund\CreateRefund400Response|Xendit\Refund\CreateRefund403Response|Xendit\Refund\CreateRefund404Response|Xendit\Refund\CreateRefundDefaultResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Xendit\Refund\Refund, HTTP status code, HTTP response headers (array of strings)
      */
     public function cancelRefundWithHttpInfo($refund_id, $idempotency_key = null, string $contentType = self::contentTypes['cancelRefund'][0])
     {
         $request = $this->cancelRefundRequest($refund_id, $idempotency_key, $contentType);
 
+        $options = $this->createHttpClientOption();
         try {
-            $options = $this->createHttpClientOption();
-            try {
-                $response = $this->client->send($request, $options);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    (int) $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
-                );
-            } catch (ConnectException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    (int) $e->getCode(),
-                    null,
-                    null
-                );
-            }
-
-            $statusCode = $response->getStatusCode();
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    sprintf(
-                        '[%d] Error connecting to the API (%s)',
-                        $statusCode,
-                        (string) $request->getUri()
-                    ),
-                    $statusCode,
-                    $response->getHeaders(),
-                    (string) $response->getBody()
-                );
-            }
-
-            switch($statusCode) {
-                case 200:
-                    if ('Xendit\Refund\Refund' === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
-                    } else {
-                        $content = (string) $response->getBody();
-                        if ('Xendit\Refund\Refund' !== 'string') {
-                            $content = json_decode($content);
-                        }
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, 'Xendit\Refund\Refund', []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-                case 400:
-                    if ('Xendit\Refund\CreateRefund400Response' === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
-                    } else {
-                        $content = (string) $response->getBody();
-                        if ('Xendit\Refund\CreateRefund400Response' !== 'string') {
-                            $content = json_decode($content);
-                        }
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, 'Xendit\Refund\CreateRefund400Response', []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-                case 403:
-                    if ('Xendit\Refund\CreateRefund403Response' === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
-                    } else {
-                        $content = (string) $response->getBody();
-                        if ('Xendit\Refund\CreateRefund403Response' !== 'string') {
-                            $content = json_decode($content);
-                        }
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, 'Xendit\Refund\CreateRefund403Response', []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-                case 404:
-                    if ('Xendit\Refund\CreateRefund404Response' === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
-                    } else {
-                        $content = (string) $response->getBody();
-                        if ('Xendit\Refund\CreateRefund404Response' !== 'string') {
-                            $content = json_decode($content);
-                        }
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, 'Xendit\Refund\CreateRefund404Response', []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-                default:
-                    if ('Xendit\Refund\CreateRefundDefaultResponse' === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
-                    } else {
-                        $content = (string) $response->getBody();
-                        if ('Xendit\Refund\CreateRefundDefaultResponse' !== 'string') {
-                            $content = json_decode($content);
-                        }
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, 'Xendit\Refund\CreateRefundDefaultResponse', []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-            }
-
-            $returnType = '\Refund\Refund';
-            if ($returnType === '\SplFileObject') {
-                $content = $response->getBody(); //stream goes to serializer
-            } else {
-                $content = (string) $response->getBody();
-                if ($returnType !== 'string') {
-                    $content = json_decode($content);
-                }
-            }
-
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 200:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        'Xendit\Refund\Refund',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                case 400:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        'Xendit\Refund\CreateRefund400Response',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                case 403:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        'Xendit\Refund\CreateRefund403Response',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                case 404:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        'Xendit\Refund\CreateRefund404Response',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                default:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        'Xendit\Refund\CreateRefundDefaultResponse',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-            }
-            throw $e;
+            $response = $this->client->send($request, $options);
+        } catch (RequestException $e) {
+            throw new XenditSdkException(
+                $e->getResponse() && $e->getResponse()->getBody() ? json_decode((string) $e->getResponse()->getBody()) : null,
+                (string) $e->getCode(),
+                $e->getMessage() ? $e->getMessage() : sprintf('Error connecting to the API (%s)', "cancelRefundRequest")
+            );
+        } catch (ConnectException $e) {
+            throw new XenditSdkException(
+                null,
+                (string) $e->getCode(),
+                $e->getMessage() ? $e->getMessage() : sprintf('Error connecting to the API (%s)', "cancelRefundRequest")
+            );
+        }  catch (GuzzleException $e) {
+            throw new XenditSdkException(
+                null,
+                (string) $e->getCode(),
+                $e->getMessage() ? $e->getMessage() : sprintf('Error instantiating client for API (%s)', "cancelRefundRequest")
+            );
         }
+
+        $statusCode = $response->getStatusCode();
+
+        if ($statusCode < 200 || $statusCode > 299) {
+            $errBodyContent = $response->getBody() ? json_decode((string) $response->getBody()) : null;
+
+            throw new XenditSdkException(
+                $errBodyContent,
+                (string) $statusCode,
+                $response->getReasonPhrase()
+            );
+        }
+        $returnType = '\Xendit\Refund\Refund';
+        if ($returnType === '\SplFileObject') {
+            $content = $response->getBody(); //stream goes to serializer
+        } else {
+            $content = (string) $response->getBody();
+            if ($returnType !== 'string') {
+                $content = json_decode($content);
+            }
+        }
+
+        return [
+            ObjectSerializer::deserialize($content, $returnType, []),
+            $response->getStatusCode(),
+            $response->getHeaders()
+        ];
     }
 
     /**
      * Operation cancelRefundAsync
      *
-     * @param  Xenditstring $refund_id (required)
-     * @param  Xenditstring $idempotency_key (optional)
+     * @param  string $refund_id (required)
+     * @param  string $idempotency_key (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['cancelRefund'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -360,8 +235,8 @@ class RefundApi
     /**
      * Operation cancelRefundAsyncWithHttpInfo
      *
-     * @param  Xenditstring $refund_id (required)
-     * @param  Xenditstring $idempotency_key (optional)
+     * @param  string $refund_id (required)
+     * @param  string $idempotency_key (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['cancelRefund'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -369,7 +244,7 @@ class RefundApi
      */
     public function cancelRefundAsyncWithHttpInfo($refund_id, $idempotency_key = null, string $contentType = self::contentTypes['cancelRefund'][0])
     {
-        $returnType = '\Refund\Refund';
+        $returnType = '\Xendit\Refund\Refund';
         $request = $this->cancelRefundRequest($refund_id, $idempotency_key, $contentType);
 
         return $this->client
@@ -391,18 +266,11 @@ class RefundApi
                         $response->getHeaders()
                     ];
                 },
-                function ($exception) {
-                    $response = $exception->getResponse();
-                    $statusCode = $response->getStatusCode();
-                    throw new ApiException(
-                        sprintf(
-                            '[%d] Error connecting to the API (%s)',
-                            $statusCode,
-                            $exception->getRequest()->getUri()
-                        ),
-                        $statusCode,
-                        $response->getHeaders(),
-                        (string) $response->getBody()
+                function ($e) {
+                    throw new XenditSdkException(
+                        $e->getResponse() && $e->getResponse()->getBody() ? json_decode((string) $e->getResponse()->getBody()) : null,
+                        (string) $e->getCode(),
+                        $e->getMessage() ? $e->getMessage() : sprintf('Error connecting to the API (%s)', "cancelRefundRequest")
                     );
                 }
             );
@@ -490,7 +358,7 @@ class RefundApi
         
         // Xendit's custom headers
         $defaultHeaders['xendit-lib'] = 'php';
-        $defaultHeaders['xendit-lib-ver'] = '3.1.0';
+        $defaultHeaders['xendit-lib-ver'] = '3.2.0';
 
         if ($this->config->getUserAgent()) {
             $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
@@ -519,9 +387,9 @@ class RefundApi
      * @param  \Xendit\Refund\CreateRefund $create_refund create_refund (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createRefund'] to see the possible values for this operation
      *
-     * @throws \Xendit\ApiException on non-2xx response
+     * @throws \Xendit\XenditSdkException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return Xendit\Refund\Refund|Xendit\Refund\CreateRefund400Response|Xendit\Refund\CreateRefund403Response|Xendit\Refund\CreateRefund404Response|Xendit\Refund\CreateRefund409Response|Xendit\Refund\CreateRefund503Response|Xendit\Refund\CreateRefundDefaultResponse
+     * @return \Xendit\Refund\Refund
      */
     public function createRefund($idempotency_key = null, $create_refund = null, string $contentType = self::contentTypes['createRefund'][0])
     {
@@ -536,241 +404,70 @@ class RefundApi
      * @param  \Xendit\Refund\CreateRefund $create_refund (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createRefund'] to see the possible values for this operation
      *
-     * @throws \Xendit\ApiException on non-2xx response
+     * @throws \Xendit\XenditSdkException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of Xendit\Refund\Refund|Xendit\Refund\CreateRefund400Response|Xendit\Refund\CreateRefund403Response|Xendit\Refund\CreateRefund404Response|Xendit\Refund\CreateRefund409Response|Xendit\Refund\CreateRefund503Response|Xendit\Refund\CreateRefundDefaultResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Xendit\Refund\Refund, HTTP status code, HTTP response headers (array of strings)
      */
     public function createRefundWithHttpInfo($idempotency_key = null, $create_refund = null, string $contentType = self::contentTypes['createRefund'][0])
     {
         $request = $this->createRefundRequest($idempotency_key, $create_refund, $contentType);
 
+        $options = $this->createHttpClientOption();
         try {
-            $options = $this->createHttpClientOption();
-            try {
-                $response = $this->client->send($request, $options);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    (int) $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
-                );
-            } catch (ConnectException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    (int) $e->getCode(),
-                    null,
-                    null
-                );
-            }
-
-            $statusCode = $response->getStatusCode();
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    sprintf(
-                        '[%d] Error connecting to the API (%s)',
-                        $statusCode,
-                        (string) $request->getUri()
-                    ),
-                    $statusCode,
-                    $response->getHeaders(),
-                    (string) $response->getBody()
-                );
-            }
-
-            switch($statusCode) {
-                case 200:
-                    if ('Xendit\Refund\Refund' === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
-                    } else {
-                        $content = (string) $response->getBody();
-                        if ('Xendit\Refund\Refund' !== 'string') {
-                            $content = json_decode($content);
-                        }
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, 'Xendit\Refund\Refund', []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-                case 400:
-                    if ('Xendit\Refund\CreateRefund400Response' === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
-                    } else {
-                        $content = (string) $response->getBody();
-                        if ('Xendit\Refund\CreateRefund400Response' !== 'string') {
-                            $content = json_decode($content);
-                        }
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, 'Xendit\Refund\CreateRefund400Response', []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-                case 403:
-                    if ('Xendit\Refund\CreateRefund403Response' === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
-                    } else {
-                        $content = (string) $response->getBody();
-                        if ('Xendit\Refund\CreateRefund403Response' !== 'string') {
-                            $content = json_decode($content);
-                        }
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, 'Xendit\Refund\CreateRefund403Response', []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-                case 404:
-                    if ('Xendit\Refund\CreateRefund404Response' === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
-                    } else {
-                        $content = (string) $response->getBody();
-                        if ('Xendit\Refund\CreateRefund404Response' !== 'string') {
-                            $content = json_decode($content);
-                        }
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, 'Xendit\Refund\CreateRefund404Response', []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-                case 409:
-                    if ('Xendit\Refund\CreateRefund409Response' === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
-                    } else {
-                        $content = (string) $response->getBody();
-                        if ('Xendit\Refund\CreateRefund409Response' !== 'string') {
-                            $content = json_decode($content);
-                        }
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, 'Xendit\Refund\CreateRefund409Response', []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-                case 503:
-                    if ('Xendit\Refund\CreateRefund503Response' === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
-                    } else {
-                        $content = (string) $response->getBody();
-                        if ('Xendit\Refund\CreateRefund503Response' !== 'string') {
-                            $content = json_decode($content);
-                        }
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, 'Xendit\Refund\CreateRefund503Response', []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-                default:
-                    if ('Xendit\Refund\CreateRefundDefaultResponse' === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
-                    } else {
-                        $content = (string) $response->getBody();
-                        if ('Xendit\Refund\CreateRefundDefaultResponse' !== 'string') {
-                            $content = json_decode($content);
-                        }
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, 'Xendit\Refund\CreateRefundDefaultResponse', []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-            }
-
-            $returnType = '\Refund\Refund';
-            if ($returnType === '\SplFileObject') {
-                $content = $response->getBody(); //stream goes to serializer
-            } else {
-                $content = (string) $response->getBody();
-                if ($returnType !== 'string') {
-                    $content = json_decode($content);
-                }
-            }
-
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 200:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        'Xendit\Refund\Refund',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                case 400:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        'Xendit\Refund\CreateRefund400Response',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                case 403:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        'Xendit\Refund\CreateRefund403Response',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                case 404:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        'Xendit\Refund\CreateRefund404Response',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                case 409:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        'Xendit\Refund\CreateRefund409Response',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                case 503:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        'Xendit\Refund\CreateRefund503Response',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                default:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        'Xendit\Refund\CreateRefundDefaultResponse',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-            }
-            throw $e;
+            $response = $this->client->send($request, $options);
+        } catch (RequestException $e) {
+            throw new XenditSdkException(
+                $e->getResponse() && $e->getResponse()->getBody() ? json_decode((string) $e->getResponse()->getBody()) : null,
+                (string) $e->getCode(),
+                $e->getMessage() ? $e->getMessage() : sprintf('Error connecting to the API (%s)', "createRefundRequest")
+            );
+        } catch (ConnectException $e) {
+            throw new XenditSdkException(
+                null,
+                (string) $e->getCode(),
+                $e->getMessage() ? $e->getMessage() : sprintf('Error connecting to the API (%s)', "createRefundRequest")
+            );
+        }  catch (GuzzleException $e) {
+            throw new XenditSdkException(
+                null,
+                (string) $e->getCode(),
+                $e->getMessage() ? $e->getMessage() : sprintf('Error instantiating client for API (%s)', "createRefundRequest")
+            );
         }
+
+        $statusCode = $response->getStatusCode();
+
+        if ($statusCode < 200 || $statusCode > 299) {
+            $errBodyContent = $response->getBody() ? json_decode((string) $response->getBody()) : null;
+
+            throw new XenditSdkException(
+                $errBodyContent,
+                (string) $statusCode,
+                $response->getReasonPhrase()
+            );
+        }
+        $returnType = '\Xendit\Refund\Refund';
+        if ($returnType === '\SplFileObject') {
+            $content = $response->getBody(); //stream goes to serializer
+        } else {
+            $content = (string) $response->getBody();
+            if ($returnType !== 'string') {
+                $content = json_decode($content);
+            }
+        }
+
+        return [
+            ObjectSerializer::deserialize($content, $returnType, []),
+            $response->getStatusCode(),
+            $response->getHeaders()
+        ];
     }
 
     /**
      * Operation createRefundAsync
      *
-     * @param  Xenditstring $idempotency_key (optional)
-     * @param  Xendit\Xendit\Refund\CreateRefund $create_refund (optional)
+     * @param  string $idempotency_key (optional)
+     * @param  \Xendit\Refund\CreateRefund $create_refund (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createRefund'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -789,8 +486,8 @@ class RefundApi
     /**
      * Operation createRefundAsyncWithHttpInfo
      *
-     * @param  Xenditstring $idempotency_key (optional)
-     * @param  Xendit\Xendit\Refund\CreateRefund $create_refund (optional)
+     * @param  string $idempotency_key (optional)
+     * @param  \Xendit\Refund\CreateRefund $create_refund (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createRefund'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -798,7 +495,7 @@ class RefundApi
      */
     public function createRefundAsyncWithHttpInfo($idempotency_key = null, $create_refund = null, string $contentType = self::contentTypes['createRefund'][0])
     {
-        $returnType = '\Refund\Refund';
+        $returnType = '\Xendit\Refund\Refund';
         $request = $this->createRefundRequest($idempotency_key, $create_refund, $contentType);
 
         return $this->client
@@ -820,18 +517,11 @@ class RefundApi
                         $response->getHeaders()
                     ];
                 },
-                function ($exception) {
-                    $response = $exception->getResponse();
-                    $statusCode = $response->getStatusCode();
-                    throw new ApiException(
-                        sprintf(
-                            '[%d] Error connecting to the API (%s)',
-                            $statusCode,
-                            $exception->getRequest()->getUri()
-                        ),
-                        $statusCode,
-                        $response->getHeaders(),
-                        (string) $response->getBody()
+                function ($e) {
+                    throw new XenditSdkException(
+                        $e->getResponse() && $e->getResponse()->getBody() ? json_decode((string) $e->getResponse()->getBody()) : null,
+                        (string) $e->getCode(),
+                        $e->getMessage() ? $e->getMessage() : sprintf('Error connecting to the API (%s)', "createRefundRequest")
                     );
                 }
             );
@@ -912,7 +602,7 @@ class RefundApi
         
         // Xendit's custom headers
         $defaultHeaders['xendit-lib'] = 'php';
-        $defaultHeaders['xendit-lib-ver'] = '3.1.0';
+        $defaultHeaders['xendit-lib-ver'] = '3.2.0';
 
         if ($this->config->getUserAgent()) {
             $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
@@ -939,9 +629,9 @@ class RefundApi
      *
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getAllRefunds'] to see the possible values for this operation
      *
-     * @throws \Xendit\ApiException on non-2xx response
+     * @throws \Xendit\XenditSdkException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return Xendit\Refund\RefundList|Xendit\Refund\CreateRefundDefaultResponse
+     * @return \Xendit\Refund\RefundList
      */
     public function getAllRefunds(string $contentType = self::contentTypes['getAllRefunds'][0])
     {
@@ -954,119 +644,63 @@ class RefundApi
      *
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getAllRefunds'] to see the possible values for this operation
      *
-     * @throws \Xendit\ApiException on non-2xx response
+     * @throws \Xendit\XenditSdkException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of Xendit\Refund\RefundList|Xendit\Refund\CreateRefundDefaultResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Xendit\Refund\RefundList, HTTP status code, HTTP response headers (array of strings)
      */
     public function getAllRefundsWithHttpInfo(string $contentType = self::contentTypes['getAllRefunds'][0])
     {
         $request = $this->getAllRefundsRequest($contentType);
 
+        $options = $this->createHttpClientOption();
         try {
-            $options = $this->createHttpClientOption();
-            try {
-                $response = $this->client->send($request, $options);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    (int) $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
-                );
-            } catch (ConnectException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    (int) $e->getCode(),
-                    null,
-                    null
-                );
-            }
-
-            $statusCode = $response->getStatusCode();
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    sprintf(
-                        '[%d] Error connecting to the API (%s)',
-                        $statusCode,
-                        (string) $request->getUri()
-                    ),
-                    $statusCode,
-                    $response->getHeaders(),
-                    (string) $response->getBody()
-                );
-            }
-
-            switch($statusCode) {
-                case 200:
-                    if ('Xendit\Refund\RefundList' === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
-                    } else {
-                        $content = (string) $response->getBody();
-                        if ('Xendit\Refund\RefundList' !== 'string') {
-                            $content = json_decode($content);
-                        }
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, 'Xendit\Refund\RefundList', []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-                default:
-                    if ('Xendit\Refund\CreateRefundDefaultResponse' === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
-                    } else {
-                        $content = (string) $response->getBody();
-                        if ('Xendit\Refund\CreateRefundDefaultResponse' !== 'string') {
-                            $content = json_decode($content);
-                        }
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, 'Xendit\Refund\CreateRefundDefaultResponse', []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-            }
-
-            $returnType = '\Refund\RefundList';
-            if ($returnType === '\SplFileObject') {
-                $content = $response->getBody(); //stream goes to serializer
-            } else {
-                $content = (string) $response->getBody();
-                if ($returnType !== 'string') {
-                    $content = json_decode($content);
-                }
-            }
-
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 200:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        'Xendit\Refund\RefundList',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                default:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        'Xendit\Refund\CreateRefundDefaultResponse',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-            }
-            throw $e;
+            $response = $this->client->send($request, $options);
+        } catch (RequestException $e) {
+            throw new XenditSdkException(
+                $e->getResponse() && $e->getResponse()->getBody() ? json_decode((string) $e->getResponse()->getBody()) : null,
+                (string) $e->getCode(),
+                $e->getMessage() ? $e->getMessage() : sprintf('Error connecting to the API (%s)', "getAllRefundsRequest")
+            );
+        } catch (ConnectException $e) {
+            throw new XenditSdkException(
+                null,
+                (string) $e->getCode(),
+                $e->getMessage() ? $e->getMessage() : sprintf('Error connecting to the API (%s)', "getAllRefundsRequest")
+            );
+        }  catch (GuzzleException $e) {
+            throw new XenditSdkException(
+                null,
+                (string) $e->getCode(),
+                $e->getMessage() ? $e->getMessage() : sprintf('Error instantiating client for API (%s)', "getAllRefundsRequest")
+            );
         }
+
+        $statusCode = $response->getStatusCode();
+
+        if ($statusCode < 200 || $statusCode > 299) {
+            $errBodyContent = $response->getBody() ? json_decode((string) $response->getBody()) : null;
+
+            throw new XenditSdkException(
+                $errBodyContent,
+                (string) $statusCode,
+                $response->getReasonPhrase()
+            );
+        }
+        $returnType = '\Xendit\Refund\RefundList';
+        if ($returnType === '\SplFileObject') {
+            $content = $response->getBody(); //stream goes to serializer
+        } else {
+            $content = (string) $response->getBody();
+            if ($returnType !== 'string') {
+                $content = json_decode($content);
+            }
+        }
+
+        return [
+            ObjectSerializer::deserialize($content, $returnType, []),
+            $response->getStatusCode(),
+            $response->getHeaders()
+        ];
     }
 
     /**
@@ -1097,7 +731,7 @@ class RefundApi
      */
     public function getAllRefundsAsyncWithHttpInfo(string $contentType = self::contentTypes['getAllRefunds'][0])
     {
-        $returnType = '\Refund\RefundList';
+        $returnType = '\Xendit\Refund\RefundList';
         $request = $this->getAllRefundsRequest($contentType);
 
         return $this->client
@@ -1119,18 +753,11 @@ class RefundApi
                         $response->getHeaders()
                     ];
                 },
-                function ($exception) {
-                    $response = $exception->getResponse();
-                    $statusCode = $response->getStatusCode();
-                    throw new ApiException(
-                        sprintf(
-                            '[%d] Error connecting to the API (%s)',
-                            $statusCode,
-                            $exception->getRequest()->getUri()
-                        ),
-                        $statusCode,
-                        $response->getHeaders(),
-                        (string) $response->getBody()
+                function ($e) {
+                    throw new XenditSdkException(
+                        $e->getResponse() && $e->getResponse()->getBody() ? json_decode((string) $e->getResponse()->getBody()) : null,
+                        (string) $e->getCode(),
+                        $e->getMessage() ? $e->getMessage() : sprintf('Error connecting to the API (%s)', "getAllRefundsRequest")
                     );
                 }
             );
@@ -1196,7 +823,7 @@ class RefundApi
         
         // Xendit's custom headers
         $defaultHeaders['xendit-lib'] = 'php';
-        $defaultHeaders['xendit-lib-ver'] = '3.1.0';
+        $defaultHeaders['xendit-lib-ver'] = '3.2.0';
 
         if ($this->config->getUserAgent()) {
             $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
@@ -1225,9 +852,9 @@ class RefundApi
      * @param  string $idempotency_key idempotency_key (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getRefund'] to see the possible values for this operation
      *
-     * @throws \Xendit\ApiException on non-2xx response
+     * @throws \Xendit\XenditSdkException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return Xendit\Refund\Refund|Xendit\Refund\CreateRefundDefaultResponse
+     * @return \Xendit\Refund\Refund
      */
     public function getRefund($refund_id, $idempotency_key = null, string $contentType = self::contentTypes['getRefund'][0])
     {
@@ -1242,126 +869,70 @@ class RefundApi
      * @param  string $idempotency_key (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getRefund'] to see the possible values for this operation
      *
-     * @throws \Xendit\ApiException on non-2xx response
+     * @throws \Xendit\XenditSdkException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of Xendit\Refund\Refund|Xendit\Refund\CreateRefundDefaultResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Xendit\Refund\Refund, HTTP status code, HTTP response headers (array of strings)
      */
     public function getRefundWithHttpInfo($refund_id, $idempotency_key = null, string $contentType = self::contentTypes['getRefund'][0])
     {
         $request = $this->getRefundRequest($refund_id, $idempotency_key, $contentType);
 
+        $options = $this->createHttpClientOption();
         try {
-            $options = $this->createHttpClientOption();
-            try {
-                $response = $this->client->send($request, $options);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    (int) $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
-                );
-            } catch (ConnectException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    (int) $e->getCode(),
-                    null,
-                    null
-                );
-            }
-
-            $statusCode = $response->getStatusCode();
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    sprintf(
-                        '[%d] Error connecting to the API (%s)',
-                        $statusCode,
-                        (string) $request->getUri()
-                    ),
-                    $statusCode,
-                    $response->getHeaders(),
-                    (string) $response->getBody()
-                );
-            }
-
-            switch($statusCode) {
-                case 200:
-                    if ('Xendit\Refund\Refund' === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
-                    } else {
-                        $content = (string) $response->getBody();
-                        if ('Xendit\Refund\Refund' !== 'string') {
-                            $content = json_decode($content);
-                        }
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, 'Xendit\Refund\Refund', []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-                default:
-                    if ('Xendit\Refund\CreateRefundDefaultResponse' === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
-                    } else {
-                        $content = (string) $response->getBody();
-                        if ('Xendit\Refund\CreateRefundDefaultResponse' !== 'string') {
-                            $content = json_decode($content);
-                        }
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, 'Xendit\Refund\CreateRefundDefaultResponse', []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-            }
-
-            $returnType = '\Refund\Refund';
-            if ($returnType === '\SplFileObject') {
-                $content = $response->getBody(); //stream goes to serializer
-            } else {
-                $content = (string) $response->getBody();
-                if ($returnType !== 'string') {
-                    $content = json_decode($content);
-                }
-            }
-
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 200:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        'Xendit\Refund\Refund',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                default:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        'Xendit\Refund\CreateRefundDefaultResponse',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-            }
-            throw $e;
+            $response = $this->client->send($request, $options);
+        } catch (RequestException $e) {
+            throw new XenditSdkException(
+                $e->getResponse() && $e->getResponse()->getBody() ? json_decode((string) $e->getResponse()->getBody()) : null,
+                (string) $e->getCode(),
+                $e->getMessage() ? $e->getMessage() : sprintf('Error connecting to the API (%s)', "getRefundRequest")
+            );
+        } catch (ConnectException $e) {
+            throw new XenditSdkException(
+                null,
+                (string) $e->getCode(),
+                $e->getMessage() ? $e->getMessage() : sprintf('Error connecting to the API (%s)', "getRefundRequest")
+            );
+        }  catch (GuzzleException $e) {
+            throw new XenditSdkException(
+                null,
+                (string) $e->getCode(),
+                $e->getMessage() ? $e->getMessage() : sprintf('Error instantiating client for API (%s)', "getRefundRequest")
+            );
         }
+
+        $statusCode = $response->getStatusCode();
+
+        if ($statusCode < 200 || $statusCode > 299) {
+            $errBodyContent = $response->getBody() ? json_decode((string) $response->getBody()) : null;
+
+            throw new XenditSdkException(
+                $errBodyContent,
+                (string) $statusCode,
+                $response->getReasonPhrase()
+            );
+        }
+        $returnType = '\Xendit\Refund\Refund';
+        if ($returnType === '\SplFileObject') {
+            $content = $response->getBody(); //stream goes to serializer
+        } else {
+            $content = (string) $response->getBody();
+            if ($returnType !== 'string') {
+                $content = json_decode($content);
+            }
+        }
+
+        return [
+            ObjectSerializer::deserialize($content, $returnType, []),
+            $response->getStatusCode(),
+            $response->getHeaders()
+        ];
     }
 
     /**
      * Operation getRefundAsync
      *
-     * @param  Xenditstring $refund_id (required)
-     * @param  Xenditstring $idempotency_key (optional)
+     * @param  string $refund_id (required)
+     * @param  string $idempotency_key (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getRefund'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -1380,8 +951,8 @@ class RefundApi
     /**
      * Operation getRefundAsyncWithHttpInfo
      *
-     * @param  Xenditstring $refund_id (required)
-     * @param  Xenditstring $idempotency_key (optional)
+     * @param  string $refund_id (required)
+     * @param  string $idempotency_key (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getRefund'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -1389,7 +960,7 @@ class RefundApi
      */
     public function getRefundAsyncWithHttpInfo($refund_id, $idempotency_key = null, string $contentType = self::contentTypes['getRefund'][0])
     {
-        $returnType = '\Refund\Refund';
+        $returnType = '\Xendit\Refund\Refund';
         $request = $this->getRefundRequest($refund_id, $idempotency_key, $contentType);
 
         return $this->client
@@ -1411,18 +982,11 @@ class RefundApi
                         $response->getHeaders()
                     ];
                 },
-                function ($exception) {
-                    $response = $exception->getResponse();
-                    $statusCode = $response->getStatusCode();
-                    throw new ApiException(
-                        sprintf(
-                            '[%d] Error connecting to the API (%s)',
-                            $statusCode,
-                            $exception->getRequest()->getUri()
-                        ),
-                        $statusCode,
-                        $response->getHeaders(),
-                        (string) $response->getBody()
+                function ($e) {
+                    throw new XenditSdkException(
+                        $e->getResponse() && $e->getResponse()->getBody() ? json_decode((string) $e->getResponse()->getBody()) : null,
+                        (string) $e->getCode(),
+                        $e->getMessage() ? $e->getMessage() : sprintf('Error connecting to the API (%s)', "getRefundRequest")
                     );
                 }
             );
@@ -1510,7 +1074,7 @@ class RefundApi
         
         // Xendit's custom headers
         $defaultHeaders['xendit-lib'] = 'php';
-        $defaultHeaders['xendit-lib-ver'] = '3.1.0';
+        $defaultHeaders['xendit-lib-ver'] = '3.2.0';
 
         if ($this->config->getUserAgent()) {
             $defaultHeaders['User-Agent'] = $this->config->getUserAgent();

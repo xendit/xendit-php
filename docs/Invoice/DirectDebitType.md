@@ -36,5 +36,15 @@ use Xendit\Invoice\DirectDebitType;
     
         * `DD_BCA_KLIKPAY` (value: `'DD_BCA_KLIKPAY'`)
     
+        * `DD_BDO_EPAY` (value: `'DD_BDO_EPAY'`)
+    
+        * `DD_RCBC` (value: `'DD_RCBC'`)
+    
+        * `DD_CHINABANK` (value: `'DD_CHINABANK'`)
+    
+        * `BA_CHINABANK` (value: `'BA_CHINABANK'`)
+    
+        * `DC_CHINABANK` (value: `'DC_CHINABANK'`)
+    
 
 [[Back to README]](../../README.md)

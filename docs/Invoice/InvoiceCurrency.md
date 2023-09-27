@@ -12,6 +12,10 @@ use Xendit\Invoice\InvoiceCurrency;
     
         * `USD` (value: `'USD'`)
     
+        * `THB` (value: `'THB'`)
+    
+        * `VND` (value: `'VND'`)
+    
         * `PHP` (value: `'PHP'`)
     
 

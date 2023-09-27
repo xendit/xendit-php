@@ -103,6 +103,65 @@ paths:
       requestBody:
         content:
           application/json:
+            examples:
+              E-Wallet One Time Payment via Redirect URL:
+                value:
+                  reference_id: example-ref-1234
+                  amount: 15000
+                  currency: IDR
+                  country: ID
+                  payment_method:
+                    type: EWALLET
+                    ewallet:
+                      channel_code: SHOPEEPAY
+                      channel_properties:
+                        success_return_url: https://redirect.me/success
+                    reusability: ONE_TIME_USE
+              Fixed amount dynamic QR:
+                value:
+                  reference_id: example-ref-1234
+                  amount: 15000
+                  currency: IDR
+                  payment_method:
+                    type: QR_CODE
+                    reusability: ONE_TIME_USE
+                    qr_code:
+                      channel_code: “QRIS”
+                  metadata:
+                    sku: example-sku-1234
+              Fixed amount single use Virtual Account:
+                value:
+                  reference_id: example-ref-1234
+                  currency: IDR
+                  amount: 15000
+                  country: ID
+                  payment_method:
+                    type: VIRTUAL_ACCOUNT
+                    reusability: ONE_TIME_USE
+                    reference_id: example-1234
+                    virtual_account:
+                      channel_code: BNI
+                      channel_properties:
+                        customer_name: Ahmad Gunawan
+                        expires_at: 2023-01-03T17:00:00Z
+                  metadata:
+                    sku: example-sku-1234
+              Subsequent PH Direct Debit payments after account linking:
+                value:
+                  reference_id: example-ref-1234
+                  amount: 1500
+                  currency: PHP
+                  payment_method_id: pm-9685a196-81e9-4c73-8d62-97df5aab2762
+                  metadata:
+                    sku: example-sku-1234
+              Subsequent tokenized E-Wallet payments after account linking:
+                value:
+                  reference_id: example-ref-1234
+                  amount: 15000
+                  currency: IDR
+                  payment_method_id: pm-2b2c6092-2100-4843-a7fc-f5c7edac7efd
+                  metadata:
+                    sku: example-sku-1234
             schema:
               $ref: '#/components/schemas/PaymentRequestParameters'
       responses:
@@ -156,65 +215,6 @@ paths:
         "200":
           content:
             application/json:
-              examples:
-                E-Wallet One Time Payment via Redirect URL:
-                  value:
-                    reference_id: example-ref-1234
-                    amount: 15000
-                    currency: IDR
-                    country: ID
-                    payment_method:
-                      type: EWALLET
-                      ewallet:
-                        channel_code: SHOPEEPAY
-                        channel_properties:
-                          success_return_url: https://redirect.me/success
-                      reusability: ONE_TIME_USE
-                Fixed amount dynamic QR:
-                  value:
-                    reference_id: example-ref-1234
-                    amount: 15000
-                    currency: IDR
-                    payment_method:
-                      type: QR_CODE
-                      reusability: ONE_TIME_USE
-                      qr_code:
-                        channel_code: “QRIS”
-                    metadata:
-                      sku: example-sku-1234
-                Fixed amount single use Virtual Account:
-                  value:
-                    reference_id: example-ref-1234
-                    currency: IDR
-                    amount: 15000
-                    country: ID
-                    payment_method:
-                      type: VIRTUAL_ACCOUNT
-                      reusability: ONE_TIME_USE
-                      reference_id: example-1234
-                      virtual_account:
-                        channel_code: BNI
-                        channel_properties:
-                          customer_name: Ahmad Gunawan
-                          expires_at: 2023-01-03T17:00:00Z
-                    metadata:
-                      sku: example-sku-1234
-                Subsequent PH Direct Debit payments after account linking:
-                  value:
-                    reference_id: example-ref-1234
-                    amount: 1500
-                    currency: PHP
-                    payment_method_id: pm-9685a196-81e9-4c73-8d62-97df5aab2762
-                    metadata:
-                      sku: example-sku-1234
-                Subsequent tokenized E-Wallet payments after account linking:
-                  value:
-                    reference_id: example-ref-1234
-                    amount: 15000
-                    currency: IDR
-                    payment_method_id: pm-2b2c6092-2100-4843-a7fc-f5c7edac7efd
-                    metadata:
-                      sku: example-sku-1234
               schema:
                 $ref: '#/components/schemas/PaymentRequest'
           description: Request successful
@@ -345,20 +345,6 @@ paths:
         required: false
         schema:
           type: integer
-        style: form
-      - explode: true
-        in: query
-        name: after_id
-        required: false
-        schema:
-          type: string
-        style: form
-      - explode: true
-        in: query
-        name: before_id
-        required: false
-        schema:
-          type: string
         style: form
       responses:
         "200":

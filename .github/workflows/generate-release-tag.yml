@@ -12,7 +12,7 @@ jobs:
         id: parse-changelog
         run: |
           echo "changelog<<EOF" >> "$GITHUB_OUTPUT"
-          echo "${{ github.event.client_payload.changelog }}" | tr -s '%0A' '\n' >> "$GITHUB_OUTPUT"
+          echo "${{ github.event.client_payload.changelog }}" | sed -e 's/%0A/\n/g' >> "$GITHUB_OUTPUT"
           echo "EOF" >> "$GITHUB_OUTPUT"
       - name: Create Release
         id: create-release
@@ -20,8 +20,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.REPO_ACCESS_TOKEN }}
         with:
-          tag_name: v${{ github.event.client_payload.version }}
-          release_name: v${{ github.event.client_payload.version }}
+          tag_name: ${{ github.event.client_payload.version }}
+          release_name: ${{ github.event.client_payload.version }}
           body: ${{ steps.parse-changelog.outputs.changelog }}
           draft: false
           prerelease: false

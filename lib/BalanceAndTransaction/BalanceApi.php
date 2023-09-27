@@ -28,7 +28,7 @@ use GuzzleHttp\Psr7\MultipartStream;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\RequestOptions;
 use Xendit\Model;
-use Xendit\ApiException;
+use Xendit\XenditSdkException;
 use Xendit\Configuration;
 use Xendit\HeaderSelector;
 use Xendit\ObjectSerializer;
@@ -130,9 +130,9 @@ class BalanceApi
      * @param  string $for_user_id The sub-account user-id that you want to make this transaction for. This header is only used if you have access to xenPlatform. See xenPlatform for more information (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getBalance'] to see the possible values for this operation
      *
-     * @throws \Xendit\ApiException on non-2xx response
+     * @throws \Xendit\XenditSdkException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return Xendit\BalanceAndTransaction\Balance|Xendit\BalanceAndTransaction\ValidationError|Xendit\BalanceAndTransaction\ServerError
+     * @return \Xendit\BalanceAndTransaction\Balance
      */
     public function getBalance($account_type = 'CASH', $currency = null, $for_user_id = null, string $contentType = self::contentTypes['getBalance'][0])
     {
@@ -150,142 +150,63 @@ class BalanceApi
      * @param  string $for_user_id The sub-account user-id that you want to make this transaction for. This header is only used if you have access to xenPlatform. See xenPlatform for more information (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getBalance'] to see the possible values for this operation
      *
-     * @throws \Xendit\ApiException on non-2xx response
+     * @throws \Xendit\XenditSdkException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of Xendit\BalanceAndTransaction\Balance|Xendit\BalanceAndTransaction\ValidationError|Xendit\BalanceAndTransaction\ServerError, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Xendit\BalanceAndTransaction\Balance, HTTP status code, HTTP response headers (array of strings)
      */
     public function getBalanceWithHttpInfo($account_type = 'CASH', $currency = null, $for_user_id = null, string $contentType = self::contentTypes['getBalance'][0])
     {
         $request = $this->getBalanceRequest($account_type, $currency, $for_user_id, $contentType);
 
+        $options = $this->createHttpClientOption();
         try {
-            $options = $this->createHttpClientOption();
-            try {
-                $response = $this->client->send($request, $options);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    (int) $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
-                );
-            } catch (ConnectException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    (int) $e->getCode(),
-                    null,
-                    null
-                );
-            }
-
-            $statusCode = $response->getStatusCode();
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    sprintf(
-                        '[%d] Error connecting to the API (%s)',
-                        $statusCode,
-                        (string) $request->getUri()
-                    ),
-                    $statusCode,
-                    $response->getHeaders(),
-                    (string) $response->getBody()
-                );
-            }
-
-            switch($statusCode) {
-                case 200:
-                    if ('Xendit\BalanceAndTransaction\Balance' === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
-                    } else {
-                        $content = (string) $response->getBody();
-                        if ('Xendit\BalanceAndTransaction\Balance' !== 'string') {
-                            $content = json_decode($content);
-                        }
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, 'Xendit\BalanceAndTransaction\Balance', []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-                case 400:
-                    if ('Xendit\BalanceAndTransaction\ValidationError' === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
-                    } else {
-                        $content = (string) $response->getBody();
-                        if ('Xendit\BalanceAndTransaction\ValidationError' !== 'string') {
-                            $content = json_decode($content);
-                        }
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, 'Xendit\BalanceAndTransaction\ValidationError', []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-                default:
-                    if ('Xendit\BalanceAndTransaction\ServerError' === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
-                    } else {
-                        $content = (string) $response->getBody();
-                        if ('Xendit\BalanceAndTransaction\ServerError' !== 'string') {
-                            $content = json_decode($content);
-                        }
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, 'Xendit\BalanceAndTransaction\ServerError', []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-            }
-
-            $returnType = '\BalanceAndTransaction\Balance';
-            if ($returnType === '\SplFileObject') {
-                $content = $response->getBody(); //stream goes to serializer
-            } else {
-                $content = (string) $response->getBody();
-                if ($returnType !== 'string') {
-                    $content = json_decode($content);
-                }
-            }
-
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 200:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        'Xendit\BalanceAndTransaction\Balance',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                case 400:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        'Xendit\BalanceAndTransaction\ValidationError',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                default:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        'Xendit\BalanceAndTransaction\ServerError',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-            }
-            throw $e;
+            $response = $this->client->send($request, $options);
+        } catch (RequestException $e) {
+            throw new XenditSdkException(
+                $e->getResponse() && $e->getResponse()->getBody() ? json_decode((string) $e->getResponse()->getBody()) : null,
+                (string) $e->getCode(),
+                $e->getMessage() ? $e->getMessage() : sprintf('Error connecting to the API (%s)', "getBalanceRequest")
+            );
+        } catch (ConnectException $e) {
+            throw new XenditSdkException(
+                null,
+                (string) $e->getCode(),
+                $e->getMessage() ? $e->getMessage() : sprintf('Error connecting to the API (%s)', "getBalanceRequest")
+            );
+        }  catch (GuzzleException $e) {
+            throw new XenditSdkException(
+                null,
+                (string) $e->getCode(),
+                $e->getMessage() ? $e->getMessage() : sprintf('Error instantiating client for API (%s)', "getBalanceRequest")
+            );
         }
+
+        $statusCode = $response->getStatusCode();
+
+        if ($statusCode < 200 || $statusCode > 299) {
+            $errBodyContent = $response->getBody() ? json_decode((string) $response->getBody()) : null;
+
+            throw new XenditSdkException(
+                $errBodyContent,
+                (string) $statusCode,
+                $response->getReasonPhrase()
+            );
+        }
+        $returnType = '\Xendit\BalanceAndTransaction\Balance';
+        if ($returnType === '\SplFileObject') {
+            $content = $response->getBody(); //stream goes to serializer
+        } else {
+            $content = (string) $response->getBody();
+            if ($returnType !== 'string') {
+                $content = json_decode($content);
+            }
+        }
+
+        return [
+            ObjectSerializer::deserialize($content, $returnType, []),
+            $response->getStatusCode(),
+            $response->getHeaders()
+        ];
     }
 
     /**
@@ -293,9 +214,9 @@ class BalanceApi
      *
      * Retrieves balances for a business, default to CASH type
      *
-     * @param  Xenditstring $account_type The selected balance type (optional, default to 'CASH')
-     * @param  Xenditstring $currency Currency for filter for customers with multi currency accounts (optional)
-     * @param  Xenditstring $for_user_id The sub-account user-id that you want to make this transaction for. This header is only used if you have access to xenPlatform. See xenPlatform for more information (optional)
+     * @param  string $account_type The selected balance type (optional, default to 'CASH')
+     * @param  string $currency Currency for filter for customers with multi currency accounts (optional)
+     * @param  string $for_user_id The sub-account user-id that you want to make this transaction for. This header is only used if you have access to xenPlatform. See xenPlatform for more information (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getBalance'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -316,9 +237,9 @@ class BalanceApi
      *
      * Retrieves balances for a business, default to CASH type
      *
-     * @param  Xenditstring $account_type The selected balance type (optional, default to 'CASH')
-     * @param  Xenditstring $currency Currency for filter for customers with multi currency accounts (optional)
-     * @param  Xenditstring $for_user_id The sub-account user-id that you want to make this transaction for. This header is only used if you have access to xenPlatform. See xenPlatform for more information (optional)
+     * @param  string $account_type The selected balance type (optional, default to 'CASH')
+     * @param  string $currency Currency for filter for customers with multi currency accounts (optional)
+     * @param  string $for_user_id The sub-account user-id that you want to make this transaction for. This header is only used if you have access to xenPlatform. See xenPlatform for more information (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getBalance'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -326,7 +247,7 @@ class BalanceApi
      */
     public function getBalanceAsyncWithHttpInfo($account_type = 'CASH', $currency = null, $for_user_id = null, string $contentType = self::contentTypes['getBalance'][0])
     {
-        $returnType = '\BalanceAndTransaction\Balance';
+        $returnType = '\Xendit\BalanceAndTransaction\Balance';
         $request = $this->getBalanceRequest($account_type, $currency, $for_user_id, $contentType);
 
         return $this->client
@@ -348,18 +269,11 @@ class BalanceApi
                         $response->getHeaders()
                     ];
                 },
-                function ($exception) {
-                    $response = $exception->getResponse();
-                    $statusCode = $response->getStatusCode();
-                    throw new ApiException(
-                        sprintf(
-                            '[%d] Error connecting to the API (%s)',
-                            $statusCode,
-                            $exception->getRequest()->getUri()
-                        ),
-                        $statusCode,
-                        $response->getHeaders(),
-                        (string) $response->getBody()
+                function ($e) {
+                    throw new XenditSdkException(
+                        $e->getResponse() && $e->getResponse()->getBody() ? json_decode((string) $e->getResponse()->getBody()) : null,
+                        (string) $e->getCode(),
+                        $e->getMessage() ? $e->getMessage() : sprintf('Error connecting to the API (%s)', "getBalanceRequest")
                     );
                 }
             );
@@ -453,7 +367,7 @@ class BalanceApi
         
         // Xendit's custom headers
         $defaultHeaders['xendit-lib'] = 'php';
-        $defaultHeaders['xendit-lib-ver'] = '3.1.0';
+        $defaultHeaders['xendit-lib-ver'] = '3.2.0';
 
         if ($this->config->getUserAgent()) {
             $defaultHeaders['User-Agent'] = $this->config->getUserAgent();

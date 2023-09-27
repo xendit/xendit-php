@@ -28,7 +28,7 @@ use GuzzleHttp\Psr7\MultipartStream;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\RequestOptions;
 use Xendit\Model;
-use Xendit\ApiException;
+use Xendit\XenditSdkException;
 use Xendit\Configuration;
 use Xendit\HeaderSelector;
 use Xendit\ObjectSerializer;
@@ -140,9 +140,9 @@ class PayoutApi
      * @param  string $id Payout id returned from the response of /v2/payouts (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['cancelPayout'] to see the possible values for this operation
      *
-     * @throws \Xendit\ApiException on non-2xx response
+     * @throws \Xendit\XenditSdkException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return Xendit\Payout\GetPayouts200ResponseDataInner|Xendit\Payout\Error|Xendit\Payout\Error|Xendit\Payout\Error
+     * @return \Xendit\Payout\GetPayouts200ResponseDataInner
      */
     public function cancelPayout($id, string $contentType = self::contentTypes['cancelPayout'][0])
     {
@@ -158,165 +158,63 @@ class PayoutApi
      * @param  string $id Payout id returned from the response of /v2/payouts (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['cancelPayout'] to see the possible values for this operation
      *
-     * @throws \Xendit\ApiException on non-2xx response
+     * @throws \Xendit\XenditSdkException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of Xendit\Payout\GetPayouts200ResponseDataInner|Xendit\Payout\Error|Xendit\Payout\Error|Xendit\Payout\Error, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Xendit\Payout\GetPayouts200ResponseDataInner, HTTP status code, HTTP response headers (array of strings)
      */
     public function cancelPayoutWithHttpInfo($id, string $contentType = self::contentTypes['cancelPayout'][0])
     {
         $request = $this->cancelPayoutRequest($id, $contentType);
 
+        $options = $this->createHttpClientOption();
         try {
-            $options = $this->createHttpClientOption();
-            try {
-                $response = $this->client->send($request, $options);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    (int) $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
-                );
-            } catch (ConnectException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    (int) $e->getCode(),
-                    null,
-                    null
-                );
-            }
-
-            $statusCode = $response->getStatusCode();
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    sprintf(
-                        '[%d] Error connecting to the API (%s)',
-                        $statusCode,
-                        (string) $request->getUri()
-                    ),
-                    $statusCode,
-                    $response->getHeaders(),
-                    (string) $response->getBody()
-                );
-            }
-
-            switch($statusCode) {
-                case 200:
-                    if ('Xendit\Payout\GetPayouts200ResponseDataInner' === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
-                    } else {
-                        $content = (string) $response->getBody();
-                        if ('Xendit\Payout\GetPayouts200ResponseDataInner' !== 'string') {
-                            $content = json_decode($content);
-                        }
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, 'Xendit\Payout\GetPayouts200ResponseDataInner', []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-                case 400:
-                    if ('Xendit\Payout\Error' === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
-                    } else {
-                        $content = (string) $response->getBody();
-                        if ('Xendit\Payout\Error' !== 'string') {
-                            $content = json_decode($content);
-                        }
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, 'Xendit\Payout\Error', []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-                case 404:
-                    if ('Xendit\Payout\Error' === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
-                    } else {
-                        $content = (string) $response->getBody();
-                        if ('Xendit\Payout\Error' !== 'string') {
-                            $content = json_decode($content);
-                        }
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, 'Xendit\Payout\Error', []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-                default:
-                    if ('Xendit\Payout\Error' === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
-                    } else {
-                        $content = (string) $response->getBody();
-                        if ('Xendit\Payout\Error' !== 'string') {
-                            $content = json_decode($content);
-                        }
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, 'Xendit\Payout\Error', []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-            }
-
-            $returnType = '\Payout\GetPayouts200ResponseDataInner';
-            if ($returnType === '\SplFileObject') {
-                $content = $response->getBody(); //stream goes to serializer
-            } else {
-                $content = (string) $response->getBody();
-                if ($returnType !== 'string') {
-                    $content = json_decode($content);
-                }
-            }
-
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 200:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        'Xendit\Payout\GetPayouts200ResponseDataInner',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                case 400:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        'Xendit\Payout\Error',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                case 404:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        'Xendit\Payout\Error',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                default:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        'Xendit\Payout\Error',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-            }
-            throw $e;
+            $response = $this->client->send($request, $options);
+        } catch (RequestException $e) {
+            throw new XenditSdkException(
+                $e->getResponse() && $e->getResponse()->getBody() ? json_decode((string) $e->getResponse()->getBody()) : null,
+                (string) $e->getCode(),
+                $e->getMessage() ? $e->getMessage() : sprintf('Error connecting to the API (%s)', "cancelPayoutRequest")
+            );
+        } catch (ConnectException $e) {
+            throw new XenditSdkException(
+                null,
+                (string) $e->getCode(),
+                $e->getMessage() ? $e->getMessage() : sprintf('Error connecting to the API (%s)', "cancelPayoutRequest")
+            );
+        }  catch (GuzzleException $e) {
+            throw new XenditSdkException(
+                null,
+                (string) $e->getCode(),
+                $e->getMessage() ? $e->getMessage() : sprintf('Error instantiating client for API (%s)', "cancelPayoutRequest")
+            );
         }
+
+        $statusCode = $response->getStatusCode();
+
+        if ($statusCode < 200 || $statusCode > 299) {
+            $errBodyContent = $response->getBody() ? json_decode((string) $response->getBody()) : null;
+
+            throw new XenditSdkException(
+                $errBodyContent,
+                (string) $statusCode,
+                $response->getReasonPhrase()
+            );
+        }
+        $returnType = '\Xendit\Payout\GetPayouts200ResponseDataInner';
+        if ($returnType === '\SplFileObject') {
+            $content = $response->getBody(); //stream goes to serializer
+        } else {
+            $content = (string) $response->getBody();
+            if ($returnType !== 'string') {
+                $content = json_decode($content);
+            }
+        }
+
+        return [
+            ObjectSerializer::deserialize($content, $returnType, []),
+            $response->getStatusCode(),
+            $response->getHeaders()
+        ];
     }
 
     /**
@@ -324,7 +222,7 @@ class PayoutApi
      *
      * API to cancel requested payouts that have not yet been sent to partner banks and e-wallets. Cancellation is possible if the payout has not been sent out via our partner and when payout status is ACCEPTED.
      *
-     * @param  Xenditstring $id Payout id returned from the response of /v2/payouts (required)
+     * @param  string $id Payout id returned from the response of /v2/payouts (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['cancelPayout'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -345,7 +243,7 @@ class PayoutApi
      *
      * API to cancel requested payouts that have not yet been sent to partner banks and e-wallets. Cancellation is possible if the payout has not been sent out via our partner and when payout status is ACCEPTED.
      *
-     * @param  Xenditstring $id Payout id returned from the response of /v2/payouts (required)
+     * @param  string $id Payout id returned from the response of /v2/payouts (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['cancelPayout'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -353,7 +251,7 @@ class PayoutApi
      */
     public function cancelPayoutAsyncWithHttpInfo($id, string $contentType = self::contentTypes['cancelPayout'][0])
     {
-        $returnType = '\Payout\GetPayouts200ResponseDataInner';
+        $returnType = '\Xendit\Payout\GetPayouts200ResponseDataInner';
         $request = $this->cancelPayoutRequest($id, $contentType);
 
         return $this->client
@@ -375,18 +273,11 @@ class PayoutApi
                         $response->getHeaders()
                     ];
                 },
-                function ($exception) {
-                    $response = $exception->getResponse();
-                    $statusCode = $response->getStatusCode();
-                    throw new ApiException(
-                        sprintf(
-                            '[%d] Error connecting to the API (%s)',
-                            $statusCode,
-                            $exception->getRequest()->getUri()
-                        ),
-                        $statusCode,
-                        $response->getHeaders(),
-                        (string) $response->getBody()
+                function ($e) {
+                    throw new XenditSdkException(
+                        $e->getResponse() && $e->getResponse()->getBody() ? json_decode((string) $e->getResponse()->getBody()) : null,
+                        (string) $e->getCode(),
+                        $e->getMessage() ? $e->getMessage() : sprintf('Error connecting to the API (%s)', "cancelPayoutRequest")
                     );
                 }
             );
@@ -468,7 +359,7 @@ class PayoutApi
         
         // Xendit's custom headers
         $defaultHeaders['xendit-lib'] = 'php';
-        $defaultHeaders['xendit-lib-ver'] = '3.1.0';
+        $defaultHeaders['xendit-lib-ver'] = '3.2.0';
 
         if ($this->config->getUserAgent()) {
             $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
@@ -500,9 +391,9 @@ class PayoutApi
      * @param  \Xendit\Payout\CreatePayoutRequest $create_payout_request create_payout_request (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createPayout'] to see the possible values for this operation
      *
-     * @throws \Xendit\ApiException on non-2xx response
+     * @throws \Xendit\XenditSdkException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return Xendit\Payout\GetPayouts200ResponseDataInner|Xendit\Payout\Error|Xendit\Payout\Error|Xendit\Payout\Error|Xendit\Payout\Error|Xendit\Payout\Error
+     * @return \Xendit\Payout\GetPayouts200ResponseDataInner
      */
     public function createPayout($idempotency_key, $for_user_id = null, $create_payout_request = null, string $contentType = self::contentTypes['createPayout'][0])
     {
@@ -520,211 +411,63 @@ class PayoutApi
      * @param  \Xendit\Payout\CreatePayoutRequest $create_payout_request (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createPayout'] to see the possible values for this operation
      *
-     * @throws \Xendit\ApiException on non-2xx response
+     * @throws \Xendit\XenditSdkException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of Xendit\Payout\GetPayouts200ResponseDataInner|Xendit\Payout\Error|Xendit\Payout\Error|Xendit\Payout\Error|Xendit\Payout\Error|Xendit\Payout\Error, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Xendit\Payout\GetPayouts200ResponseDataInner, HTTP status code, HTTP response headers (array of strings)
      */
     public function createPayoutWithHttpInfo($idempotency_key, $for_user_id = null, $create_payout_request = null, string $contentType = self::contentTypes['createPayout'][0])
     {
         $request = $this->createPayoutRequest($idempotency_key, $for_user_id, $create_payout_request, $contentType);
 
+        $options = $this->createHttpClientOption();
         try {
-            $options = $this->createHttpClientOption();
-            try {
-                $response = $this->client->send($request, $options);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    (int) $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
-                );
-            } catch (ConnectException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    (int) $e->getCode(),
-                    null,
-                    null
-                );
-            }
-
-            $statusCode = $response->getStatusCode();
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    sprintf(
-                        '[%d] Error connecting to the API (%s)',
-                        $statusCode,
-                        (string) $request->getUri()
-                    ),
-                    $statusCode,
-                    $response->getHeaders(),
-                    (string) $response->getBody()
-                );
-            }
-
-            switch($statusCode) {
-                case 200:
-                    if ('Xendit\Payout\GetPayouts200ResponseDataInner' === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
-                    } else {
-                        $content = (string) $response->getBody();
-                        if ('Xendit\Payout\GetPayouts200ResponseDataInner' !== 'string') {
-                            $content = json_decode($content);
-                        }
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, 'Xendit\Payout\GetPayouts200ResponseDataInner', []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-                case 400:
-                    if ('Xendit\Payout\Error' === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
-                    } else {
-                        $content = (string) $response->getBody();
-                        if ('Xendit\Payout\Error' !== 'string') {
-                            $content = json_decode($content);
-                        }
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, 'Xendit\Payout\Error', []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-                case 401:
-                    if ('Xendit\Payout\Error' === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
-                    } else {
-                        $content = (string) $response->getBody();
-                        if ('Xendit\Payout\Error' !== 'string') {
-                            $content = json_decode($content);
-                        }
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, 'Xendit\Payout\Error', []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-                case 403:
-                    if ('Xendit\Payout\Error' === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
-                    } else {
-                        $content = (string) $response->getBody();
-                        if ('Xendit\Payout\Error' !== 'string') {
-                            $content = json_decode($content);
-                        }
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, 'Xendit\Payout\Error', []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-                case 409:
-                    if ('Xendit\Payout\Error' === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
-                    } else {
-                        $content = (string) $response->getBody();
-                        if ('Xendit\Payout\Error' !== 'string') {
-                            $content = json_decode($content);
-                        }
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, 'Xendit\Payout\Error', []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-                default:
-                    if ('Xendit\Payout\Error' === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
-                    } else {
-                        $content = (string) $response->getBody();
-                        if ('Xendit\Payout\Error' !== 'string') {
-                            $content = json_decode($content);
-                        }
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, 'Xendit\Payout\Error', []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-            }
-
-            $returnType = '\Payout\GetPayouts200ResponseDataInner';
-            if ($returnType === '\SplFileObject') {
-                $content = $response->getBody(); //stream goes to serializer
-            } else {
-                $content = (string) $response->getBody();
-                if ($returnType !== 'string') {
-                    $content = json_decode($content);
-                }
-            }
-
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 200:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        'Xendit\Payout\GetPayouts200ResponseDataInner',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                case 400:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        'Xendit\Payout\Error',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                case 401:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        'Xendit\Payout\Error',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                case 403:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        'Xendit\Payout\Error',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                case 409:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        'Xendit\Payout\Error',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                default:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        'Xendit\Payout\Error',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-            }
-            throw $e;
+            $response = $this->client->send($request, $options);
+        } catch (RequestException $e) {
+            throw new XenditSdkException(
+                $e->getResponse() && $e->getResponse()->getBody() ? json_decode((string) $e->getResponse()->getBody()) : null,
+                (string) $e->getCode(),
+                $e->getMessage() ? $e->getMessage() : sprintf('Error connecting to the API (%s)', "createPayoutRequest")
+            );
+        } catch (ConnectException $e) {
+            throw new XenditSdkException(
+                null,
+                (string) $e->getCode(),
+                $e->getMessage() ? $e->getMessage() : sprintf('Error connecting to the API (%s)', "createPayoutRequest")
+            );
+        }  catch (GuzzleException $e) {
+            throw new XenditSdkException(
+                null,
+                (string) $e->getCode(),
+                $e->getMessage() ? $e->getMessage() : sprintf('Error instantiating client for API (%s)', "createPayoutRequest")
+            );
         }
+
+        $statusCode = $response->getStatusCode();
+
+        if ($statusCode < 200 || $statusCode > 299) {
+            $errBodyContent = $response->getBody() ? json_decode((string) $response->getBody()) : null;
+
+            throw new XenditSdkException(
+                $errBodyContent,
+                (string) $statusCode,
+                $response->getReasonPhrase()
+            );
+        }
+        $returnType = '\Xendit\Payout\GetPayouts200ResponseDataInner';
+        if ($returnType === '\SplFileObject') {
+            $content = $response->getBody(); //stream goes to serializer
+        } else {
+            $content = (string) $response->getBody();
+            if ($returnType !== 'string') {
+                $content = json_decode($content);
+            }
+        }
+
+        return [
+            ObjectSerializer::deserialize($content, $returnType, []),
+            $response->getStatusCode(),
+            $response->getHeaders()
+        ];
     }
 
     /**
@@ -732,9 +475,9 @@ class PayoutApi
      *
      * API to send money at scale to bank accounts &amp; eWallets
      *
-     * @param  Xenditstring $idempotency_key A unique key to prevent duplicate requests from pushing through our system. No expiration. (required)
-     * @param  Xenditstring $for_user_id The sub-account user-id that you want to make this transaction for. This header is only used if you have access to xenPlatform. See xenPlatform for more information. (optional)
-     * @param  Xendit\Xendit\Payout\CreatePayoutRequest $create_payout_request (optional)
+     * @param  string $idempotency_key A unique key to prevent duplicate requests from pushing through our system. No expiration. (required)
+     * @param  string $for_user_id The sub-account user-id that you want to make this transaction for. This header is only used if you have access to xenPlatform. See xenPlatform for more information. (optional)
+     * @param  \Xendit\Payout\CreatePayoutRequest $create_payout_request (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createPayout'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -755,9 +498,9 @@ class PayoutApi
      *
      * API to send money at scale to bank accounts &amp; eWallets
      *
-     * @param  Xenditstring $idempotency_key A unique key to prevent duplicate requests from pushing through our system. No expiration. (required)
-     * @param  Xenditstring $for_user_id The sub-account user-id that you want to make this transaction for. This header is only used if you have access to xenPlatform. See xenPlatform for more information. (optional)
-     * @param  Xendit\Xendit\Payout\CreatePayoutRequest $create_payout_request (optional)
+     * @param  string $idempotency_key A unique key to prevent duplicate requests from pushing through our system. No expiration. (required)
+     * @param  string $for_user_id The sub-account user-id that you want to make this transaction for. This header is only used if you have access to xenPlatform. See xenPlatform for more information. (optional)
+     * @param  \Xendit\Payout\CreatePayoutRequest $create_payout_request (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createPayout'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -765,7 +508,7 @@ class PayoutApi
      */
     public function createPayoutAsyncWithHttpInfo($idempotency_key, $for_user_id = null, $create_payout_request = null, string $contentType = self::contentTypes['createPayout'][0])
     {
-        $returnType = '\Payout\GetPayouts200ResponseDataInner';
+        $returnType = '\Xendit\Payout\GetPayouts200ResponseDataInner';
         $request = $this->createPayoutRequest($idempotency_key, $for_user_id, $create_payout_request, $contentType);
 
         return $this->client
@@ -787,18 +530,11 @@ class PayoutApi
                         $response->getHeaders()
                     ];
                 },
-                function ($exception) {
-                    $response = $exception->getResponse();
-                    $statusCode = $response->getStatusCode();
-                    throw new ApiException(
-                        sprintf(
-                            '[%d] Error connecting to the API (%s)',
-                            $statusCode,
-                            $exception->getRequest()->getUri()
-                        ),
-                        $statusCode,
-                        $response->getHeaders(),
-                        (string) $response->getBody()
+                function ($e) {
+                    throw new XenditSdkException(
+                        $e->getResponse() && $e->getResponse()->getBody() ? json_decode((string) $e->getResponse()->getBody()) : null,
+                        (string) $e->getCode(),
+                        $e->getMessage() ? $e->getMessage() : sprintf('Error connecting to the API (%s)', "createPayoutRequest")
                     );
                 }
             );
@@ -891,7 +627,7 @@ class PayoutApi
         
         // Xendit's custom headers
         $defaultHeaders['xendit-lib'] = 'php';
-        $defaultHeaders['xendit-lib-ver'] = '3.1.0';
+        $defaultHeaders['xendit-lib-ver'] = '3.2.0';
 
         if ($this->config->getUserAgent()) {
             $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
@@ -921,9 +657,9 @@ class PayoutApi
      * @param  string $id Payout id returned from the response of /v2/payouts (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getPayoutById'] to see the possible values for this operation
      *
-     * @throws \Xendit\ApiException on non-2xx response
+     * @throws \Xendit\XenditSdkException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return Xendit\Payout\GetPayouts200ResponseDataInner|Xendit\Payout\Error|Xendit\Payout\Error|Xendit\Payout\Error|Xendit\Payout\Error
+     * @return \Xendit\Payout\GetPayouts200ResponseDataInner
      */
     public function getPayoutById($id, string $contentType = self::contentTypes['getPayoutById'][0])
     {
@@ -939,188 +675,63 @@ class PayoutApi
      * @param  string $id Payout id returned from the response of /v2/payouts (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getPayoutById'] to see the possible values for this operation
      *
-     * @throws \Xendit\ApiException on non-2xx response
+     * @throws \Xendit\XenditSdkException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of Xendit\Payout\GetPayouts200ResponseDataInner|Xendit\Payout\Error|Xendit\Payout\Error|Xendit\Payout\Error|Xendit\Payout\Error, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Xendit\Payout\GetPayouts200ResponseDataInner, HTTP status code, HTTP response headers (array of strings)
      */
     public function getPayoutByIdWithHttpInfo($id, string $contentType = self::contentTypes['getPayoutById'][0])
     {
         $request = $this->getPayoutByIdRequest($id, $contentType);
 
+        $options = $this->createHttpClientOption();
         try {
-            $options = $this->createHttpClientOption();
-            try {
-                $response = $this->client->send($request, $options);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    (int) $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
-                );
-            } catch (ConnectException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    (int) $e->getCode(),
-                    null,
-                    null
-                );
-            }
-
-            $statusCode = $response->getStatusCode();
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    sprintf(
-                        '[%d] Error connecting to the API (%s)',
-                        $statusCode,
-                        (string) $request->getUri()
-                    ),
-                    $statusCode,
-                    $response->getHeaders(),
-                    (string) $response->getBody()
-                );
-            }
-
-            switch($statusCode) {
-                case 200:
-                    if ('Xendit\Payout\GetPayouts200ResponseDataInner' === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
-                    } else {
-                        $content = (string) $response->getBody();
-                        if ('Xendit\Payout\GetPayouts200ResponseDataInner' !== 'string') {
-                            $content = json_decode($content);
-                        }
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, 'Xendit\Payout\GetPayouts200ResponseDataInner', []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-                case 401:
-                    if ('Xendit\Payout\Error' === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
-                    } else {
-                        $content = (string) $response->getBody();
-                        if ('Xendit\Payout\Error' !== 'string') {
-                            $content = json_decode($content);
-                        }
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, 'Xendit\Payout\Error', []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-                case 403:
-                    if ('Xendit\Payout\Error' === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
-                    } else {
-                        $content = (string) $response->getBody();
-                        if ('Xendit\Payout\Error' !== 'string') {
-                            $content = json_decode($content);
-                        }
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, 'Xendit\Payout\Error', []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-                case 404:
-                    if ('Xendit\Payout\Error' === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
-                    } else {
-                        $content = (string) $response->getBody();
-                        if ('Xendit\Payout\Error' !== 'string') {
-                            $content = json_decode($content);
-                        }
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, 'Xendit\Payout\Error', []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-                default:
-                    if ('Xendit\Payout\Error' === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
-                    } else {
-                        $content = (string) $response->getBody();
-                        if ('Xendit\Payout\Error' !== 'string') {
-                            $content = json_decode($content);
-                        }
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, 'Xendit\Payout\Error', []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-            }
-
-            $returnType = '\Payout\GetPayouts200ResponseDataInner';
-            if ($returnType === '\SplFileObject') {
-                $content = $response->getBody(); //stream goes to serializer
-            } else {
-                $content = (string) $response->getBody();
-                if ($returnType !== 'string') {
-                    $content = json_decode($content);
-                }
-            }
-
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 200:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        'Xendit\Payout\GetPayouts200ResponseDataInner',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                case 401:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        'Xendit\Payout\Error',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                case 403:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        'Xendit\Payout\Error',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                case 404:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        'Xendit\Payout\Error',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                default:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        'Xendit\Payout\Error',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-            }
-            throw $e;
+            $response = $this->client->send($request, $options);
+        } catch (RequestException $e) {
+            throw new XenditSdkException(
+                $e->getResponse() && $e->getResponse()->getBody() ? json_decode((string) $e->getResponse()->getBody()) : null,
+                (string) $e->getCode(),
+                $e->getMessage() ? $e->getMessage() : sprintf('Error connecting to the API (%s)', "getPayoutByIdRequest")
+            );
+        } catch (ConnectException $e) {
+            throw new XenditSdkException(
+                null,
+                (string) $e->getCode(),
+                $e->getMessage() ? $e->getMessage() : sprintf('Error connecting to the API (%s)', "getPayoutByIdRequest")
+            );
+        }  catch (GuzzleException $e) {
+            throw new XenditSdkException(
+                null,
+                (string) $e->getCode(),
+                $e->getMessage() ? $e->getMessage() : sprintf('Error instantiating client for API (%s)', "getPayoutByIdRequest")
+            );
         }
+
+        $statusCode = $response->getStatusCode();
+
+        if ($statusCode < 200 || $statusCode > 299) {
+            $errBodyContent = $response->getBody() ? json_decode((string) $response->getBody()) : null;
+
+            throw new XenditSdkException(
+                $errBodyContent,
+                (string) $statusCode,
+                $response->getReasonPhrase()
+            );
+        }
+        $returnType = '\Xendit\Payout\GetPayouts200ResponseDataInner';
+        if ($returnType === '\SplFileObject') {
+            $content = $response->getBody(); //stream goes to serializer
+        } else {
+            $content = (string) $response->getBody();
+            if ($returnType !== 'string') {
+                $content = json_decode($content);
+            }
+        }
+
+        return [
+            ObjectSerializer::deserialize($content, $returnType, []),
+            $response->getStatusCode(),
+            $response->getHeaders()
+        ];
     }
 
     /**
@@ -1128,7 +739,7 @@ class PayoutApi
      *
      * API to fetch the current status, or details of the payout
      *
-     * @param  Xenditstring $id Payout id returned from the response of /v2/payouts (required)
+     * @param  string $id Payout id returned from the response of /v2/payouts (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getPayoutById'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -1149,7 +760,7 @@ class PayoutApi
      *
      * API to fetch the current status, or details of the payout
      *
-     * @param  Xenditstring $id Payout id returned from the response of /v2/payouts (required)
+     * @param  string $id Payout id returned from the response of /v2/payouts (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getPayoutById'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -1157,7 +768,7 @@ class PayoutApi
      */
     public function getPayoutByIdAsyncWithHttpInfo($id, string $contentType = self::contentTypes['getPayoutById'][0])
     {
-        $returnType = '\Payout\GetPayouts200ResponseDataInner';
+        $returnType = '\Xendit\Payout\GetPayouts200ResponseDataInner';
         $request = $this->getPayoutByIdRequest($id, $contentType);
 
         return $this->client
@@ -1179,18 +790,11 @@ class PayoutApi
                         $response->getHeaders()
                     ];
                 },
-                function ($exception) {
-                    $response = $exception->getResponse();
-                    $statusCode = $response->getStatusCode();
-                    throw new ApiException(
-                        sprintf(
-                            '[%d] Error connecting to the API (%s)',
-                            $statusCode,
-                            $exception->getRequest()->getUri()
-                        ),
-                        $statusCode,
-                        $response->getHeaders(),
-                        (string) $response->getBody()
+                function ($e) {
+                    throw new XenditSdkException(
+                        $e->getResponse() && $e->getResponse()->getBody() ? json_decode((string) $e->getResponse()->getBody()) : null,
+                        (string) $e->getCode(),
+                        $e->getMessage() ? $e->getMessage() : sprintf('Error connecting to the API (%s)', "getPayoutByIdRequest")
                     );
                 }
             );
@@ -1272,7 +876,7 @@ class PayoutApi
         
         // Xendit's custom headers
         $defaultHeaders['xendit-lib'] = 'php';
-        $defaultHeaders['xendit-lib-ver'] = '3.1.0';
+        $defaultHeaders['xendit-lib-ver'] = '3.2.0';
 
         if ($this->config->getUserAgent()) {
             $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
@@ -1304,9 +908,9 @@ class PayoutApi
      * @param  string $channel_code Filter channels by channel code, prefixed by ISO-3166 country code (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getPayoutChannels'] to see the possible values for this operation
      *
-     * @throws \Xendit\ApiException on non-2xx response
+     * @throws \Xendit\XenditSdkException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return Xendit\Payout\Channel[]|Xendit\Payout\Error
+     * @return \Xendit\Payout\Channel[]
      */
     public function getPayoutChannels($currency = null, $channel_category = null, $channel_code = null, string $contentType = self::contentTypes['getPayoutChannels'][0])
     {
@@ -1324,119 +928,63 @@ class PayoutApi
      * @param  string $channel_code Filter channels by channel code, prefixed by ISO-3166 country code (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getPayoutChannels'] to see the possible values for this operation
      *
-     * @throws \Xendit\ApiException on non-2xx response
+     * @throws \Xendit\XenditSdkException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of Xendit\Payout\Channel[]|Xendit\Payout\Error, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Xendit\Payout\Channel[], HTTP status code, HTTP response headers (array of strings)
      */
     public function getPayoutChannelsWithHttpInfo($currency = null, $channel_category = null, $channel_code = null, string $contentType = self::contentTypes['getPayoutChannels'][0])
     {
         $request = $this->getPayoutChannelsRequest($currency, $channel_category, $channel_code, $contentType);
 
+        $options = $this->createHttpClientOption();
         try {
-            $options = $this->createHttpClientOption();
-            try {
-                $response = $this->client->send($request, $options);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    (int) $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
-                );
-            } catch (ConnectException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    (int) $e->getCode(),
-                    null,
-                    null
-                );
-            }
-
-            $statusCode = $response->getStatusCode();
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    sprintf(
-                        '[%d] Error connecting to the API (%s)',
-                        $statusCode,
-                        (string) $request->getUri()
-                    ),
-                    $statusCode,
-                    $response->getHeaders(),
-                    (string) $response->getBody()
-                );
-            }
-
-            switch($statusCode) {
-                case 200:
-                    if ('Xendit\Payout\Channel[]' === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
-                    } else {
-                        $content = (string) $response->getBody();
-                        if ('Xendit\Payout\Channel[]' !== 'string') {
-                            $content = json_decode($content);
-                        }
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, 'Xendit\Payout\Channel[]', []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-                default:
-                    if ('Xendit\Payout\Error' === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
-                    } else {
-                        $content = (string) $response->getBody();
-                        if ('Xendit\Payout\Error' !== 'string') {
-                            $content = json_decode($content);
-                        }
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, 'Xendit\Payout\Error', []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-            }
-
-            $returnType = '\Payout\Channel[]';
-            if ($returnType === '\SplFileObject') {
-                $content = $response->getBody(); //stream goes to serializer
-            } else {
-                $content = (string) $response->getBody();
-                if ($returnType !== 'string') {
-                    $content = json_decode($content);
-                }
-            }
-
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 200:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        'Xendit\Payout\Channel[]',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                default:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        'Xendit\Payout\Error',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-            }
-            throw $e;
+            $response = $this->client->send($request, $options);
+        } catch (RequestException $e) {
+            throw new XenditSdkException(
+                $e->getResponse() && $e->getResponse()->getBody() ? json_decode((string) $e->getResponse()->getBody()) : null,
+                (string) $e->getCode(),
+                $e->getMessage() ? $e->getMessage() : sprintf('Error connecting to the API (%s)', "getPayoutChannelsRequest")
+            );
+        } catch (ConnectException $e) {
+            throw new XenditSdkException(
+                null,
+                (string) $e->getCode(),
+                $e->getMessage() ? $e->getMessage() : sprintf('Error connecting to the API (%s)', "getPayoutChannelsRequest")
+            );
+        }  catch (GuzzleException $e) {
+            throw new XenditSdkException(
+                null,
+                (string) $e->getCode(),
+                $e->getMessage() ? $e->getMessage() : sprintf('Error instantiating client for API (%s)', "getPayoutChannelsRequest")
+            );
         }
+
+        $statusCode = $response->getStatusCode();
+
+        if ($statusCode < 200 || $statusCode > 299) {
+            $errBodyContent = $response->getBody() ? json_decode((string) $response->getBody()) : null;
+
+            throw new XenditSdkException(
+                $errBodyContent,
+                (string) $statusCode,
+                $response->getReasonPhrase()
+            );
+        }
+        $returnType = '\Xendit\Payout\Channel[]';
+        if ($returnType === '\SplFileObject') {
+            $content = $response->getBody(); //stream goes to serializer
+        } else {
+            $content = (string) $response->getBody();
+            if ($returnType !== 'string') {
+                $content = json_decode($content);
+            }
+        }
+
+        return [
+            ObjectSerializer::deserialize($content, $returnType, []),
+            $response->getStatusCode(),
+            $response->getHeaders()
+        ];
     }
 
     /**
@@ -1444,9 +992,9 @@ class PayoutApi
      *
      * API providing the current list of banks and e-wallets we support for payouts for both regions
      *
-     * @param  Xenditstring $currency Filter channels by currency from ISO-4217 values (optional)
-     * @param  Xendit\Payout\ChannelCategory[] $channel_category Filter channels by category (optional)
-     * @param  Xenditstring $channel_code Filter channels by channel code, prefixed by ISO-3166 country code (optional)
+     * @param  string $currency Filter channels by currency from ISO-4217 values (optional)
+     * @param  \Payout\ChannelCategory[] $channel_category Filter channels by category (optional)
+     * @param  string $channel_code Filter channels by channel code, prefixed by ISO-3166 country code (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getPayoutChannels'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -1467,9 +1015,9 @@ class PayoutApi
      *
      * API providing the current list of banks and e-wallets we support for payouts for both regions
      *
-     * @param  Xenditstring $currency Filter channels by currency from ISO-4217 values (optional)
-     * @param  Xendit\Payout\ChannelCategory[] $channel_category Filter channels by category (optional)
-     * @param  Xenditstring $channel_code Filter channels by channel code, prefixed by ISO-3166 country code (optional)
+     * @param  string $currency Filter channels by currency from ISO-4217 values (optional)
+     * @param  \Payout\ChannelCategory[] $channel_category Filter channels by category (optional)
+     * @param  string $channel_code Filter channels by channel code, prefixed by ISO-3166 country code (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getPayoutChannels'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -1477,7 +1025,7 @@ class PayoutApi
      */
     public function getPayoutChannelsAsyncWithHttpInfo($currency = null, $channel_category = null, $channel_code = null, string $contentType = self::contentTypes['getPayoutChannels'][0])
     {
-        $returnType = '\Payout\Channel[]';
+        $returnType = '\Xendit\Payout\Channel[]';
         $request = $this->getPayoutChannelsRequest($currency, $channel_category, $channel_code, $contentType);
 
         return $this->client
@@ -1499,18 +1047,11 @@ class PayoutApi
                         $response->getHeaders()
                     ];
                 },
-                function ($exception) {
-                    $response = $exception->getResponse();
-                    $statusCode = $response->getStatusCode();
-                    throw new ApiException(
-                        sprintf(
-                            '[%d] Error connecting to the API (%s)',
-                            $statusCode,
-                            $exception->getRequest()->getUri()
-                        ),
-                        $statusCode,
-                        $response->getHeaders(),
-                        (string) $response->getBody()
+                function ($e) {
+                    throw new XenditSdkException(
+                        $e->getResponse() && $e->getResponse()->getBody() ? json_decode((string) $e->getResponse()->getBody()) : null,
+                        (string) $e->getCode(),
+                        $e->getMessage() ? $e->getMessage() : sprintf('Error connecting to the API (%s)', "getPayoutChannelsRequest")
                     );
                 }
             );
@@ -1609,7 +1150,7 @@ class PayoutApi
         
         // Xendit's custom headers
         $defaultHeaders['xendit-lib'] = 'php';
-        $defaultHeaders['xendit-lib-ver'] = '3.1.0';
+        $defaultHeaders['xendit-lib-ver'] = '3.2.0';
 
         if ($this->config->getUserAgent()) {
             $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
@@ -1642,9 +1183,9 @@ class PayoutApi
      * @param  string $before_id Used to fetch record before this payout unique id (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getPayouts'] to see the possible values for this operation
      *
-     * @throws \Xendit\ApiException on non-2xx response
+     * @throws \Xendit\XenditSdkException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return Xendit\Payout\GetPayouts200Response|Xendit\Payout\Error|Xendit\Payout\Error
+     * @return \Xendit\Payout\GetPayouts200Response
      */
     public function getPayouts($reference_id, $limit = null, $after_id = null, $before_id = null, string $contentType = self::contentTypes['getPayouts'][0])
     {
@@ -1663,142 +1204,63 @@ class PayoutApi
      * @param  string $before_id Used to fetch record before this payout unique id (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getPayouts'] to see the possible values for this operation
      *
-     * @throws \Xendit\ApiException on non-2xx response
+     * @throws \Xendit\XenditSdkException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of Xendit\Payout\GetPayouts200Response|Xendit\Payout\Error|Xendit\Payout\Error, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Xendit\Payout\GetPayouts200Response, HTTP status code, HTTP response headers (array of strings)
      */
     public function getPayoutsWithHttpInfo($reference_id, $limit = null, $after_id = null, $before_id = null, string $contentType = self::contentTypes['getPayouts'][0])
     {
         $request = $this->getPayoutsRequest($reference_id, $limit, $after_id, $before_id, $contentType);
 
+        $options = $this->createHttpClientOption();
         try {
-            $options = $this->createHttpClientOption();
-            try {
-                $response = $this->client->send($request, $options);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    (int) $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
-                );
-            } catch (ConnectException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    (int) $e->getCode(),
-                    null,
-                    null
-                );
-            }
-
-            $statusCode = $response->getStatusCode();
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    sprintf(
-                        '[%d] Error connecting to the API (%s)',
-                        $statusCode,
-                        (string) $request->getUri()
-                    ),
-                    $statusCode,
-                    $response->getHeaders(),
-                    (string) $response->getBody()
-                );
-            }
-
-            switch($statusCode) {
-                case 200:
-                    if ('Xendit\Payout\GetPayouts200Response' === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
-                    } else {
-                        $content = (string) $response->getBody();
-                        if ('Xendit\Payout\GetPayouts200Response' !== 'string') {
-                            $content = json_decode($content);
-                        }
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, 'Xendit\Payout\GetPayouts200Response', []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-                case 403:
-                    if ('Xendit\Payout\Error' === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
-                    } else {
-                        $content = (string) $response->getBody();
-                        if ('Xendit\Payout\Error' !== 'string') {
-                            $content = json_decode($content);
-                        }
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, 'Xendit\Payout\Error', []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-                default:
-                    if ('Xendit\Payout\Error' === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
-                    } else {
-                        $content = (string) $response->getBody();
-                        if ('Xendit\Payout\Error' !== 'string') {
-                            $content = json_decode($content);
-                        }
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, 'Xendit\Payout\Error', []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-            }
-
-            $returnType = '\Payout\GetPayouts200Response';
-            if ($returnType === '\SplFileObject') {
-                $content = $response->getBody(); //stream goes to serializer
-            } else {
-                $content = (string) $response->getBody();
-                if ($returnType !== 'string') {
-                    $content = json_decode($content);
-                }
-            }
-
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 200:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        'Xendit\Payout\GetPayouts200Response',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                case 403:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        'Xendit\Payout\Error',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                default:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        'Xendit\Payout\Error',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-            }
-            throw $e;
+            $response = $this->client->send($request, $options);
+        } catch (RequestException $e) {
+            throw new XenditSdkException(
+                $e->getResponse() && $e->getResponse()->getBody() ? json_decode((string) $e->getResponse()->getBody()) : null,
+                (string) $e->getCode(),
+                $e->getMessage() ? $e->getMessage() : sprintf('Error connecting to the API (%s)', "getPayoutsRequest")
+            );
+        } catch (ConnectException $e) {
+            throw new XenditSdkException(
+                null,
+                (string) $e->getCode(),
+                $e->getMessage() ? $e->getMessage() : sprintf('Error connecting to the API (%s)', "getPayoutsRequest")
+            );
+        }  catch (GuzzleException $e) {
+            throw new XenditSdkException(
+                null,
+                (string) $e->getCode(),
+                $e->getMessage() ? $e->getMessage() : sprintf('Error instantiating client for API (%s)', "getPayoutsRequest")
+            );
         }
+
+        $statusCode = $response->getStatusCode();
+
+        if ($statusCode < 200 || $statusCode > 299) {
+            $errBodyContent = $response->getBody() ? json_decode((string) $response->getBody()) : null;
+
+            throw new XenditSdkException(
+                $errBodyContent,
+                (string) $statusCode,
+                $response->getReasonPhrase()
+            );
+        }
+        $returnType = '\Xendit\Payout\GetPayouts200Response';
+        if ($returnType === '\SplFileObject') {
+            $content = $response->getBody(); //stream goes to serializer
+        } else {
+            $content = (string) $response->getBody();
+            if ($returnType !== 'string') {
+                $content = json_decode($content);
+            }
+        }
+
+        return [
+            ObjectSerializer::deserialize($content, $returnType, []),
+            $response->getStatusCode(),
+            $response->getHeaders()
+        ];
     }
 
     /**
@@ -1806,10 +1268,10 @@ class PayoutApi
      *
      * API to retrieve all matching payouts with reference ID
      *
-     * @param  Xenditstring $reference_id Reference_id provided when creating the payout (required)
-     * @param  Xenditfloat $limit Number of records to fetch per API call (optional)
-     * @param  Xenditstring $after_id Used to fetch record after this payout unique id (optional)
-     * @param  Xenditstring $before_id Used to fetch record before this payout unique id (optional)
+     * @param  string $reference_id Reference_id provided when creating the payout (required)
+     * @param  float $limit Number of records to fetch per API call (optional)
+     * @param  string $after_id Used to fetch record after this payout unique id (optional)
+     * @param  string $before_id Used to fetch record before this payout unique id (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getPayouts'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -1830,10 +1292,10 @@ class PayoutApi
      *
      * API to retrieve all matching payouts with reference ID
      *
-     * @param  Xenditstring $reference_id Reference_id provided when creating the payout (required)
-     * @param  Xenditfloat $limit Number of records to fetch per API call (optional)
-     * @param  Xenditstring $after_id Used to fetch record after this payout unique id (optional)
-     * @param  Xenditstring $before_id Used to fetch record before this payout unique id (optional)
+     * @param  string $reference_id Reference_id provided when creating the payout (required)
+     * @param  float $limit Number of records to fetch per API call (optional)
+     * @param  string $after_id Used to fetch record after this payout unique id (optional)
+     * @param  string $before_id Used to fetch record before this payout unique id (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getPayouts'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -1841,7 +1303,7 @@ class PayoutApi
      */
     public function getPayoutsAsyncWithHttpInfo($reference_id, $limit = null, $after_id = null, $before_id = null, string $contentType = self::contentTypes['getPayouts'][0])
     {
-        $returnType = '\Payout\GetPayouts200Response';
+        $returnType = '\Xendit\Payout\GetPayouts200Response';
         $request = $this->getPayoutsRequest($reference_id, $limit, $after_id, $before_id, $contentType);
 
         return $this->client
@@ -1863,18 +1325,11 @@ class PayoutApi
                         $response->getHeaders()
                     ];
                 },
-                function ($exception) {
-                    $response = $exception->getResponse();
-                    $statusCode = $response->getStatusCode();
-                    throw new ApiException(
-                        sprintf(
-                            '[%d] Error connecting to the API (%s)',
-                            $statusCode,
-                            $exception->getRequest()->getUri()
-                        ),
-                        $statusCode,
-                        $response->getHeaders(),
-                        (string) $response->getBody()
+                function ($e) {
+                    throw new XenditSdkException(
+                        $e->getResponse() && $e->getResponse()->getBody() ? json_decode((string) $e->getResponse()->getBody()) : null,
+                        (string) $e->getCode(),
+                        $e->getMessage() ? $e->getMessage() : sprintf('Error connecting to the API (%s)', "getPayoutsRequest")
                     );
                 }
             );
@@ -1990,7 +1445,7 @@ class PayoutApi
         
         // Xendit's custom headers
         $defaultHeaders['xendit-lib'] = 'php';
-        $defaultHeaders['xendit-lib-ver'] = '3.1.0';
+        $defaultHeaders['xendit-lib-ver'] = '3.2.0';
 
         if ($this->config->getUserAgent()) {
             $defaultHeaders['User-Agent'] = $this->config->getUserAgent();

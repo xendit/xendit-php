@@ -122,6 +122,42 @@ paths:
       requestBody:
         content:
           application/json:
+            examples:
+              Account linking for E-Wallet:
+                value:
+                  type: EWALLET
+                  reusability: MULTIPLE_USE
+                  customer:
+                    reference_id: customer-123
+                    type: INDIVIDUAL
+                    individual_detail:
+                      given_names: John
+                      surname: Doe
+                  ewallet:
+                    channel_code: OVO
+                    channel_properties:
+                      success_return_url: https://redirect.me/success
+                      failure_return_url: https://redirect.me/failure
+                      cancel_return_url: https://redirect.me/cancel
+                  metadata:
+                    sku: example-1234
+              Account linking for PH Direct Debit:
+                value:
+                  type: DIRECT_DEBIT
+                  direct_debit:
+                    channel_code: BPI
+                    channel_properties:
+                      success_return_url: https://redirect.me/success
+                      failure_return_url: https://redirect.me/failure
+                  reusability: MULTIPLE_USE
+                  customer:
+                    reference_id: customer-123
+                    type: INDIVIDUAL
+                    individual_detail:
+                      given_names: John
+                      surname: Doe
+                  email: testemail@email.com
+                  mobile_number: 628774494404
             schema:
               $ref: '#/components/schemas/PaymentMethodParameters'
       responses:
@@ -187,42 +223,6 @@ paths:
         "200":
           content:
             application/json:
-              examples:
-                Account linking for PH Direct Debit:
-                  value:
-                    type: DIRECT_DEBIT
-                    direct_debit:
-                      channel_code: BPI
-                      channel_properties:
-                        success_return_url: https://redirect.me/success
-                        failure_return_url: https://redirect.me/failure
-                    reusability: MULTIPLE_USE
-                    customer:
-                      reference_id: customer-123
-                      type: INDIVIDUAL
-                      individual_detail:
-                        given_names: John
-                        surname: Doe
-                    email: testemail@email.com
-                    mobile_number: 628774494404
-                Account linking for E-Wallet:
-                  value:
-                    type: EWALLET
-                    reusability: MULTIPLE_USE
-                    customer:
-                      reference_id: customer-123
-                      type: INDIVIDUAL
-                      individual_detail:
-                        given_names: John
-                        surname: Doe
-                    ewallet:
-                      channel_code: OVO
-                      channel_properties:
-                        success_return_url: https://redirect.me/success
-                        failure_return_url: https://redirect.me/failure
-                        cancel_return_url: https://redirect.me/cancel
-                    metadata:
-                      sku: example-1234
               schema:
                 $ref: '#/components/schemas/PaymentMethod'
           description: Request successful

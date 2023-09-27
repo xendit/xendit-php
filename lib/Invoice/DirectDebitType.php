@@ -65,6 +65,16 @@ class DirectDebitType
     
     public const DD_BCA_KLIKPAY = 'DD_BCA_KLIKPAY';
     
+    public const DD_BDO_EPAY = 'DD_BDO_EPAY';
+    
+    public const DD_RCBC = 'DD_RCBC';
+    
+    public const DD_CHINABANK = 'DD_CHINABANK';
+    
+    public const BA_CHINABANK = 'BA_CHINABANK';
+    
+    public const DC_CHINABANK = 'DC_CHINABANK';
+    
 
     private $value;
 
@@ -107,7 +117,12 @@ class DirectDebitType
             self::BCA_KLIKPAY,
             self::BA_BCA_KLIKPAY,
             self::DC_BCA_KLIKPAY,
-            self::DD_BCA_KLIKPAY
+            self::DD_BCA_KLIKPAY,
+            self::DD_BDO_EPAY,
+            self::DD_RCBC,
+            self::DD_CHINABANK,
+            self::BA_CHINABANK,
+            self::DC_CHINABANK
         ];
     }
 }

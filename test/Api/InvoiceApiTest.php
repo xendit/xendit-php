@@ -17,7 +17,7 @@
 namespace Xendit\Test\Api;
 
 use \Xendit\Configuration;
-use \Xendit\ApiException;
+use \Xendit\XenditSdkException;
 use \Xendit\ObjectSerializer;
 use PHPUnit\Framework\TestCase;
 

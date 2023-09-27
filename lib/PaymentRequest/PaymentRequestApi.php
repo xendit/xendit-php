@@ -28,7 +28,7 @@ use GuzzleHttp\Psr7\MultipartStream;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\RequestOptions;
 use Xendit\Model;
-use Xendit\ApiException;
+use Xendit\XenditSdkException;
 use Xendit\Configuration;
 use Xendit\HeaderSelector;
 use Xendit\ObjectSerializer;
@@ -147,9 +147,9 @@ class PaymentRequestApi
      * @param  \Xendit\PaymentRequest\PaymentRequestAuthParameters $payment_request_auth_parameters payment_request_auth_parameters (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['authorizePaymentRequest'] to see the possible values for this operation
      *
-     * @throws \Xendit\ApiException on non-2xx response
+     * @throws \Xendit\XenditSdkException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return Xendit\PaymentRequest\PaymentRequest|Xendit\PaymentRequest\Error|Xendit\PaymentRequest\Error|Xendit\PaymentRequest\Error
+     * @return \Xendit\PaymentRequest\PaymentRequest
      */
     public function authorizePaymentRequest($payment_request_id, $payment_request_auth_parameters = null, string $contentType = self::contentTypes['authorizePaymentRequest'][0])
     {
@@ -166,165 +166,63 @@ class PaymentRequestApi
      * @param  \Xendit\PaymentRequest\PaymentRequestAuthParameters $payment_request_auth_parameters (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['authorizePaymentRequest'] to see the possible values for this operation
      *
-     * @throws \Xendit\ApiException on non-2xx response
+     * @throws \Xendit\XenditSdkException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of Xendit\PaymentRequest\PaymentRequest|Xendit\PaymentRequest\Error|Xendit\PaymentRequest\Error|Xendit\PaymentRequest\Error, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Xendit\PaymentRequest\PaymentRequest, HTTP status code, HTTP response headers (array of strings)
      */
     public function authorizePaymentRequestWithHttpInfo($payment_request_id, $payment_request_auth_parameters = null, string $contentType = self::contentTypes['authorizePaymentRequest'][0])
     {
         $request = $this->authorizePaymentRequestRequest($payment_request_id, $payment_request_auth_parameters, $contentType);
 
+        $options = $this->createHttpClientOption();
         try {
-            $options = $this->createHttpClientOption();
-            try {
-                $response = $this->client->send($request, $options);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    (int) $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
-                );
-            } catch (ConnectException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    (int) $e->getCode(),
-                    null,
-                    null
-                );
-            }
-
-            $statusCode = $response->getStatusCode();
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    sprintf(
-                        '[%d] Error connecting to the API (%s)',
-                        $statusCode,
-                        (string) $request->getUri()
-                    ),
-                    $statusCode,
-                    $response->getHeaders(),
-                    (string) $response->getBody()
-                );
-            }
-
-            switch($statusCode) {
-                case 200:
-                    if ('Xendit\PaymentRequest\PaymentRequest' === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
-                    } else {
-                        $content = (string) $response->getBody();
-                        if ('Xendit\PaymentRequest\PaymentRequest' !== 'string') {
-                            $content = json_decode($content);
-                        }
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, 'Xendit\PaymentRequest\PaymentRequest', []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-                case 400:
-                    if ('Xendit\PaymentRequest\Error' === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
-                    } else {
-                        $content = (string) $response->getBody();
-                        if ('Xendit\PaymentRequest\Error' !== 'string') {
-                            $content = json_decode($content);
-                        }
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, 'Xendit\PaymentRequest\Error', []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-                case 500:
-                    if ('Xendit\PaymentRequest\Error' === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
-                    } else {
-                        $content = (string) $response->getBody();
-                        if ('Xendit\PaymentRequest\Error' !== 'string') {
-                            $content = json_decode($content);
-                        }
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, 'Xendit\PaymentRequest\Error', []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-                default:
-                    if ('Xendit\PaymentRequest\Error' === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
-                    } else {
-                        $content = (string) $response->getBody();
-                        if ('Xendit\PaymentRequest\Error' !== 'string') {
-                            $content = json_decode($content);
-                        }
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, 'Xendit\PaymentRequest\Error', []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-            }
-
-            $returnType = '\PaymentRequest\PaymentRequest';
-            if ($returnType === '\SplFileObject') {
-                $content = $response->getBody(); //stream goes to serializer
-            } else {
-                $content = (string) $response->getBody();
-                if ($returnType !== 'string') {
-                    $content = json_decode($content);
-                }
-            }
-
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 200:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        'Xendit\PaymentRequest\PaymentRequest',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                case 400:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        'Xendit\PaymentRequest\Error',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                case 500:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        'Xendit\PaymentRequest\Error',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                default:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        'Xendit\PaymentRequest\Error',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-            }
-            throw $e;
+            $response = $this->client->send($request, $options);
+        } catch (RequestException $e) {
+            throw new XenditSdkException(
+                $e->getResponse() && $e->getResponse()->getBody() ? json_decode((string) $e->getResponse()->getBody()) : null,
+                (string) $e->getCode(),
+                $e->getMessage() ? $e->getMessage() : sprintf('Error connecting to the API (%s)', "authorizePaymentRequestRequest")
+            );
+        } catch (ConnectException $e) {
+            throw new XenditSdkException(
+                null,
+                (string) $e->getCode(),
+                $e->getMessage() ? $e->getMessage() : sprintf('Error connecting to the API (%s)', "authorizePaymentRequestRequest")
+            );
+        }  catch (GuzzleException $e) {
+            throw new XenditSdkException(
+                null,
+                (string) $e->getCode(),
+                $e->getMessage() ? $e->getMessage() : sprintf('Error instantiating client for API (%s)', "authorizePaymentRequestRequest")
+            );
         }
+
+        $statusCode = $response->getStatusCode();
+
+        if ($statusCode < 200 || $statusCode > 299) {
+            $errBodyContent = $response->getBody() ? json_decode((string) $response->getBody()) : null;
+
+            throw new XenditSdkException(
+                $errBodyContent,
+                (string) $statusCode,
+                $response->getReasonPhrase()
+            );
+        }
+        $returnType = '\Xendit\PaymentRequest\PaymentRequest';
+        if ($returnType === '\SplFileObject') {
+            $content = $response->getBody(); //stream goes to serializer
+        } else {
+            $content = (string) $response->getBody();
+            if ($returnType !== 'string') {
+                $content = json_decode($content);
+            }
+        }
+
+        return [
+            ObjectSerializer::deserialize($content, $returnType, []),
+            $response->getStatusCode(),
+            $response->getHeaders()
+        ];
     }
 
     /**
@@ -332,8 +230,8 @@ class PaymentRequestApi
      *
      * Payment Request Authorize
      *
-     * @param  Xenditstring $payment_request_id (required)
-     * @param  Xendit\Xendit\PaymentRequest\PaymentRequestAuthParameters $payment_request_auth_parameters (optional)
+     * @param  string $payment_request_id (required)
+     * @param  \Xendit\PaymentRequest\PaymentRequestAuthParameters $payment_request_auth_parameters (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['authorizePaymentRequest'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -354,8 +252,8 @@ class PaymentRequestApi
      *
      * Payment Request Authorize
      *
-     * @param  Xenditstring $payment_request_id (required)
-     * @param  Xendit\Xendit\PaymentRequest\PaymentRequestAuthParameters $payment_request_auth_parameters (optional)
+     * @param  string $payment_request_id (required)
+     * @param  \Xendit\PaymentRequest\PaymentRequestAuthParameters $payment_request_auth_parameters (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['authorizePaymentRequest'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -363,7 +261,7 @@ class PaymentRequestApi
      */
     public function authorizePaymentRequestAsyncWithHttpInfo($payment_request_id, $payment_request_auth_parameters = null, string $contentType = self::contentTypes['authorizePaymentRequest'][0])
     {
-        $returnType = '\PaymentRequest\PaymentRequest';
+        $returnType = '\Xendit\PaymentRequest\PaymentRequest';
         $request = $this->authorizePaymentRequestRequest($payment_request_id, $payment_request_auth_parameters, $contentType);
 
         return $this->client
@@ -385,18 +283,11 @@ class PaymentRequestApi
                         $response->getHeaders()
                     ];
                 },
-                function ($exception) {
-                    $response = $exception->getResponse();
-                    $statusCode = $response->getStatusCode();
-                    throw new ApiException(
-                        sprintf(
-                            '[%d] Error connecting to the API (%s)',
-                            $statusCode,
-                            $exception->getRequest()->getUri()
-                        ),
-                        $statusCode,
-                        $response->getHeaders(),
-                        (string) $response->getBody()
+                function ($e) {
+                    throw new XenditSdkException(
+                        $e->getResponse() && $e->getResponse()->getBody() ? json_decode((string) $e->getResponse()->getBody()) : null,
+                        (string) $e->getCode(),
+                        $e->getMessage() ? $e->getMessage() : sprintf('Error connecting to the API (%s)', "authorizePaymentRequestRequest")
                     );
                 }
             );
@@ -487,7 +378,7 @@ class PaymentRequestApi
         
         // Xendit's custom headers
         $defaultHeaders['xendit-lib'] = 'php';
-        $defaultHeaders['xendit-lib-ver'] = '3.1.0';
+        $defaultHeaders['xendit-lib-ver'] = '3.2.0';
 
         if ($this->config->getUserAgent()) {
             $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
@@ -518,9 +409,9 @@ class PaymentRequestApi
      * @param  \Xendit\PaymentRequest\CaptureParameters $capture_parameters capture_parameters (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['capturePaymentRequest'] to see the possible values for this operation
      *
-     * @throws \Xendit\ApiException on non-2xx response
+     * @throws \Xendit\XenditSdkException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return Xendit\PaymentRequest\Capture|Xendit\PaymentRequest\Error|Xendit\PaymentRequest\Error|Xendit\PaymentRequest\Error
+     * @return \Xendit\PaymentRequest\Capture
      */
     public function capturePaymentRequest($payment_request_id, $capture_parameters = null, string $contentType = self::contentTypes['capturePaymentRequest'][0])
     {
@@ -537,165 +428,63 @@ class PaymentRequestApi
      * @param  \Xendit\PaymentRequest\CaptureParameters $capture_parameters (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['capturePaymentRequest'] to see the possible values for this operation
      *
-     * @throws \Xendit\ApiException on non-2xx response
+     * @throws \Xendit\XenditSdkException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of Xendit\PaymentRequest\Capture|Xendit\PaymentRequest\Error|Xendit\PaymentRequest\Error|Xendit\PaymentRequest\Error, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Xendit\PaymentRequest\Capture, HTTP status code, HTTP response headers (array of strings)
      */
     public function capturePaymentRequestWithHttpInfo($payment_request_id, $capture_parameters = null, string $contentType = self::contentTypes['capturePaymentRequest'][0])
     {
         $request = $this->capturePaymentRequestRequest($payment_request_id, $capture_parameters, $contentType);
 
+        $options = $this->createHttpClientOption();
         try {
-            $options = $this->createHttpClientOption();
-            try {
-                $response = $this->client->send($request, $options);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    (int) $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
-                );
-            } catch (ConnectException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    (int) $e->getCode(),
-                    null,
-                    null
-                );
-            }
-
-            $statusCode = $response->getStatusCode();
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    sprintf(
-                        '[%d] Error connecting to the API (%s)',
-                        $statusCode,
-                        (string) $request->getUri()
-                    ),
-                    $statusCode,
-                    $response->getHeaders(),
-                    (string) $response->getBody()
-                );
-            }
-
-            switch($statusCode) {
-                case 201:
-                    if ('Xendit\PaymentRequest\Capture' === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
-                    } else {
-                        $content = (string) $response->getBody();
-                        if ('Xendit\PaymentRequest\Capture' !== 'string') {
-                            $content = json_decode($content);
-                        }
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, 'Xendit\PaymentRequest\Capture', []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-                case 400:
-                    if ('Xendit\PaymentRequest\Error' === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
-                    } else {
-                        $content = (string) $response->getBody();
-                        if ('Xendit\PaymentRequest\Error' !== 'string') {
-                            $content = json_decode($content);
-                        }
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, 'Xendit\PaymentRequest\Error', []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-                case 500:
-                    if ('Xendit\PaymentRequest\Error' === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
-                    } else {
-                        $content = (string) $response->getBody();
-                        if ('Xendit\PaymentRequest\Error' !== 'string') {
-                            $content = json_decode($content);
-                        }
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, 'Xendit\PaymentRequest\Error', []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-                default:
-                    if ('Xendit\PaymentRequest\Error' === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
-                    } else {
-                        $content = (string) $response->getBody();
-                        if ('Xendit\PaymentRequest\Error' !== 'string') {
-                            $content = json_decode($content);
-                        }
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, 'Xendit\PaymentRequest\Error', []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-            }
-
-            $returnType = '\PaymentRequest\Capture';
-            if ($returnType === '\SplFileObject') {
-                $content = $response->getBody(); //stream goes to serializer
-            } else {
-                $content = (string) $response->getBody();
-                if ($returnType !== 'string') {
-                    $content = json_decode($content);
-                }
-            }
-
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 201:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        'Xendit\PaymentRequest\Capture',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                case 400:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        'Xendit\PaymentRequest\Error',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                case 500:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        'Xendit\PaymentRequest\Error',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                default:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        'Xendit\PaymentRequest\Error',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-            }
-            throw $e;
+            $response = $this->client->send($request, $options);
+        } catch (RequestException $e) {
+            throw new XenditSdkException(
+                $e->getResponse() && $e->getResponse()->getBody() ? json_decode((string) $e->getResponse()->getBody()) : null,
+                (string) $e->getCode(),
+                $e->getMessage() ? $e->getMessage() : sprintf('Error connecting to the API (%s)', "capturePaymentRequestRequest")
+            );
+        } catch (ConnectException $e) {
+            throw new XenditSdkException(
+                null,
+                (string) $e->getCode(),
+                $e->getMessage() ? $e->getMessage() : sprintf('Error connecting to the API (%s)', "capturePaymentRequestRequest")
+            );
+        }  catch (GuzzleException $e) {
+            throw new XenditSdkException(
+                null,
+                (string) $e->getCode(),
+                $e->getMessage() ? $e->getMessage() : sprintf('Error instantiating client for API (%s)', "capturePaymentRequestRequest")
+            );
         }
+
+        $statusCode = $response->getStatusCode();
+
+        if ($statusCode < 200 || $statusCode > 299) {
+            $errBodyContent = $response->getBody() ? json_decode((string) $response->getBody()) : null;
+
+            throw new XenditSdkException(
+                $errBodyContent,
+                (string) $statusCode,
+                $response->getReasonPhrase()
+            );
+        }
+        $returnType = '\Xendit\PaymentRequest\Capture';
+        if ($returnType === '\SplFileObject') {
+            $content = $response->getBody(); //stream goes to serializer
+        } else {
+            $content = (string) $response->getBody();
+            if ($returnType !== 'string') {
+                $content = json_decode($content);
+            }
+        }
+
+        return [
+            ObjectSerializer::deserialize($content, $returnType, []),
+            $response->getStatusCode(),
+            $response->getHeaders()
+        ];
     }
 
     /**
@@ -703,8 +492,8 @@ class PaymentRequestApi
      *
      * Payment Request Capture
      *
-     * @param  Xenditstring $payment_request_id (required)
-     * @param  Xendit\Xendit\PaymentRequest\CaptureParameters $capture_parameters (optional)
+     * @param  string $payment_request_id (required)
+     * @param  \Xendit\PaymentRequest\CaptureParameters $capture_parameters (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['capturePaymentRequest'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -725,8 +514,8 @@ class PaymentRequestApi
      *
      * Payment Request Capture
      *
-     * @param  Xenditstring $payment_request_id (required)
-     * @param  Xendit\Xendit\PaymentRequest\CaptureParameters $capture_parameters (optional)
+     * @param  string $payment_request_id (required)
+     * @param  \Xendit\PaymentRequest\CaptureParameters $capture_parameters (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['capturePaymentRequest'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -734,7 +523,7 @@ class PaymentRequestApi
      */
     public function capturePaymentRequestAsyncWithHttpInfo($payment_request_id, $capture_parameters = null, string $contentType = self::contentTypes['capturePaymentRequest'][0])
     {
-        $returnType = '\PaymentRequest\Capture';
+        $returnType = '\Xendit\PaymentRequest\Capture';
         $request = $this->capturePaymentRequestRequest($payment_request_id, $capture_parameters, $contentType);
 
         return $this->client
@@ -756,18 +545,11 @@ class PaymentRequestApi
                         $response->getHeaders()
                     ];
                 },
-                function ($exception) {
-                    $response = $exception->getResponse();
-                    $statusCode = $response->getStatusCode();
-                    throw new ApiException(
-                        sprintf(
-                            '[%d] Error connecting to the API (%s)',
-                            $statusCode,
-                            $exception->getRequest()->getUri()
-                        ),
-                        $statusCode,
-                        $response->getHeaders(),
-                        (string) $response->getBody()
+                function ($e) {
+                    throw new XenditSdkException(
+                        $e->getResponse() && $e->getResponse()->getBody() ? json_decode((string) $e->getResponse()->getBody()) : null,
+                        (string) $e->getCode(),
+                        $e->getMessage() ? $e->getMessage() : sprintf('Error connecting to the API (%s)', "capturePaymentRequestRequest")
                     );
                 }
             );
@@ -858,7 +640,7 @@ class PaymentRequestApi
         
         // Xendit's custom headers
         $defaultHeaders['xendit-lib'] = 'php';
-        $defaultHeaders['xendit-lib-ver'] = '3.1.0';
+        $defaultHeaders['xendit-lib-ver'] = '3.2.0';
 
         if ($this->config->getUserAgent()) {
             $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
@@ -889,9 +671,9 @@ class PaymentRequestApi
      * @param  \Xendit\PaymentRequest\PaymentRequestParameters $payment_request_parameters payment_request_parameters (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createPaymentRequest'] to see the possible values for this operation
      *
-     * @throws \Xendit\ApiException on non-2xx response
+     * @throws \Xendit\XenditSdkException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return Xendit\PaymentRequest\PaymentRequest|Xendit\PaymentRequest\PaymentRequest|Xendit\PaymentRequest\Error|Xendit\PaymentRequest\Error|Xendit\PaymentRequest\Error
+     * @return \Xendit\PaymentRequest\PaymentRequest
      */
     public function createPaymentRequest($idempotency_key = null, $payment_request_parameters = null, string $contentType = self::contentTypes['createPaymentRequest'][0])
     {
@@ -908,188 +690,63 @@ class PaymentRequestApi
      * @param  \Xendit\PaymentRequest\PaymentRequestParameters $payment_request_parameters (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createPaymentRequest'] to see the possible values for this operation
      *
-     * @throws \Xendit\ApiException on non-2xx response
+     * @throws \Xendit\XenditSdkException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of Xendit\PaymentRequest\PaymentRequest|Xendit\PaymentRequest\PaymentRequest|Xendit\PaymentRequest\Error|Xendit\PaymentRequest\Error|Xendit\PaymentRequest\Error, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Xendit\PaymentRequest\PaymentRequest, HTTP status code, HTTP response headers (array of strings)
      */
     public function createPaymentRequestWithHttpInfo($idempotency_key = null, $payment_request_parameters = null, string $contentType = self::contentTypes['createPaymentRequest'][0])
     {
         $request = $this->createPaymentRequestRequest($idempotency_key, $payment_request_parameters, $contentType);
 
+        $options = $this->createHttpClientOption();
         try {
-            $options = $this->createHttpClientOption();
-            try {
-                $response = $this->client->send($request, $options);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    (int) $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
-                );
-            } catch (ConnectException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    (int) $e->getCode(),
-                    null,
-                    null
-                );
-            }
-
-            $statusCode = $response->getStatusCode();
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    sprintf(
-                        '[%d] Error connecting to the API (%s)',
-                        $statusCode,
-                        (string) $request->getUri()
-                    ),
-                    $statusCode,
-                    $response->getHeaders(),
-                    (string) $response->getBody()
-                );
-            }
-
-            switch($statusCode) {
-                case 200:
-                    if ('Xendit\PaymentRequest\PaymentRequest' === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
-                    } else {
-                        $content = (string) $response->getBody();
-                        if ('Xendit\PaymentRequest\PaymentRequest' !== 'string') {
-                            $content = json_decode($content);
-                        }
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, 'Xendit\PaymentRequest\PaymentRequest', []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-                case 201:
-                    if ('Xendit\PaymentRequest\PaymentRequest' === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
-                    } else {
-                        $content = (string) $response->getBody();
-                        if ('Xendit\PaymentRequest\PaymentRequest' !== 'string') {
-                            $content = json_decode($content);
-                        }
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, 'Xendit\PaymentRequest\PaymentRequest', []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-                case 400:
-                    if ('Xendit\PaymentRequest\Error' === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
-                    } else {
-                        $content = (string) $response->getBody();
-                        if ('Xendit\PaymentRequest\Error' !== 'string') {
-                            $content = json_decode($content);
-                        }
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, 'Xendit\PaymentRequest\Error', []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-                case 500:
-                    if ('Xendit\PaymentRequest\Error' === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
-                    } else {
-                        $content = (string) $response->getBody();
-                        if ('Xendit\PaymentRequest\Error' !== 'string') {
-                            $content = json_decode($content);
-                        }
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, 'Xendit\PaymentRequest\Error', []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-                default:
-                    if ('Xendit\PaymentRequest\Error' === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
-                    } else {
-                        $content = (string) $response->getBody();
-                        if ('Xendit\PaymentRequest\Error' !== 'string') {
-                            $content = json_decode($content);
-                        }
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, 'Xendit\PaymentRequest\Error', []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-            }
-
-            $returnType = '\PaymentRequest\PaymentRequest';
-            if ($returnType === '\SplFileObject') {
-                $content = $response->getBody(); //stream goes to serializer
-            } else {
-                $content = (string) $response->getBody();
-                if ($returnType !== 'string') {
-                    $content = json_decode($content);
-                }
-            }
-
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 200:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        'Xendit\PaymentRequest\PaymentRequest',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                case 201:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        'Xendit\PaymentRequest\PaymentRequest',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                case 400:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        'Xendit\PaymentRequest\Error',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                case 500:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        'Xendit\PaymentRequest\Error',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                default:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        'Xendit\PaymentRequest\Error',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-            }
-            throw $e;
+            $response = $this->client->send($request, $options);
+        } catch (RequestException $e) {
+            throw new XenditSdkException(
+                $e->getResponse() && $e->getResponse()->getBody() ? json_decode((string) $e->getResponse()->getBody()) : null,
+                (string) $e->getCode(),
+                $e->getMessage() ? $e->getMessage() : sprintf('Error connecting to the API (%s)', "createPaymentRequestRequest")
+            );
+        } catch (ConnectException $e) {
+            throw new XenditSdkException(
+                null,
+                (string) $e->getCode(),
+                $e->getMessage() ? $e->getMessage() : sprintf('Error connecting to the API (%s)', "createPaymentRequestRequest")
+            );
+        }  catch (GuzzleException $e) {
+            throw new XenditSdkException(
+                null,
+                (string) $e->getCode(),
+                $e->getMessage() ? $e->getMessage() : sprintf('Error instantiating client for API (%s)', "createPaymentRequestRequest")
+            );
         }
+
+        $statusCode = $response->getStatusCode();
+
+        if ($statusCode < 200 || $statusCode > 299) {
+            $errBodyContent = $response->getBody() ? json_decode((string) $response->getBody()) : null;
+
+            throw new XenditSdkException(
+                $errBodyContent,
+                (string) $statusCode,
+                $response->getReasonPhrase()
+            );
+        }
+        $returnType = '\Xendit\PaymentRequest\PaymentRequest';
+        if ($returnType === '\SplFileObject') {
+            $content = $response->getBody(); //stream goes to serializer
+        } else {
+            $content = (string) $response->getBody();
+            if ($returnType !== 'string') {
+                $content = json_decode($content);
+            }
+        }
+
+        return [
+            ObjectSerializer::deserialize($content, $returnType, []),
+            $response->getStatusCode(),
+            $response->getHeaders()
+        ];
     }
 
     /**
@@ -1097,8 +754,8 @@ class PaymentRequestApi
      *
      * Create Payment Request
      *
-     * @param  Xenditstring $idempotency_key (optional)
-     * @param  Xendit\Xendit\PaymentRequest\PaymentRequestParameters $payment_request_parameters (optional)
+     * @param  string $idempotency_key (optional)
+     * @param  \Xendit\PaymentRequest\PaymentRequestParameters $payment_request_parameters (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createPaymentRequest'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -1119,8 +776,8 @@ class PaymentRequestApi
      *
      * Create Payment Request
      *
-     * @param  Xenditstring $idempotency_key (optional)
-     * @param  Xendit\Xendit\PaymentRequest\PaymentRequestParameters $payment_request_parameters (optional)
+     * @param  string $idempotency_key (optional)
+     * @param  \Xendit\PaymentRequest\PaymentRequestParameters $payment_request_parameters (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createPaymentRequest'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -1128,7 +785,7 @@ class PaymentRequestApi
      */
     public function createPaymentRequestAsyncWithHttpInfo($idempotency_key = null, $payment_request_parameters = null, string $contentType = self::contentTypes['createPaymentRequest'][0])
     {
-        $returnType = '\PaymentRequest\PaymentRequest';
+        $returnType = '\Xendit\PaymentRequest\PaymentRequest';
         $request = $this->createPaymentRequestRequest($idempotency_key, $payment_request_parameters, $contentType);
 
         return $this->client
@@ -1150,18 +807,11 @@ class PaymentRequestApi
                         $response->getHeaders()
                     ];
                 },
-                function ($exception) {
-                    $response = $exception->getResponse();
-                    $statusCode = $response->getStatusCode();
-                    throw new ApiException(
-                        sprintf(
-                            '[%d] Error connecting to the API (%s)',
-                            $statusCode,
-                            $exception->getRequest()->getUri()
-                        ),
-                        $statusCode,
-                        $response->getHeaders(),
-                        (string) $response->getBody()
+                function ($e) {
+                    throw new XenditSdkException(
+                        $e->getResponse() && $e->getResponse()->getBody() ? json_decode((string) $e->getResponse()->getBody()) : null,
+                        (string) $e->getCode(),
+                        $e->getMessage() ? $e->getMessage() : sprintf('Error connecting to the API (%s)', "createPaymentRequestRequest")
                     );
                 }
             );
@@ -1242,7 +892,7 @@ class PaymentRequestApi
         
         // Xendit's custom headers
         $defaultHeaders['xendit-lib'] = 'php';
-        $defaultHeaders['xendit-lib-ver'] = '3.1.0';
+        $defaultHeaders['xendit-lib-ver'] = '3.2.0';
 
         if ($this->config->getUserAgent()) {
             $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
@@ -1277,9 +927,9 @@ class PaymentRequestApi
      * @param  string $after_id after_id (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getAllPaymentRequests'] to see the possible values for this operation
      *
-     * @throws \Xendit\ApiException on non-2xx response
+     * @throws \Xendit\XenditSdkException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return Xendit\PaymentRequest\PaymentRequestListResponse|Xendit\PaymentRequest\Error|Xendit\PaymentRequest\Error|Xendit\PaymentRequest\Error
+     * @return \Xendit\PaymentRequest\PaymentRequestListResponse
      */
     public function getAllPaymentRequests($reference_id = null, $id = null, $customer_id = null, $limit = null, $before_id = null, $after_id = null, string $contentType = self::contentTypes['getAllPaymentRequests'][0])
     {
@@ -1300,165 +950,63 @@ class PaymentRequestApi
      * @param  string $after_id (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getAllPaymentRequests'] to see the possible values for this operation
      *
-     * @throws \Xendit\ApiException on non-2xx response
+     * @throws \Xendit\XenditSdkException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of Xendit\PaymentRequest\PaymentRequestListResponse|Xendit\PaymentRequest\Error|Xendit\PaymentRequest\Error|Xendit\PaymentRequest\Error, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Xendit\PaymentRequest\PaymentRequestListResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function getAllPaymentRequestsWithHttpInfo($reference_id = null, $id = null, $customer_id = null, $limit = null, $before_id = null, $after_id = null, string $contentType = self::contentTypes['getAllPaymentRequests'][0])
     {
         $request = $this->getAllPaymentRequestsRequest($reference_id, $id, $customer_id, $limit, $before_id, $after_id, $contentType);
 
+        $options = $this->createHttpClientOption();
         try {
-            $options = $this->createHttpClientOption();
-            try {
-                $response = $this->client->send($request, $options);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    (int) $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
-                );
-            } catch (ConnectException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    (int) $e->getCode(),
-                    null,
-                    null
-                );
-            }
-
-            $statusCode = $response->getStatusCode();
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    sprintf(
-                        '[%d] Error connecting to the API (%s)',
-                        $statusCode,
-                        (string) $request->getUri()
-                    ),
-                    $statusCode,
-                    $response->getHeaders(),
-                    (string) $response->getBody()
-                );
-            }
-
-            switch($statusCode) {
-                case 200:
-                    if ('Xendit\PaymentRequest\PaymentRequestListResponse' === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
-                    } else {
-                        $content = (string) $response->getBody();
-                        if ('Xendit\PaymentRequest\PaymentRequestListResponse' !== 'string') {
-                            $content = json_decode($content);
-                        }
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, 'Xendit\PaymentRequest\PaymentRequestListResponse', []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-                case 404:
-                    if ('Xendit\PaymentRequest\Error' === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
-                    } else {
-                        $content = (string) $response->getBody();
-                        if ('Xendit\PaymentRequest\Error' !== 'string') {
-                            $content = json_decode($content);
-                        }
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, 'Xendit\PaymentRequest\Error', []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-                case 500:
-                    if ('Xendit\PaymentRequest\Error' === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
-                    } else {
-                        $content = (string) $response->getBody();
-                        if ('Xendit\PaymentRequest\Error' !== 'string') {
-                            $content = json_decode($content);
-                        }
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, 'Xendit\PaymentRequest\Error', []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-                default:
-                    if ('Xendit\PaymentRequest\Error' === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
-                    } else {
-                        $content = (string) $response->getBody();
-                        if ('Xendit\PaymentRequest\Error' !== 'string') {
-                            $content = json_decode($content);
-                        }
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, 'Xendit\PaymentRequest\Error', []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-            }
-
-            $returnType = '\PaymentRequest\PaymentRequestListResponse';
-            if ($returnType === '\SplFileObject') {
-                $content = $response->getBody(); //stream goes to serializer
-            } else {
-                $content = (string) $response->getBody();
-                if ($returnType !== 'string') {
-                    $content = json_decode($content);
-                }
-            }
-
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 200:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        'Xendit\PaymentRequest\PaymentRequestListResponse',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                case 404:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        'Xendit\PaymentRequest\Error',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                case 500:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        'Xendit\PaymentRequest\Error',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                default:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        'Xendit\PaymentRequest\Error',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-            }
-            throw $e;
+            $response = $this->client->send($request, $options);
+        } catch (RequestException $e) {
+            throw new XenditSdkException(
+                $e->getResponse() && $e->getResponse()->getBody() ? json_decode((string) $e->getResponse()->getBody()) : null,
+                (string) $e->getCode(),
+                $e->getMessage() ? $e->getMessage() : sprintf('Error connecting to the API (%s)', "getAllPaymentRequestsRequest")
+            );
+        } catch (ConnectException $e) {
+            throw new XenditSdkException(
+                null,
+                (string) $e->getCode(),
+                $e->getMessage() ? $e->getMessage() : sprintf('Error connecting to the API (%s)', "getAllPaymentRequestsRequest")
+            );
+        }  catch (GuzzleException $e) {
+            throw new XenditSdkException(
+                null,
+                (string) $e->getCode(),
+                $e->getMessage() ? $e->getMessage() : sprintf('Error instantiating client for API (%s)', "getAllPaymentRequestsRequest")
+            );
         }
+
+        $statusCode = $response->getStatusCode();
+
+        if ($statusCode < 200 || $statusCode > 299) {
+            $errBodyContent = $response->getBody() ? json_decode((string) $response->getBody()) : null;
+
+            throw new XenditSdkException(
+                $errBodyContent,
+                (string) $statusCode,
+                $response->getReasonPhrase()
+            );
+        }
+        $returnType = '\Xendit\PaymentRequest\PaymentRequestListResponse';
+        if ($returnType === '\SplFileObject') {
+            $content = $response->getBody(); //stream goes to serializer
+        } else {
+            $content = (string) $response->getBody();
+            if ($returnType !== 'string') {
+                $content = json_decode($content);
+            }
+        }
+
+        return [
+            ObjectSerializer::deserialize($content, $returnType, []),
+            $response->getStatusCode(),
+            $response->getHeaders()
+        ];
     }
 
     /**
@@ -1466,12 +1014,12 @@ class PaymentRequestApi
      *
      * Get all payment requests by filter
      *
-     * @param  Xenditstring[] $reference_id (optional)
-     * @param  Xenditstring[] $id (optional)
-     * @param  Xenditstring[] $customer_id (optional)
-     * @param  Xenditint $limit (optional)
-     * @param  Xenditstring $before_id (optional)
-     * @param  Xenditstring $after_id (optional)
+     * @param  string[] $reference_id (optional)
+     * @param  string[] $id (optional)
+     * @param  string[] $customer_id (optional)
+     * @param  int $limit (optional)
+     * @param  string $before_id (optional)
+     * @param  string $after_id (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getAllPaymentRequests'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -1492,12 +1040,12 @@ class PaymentRequestApi
      *
      * Get all payment requests by filter
      *
-     * @param  Xenditstring[] $reference_id (optional)
-     * @param  Xenditstring[] $id (optional)
-     * @param  Xenditstring[] $customer_id (optional)
-     * @param  Xenditint $limit (optional)
-     * @param  Xenditstring $before_id (optional)
-     * @param  Xenditstring $after_id (optional)
+     * @param  string[] $reference_id (optional)
+     * @param  string[] $id (optional)
+     * @param  string[] $customer_id (optional)
+     * @param  int $limit (optional)
+     * @param  string $before_id (optional)
+     * @param  string $after_id (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getAllPaymentRequests'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -1505,7 +1053,7 @@ class PaymentRequestApi
      */
     public function getAllPaymentRequestsAsyncWithHttpInfo($reference_id = null, $id = null, $customer_id = null, $limit = null, $before_id = null, $after_id = null, string $contentType = self::contentTypes['getAllPaymentRequests'][0])
     {
-        $returnType = '\PaymentRequest\PaymentRequestListResponse';
+        $returnType = '\Xendit\PaymentRequest\PaymentRequestListResponse';
         $request = $this->getAllPaymentRequestsRequest($reference_id, $id, $customer_id, $limit, $before_id, $after_id, $contentType);
 
         return $this->client
@@ -1527,18 +1075,11 @@ class PaymentRequestApi
                         $response->getHeaders()
                     ];
                 },
-                function ($exception) {
-                    $response = $exception->getResponse();
-                    $statusCode = $response->getStatusCode();
-                    throw new ApiException(
-                        sprintf(
-                            '[%d] Error connecting to the API (%s)',
-                            $statusCode,
-                            $exception->getRequest()->getUri()
-                        ),
-                        $statusCode,
-                        $response->getHeaders(),
-                        (string) $response->getBody()
+                function ($e) {
+                    throw new XenditSdkException(
+                        $e->getResponse() && $e->getResponse()->getBody() ? json_decode((string) $e->getResponse()->getBody()) : null,
+                        (string) $e->getCode(),
+                        $e->getMessage() ? $e->getMessage() : sprintf('Error connecting to the API (%s)', "getAllPaymentRequestsRequest")
                     );
                 }
             );
@@ -1670,7 +1211,7 @@ class PaymentRequestApi
         
         // Xendit's custom headers
         $defaultHeaders['xendit-lib'] = 'php';
-        $defaultHeaders['xendit-lib-ver'] = '3.1.0';
+        $defaultHeaders['xendit-lib-ver'] = '3.2.0';
 
         if ($this->config->getUserAgent()) {
             $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
@@ -1700,9 +1241,9 @@ class PaymentRequestApi
      * @param  string $payment_request_id payment_request_id (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getPaymentRequestByID'] to see the possible values for this operation
      *
-     * @throws \Xendit\ApiException on non-2xx response
+     * @throws \Xendit\XenditSdkException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return Xendit\PaymentRequest\PaymentRequest|Xendit\PaymentRequest\Error|Xendit\PaymentRequest\Error|Xendit\PaymentRequest\Error
+     * @return \Xendit\PaymentRequest\PaymentRequest
      */
     public function getPaymentRequestByID($payment_request_id, string $contentType = self::contentTypes['getPaymentRequestByID'][0])
     {
@@ -1718,165 +1259,63 @@ class PaymentRequestApi
      * @param  string $payment_request_id (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getPaymentRequestByID'] to see the possible values for this operation
      *
-     * @throws \Xendit\ApiException on non-2xx response
+     * @throws \Xendit\XenditSdkException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of Xendit\PaymentRequest\PaymentRequest|Xendit\PaymentRequest\Error|Xendit\PaymentRequest\Error|Xendit\PaymentRequest\Error, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Xendit\PaymentRequest\PaymentRequest, HTTP status code, HTTP response headers (array of strings)
      */
     public function getPaymentRequestByIDWithHttpInfo($payment_request_id, string $contentType = self::contentTypes['getPaymentRequestByID'][0])
     {
         $request = $this->getPaymentRequestByIDRequest($payment_request_id, $contentType);
 
+        $options = $this->createHttpClientOption();
         try {
-            $options = $this->createHttpClientOption();
-            try {
-                $response = $this->client->send($request, $options);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    (int) $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
-                );
-            } catch (ConnectException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    (int) $e->getCode(),
-                    null,
-                    null
-                );
-            }
-
-            $statusCode = $response->getStatusCode();
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    sprintf(
-                        '[%d] Error connecting to the API (%s)',
-                        $statusCode,
-                        (string) $request->getUri()
-                    ),
-                    $statusCode,
-                    $response->getHeaders(),
-                    (string) $response->getBody()
-                );
-            }
-
-            switch($statusCode) {
-                case 200:
-                    if ('Xendit\PaymentRequest\PaymentRequest' === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
-                    } else {
-                        $content = (string) $response->getBody();
-                        if ('Xendit\PaymentRequest\PaymentRequest' !== 'string') {
-                            $content = json_decode($content);
-                        }
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, 'Xendit\PaymentRequest\PaymentRequest', []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-                case 404:
-                    if ('Xendit\PaymentRequest\Error' === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
-                    } else {
-                        $content = (string) $response->getBody();
-                        if ('Xendit\PaymentRequest\Error' !== 'string') {
-                            $content = json_decode($content);
-                        }
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, 'Xendit\PaymentRequest\Error', []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-                case 500:
-                    if ('Xendit\PaymentRequest\Error' === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
-                    } else {
-                        $content = (string) $response->getBody();
-                        if ('Xendit\PaymentRequest\Error' !== 'string') {
-                            $content = json_decode($content);
-                        }
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, 'Xendit\PaymentRequest\Error', []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-                default:
-                    if ('Xendit\PaymentRequest\Error' === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
-                    } else {
-                        $content = (string) $response->getBody();
-                        if ('Xendit\PaymentRequest\Error' !== 'string') {
-                            $content = json_decode($content);
-                        }
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, 'Xendit\PaymentRequest\Error', []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-            }
-
-            $returnType = '\PaymentRequest\PaymentRequest';
-            if ($returnType === '\SplFileObject') {
-                $content = $response->getBody(); //stream goes to serializer
-            } else {
-                $content = (string) $response->getBody();
-                if ($returnType !== 'string') {
-                    $content = json_decode($content);
-                }
-            }
-
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 200:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        'Xendit\PaymentRequest\PaymentRequest',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                case 404:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        'Xendit\PaymentRequest\Error',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                case 500:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        'Xendit\PaymentRequest\Error',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                default:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        'Xendit\PaymentRequest\Error',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-            }
-            throw $e;
+            $response = $this->client->send($request, $options);
+        } catch (RequestException $e) {
+            throw new XenditSdkException(
+                $e->getResponse() && $e->getResponse()->getBody() ? json_decode((string) $e->getResponse()->getBody()) : null,
+                (string) $e->getCode(),
+                $e->getMessage() ? $e->getMessage() : sprintf('Error connecting to the API (%s)', "getPaymentRequestByIDRequest")
+            );
+        } catch (ConnectException $e) {
+            throw new XenditSdkException(
+                null,
+                (string) $e->getCode(),
+                $e->getMessage() ? $e->getMessage() : sprintf('Error connecting to the API (%s)', "getPaymentRequestByIDRequest")
+            );
+        }  catch (GuzzleException $e) {
+            throw new XenditSdkException(
+                null,
+                (string) $e->getCode(),
+                $e->getMessage() ? $e->getMessage() : sprintf('Error instantiating client for API (%s)', "getPaymentRequestByIDRequest")
+            );
         }
+
+        $statusCode = $response->getStatusCode();
+
+        if ($statusCode < 200 || $statusCode > 299) {
+            $errBodyContent = $response->getBody() ? json_decode((string) $response->getBody()) : null;
+
+            throw new XenditSdkException(
+                $errBodyContent,
+                (string) $statusCode,
+                $response->getReasonPhrase()
+            );
+        }
+        $returnType = '\Xendit\PaymentRequest\PaymentRequest';
+        if ($returnType === '\SplFileObject') {
+            $content = $response->getBody(); //stream goes to serializer
+        } else {
+            $content = (string) $response->getBody();
+            if ($returnType !== 'string') {
+                $content = json_decode($content);
+            }
+        }
+
+        return [
+            ObjectSerializer::deserialize($content, $returnType, []),
+            $response->getStatusCode(),
+            $response->getHeaders()
+        ];
     }
 
     /**
@@ -1884,7 +1323,7 @@ class PaymentRequestApi
      *
      * Get payment request by ID
      *
-     * @param  Xenditstring $payment_request_id (required)
+     * @param  string $payment_request_id (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getPaymentRequestByID'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -1905,7 +1344,7 @@ class PaymentRequestApi
      *
      * Get payment request by ID
      *
-     * @param  Xenditstring $payment_request_id (required)
+     * @param  string $payment_request_id (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getPaymentRequestByID'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -1913,7 +1352,7 @@ class PaymentRequestApi
      */
     public function getPaymentRequestByIDAsyncWithHttpInfo($payment_request_id, string $contentType = self::contentTypes['getPaymentRequestByID'][0])
     {
-        $returnType = '\PaymentRequest\PaymentRequest';
+        $returnType = '\Xendit\PaymentRequest\PaymentRequest';
         $request = $this->getPaymentRequestByIDRequest($payment_request_id, $contentType);
 
         return $this->client
@@ -1935,18 +1374,11 @@ class PaymentRequestApi
                         $response->getHeaders()
                     ];
                 },
-                function ($exception) {
-                    $response = $exception->getResponse();
-                    $statusCode = $response->getStatusCode();
-                    throw new ApiException(
-                        sprintf(
-                            '[%d] Error connecting to the API (%s)',
-                            $statusCode,
-                            $exception->getRequest()->getUri()
-                        ),
-                        $statusCode,
-                        $response->getHeaders(),
-                        (string) $response->getBody()
+                function ($e) {
+                    throw new XenditSdkException(
+                        $e->getResponse() && $e->getResponse()->getBody() ? json_decode((string) $e->getResponse()->getBody()) : null,
+                        (string) $e->getCode(),
+                        $e->getMessage() ? $e->getMessage() : sprintf('Error connecting to the API (%s)', "getPaymentRequestByIDRequest")
                     );
                 }
             );
@@ -2028,7 +1460,7 @@ class PaymentRequestApi
         
         // Xendit's custom headers
         $defaultHeaders['xendit-lib'] = 'php';
-        $defaultHeaders['xendit-lib-ver'] = '3.1.0';
+        $defaultHeaders['xendit-lib-ver'] = '3.2.0';
 
         if ($this->config->getUserAgent()) {
             $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
@@ -2057,17 +1489,15 @@ class PaymentRequestApi
      *
      * @param  string $payment_request_id payment_request_id (required)
      * @param  int $limit limit (optional)
-     * @param  string $after_id after_id (optional)
-     * @param  string $before_id before_id (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getPaymentRequestCaptures'] to see the possible values for this operation
      *
-     * @throws \Xendit\ApiException on non-2xx response
+     * @throws \Xendit\XenditSdkException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return Xendit\PaymentRequest\CaptureListResponse|Xendit\PaymentRequest\Error|Xendit\PaymentRequest\Error|Xendit\PaymentRequest\Error
+     * @return \Xendit\PaymentRequest\CaptureListResponse
      */
-    public function getPaymentRequestCaptures($payment_request_id, $limit = null, $after_id = null, $before_id = null, string $contentType = self::contentTypes['getPaymentRequestCaptures'][0])
+    public function getPaymentRequestCaptures($payment_request_id, $limit = null, string $contentType = self::contentTypes['getPaymentRequestCaptures'][0])
     {
-        list($response) = $this->getPaymentRequestCapturesWithHttpInfo($payment_request_id, $limit, $after_id, $before_id, $contentType);
+        list($response) = $this->getPaymentRequestCapturesWithHttpInfo($payment_request_id, $limit, $contentType);
         return $response;
     }
 
@@ -2078,169 +1508,65 @@ class PaymentRequestApi
      *
      * @param  string $payment_request_id (required)
      * @param  int $limit (optional)
-     * @param  string $after_id (optional)
-     * @param  string $before_id (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getPaymentRequestCaptures'] to see the possible values for this operation
      *
-     * @throws \Xendit\ApiException on non-2xx response
+     * @throws \Xendit\XenditSdkException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of Xendit\PaymentRequest\CaptureListResponse|Xendit\PaymentRequest\Error|Xendit\PaymentRequest\Error|Xendit\PaymentRequest\Error, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Xendit\PaymentRequest\CaptureListResponse, HTTP status code, HTTP response headers (array of strings)
      */
-    public function getPaymentRequestCapturesWithHttpInfo($payment_request_id, $limit = null, $after_id = null, $before_id = null, string $contentType = self::contentTypes['getPaymentRequestCaptures'][0])
+    public function getPaymentRequestCapturesWithHttpInfo($payment_request_id, $limit = null, string $contentType = self::contentTypes['getPaymentRequestCaptures'][0])
     {
-        $request = $this->getPaymentRequestCapturesRequest($payment_request_id, $limit, $after_id, $before_id, $contentType);
+        $request = $this->getPaymentRequestCapturesRequest($payment_request_id, $limit, $contentType);
 
+        $options = $this->createHttpClientOption();
         try {
-            $options = $this->createHttpClientOption();
-            try {
-                $response = $this->client->send($request, $options);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    (int) $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
-                );
-            } catch (ConnectException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    (int) $e->getCode(),
-                    null,
-                    null
-                );
-            }
-
-            $statusCode = $response->getStatusCode();
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    sprintf(
-                        '[%d] Error connecting to the API (%s)',
-                        $statusCode,
-                        (string) $request->getUri()
-                    ),
-                    $statusCode,
-                    $response->getHeaders(),
-                    (string) $response->getBody()
-                );
-            }
-
-            switch($statusCode) {
-                case 200:
-                    if ('Xendit\PaymentRequest\CaptureListResponse' === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
-                    } else {
-                        $content = (string) $response->getBody();
-                        if ('Xendit\PaymentRequest\CaptureListResponse' !== 'string') {
-                            $content = json_decode($content);
-                        }
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, 'Xendit\PaymentRequest\CaptureListResponse', []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-                case 400:
-                    if ('Xendit\PaymentRequest\Error' === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
-                    } else {
-                        $content = (string) $response->getBody();
-                        if ('Xendit\PaymentRequest\Error' !== 'string') {
-                            $content = json_decode($content);
-                        }
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, 'Xendit\PaymentRequest\Error', []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-                case 500:
-                    if ('Xendit\PaymentRequest\Error' === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
-                    } else {
-                        $content = (string) $response->getBody();
-                        if ('Xendit\PaymentRequest\Error' !== 'string') {
-                            $content = json_decode($content);
-                        }
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, 'Xendit\PaymentRequest\Error', []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-                default:
-                    if ('Xendit\PaymentRequest\Error' === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
-                    } else {
-                        $content = (string) $response->getBody();
-                        if ('Xendit\PaymentRequest\Error' !== 'string') {
-                            $content = json_decode($content);
-                        }
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, 'Xendit\PaymentRequest\Error', []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-            }
-
-            $returnType = '\PaymentRequest\CaptureListResponse';
-            if ($returnType === '\SplFileObject') {
-                $content = $response->getBody(); //stream goes to serializer
-            } else {
-                $content = (string) $response->getBody();
-                if ($returnType !== 'string') {
-                    $content = json_decode($content);
-                }
-            }
-
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 200:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        'Xendit\PaymentRequest\CaptureListResponse',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                case 400:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        'Xendit\PaymentRequest\Error',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                case 500:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        'Xendit\PaymentRequest\Error',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                default:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        'Xendit\PaymentRequest\Error',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-            }
-            throw $e;
+            $response = $this->client->send($request, $options);
+        } catch (RequestException $e) {
+            throw new XenditSdkException(
+                $e->getResponse() && $e->getResponse()->getBody() ? json_decode((string) $e->getResponse()->getBody()) : null,
+                (string) $e->getCode(),
+                $e->getMessage() ? $e->getMessage() : sprintf('Error connecting to the API (%s)', "getPaymentRequestCapturesRequest")
+            );
+        } catch (ConnectException $e) {
+            throw new XenditSdkException(
+                null,
+                (string) $e->getCode(),
+                $e->getMessage() ? $e->getMessage() : sprintf('Error connecting to the API (%s)', "getPaymentRequestCapturesRequest")
+            );
+        }  catch (GuzzleException $e) {
+            throw new XenditSdkException(
+                null,
+                (string) $e->getCode(),
+                $e->getMessage() ? $e->getMessage() : sprintf('Error instantiating client for API (%s)', "getPaymentRequestCapturesRequest")
+            );
         }
+
+        $statusCode = $response->getStatusCode();
+
+        if ($statusCode < 200 || $statusCode > 299) {
+            $errBodyContent = $response->getBody() ? json_decode((string) $response->getBody()) : null;
+
+            throw new XenditSdkException(
+                $errBodyContent,
+                (string) $statusCode,
+                $response->getReasonPhrase()
+            );
+        }
+        $returnType = '\Xendit\PaymentRequest\CaptureListResponse';
+        if ($returnType === '\SplFileObject') {
+            $content = $response->getBody(); //stream goes to serializer
+        } else {
+            $content = (string) $response->getBody();
+            if ($returnType !== 'string') {
+                $content = json_decode($content);
+            }
+        }
+
+        return [
+            ObjectSerializer::deserialize($content, $returnType, []),
+            $response->getStatusCode(),
+            $response->getHeaders()
+        ];
     }
 
     /**
@@ -2248,18 +1574,16 @@ class PaymentRequestApi
      *
      * Get Payment Request Capture
      *
-     * @param  Xenditstring $payment_request_id (required)
-     * @param  Xenditint $limit (optional)
-     * @param  Xenditstring $after_id (optional)
-     * @param  Xenditstring $before_id (optional)
+     * @param  string $payment_request_id (required)
+     * @param  int $limit (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getPaymentRequestCaptures'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function getPaymentRequestCapturesAsync($payment_request_id, $limit = null, $after_id = null, $before_id = null, string $contentType = self::contentTypes['getPaymentRequestCaptures'][0])
+    public function getPaymentRequestCapturesAsync($payment_request_id, $limit = null, string $contentType = self::contentTypes['getPaymentRequestCaptures'][0])
     {
-        return $this->getPaymentRequestCapturesAsyncWithHttpInfo($payment_request_id, $limit, $after_id, $before_id, $contentType)
+        return $this->getPaymentRequestCapturesAsyncWithHttpInfo($payment_request_id, $limit, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -2272,19 +1596,17 @@ class PaymentRequestApi
      *
      * Get Payment Request Capture
      *
-     * @param  Xenditstring $payment_request_id (required)
-     * @param  Xenditint $limit (optional)
-     * @param  Xenditstring $after_id (optional)
-     * @param  Xenditstring $before_id (optional)
+     * @param  string $payment_request_id (required)
+     * @param  int $limit (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getPaymentRequestCaptures'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function getPaymentRequestCapturesAsyncWithHttpInfo($payment_request_id, $limit = null, $after_id = null, $before_id = null, string $contentType = self::contentTypes['getPaymentRequestCaptures'][0])
+    public function getPaymentRequestCapturesAsyncWithHttpInfo($payment_request_id, $limit = null, string $contentType = self::contentTypes['getPaymentRequestCaptures'][0])
     {
-        $returnType = '\PaymentRequest\CaptureListResponse';
-        $request = $this->getPaymentRequestCapturesRequest($payment_request_id, $limit, $after_id, $before_id, $contentType);
+        $returnType = '\Xendit\PaymentRequest\CaptureListResponse';
+        $request = $this->getPaymentRequestCapturesRequest($payment_request_id, $limit, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -2305,18 +1627,11 @@ class PaymentRequestApi
                         $response->getHeaders()
                     ];
                 },
-                function ($exception) {
-                    $response = $exception->getResponse();
-                    $statusCode = $response->getStatusCode();
-                    throw new ApiException(
-                        sprintf(
-                            '[%d] Error connecting to the API (%s)',
-                            $statusCode,
-                            $exception->getRequest()->getUri()
-                        ),
-                        $statusCode,
-                        $response->getHeaders(),
-                        (string) $response->getBody()
+                function ($e) {
+                    throw new XenditSdkException(
+                        $e->getResponse() && $e->getResponse()->getBody() ? json_decode((string) $e->getResponse()->getBody()) : null,
+                        (string) $e->getCode(),
+                        $e->getMessage() ? $e->getMessage() : sprintf('Error connecting to the API (%s)', "getPaymentRequestCapturesRequest")
                     );
                 }
             );
@@ -2327,14 +1642,12 @@ class PaymentRequestApi
      *
      * @param  string $payment_request_id (required)
      * @param  int $limit (optional)
-     * @param  string $after_id (optional)
-     * @param  string $before_id (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getPaymentRequestCaptures'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function getPaymentRequestCapturesRequest($payment_request_id, $limit = null, $after_id = null, $before_id = null, string $contentType = self::contentTypes['getPaymentRequestCaptures'][0])
+    public function getPaymentRequestCapturesRequest($payment_request_id, $limit = null, string $contentType = self::contentTypes['getPaymentRequestCaptures'][0])
     {
 
         // verify the required parameter 'payment_request_id' is set
@@ -2343,8 +1656,6 @@ class PaymentRequestApi
                 'Missing the required parameter $payment_request_id when calling getPaymentRequestCaptures'
             );
         }
-
-
 
 
 
@@ -2360,24 +1671,6 @@ class PaymentRequestApi
             $limit,
             'limit', // param base name
             'integer', // openApiType
-            'form', // style
-            true, // explode
-            false // required
-        ) ?? []);
-        // query params
-        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
-            $after_id,
-            'after_id', // param base name
-            'string', // openApiType
-            'form', // style
-            true, // explode
-            false // required
-        ) ?? []);
-        // query params
-        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
-            $before_id,
-            'before_id', // param base name
-            'string', // openApiType
             'form', // style
             true, // explode
             false // required
@@ -2431,7 +1724,7 @@ class PaymentRequestApi
         
         // Xendit's custom headers
         $defaultHeaders['xendit-lib'] = 'php';
-        $defaultHeaders['xendit-lib-ver'] = '3.1.0';
+        $defaultHeaders['xendit-lib-ver'] = '3.2.0';
 
         if ($this->config->getUserAgent()) {
             $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
@@ -2461,9 +1754,9 @@ class PaymentRequestApi
      * @param  string $payment_request_id payment_request_id (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['resendPaymentRequestAuth'] to see the possible values for this operation
      *
-     * @throws \Xendit\ApiException on non-2xx response
+     * @throws \Xendit\XenditSdkException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return Xendit\PaymentRequest\PaymentRequest|Xendit\PaymentRequest\Error|Xendit\PaymentRequest\Error|Xendit\PaymentRequest\Error
+     * @return \Xendit\PaymentRequest\PaymentRequest
      */
     public function resendPaymentRequestAuth($payment_request_id, string $contentType = self::contentTypes['resendPaymentRequestAuth'][0])
     {
@@ -2479,165 +1772,63 @@ class PaymentRequestApi
      * @param  string $payment_request_id (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['resendPaymentRequestAuth'] to see the possible values for this operation
      *
-     * @throws \Xendit\ApiException on non-2xx response
+     * @throws \Xendit\XenditSdkException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of Xendit\PaymentRequest\PaymentRequest|Xendit\PaymentRequest\Error|Xendit\PaymentRequest\Error|Xendit\PaymentRequest\Error, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Xendit\PaymentRequest\PaymentRequest, HTTP status code, HTTP response headers (array of strings)
      */
     public function resendPaymentRequestAuthWithHttpInfo($payment_request_id, string $contentType = self::contentTypes['resendPaymentRequestAuth'][0])
     {
         $request = $this->resendPaymentRequestAuthRequest($payment_request_id, $contentType);
 
+        $options = $this->createHttpClientOption();
         try {
-            $options = $this->createHttpClientOption();
-            try {
-                $response = $this->client->send($request, $options);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    (int) $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
-                );
-            } catch (ConnectException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    (int) $e->getCode(),
-                    null,
-                    null
-                );
-            }
-
-            $statusCode = $response->getStatusCode();
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    sprintf(
-                        '[%d] Error connecting to the API (%s)',
-                        $statusCode,
-                        (string) $request->getUri()
-                    ),
-                    $statusCode,
-                    $response->getHeaders(),
-                    (string) $response->getBody()
-                );
-            }
-
-            switch($statusCode) {
-                case 200:
-                    if ('Xendit\PaymentRequest\PaymentRequest' === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
-                    } else {
-                        $content = (string) $response->getBody();
-                        if ('Xendit\PaymentRequest\PaymentRequest' !== 'string') {
-                            $content = json_decode($content);
-                        }
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, 'Xendit\PaymentRequest\PaymentRequest', []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-                case 400:
-                    if ('Xendit\PaymentRequest\Error' === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
-                    } else {
-                        $content = (string) $response->getBody();
-                        if ('Xendit\PaymentRequest\Error' !== 'string') {
-                            $content = json_decode($content);
-                        }
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, 'Xendit\PaymentRequest\Error', []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-                case 500:
-                    if ('Xendit\PaymentRequest\Error' === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
-                    } else {
-                        $content = (string) $response->getBody();
-                        if ('Xendit\PaymentRequest\Error' !== 'string') {
-                            $content = json_decode($content);
-                        }
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, 'Xendit\PaymentRequest\Error', []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-                default:
-                    if ('Xendit\PaymentRequest\Error' === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
-                    } else {
-                        $content = (string) $response->getBody();
-                        if ('Xendit\PaymentRequest\Error' !== 'string') {
-                            $content = json_decode($content);
-                        }
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, 'Xendit\PaymentRequest\Error', []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-            }
-
-            $returnType = '\PaymentRequest\PaymentRequest';
-            if ($returnType === '\SplFileObject') {
-                $content = $response->getBody(); //stream goes to serializer
-            } else {
-                $content = (string) $response->getBody();
-                if ($returnType !== 'string') {
-                    $content = json_decode($content);
-                }
-            }
-
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 200:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        'Xendit\PaymentRequest\PaymentRequest',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                case 400:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        'Xendit\PaymentRequest\Error',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                case 500:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        'Xendit\PaymentRequest\Error',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                default:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        'Xendit\PaymentRequest\Error',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-            }
-            throw $e;
+            $response = $this->client->send($request, $options);
+        } catch (RequestException $e) {
+            throw new XenditSdkException(
+                $e->getResponse() && $e->getResponse()->getBody() ? json_decode((string) $e->getResponse()->getBody()) : null,
+                (string) $e->getCode(),
+                $e->getMessage() ? $e->getMessage() : sprintf('Error connecting to the API (%s)', "resendPaymentRequestAuthRequest")
+            );
+        } catch (ConnectException $e) {
+            throw new XenditSdkException(
+                null,
+                (string) $e->getCode(),
+                $e->getMessage() ? $e->getMessage() : sprintf('Error connecting to the API (%s)', "resendPaymentRequestAuthRequest")
+            );
+        }  catch (GuzzleException $e) {
+            throw new XenditSdkException(
+                null,
+                (string) $e->getCode(),
+                $e->getMessage() ? $e->getMessage() : sprintf('Error instantiating client for API (%s)', "resendPaymentRequestAuthRequest")
+            );
         }
+
+        $statusCode = $response->getStatusCode();
+
+        if ($statusCode < 200 || $statusCode > 299) {
+            $errBodyContent = $response->getBody() ? json_decode((string) $response->getBody()) : null;
+
+            throw new XenditSdkException(
+                $errBodyContent,
+                (string) $statusCode,
+                $response->getReasonPhrase()
+            );
+        }
+        $returnType = '\Xendit\PaymentRequest\PaymentRequest';
+        if ($returnType === '\SplFileObject') {
+            $content = $response->getBody(); //stream goes to serializer
+        } else {
+            $content = (string) $response->getBody();
+            if ($returnType !== 'string') {
+                $content = json_decode($content);
+            }
+        }
+
+        return [
+            ObjectSerializer::deserialize($content, $returnType, []),
+            $response->getStatusCode(),
+            $response->getHeaders()
+        ];
     }
 
     /**
@@ -2645,7 +1836,7 @@ class PaymentRequestApi
      *
      * Payment Request Resend Auth
      *
-     * @param  Xenditstring $payment_request_id (required)
+     * @param  string $payment_request_id (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['resendPaymentRequestAuth'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -2666,7 +1857,7 @@ class PaymentRequestApi
      *
      * Payment Request Resend Auth
      *
-     * @param  Xenditstring $payment_request_id (required)
+     * @param  string $payment_request_id (required)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['resendPaymentRequestAuth'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -2674,7 +1865,7 @@ class PaymentRequestApi
      */
     public function resendPaymentRequestAuthAsyncWithHttpInfo($payment_request_id, string $contentType = self::contentTypes['resendPaymentRequestAuth'][0])
     {
-        $returnType = '\PaymentRequest\PaymentRequest';
+        $returnType = '\Xendit\PaymentRequest\PaymentRequest';
         $request = $this->resendPaymentRequestAuthRequest($payment_request_id, $contentType);
 
         return $this->client
@@ -2696,18 +1887,11 @@ class PaymentRequestApi
                         $response->getHeaders()
                     ];
                 },
-                function ($exception) {
-                    $response = $exception->getResponse();
-                    $statusCode = $response->getStatusCode();
-                    throw new ApiException(
-                        sprintf(
-                            '[%d] Error connecting to the API (%s)',
-                            $statusCode,
-                            $exception->getRequest()->getUri()
-                        ),
-                        $statusCode,
-                        $response->getHeaders(),
-                        (string) $response->getBody()
+                function ($e) {
+                    throw new XenditSdkException(
+                        $e->getResponse() && $e->getResponse()->getBody() ? json_decode((string) $e->getResponse()->getBody()) : null,
+                        (string) $e->getCode(),
+                        $e->getMessage() ? $e->getMessage() : sprintf('Error connecting to the API (%s)', "resendPaymentRequestAuthRequest")
                     );
                 }
             );
@@ -2789,7 +1973,7 @@ class PaymentRequestApi
         
         // Xendit's custom headers
         $defaultHeaders['xendit-lib'] = 'php';
-        $defaultHeaders['xendit-lib-ver'] = '3.1.0';
+        $defaultHeaders['xendit-lib-ver'] = '3.2.0';
 
         if ($this->config->getUserAgent()) {
             $defaultHeaders['User-Agent'] = $this->config->getUserAgent();

@@ -36,8 +36,9 @@ $id = "disb-7baa7335-a0b2-4678-bb8c-318c0167f332"; // string | Payout id returne
 try {
     $result = $apiInstance->cancelPayout($id);
     print_r($result);
-} catch (Exception $e) {
+} catch (\Xendit\XenditSdkException $e) {
     echo 'Exception when calling PayoutApi->cancelPayout: ', $e->getMessage(), PHP_EOL;
+    echo 'Full Error: ', json_encode($e->getFullError()), PHP_EOL;
 }
 ```
 
@@ -89,8 +90,9 @@ $create_payout_request = {"reference_id":"DISB-001","currency":"PHP","channel_co
 try {
     $result = $apiInstance->createPayout($idempotency_key, $for_user_id, $create_payout_request);
     print_r($result);
-} catch (Exception $e) {
+} catch (\Xendit\XenditSdkException $e) {
     echo 'Exception when calling PayoutApi->createPayout: ', $e->getMessage(), PHP_EOL;
+    echo 'Full Error: ', json_encode($e->getFullError()), PHP_EOL;
 }
 ```
 
@@ -142,8 +144,9 @@ $id = "disb-7baa7335-a0b2-4678-bb8c-318c0167f332"; // string | Payout id returne
 try {
     $result = $apiInstance->getPayoutById($id);
     print_r($result);
-} catch (Exception $e) {
+} catch (\Xendit\XenditSdkException $e) {
     echo 'Exception when calling PayoutApi->getPayoutById: ', $e->getMessage(), PHP_EOL;
+    echo 'Full Error: ', json_encode($e->getFullError()), PHP_EOL;
 }
 ```
 
@@ -195,8 +198,9 @@ $channel_code = "ID_MANDIRI, PH_GCASH"; // string | Filter channels by channel c
 try {
     $result = $apiInstance->getPayoutChannels($currency, $channel_category, $channel_code);
     print_r($result);
-} catch (Exception $e) {
+} catch (\Xendit\XenditSdkException $e) {
     echo 'Exception when calling PayoutApi->getPayoutChannels: ', $e->getMessage(), PHP_EOL;
+    echo 'Full Error: ', json_encode($e->getFullError()), PHP_EOL;
 }
 ```
 
@@ -251,8 +255,9 @@ $before_id = "disb-7baa7335-a0b2-4678-bb8c-318c0167f332"; // string | Used to fe
 try {
     $result = $apiInstance->getPayouts($reference_id, $limit, $after_id, $before_id);
     print_r($result);
-} catch (Exception $e) {
+} catch (\Xendit\XenditSdkException $e) {
     echo 'Exception when calling PayoutApi->getPayouts: ', $e->getMessage(), PHP_EOL;
+    echo 'Full Error: ', json_encode($e->getFullError()), PHP_EOL;
 }
 ```
 

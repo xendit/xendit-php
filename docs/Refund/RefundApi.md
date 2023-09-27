@@ -36,8 +36,9 @@ $idempotency_key = "9797b5a6-54ad-4511-80a4-ec451346808b"; // string
 try {
     $result = $apiInstance->cancelRefund($refund_id, $idempotency_key);
     print_r($result);
-} catch (Exception $e) {
+} catch (\Xendit\XenditSdkException $e) {
     echo 'Exception when calling RefundApi->cancelRefund: ', $e->getMessage(), PHP_EOL;
+    echo 'Full Error: ', json_encode($e->getFullError()), PHP_EOL;
 }
 ```
 
@@ -89,8 +90,9 @@ $create_refund = new \Xendit\Refund\CreateRefund(); // \Xendit\Refund\CreateRefu
 try {
     $result = $apiInstance->createRefund($idempotency_key, $create_refund);
     print_r($result);
-} catch (Exception $e) {
+} catch (\Xendit\XenditSdkException $e) {
     echo 'Exception when calling RefundApi->createRefund: ', $e->getMessage(), PHP_EOL;
+    echo 'Full Error: ', json_encode($e->getFullError()), PHP_EOL;
 }
 ```
 
@@ -140,8 +142,9 @@ $apiInstance = new RefundApi();
 try {
     $result = $apiInstance->getAllRefunds();
     print_r($result);
-} catch (Exception $e) {
+} catch (\Xendit\XenditSdkException $e) {
     echo 'Exception when calling RefundApi->getAllRefunds: ', $e->getMessage(), PHP_EOL;
+    echo 'Full Error: ', json_encode($e->getFullError()), PHP_EOL;
 }
 ```
 
@@ -190,8 +193,9 @@ $idempotency_key = "9797b5a6-54ad-4511-80a4-ec451346808b"; // string
 try {
     $result = $apiInstance->getRefund($refund_id, $idempotency_key);
     print_r($result);
-} catch (Exception $e) {
+} catch (\Xendit\XenditSdkException $e) {
     echo 'Exception when calling RefundApi->getRefund: ', $e->getMessage(), PHP_EOL;
+    echo 'Full Error: ', json_encode($e->getFullError()), PHP_EOL;
 }
 ```
 

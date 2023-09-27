@@ -22,7 +22,6 @@ docs/Payout/PayoutAllOf.md
 docs/Payout/PayoutApi.md
 docs/Payout/ReceiptNotification.md
 docs/header.jpg
-lib/ApiException.php
 lib/Configuration.php
 lib/HeaderSelector.php
 lib/Model/ModelInterface.php
@@ -42,6 +41,7 @@ lib/Payout/Payout.php
 lib/Payout/PayoutAllOf.php
 lib/Payout/PayoutApi.php
 lib/Payout/ReceiptNotification.php
+lib/XenditSdkException.php
 phpunit.xml.dist
 test/Api/PayoutApiTest.php
 test/Model/ChannelAccountTypeTest.php
