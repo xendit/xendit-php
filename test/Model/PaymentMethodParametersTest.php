@@ -9,9 +9,9 @@
  */
 
 /**
- * Payment Requests
+ * Payment Method Service v2
  *
- * The version of the OpenAPI document: 1.44.0
+ * The version of the OpenAPI document: 2.89.1
  */
 
 /**
@@ -82,9 +82,36 @@ class PaymentMethodParametersTest extends TestCase
     }
 
     /**
+     * Test attribute "country"
+     */
+    public function testPropertyCountry()
+    {
+        // TODO: implement
+        $this->markTestIncomplete('Not implemented');
+    }
+
+    /**
      * Test attribute "reusability"
      */
     public function testPropertyReusability()
+    {
+        // TODO: implement
+        $this->markTestIncomplete('Not implemented');
+    }
+
+    /**
+     * Test attribute "customer_id"
+     */
+    public function testPropertyCustomerId()
+    {
+        // TODO: implement
+        $this->markTestIncomplete('Not implemented');
+    }
+
+    /**
+     * Test attribute "reference_id"
+     */
+    public function testPropertyReferenceId()
     {
         // TODO: implement
         $this->markTestIncomplete('Not implemented');
@@ -100,9 +127,9 @@ class PaymentMethodParametersTest extends TestCase
     }
 
     /**
-     * Test attribute "reference_id"
+     * Test attribute "card"
      */
-    public function testPropertyReferenceId()
+    public function testPropertyCard()
     {
         // TODO: implement
         $this->markTestIncomplete('Not implemented');
@@ -148,6 +175,24 @@ class PaymentMethodParametersTest extends TestCase
      * Test attribute "qr_code"
      */
     public function testPropertyQrCode()
+    {
+        // TODO: implement
+        $this->markTestIncomplete('Not implemented');
+    }
+
+    /**
+     * Test attribute "metadata"
+     */
+    public function testPropertyMetadata()
+    {
+        // TODO: implement
+        $this->markTestIncomplete('Not implemented');
+    }
+
+    /**
+     * Test attribute "billing_information"
+     */
+    public function testPropertyBillingInformation()
     {
         // TODO: implement
         $this->markTestIncomplete('Not implemented');

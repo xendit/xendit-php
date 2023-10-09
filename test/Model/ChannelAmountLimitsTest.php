@@ -9,9 +9,9 @@
  */
 
 /**
- * Payment Method Service v2
+ * Payout Service
  *
- * The version of the OpenAPI document: 2.87.2
+ * The version of the OpenAPI document: 1.0.0
  */
 
 /**
@@ -27,7 +27,7 @@ use PHPUnit\Framework\TestCase;
  * ChannelAmountLimitsTest Class Doc Comment
  *
  * @category    Class
- * @description ChannelAmountLimits
+ * @description Supported amount ranges for payouts to this channel
  * @package     Xendit
  * @author      OpenAPI Generator team
  * @link        https://openapi-generator.tech
@@ -73,27 +73,27 @@ class ChannelAmountLimitsTest extends TestCase
     }
 
     /**
-     * Test attribute "currency"
+     * Test attribute "minimum"
      */
-    public function testPropertyCurrency()
+    public function testPropertyMinimum()
     {
         // TODO: implement
         $this->markTestIncomplete('Not implemented');
     }
 
     /**
-     * Test attribute "min_limit"
+     * Test attribute "maximum"
      */
-    public function testPropertyMinLimit()
+    public function testPropertyMaximum()
     {
         // TODO: implement
         $this->markTestIncomplete('Not implemented');
     }
 
     /**
-     * Test attribute "max_limit"
+     * Test attribute "minimum_increment"
      */
-    public function testPropertyMaxLimit()
+    public function testPropertyMinimumIncrement()
     {
         // TODO: implement
         $this->markTestIncomplete('Not implemented');

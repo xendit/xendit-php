@@ -9,9 +9,9 @@
  */
 
 /**
- * Payment Requests
+ * XENDIT SDK openapi spec
  *
- * The version of the OpenAPI document: 1.44.0
+ * The version of the OpenAPI document: 1.0.0
  */
 
 /**
@@ -85,6 +85,15 @@ class ErrorTest extends TestCase
      * Test attribute "message"
      */
     public function testPropertyMessage()
+    {
+        // TODO: implement
+        $this->markTestIncomplete('Not implemented');
+    }
+
+    /**
+     * Test attribute "errors"
+     */
+    public function testPropertyErrors()
     {
         // TODO: implement
         $this->markTestIncomplete('Not implemented');

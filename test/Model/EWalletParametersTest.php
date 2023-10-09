@@ -9,9 +9,9 @@
  */
 
 /**
- * Payment Requests
+ * Payment Method Service v2
  *
- * The version of the OpenAPI document: 1.44.0
+ * The version of the OpenAPI document: 2.89.1
  */
 
 /**
@@ -85,6 +85,15 @@ class EWalletParametersTest extends TestCase
      * Test attribute "channel_properties"
      */
     public function testPropertyChannelProperties()
+    {
+        // TODO: implement
+        $this->markTestIncomplete('Not implemented');
+    }
+
+    /**
+     * Test attribute "account"
+     */
+    public function testPropertyAccount()
     {
         // TODO: implement
         $this->markTestIncomplete('Not implemented');

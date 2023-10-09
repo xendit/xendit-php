@@ -9,9 +9,9 @@
  */
 
 /**
- * Payment Requests
+ * Payment Method Service v2
  *
- * The version of the OpenAPI document: 1.44.0
+ * The version of the OpenAPI document: 2.89.1
  */
 
 /**
@@ -82,9 +82,117 @@ class PaymentMethodTest extends TestCase
     }
 
     /**
+     * Test attribute "business_id"
+     */
+    public function testPropertyBusinessId()
+    {
+        // TODO: implement
+        $this->markTestIncomplete('Not implemented');
+    }
+
+    /**
      * Test attribute "type"
      */
     public function testPropertyType()
+    {
+        // TODO: implement
+        $this->markTestIncomplete('Not implemented');
+    }
+
+    /**
+     * Test attribute "country"
+     */
+    public function testPropertyCountry()
+    {
+        // TODO: implement
+        $this->markTestIncomplete('Not implemented');
+    }
+
+    /**
+     * Test attribute "customer_id"
+     */
+    public function testPropertyCustomerId()
+    {
+        // TODO: implement
+        $this->markTestIncomplete('Not implemented');
+    }
+
+    /**
+     * Test attribute "customer"
+     */
+    public function testPropertyCustomer()
+    {
+        // TODO: implement
+        $this->markTestIncomplete('Not implemented');
+    }
+
+    /**
+     * Test attribute "reference_id"
+     */
+    public function testPropertyReferenceId()
+    {
+        // TODO: implement
+        $this->markTestIncomplete('Not implemented');
+    }
+
+    /**
+     * Test attribute "description"
+     */
+    public function testPropertyDescription()
+    {
+        // TODO: implement
+        $this->markTestIncomplete('Not implemented');
+    }
+
+    /**
+     * Test attribute "status"
+     */
+    public function testPropertyStatus()
+    {
+        // TODO: implement
+        $this->markTestIncomplete('Not implemented');
+    }
+
+    /**
+     * Test attribute "reusability"
+     */
+    public function testPropertyReusability()
+    {
+        // TODO: implement
+        $this->markTestIncomplete('Not implemented');
+    }
+
+    /**
+     * Test attribute "actions"
+     */
+    public function testPropertyActions()
+    {
+        // TODO: implement
+        $this->markTestIncomplete('Not implemented');
+    }
+
+    /**
+     * Test attribute "metadata"
+     */
+    public function testPropertyMetadata()
+    {
+        // TODO: implement
+        $this->markTestIncomplete('Not implemented');
+    }
+
+    /**
+     * Test attribute "billing_information"
+     */
+    public function testPropertyBillingInformation()
+    {
+        // TODO: implement
+        $this->markTestIncomplete('Not implemented');
+    }
+
+    /**
+     * Test attribute "failure_code"
+     */
+    public function testPropertyFailureCode()
     {
         // TODO: implement
         $this->markTestIncomplete('Not implemented');
@@ -109,27 +217,9 @@ class PaymentMethodTest extends TestCase
     }
 
     /**
-     * Test attribute "description"
+     * Test attribute "ewallet"
      */
-    public function testPropertyDescription()
-    {
-        // TODO: implement
-        $this->markTestIncomplete('Not implemented');
-    }
-
-    /**
-     * Test attribute "reference_id"
-     */
-    public function testPropertyReferenceId()
-    {
-        // TODO: implement
-        $this->markTestIncomplete('Not implemented');
-    }
-
-    /**
-     * Test attribute "card"
-     */
-    public function testPropertyCard()
+    public function testPropertyEwallet()
     {
         // TODO: implement
         $this->markTestIncomplete('Not implemented');
@@ -145,15 +235,6 @@ class PaymentMethodTest extends TestCase
     }
 
     /**
-     * Test attribute "ewallet"
-     */
-    public function testPropertyEwallet()
-    {
-        // TODO: implement
-        $this->markTestIncomplete('Not implemented');
-    }
-
-    /**
      * Test attribute "over_the_counter"
      */
     public function testPropertyOverTheCounter()
@@ -163,9 +244,9 @@ class PaymentMethodTest extends TestCase
     }
 
     /**
-     * Test attribute "virtual_account"
+     * Test attribute "card"
      */
-    public function testPropertyVirtualAccount()
+    public function testPropertyCard()
     {
         // TODO: implement
         $this->markTestIncomplete('Not implemented');
@@ -181,27 +262,9 @@ class PaymentMethodTest extends TestCase
     }
 
     /**
-     * Test attribute "reusability"
+     * Test attribute "virtual_account"
      */
-    public function testPropertyReusability()
-    {
-        // TODO: implement
-        $this->markTestIncomplete('Not implemented');
-    }
-
-    /**
-     * Test attribute "status"
-     */
-    public function testPropertyStatus()
-    {
-        // TODO: implement
-        $this->markTestIncomplete('Not implemented');
-    }
-
-    /**
-     * Test attribute "metadata"
-     */
-    public function testPropertyMetadata()
+    public function testPropertyVirtualAccount()
     {
         // TODO: implement
         $this->markTestIncomplete('Not implemented');

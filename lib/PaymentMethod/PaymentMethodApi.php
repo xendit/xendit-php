@@ -10,7 +10,7 @@
 /**
  * Payment Method Service v2
  *
- * The version of the OpenAPI document: 2.87.2
+ * The version of the OpenAPI document: 2.89.1
  */
 
 /**
@@ -70,9 +70,6 @@ class PaymentMethodApi
             'application/json',
         ],
         'expirePaymentMethod' => [
-            'application/json',
-        ],
-        'getAllPaymentChannels' => [
             'application/json',
         ],
         'getAllPaymentMethods' => [
@@ -384,7 +381,7 @@ class PaymentMethodApi
         
         // Xendit's custom headers
         $defaultHeaders['xendit-lib'] = 'php';
-        $defaultHeaders['xendit-lib-ver'] = '3.2.0';
+        $defaultHeaders['xendit-lib-ver'] = '3.3.0';
 
         if ($this->config->getUserAgent()) {
             $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
@@ -626,7 +623,7 @@ class PaymentMethodApi
         
         // Xendit's custom headers
         $defaultHeaders['xendit-lib'] = 'php';
-        $defaultHeaders['xendit-lib-ver'] = '3.2.0';
+        $defaultHeaders['xendit-lib-ver'] = '3.3.0';
 
         if ($this->config->getUserAgent()) {
             $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
@@ -888,7 +885,7 @@ class PaymentMethodApi
         
         // Xendit's custom headers
         $defaultHeaders['xendit-lib'] = 'php';
-        $defaultHeaders['xendit-lib-ver'] = '3.2.0';
+        $defaultHeaders['xendit-lib-ver'] = '3.3.0';
 
         if ($this->config->getUserAgent()) {
             $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
@@ -904,265 +901,6 @@ class PaymentMethodApi
         $query = ObjectSerializer::buildQuery($queryParams);
         return new Request(
             'POST',
-            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
-            $headers,
-            $httpBody
-        );
-    }
-
-    /**
-     * Operation getAllPaymentChannels
-     *
-     * Get all payment channels
-     *
-     * @param  bool $is_activated is_activated (optional, default to true)
-     * @param  string $type type (optional)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getAllPaymentChannels'] to see the possible values for this operation
-     *
-     * @throws \Xendit\XenditSdkException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return \Xendit\PaymentMethod\PaymentChannelList
-     */
-    public function getAllPaymentChannels($is_activated = true, $type = null, string $contentType = self::contentTypes['getAllPaymentChannels'][0])
-    {
-        list($response) = $this->getAllPaymentChannelsWithHttpInfo($is_activated, $type, $contentType);
-        return $response;
-    }
-
-    /**
-     * Operation getAllPaymentChannelsWithHttpInfo
-     *
-     * Get all payment channels
-     *
-     * @param  bool $is_activated (optional, default to true)
-     * @param  string $type (optional)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getAllPaymentChannels'] to see the possible values for this operation
-     *
-     * @throws \Xendit\XenditSdkException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return array of \Xendit\PaymentMethod\PaymentChannelList, HTTP status code, HTTP response headers (array of strings)
-     */
-    public function getAllPaymentChannelsWithHttpInfo($is_activated = true, $type = null, string $contentType = self::contentTypes['getAllPaymentChannels'][0])
-    {
-        $request = $this->getAllPaymentChannelsRequest($is_activated, $type, $contentType);
-
-        $options = $this->createHttpClientOption();
-        try {
-            $response = $this->client->send($request, $options);
-        } catch (RequestException $e) {
-            throw new XenditSdkException(
-                $e->getResponse() && $e->getResponse()->getBody() ? json_decode((string) $e->getResponse()->getBody()) : null,
-                (string) $e->getCode(),
-                $e->getMessage() ? $e->getMessage() : sprintf('Error connecting to the API (%s)', "getAllPaymentChannelsRequest")
-            );
-        } catch (ConnectException $e) {
-            throw new XenditSdkException(
-                null,
-                (string) $e->getCode(),
-                $e->getMessage() ? $e->getMessage() : sprintf('Error connecting to the API (%s)', "getAllPaymentChannelsRequest")
-            );
-        }  catch (GuzzleException $e) {
-            throw new XenditSdkException(
-                null,
-                (string) $e->getCode(),
-                $e->getMessage() ? $e->getMessage() : sprintf('Error instantiating client for API (%s)', "getAllPaymentChannelsRequest")
-            );
-        }
-
-        $statusCode = $response->getStatusCode();
-
-        if ($statusCode < 200 || $statusCode > 299) {
-            $errBodyContent = $response->getBody() ? json_decode((string) $response->getBody()) : null;
-
-            throw new XenditSdkException(
-                $errBodyContent,
-                (string) $statusCode,
-                $response->getReasonPhrase()
-            );
-        }
-        $returnType = '\Xendit\PaymentMethod\PaymentChannelList';
-        if ($returnType === '\SplFileObject') {
-            $content = $response->getBody(); //stream goes to serializer
-        } else {
-            $content = (string) $response->getBody();
-            if ($returnType !== 'string') {
-                $content = json_decode($content);
-            }
-        }
-
-        return [
-            ObjectSerializer::deserialize($content, $returnType, []),
-            $response->getStatusCode(),
-            $response->getHeaders()
-        ];
-    }
-
-    /**
-     * Operation getAllPaymentChannelsAsync
-     *
-     * Get all payment channels
-     *
-     * @param  bool $is_activated (optional, default to true)
-     * @param  string $type (optional)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getAllPaymentChannels'] to see the possible values for this operation
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     */
-    public function getAllPaymentChannelsAsync($is_activated = true, $type = null, string $contentType = self::contentTypes['getAllPaymentChannels'][0])
-    {
-        return $this->getAllPaymentChannelsAsyncWithHttpInfo($is_activated, $type, $contentType)
-            ->then(
-                function ($response) {
-                    return $response[0];
-                }
-            );
-    }
-
-    /**
-     * Operation getAllPaymentChannelsAsyncWithHttpInfo
-     *
-     * Get all payment channels
-     *
-     * @param  bool $is_activated (optional, default to true)
-     * @param  string $type (optional)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getAllPaymentChannels'] to see the possible values for this operation
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     */
-    public function getAllPaymentChannelsAsyncWithHttpInfo($is_activated = true, $type = null, string $contentType = self::contentTypes['getAllPaymentChannels'][0])
-    {
-        $returnType = '\Xendit\PaymentMethod\PaymentChannelList';
-        $request = $this->getAllPaymentChannelsRequest($is_activated, $type, $contentType);
-
-        return $this->client
-            ->sendAsync($request, $this->createHttpClientOption())
-            ->then(
-                function ($response) use ($returnType) {
-                    if ($returnType === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
-                    } else {
-                        $content = (string) $response->getBody();
-                        if ($returnType !== 'string') {
-                            $content = json_decode($content);
-                        }
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, $returnType, []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-                },
-                function ($e) {
-                    throw new XenditSdkException(
-                        $e->getResponse() && $e->getResponse()->getBody() ? json_decode((string) $e->getResponse()->getBody()) : null,
-                        (string) $e->getCode(),
-                        $e->getMessage() ? $e->getMessage() : sprintf('Error connecting to the API (%s)', "getAllPaymentChannelsRequest")
-                    );
-                }
-            );
-    }
-
-    /**
-     * Create request for operation 'getAllPaymentChannels'
-     *
-     * @param  bool $is_activated (optional, default to true)
-     * @param  string $type (optional)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getAllPaymentChannels'] to see the possible values for this operation
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Psr7\Request
-     */
-    public function getAllPaymentChannelsRequest($is_activated = true, $type = null, string $contentType = self::contentTypes['getAllPaymentChannels'][0])
-    {
-
-
-
-
-        $resourcePath = '/v2/payment_methods/channels';
-        $formParams = [];
-        $queryParams = [];
-        $headerParams = [];
-        $httpBody = '';
-        $multipart = false;
-
-        // query params
-        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
-            $is_activated,
-            'is_activated', // param base name
-            'boolean', // openApiType
-            'form', // style
-            true, // explode
-            false // required
-        ) ?? []);
-        // query params
-        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
-            $type,
-            'type', // param base name
-            'string', // openApiType
-            'form', // style
-            true, // explode
-            false // required
-        ) ?? []);
-
-
-
-        $headers = $this->headerSelector->selectHeaders(
-            ['application/json', ],
-            $contentType,
-            $multipart
-        );
-
-        // for model (json/xml)
-        if (count($formParams) > 0) {
-            if ($multipart) {
-                $multipartContents = [];
-                foreach ($formParams as $formParamName => $formParamValue) {
-                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
-                    foreach ($formParamValueItems as $formParamValueItem) {
-                        $multipartContents[] = [
-                            'name' => $formParamName,
-                            'contents' => $formParamValueItem
-                        ];
-                    }
-                }
-                // for HTTP post (form)
-                $httpBody = new MultipartStream($multipartContents);
-
-            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
-                # if Content-Type contains "application/json", json_encode the form parameters
-                $httpBody = \GuzzleHttp\Utils::jsonEncode($formParams);
-            } else {
-                // for HTTP post (form)
-                $httpBody = ObjectSerializer::buildQuery($formParams);
-            }
-        }
-
-        // this endpoint requires HTTP basic authentication
-        $headers['Authorization'] = 'Basic ' . base64_encode($this->config->getApiKey() . ":");
-
-        $defaultHeaders = [];
-        
-        // Xendit's custom headers
-        $defaultHeaders['xendit-lib'] = 'php';
-        $defaultHeaders['xendit-lib-ver'] = '3.2.0';
-
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $operationHost = $this->config->getHost();
-        $query = ObjectSerializer::buildQuery($queryParams);
-        return new Request(
-            'GET',
             $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
             $headers,
             $httpBody
@@ -1514,7 +1252,7 @@ class PaymentMethodApi
         
         // Xendit's custom headers
         $defaultHeaders['xendit-lib'] = 'php';
-        $defaultHeaders['xendit-lib-ver'] = '3.2.0';
+        $defaultHeaders['xendit-lib-ver'] = '3.3.0';
 
         if ($this->config->getUserAgent()) {
             $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
@@ -1763,7 +1501,7 @@ class PaymentMethodApi
         
         // Xendit's custom headers
         $defaultHeaders['xendit-lib'] = 'php';
-        $defaultHeaders['xendit-lib-ver'] = '3.2.0';
+        $defaultHeaders['xendit-lib-ver'] = '3.3.0';
 
         if ($this->config->getUserAgent()) {
             $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
@@ -2192,7 +1930,7 @@ class PaymentMethodApi
         
         // Xendit's custom headers
         $defaultHeaders['xendit-lib'] = 'php';
-        $defaultHeaders['xendit-lib-ver'] = '3.2.0';
+        $defaultHeaders['xendit-lib-ver'] = '3.3.0';
 
         if ($this->config->getUserAgent()) {
             $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
@@ -2454,7 +2192,7 @@ class PaymentMethodApi
         
         // Xendit's custom headers
         $defaultHeaders['xendit-lib'] = 'php';
-        $defaultHeaders['xendit-lib-ver'] = '3.2.0';
+        $defaultHeaders['xendit-lib-ver'] = '3.3.0';
 
         if ($this->config->getUserAgent()) {
             $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
@@ -2689,7 +2427,7 @@ class PaymentMethodApi
         
         // Xendit's custom headers
         $defaultHeaders['xendit-lib'] = 'php';
-        $defaultHeaders['xendit-lib-ver'] = '3.2.0';
+        $defaultHeaders['xendit-lib-ver'] = '3.3.0';
 
         if ($this->config->getUserAgent()) {
             $defaultHeaders['User-Agent'] = $this->config->getUserAgent();

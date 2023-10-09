@@ -7,7 +7,6 @@ All URIs are relative to https://api.xendit.co, except if the operation defines 
 | [**authPaymentMethod()**](PaymentMethodApi.md#authPaymentMethod) | **POST** /v2/payment_methods/{paymentMethodId}/auth | Validate a payment method&#39;s linking OTP |
 | [**createPaymentMethod()**](PaymentMethodApi.md#createPaymentMethod) | **POST** /v2/payment_methods | Creates payment method |
 | [**expirePaymentMethod()**](PaymentMethodApi.md#expirePaymentMethod) | **POST** /v2/payment_methods/{paymentMethodId}/expire | Expires a payment method |
-| [**getAllPaymentChannels()**](PaymentMethodApi.md#getAllPaymentChannels) | **GET** /v2/payment_methods/channels | Get all payment channels |
 | [**getAllPaymentMethods()**](PaymentMethodApi.md#getAllPaymentMethods) | **GET** /v2/payment_methods | Get all payment methods by filters |
 | [**getPaymentMethodByID()**](PaymentMethodApi.md#getPaymentMethodByID) | **GET** /v2/payment_methods/{paymentMethodId} | Get payment method by ID |
 | [**getPaymentsByPaymentMethodId()**](PaymentMethodApi.md#getPaymentsByPaymentMethodId) | **GET** /v2/payment_methods/{paymentMethodId}/payments | Returns payments with matching PaymentMethodID. |
@@ -177,62 +176,6 @@ No authorization required
 ### HTTP request headers
 
 - **Content-Type**: `application/json`
-- **Accept**: `application/json`
-
-[[Back to README]](../../README.md)
-
-## `getAllPaymentChannels()`
-
-```php
-getAllPaymentChannels($is_activated, $type): \PaymentMethod\PaymentChannelList
-```
-
-Get all payment channels
-
-Get all payment channels
-
-### Example
-
-```php
-<?php
-require_once(__DIR__ . '/vendor/autoload.php');
-
-use Xendit\Configuration;
-use Xendit\PaymentMethod\PaymentMethodApi;
-
-Configuration::setXenditKey("YOUR_API_KEY_HERE");
-
-$apiInstance = new PaymentMethodApi();
-$is_activated = true; // bool
-$type = "DIRECT_DEBIT"; // string
-
-try {
-    $result = $apiInstance->getAllPaymentChannels($is_activated, $type);
-    print_r($result);
-} catch (\Xendit\XenditSdkException $e) {
-    echo 'Exception when calling PaymentMethodApi->getAllPaymentChannels: ', $e->getMessage(), PHP_EOL;
-    echo 'Full Error: ', json_encode($e->getFullError()), PHP_EOL;
-}
-```
-
-### Parameters
-
-| Name | Type | Description  | Notes |
-| ------------- | ------------- | ------------- | ------------- |
-| **is_activated** | **bool**|  | [optional] [default to true] |
-| **type** | **string**|  | [optional] |
-
-### Return type
-
-[**\Xendit\PaymentMethod\PaymentChannelList**](PaymentChannelList.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
-- **Content-Type**: Not defined
 - **Accept**: `application/json`
 
 [[Back to README]](../../README.md)

@@ -11,7 +11,7 @@
 /**
  * Payment Requests
  *
- * The version of the OpenAPI document: 1.44.0
+ * The version of the OpenAPI document: 1.44.1
  */
 
 /**
@@ -55,7 +55,7 @@ class EWalletChannelProperties implements ModelInterface, ArrayAccess, \JsonSeri
         'failure_return_url' => 'string',
         'cancel_return_url' => 'string',
         'redeem_points' => 'string',
-        'mobilenumber' => 'string',
+        'mobile_number' => 'string',
         'cashtag' => 'string'
     ];
 
@@ -71,7 +71,7 @@ class EWalletChannelProperties implements ModelInterface, ArrayAccess, \JsonSeri
         'failure_return_url' => null,
         'cancel_return_url' => null,
         'redeem_points' => null,
-        'mobilenumber' => null,
+        'mobile_number' => null,
         'cashtag' => null
     ];
 
@@ -85,7 +85,7 @@ class EWalletChannelProperties implements ModelInterface, ArrayAccess, \JsonSeri
 		'failure_return_url' => false,
 		'cancel_return_url' => false,
 		'redeem_points' => false,
-		'mobilenumber' => false,
+		'mobile_number' => false,
 		'cashtag' => false
     ];
 
@@ -179,7 +179,7 @@ class EWalletChannelProperties implements ModelInterface, ArrayAccess, \JsonSeri
         'failure_return_url' => 'failure_return_url',
         'cancel_return_url' => 'cancel_return_url',
         'redeem_points' => 'redeem_points',
-        'mobilenumber' => 'mobile:number',
+        'mobile_number' => 'mobile_number',
         'cashtag' => 'cashtag'
     ];
 
@@ -193,7 +193,7 @@ class EWalletChannelProperties implements ModelInterface, ArrayAccess, \JsonSeri
         'failure_return_url' => 'setFailureReturnUrl',
         'cancel_return_url' => 'setCancelReturnUrl',
         'redeem_points' => 'setRedeemPoints',
-        'mobilenumber' => 'setMobilenumber',
+        'mobile_number' => 'setMobileNumber',
         'cashtag' => 'setCashtag'
     ];
 
@@ -207,7 +207,7 @@ class EWalletChannelProperties implements ModelInterface, ArrayAccess, \JsonSeri
         'failure_return_url' => 'getFailureReturnUrl',
         'cancel_return_url' => 'getCancelReturnUrl',
         'redeem_points' => 'getRedeemPoints',
-        'mobilenumber' => 'getMobilenumber',
+        'mobile_number' => 'getMobileNumber',
         'cashtag' => 'getCashtag'
     ];
 
@@ -272,7 +272,7 @@ class EWalletChannelProperties implements ModelInterface, ArrayAccess, \JsonSeri
         $this->setIfExists('failure_return_url', $data ?? [], null);
         $this->setIfExists('cancel_return_url', $data ?? [], null);
         $this->setIfExists('redeem_points', $data ?? [], null);
-        $this->setIfExists('mobilenumber', $data ?? [], null);
+        $this->setIfExists('mobile_number', $data ?? [], null);
         $this->setIfExists('cashtag', $data ?? [], null);
     }
 
@@ -454,28 +454,28 @@ class EWalletChannelProperties implements ModelInterface, ArrayAccess, \JsonSeri
     }
 
     /**
-     * Gets mobilenumber
+     * Gets mobile_number
      *
      * @return string|null
      */
-    public function getMobilenumber()
+    public function getMobileNumber()
     {
-        return $this->container['mobilenumber'];
+        return $this->container['mobile_number'];
     }
 
     /**
-     * Sets mobilenumber
+     * Sets mobile_number
      *
-     * @param string|null $mobilenumber mobilenumber
+     * @param string|null $mobile_number mobile_number
      *
      * @return self
      */
-    public function setMobilenumber($mobilenumber)
+    public function setMobileNumber($mobile_number)
     {
-        if (is_null($mobilenumber)) {
-            throw new \InvalidArgumentException('non-nullable mobilenumber cannot be null');
+        if (is_null($mobile_number)) {
+            throw new \InvalidArgumentException('non-nullable mobile_number cannot be null');
         }
-        $this->container['mobilenumber'] = $mobilenumber;
+        $this->container['mobile_number'] = $mobile_number;
 
         return $this;
     }

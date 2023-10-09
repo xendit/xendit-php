@@ -9,9 +9,9 @@
  */
 
 /**
- * Payment Requests
+ * Payment Method Service v2
  *
- * The version of the OpenAPI document: 1.44.0
+ * The version of the OpenAPI document: 2.89.1
  */
 
 /**
@@ -27,7 +27,7 @@ use PHPUnit\Framework\TestCase;
  * DirectDebitChannelPropertiesTest Class Doc Comment
  *
  * @category    Class
- * @description DirectDebitChannelProperties
+ * @description Direct Debit Channel Properties
  * @package     Xendit
  * @author      OpenAPI Generator team
  * @link        https://openapi-generator.tech
@@ -73,15 +73,6 @@ class DirectDebitChannelPropertiesTest extends TestCase
     }
 
     /**
-     * Test attribute "mobile_number"
-     */
-    public function testPropertyMobileNumber()
-    {
-        // TODO: implement
-        $this->markTestIncomplete('Not implemented');
-    }
-
-    /**
      * Test attribute "success_return_url"
      */
     public function testPropertySuccessReturnUrl()
@@ -100,18 +91,9 @@ class DirectDebitChannelPropertiesTest extends TestCase
     }
 
     /**
-     * Test attribute "identity_document_number"
+     * Test attribute "mobile_number"
      */
-    public function testPropertyIdentityDocumentNumber()
-    {
-        // TODO: implement
-        $this->markTestIncomplete('Not implemented');
-    }
-
-    /**
-     * Test attribute "account_number"
-     */
-    public function testPropertyAccountNumber()
+    public function testPropertyMobileNumber()
     {
         // TODO: implement
         $this->markTestIncomplete('Not implemented');
@@ -139,6 +121,24 @@ class DirectDebitChannelPropertiesTest extends TestCase
      * Test attribute "email"
      */
     public function testPropertyEmail()
+    {
+        // TODO: implement
+        $this->markTestIncomplete('Not implemented');
+    }
+
+    /**
+     * Test attribute "identity_document_number"
+     */
+    public function testPropertyIdentityDocumentNumber()
+    {
+        // TODO: implement
+        $this->markTestIncomplete('Not implemented');
+    }
+
+    /**
+     * Test attribute "require_auth"
+     */
+    public function testPropertyRequireAuth()
     {
         // TODO: implement
         $this->markTestIncomplete('Not implemented');

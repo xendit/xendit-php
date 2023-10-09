@@ -10,7 +10,7 @@
 /**
  * Payment Method Service v2
  *
- * The version of the OpenAPI document: 2.87.2
+ * The version of the OpenAPI document: 2.89.1
  */
 
 
@@ -91,18 +91,6 @@ class PaymentMethodApiTest extends TestCase
      *
      */
     public function testExpirePaymentMethod()
-    {
-        // TODO: implement
-        $this->markTestIncomplete('Not implemented');
-    }
-
-    /**
-     * Test case for getAllPaymentChannels
-     *
-     * Get all payment channels.
-     *
-     */
-    public function testGetAllPaymentChannels()
     {
         // TODO: implement
         $this->markTestIncomplete('Not implemented');

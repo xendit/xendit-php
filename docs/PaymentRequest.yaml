@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   description: This API is used for Payment Requests
   title: Payment Requests
-  version: 1.44.0
+  version: 1.44.1
 servers:
 - description: Xendit API Server
   url: https://api.xendit.co
@@ -984,7 +984,7 @@ components:
             \ tokenized payment use only."
           example: REDEEM_NONE
           type: string
-        mobile:number:
+        mobile_number:
           type: string
         cashtag:
           type: string

@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   description: This API is used for Payment Method Service v2
   title: Payment Method Service v2
-  version: 2.87.2
+  version: 2.89.1
 servers:
 - description: Xendit API Server
   url: https://api.xendit.co
@@ -579,58 +579,6 @@ paths:
                 $ref: '#/components/schemas/getAllPaymentMethods_default_response'
           description: Internal server error
       summary: Returns payments with matching PaymentMethodID.
-      tags:
-      - payment_method
-  /v2/payment_methods/channels:
-    get:
-      description: Get all payment channels
-      operationId: getAllPaymentChannels
-      parameters:
-      - explode: true
-        in: query
-        name: is_activated
-        required: false
-        schema:
-          default: true
-          enum:
-          - true
-          - false
-          type: boolean
-        style: form
-      - explode: true
-        in: query
-        name: type
-        required: false
-        schema:
-          example: DIRECT_DEBIT
-          type: string
-        style: form
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PaymentChannelList'
-          description: Request successful
-        "400":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/getAllPaymentMethods_400_response'
-          description: Bad request
-        "403":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/getAllPaymentMethods_403_response'
-          description: Forbidden due to permissions
-        default:
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/getAllPaymentMethods_default_response'
-          description: Internal server error
-      summary: Get all payment channels
       tags:
       - payment_method
   /v2/payment_methods/{paymentMethodId}/payments/simulate:
@@ -2137,40 +2085,6 @@ components:
       required:
       - auth_code
       type: object
-    ChannelProperty:
-      allOf:
-      - $ref: '#/components/schemas/ChannelProperty_allOf'
-    ChannelAmountLimits:
-      allOf:
-      - $ref: '#/components/schemas/ChannelAmountLimits_allOf'
-    PaymentChannel:
-      allOf:
-      - $ref: '#/components/schemas/PaymentChannel_allOf'
-    PaymentChannelList:
-      example:
-        data:
-        - null
-        - null
-        links:
-        - null
-        - null
-        has_more: true
-      properties:
-        data:
-          description: Array of resources that match the provided filters
-          items:
-            $ref: '#/components/schemas/PaymentChannel'
-          type: array
-        links:
-          description: Array of objects that can be used to assist on navigating through
-            the data
-          items:
-            $ref: '#/components/schemas/PaymentChannelList_links_inner'
-          type: array
-        has_more:
-          description: Indicates whether there are more items in the list
-          type: boolean
-      type: object
     getAllPaymentMethods_400_response:
       properties:
         error_code:
@@ -2305,91 +2219,3 @@ components:
       - expiry_month
       - expiry_year
       type: object
-    ChannelProperty_allOf:
-      description: Objects that enumerate the parameters needed as `channel_properties`
-        when creating a Payment Method
-      properties:
-        name:
-          description: The corresponding parameter name
-          type: string
-        type:
-          description: Data type of the parameter
-          type: string
-        is_required:
-          description: Indicates whether or not the parameter is required
-          type: boolean
-      type: object
-      example: null
-    ChannelAmountLimits_allOf:
-      description: Contains objects of the support currencies and its respective limits
-        per transaction
-      properties:
-        currency:
-          description: Currency supported by the payment channel
-          type: string
-        min_limit:
-          description: The minimum allowed transaction amount for the payment channel
-          type: number
-        max_limit:
-          description: The minimum allowed transaction amount for the payment channel
-          type: number
-      type: object
-      example: null
-    PaymentChannel_allOf:
-      properties:
-        channel_code:
-          description: The specific Xendit code used to identify the partner channel
-          example: BPI
-          type: string
-        type:
-          description: The payment method type
-          example: DIRECT_DEBIT
-          type: string
-        country:
-          description: The country where the channel operates  in ISO 3166-2 country
-            code
-          example: PH
-          type: string
-        channel_name:
-          description: Official parter name of the payment channel
-          example: Bank of the Philippine Islands
-          type: string
-        channel_properties:
-          items:
-            $ref: '#/components/schemas/ChannelProperty'
-          type: array
-        logo_url:
-          description: "If available, this contains a URL to the logo of the partner\
-            \ channel"
-          type: string
-        amount_limits:
-          items:
-            $ref: '#/components/schemas/ChannelAmountLimits'
-          type: array
-      type: object
-      example: null
-    PaymentChannelList_links_inner_allOf:
-      properties:
-        href:
-          description: Target URI that should contain a target to Internationalized
-            Resource Identifiers (IRI)
-          example: /v2/payment_methods/channels?is_activated=true
-          type: string
-        rel:
-          description: The link relation type described how the current context (source)
-            is related to target resource
-          enum:
-          - first
-          - last
-          - next
-          - prev
-          example: next
-          type: string
-        method:
-          description: The HTTP method to be used to call `href`
-          example: GET
-          type: string
-      type: object
-    PaymentChannelList_links_inner:
-      allOf:
-      - $ref: '#/components/schemas/PaymentChannelList_links_inner_allOf'

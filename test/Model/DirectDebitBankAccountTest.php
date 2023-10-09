@@ -9,9 +9,9 @@
  */
 
 /**
- * Payment Requests
+ * Payment Method Service v2
  *
- * The version of the OpenAPI document: 1.44.0
+ * The version of the OpenAPI document: 2.89.1
  */
 
 /**
@@ -85,6 +85,24 @@ class DirectDebitBankAccountTest extends TestCase
      * Test attribute "bank_account_hash"
      */
     public function testPropertyBankAccountHash()
+    {
+        // TODO: implement
+        $this->markTestIncomplete('Not implemented');
+    }
+
+    /**
+     * Test attribute "mobile_number"
+     */
+    public function testPropertyMobileNumber()
+    {
+        // TODO: implement
+        $this->markTestIncomplete('Not implemented');
+    }
+
+    /**
+     * Test attribute "identity_document_number"
+     */
+    public function testPropertyIdentityDocumentNumber()
     {
         // TODO: implement
         $this->markTestIncomplete('Not implemented');

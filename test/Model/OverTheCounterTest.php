@@ -9,9 +9,9 @@
  */
 
 /**
- * Payment Requests
+ * Payment Method Service v2
  *
- * The version of the OpenAPI document: 1.44.0
+ * The version of the OpenAPI document: 2.89.1
  */
 
 /**
@@ -27,7 +27,7 @@ use PHPUnit\Framework\TestCase;
  * OverTheCounterTest Class Doc Comment
  *
  * @category    Class
- * @description Over the Counter Payment Method Details
+ * @description Over The Counter Payment Method Details
  * @package     Xendit
  * @author      OpenAPI Generator team
  * @link        https://openapi-generator.tech
