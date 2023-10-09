@@ -22,6 +22,7 @@
 namespace Xendit\Test\Model;
 
 use PHPUnit\Framework\TestCase;
+use Xendit\Customer\AccountBank;
 
 /**
  * AccountBankTest Class Doc Comment
@@ -68,8 +69,8 @@ class AccountBankTest extends TestCase
      */
     public function testAccountBank()
     {
-        // TODO: implement
-        $this->markTestIncomplete('Not implemented');
+        $bankAccount = new AccountBank();
+        $this->assertInstanceOf(AccountBank::class, $bankAccount);
     }
 
     /**
