@@ -32,7 +32,7 @@ use PHPUnit\Framework\TestCase;
  * @author      OpenAPI Generator team
  * @link        https://openapi-generator.tech
  */
-class EWalletTest extends TestCase
+class EWallet2Test extends TestCase
 {
 
     /**

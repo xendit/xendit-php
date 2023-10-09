@@ -32,7 +32,7 @@ use PHPUnit\Framework\TestCase;
  * @author      OpenAPI Generator team
  * @link        https://openapi-generator.tech
  */
-class QRCodeTest extends TestCase
+class QRCode2Test extends TestCase
 {
 
     /**
