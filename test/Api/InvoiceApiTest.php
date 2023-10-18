@@ -73,18 +73,6 @@ class InvoiceApiTest extends TestCase
     }
 
     /**
-     * Test case for expireInvoice
-     *
-     * Manually expire an invoice.
-     *
-     */
-    public function testExpireInvoice()
-    {
-        // TODO: implement
-        $this->markTestIncomplete('Not implemented');
-    }
-
-    /**
      * Test case for getInvoiceById
      *
      * Get invoice by invoice id.
@@ -103,6 +91,18 @@ class InvoiceApiTest extends TestCase
      *
      */
     public function testGetInvoices()
+    {
+        // TODO: implement
+        $this->markTestIncomplete('Not implemented');
+    }
+
+    /**
+     * Test case for expireInvoice
+     *
+     * Manually expire an invoice.
+     *
+     */
+    public function testExpireInvoice()
     {
         // TODO: implement
         $this->markTestIncomplete('Not implemented');

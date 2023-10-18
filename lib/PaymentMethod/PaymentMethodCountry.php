@@ -11,7 +11,7 @@
 /**
  * Payment Method Service v2
  *
- * The version of the OpenAPI document: 2.89.1
+ * The version of the OpenAPI document: 2.89.2
  */
 
 /**
@@ -46,6 +46,7 @@ class PaymentMethodCountry
     
     public const MY = 'MY';
     
+    public const XENDIT_ENUM_DEFAULT_FALLBACK = 'UNKNOWN_ENUM_VALUE';
 
     private $value;
 
@@ -79,7 +80,8 @@ class PaymentMethodCountry
             self::ID,
             self::VN,
             self::TH,
-            self::MY
+            self::MY,
+            self::XENDIT_ENUM_DEFAULT_FALLBACK
         ];
     }
 }

@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   description: This API is used for Payment Method Service v2
   title: Payment Method Service v2
-  version: 2.89.1
+  version: 2.89.2
 servers:
 - description: Xendit API Server
   url: https://api.xendit.co
@@ -12,6 +12,14 @@ paths:
       description: Get all payment methods by filters
       operationId: getAllPaymentMethods
       parameters:
+      - explode: false
+        in: header
+        name: for-user-id
+        required: false
+        schema:
+          example: 5f9a3fbd571a1c4068aa40ce
+          type: string
+        style: simple
       - explode: true
         in: query
         name: id
@@ -119,6 +127,15 @@ paths:
     post:
       description: This endpoint initiates creation of payment method
       operationId: createPaymentMethod
+      parameters:
+      - explode: false
+        in: header
+        name: for-user-id
+        required: false
+        schema:
+          example: 5f9a3fbd571a1c4068aa40ce
+          type: string
+        style: simple
       requestBody:
         content:
           application/json:
@@ -219,6 +236,14 @@ paths:
           example: pm-1fdaf346-dd2e-4b6c-b938-124c7167a822
           type: string
         style: simple
+      - explode: false
+        in: header
+        name: for-user-id
+        required: false
+        schema:
+          example: 5f9a3fbd571a1c4068aa40ce
+          type: string
+        style: simple
       responses:
         "200":
           content:
@@ -255,8 +280,8 @@ paths:
       - payment_method
     patch:
       description: This endpoint is used to toggle the ```status``` of an e-Wallet
-        or a Direct Debit payment method to ```ACTIVE``` or ```INACTIVE```.  This
-        is also used to update the details of an Over-the-Counter or a Virtual Account
+        or a Direct Debit payment method to ```ACTIVE``` or ```INACTIVE```. This is
+        also used to update the details of an Over-the-Counter or a Virtual Account
         payment method.
       operationId: patchPaymentMethod
       parameters:
@@ -266,6 +291,14 @@ paths:
         required: true
         schema:
           example: pm-1fdaf346-dd2e-4b6c-b938-124c7167a822
+          type: string
+        style: simple
+      - explode: false
+        in: header
+        name: for-user-id
+        required: false
+        schema:
+          example: 5f9a3fbd571a1c4068aa40ce
           type: string
         style: simple
       requestBody:
@@ -319,6 +352,14 @@ paths:
         required: true
         schema:
           example: pm-1fdaf346-dd2e-4b6c-b938-124c7167a822
+          type: string
+        style: simple
+      - explode: false
+        in: header
+        name: for-user-id
+        required: false
+        schema:
+          example: 5f9a3fbd571a1c4068aa40ce
           type: string
         style: simple
       requestBody:
@@ -377,6 +418,14 @@ paths:
         required: true
         schema:
           example: pm-1fdaf346-dd2e-4b6c-b938-124c7167a822
+          type: string
+        style: simple
+      - explode: false
+        in: header
+        name: for-user-id
+        required: false
+        schema:
+          example: 5f9a3fbd571a1c4068aa40ce
           type: string
         style: simple
       requestBody:
@@ -441,6 +490,14 @@ paths:
         required: true
         schema:
           example: pm-1fdaf346-dd2e-4b6c-b938-124c7167a822
+          type: string
+        style: simple
+      - explode: false
+        in: header
+        name: for-user-id
+        required: false
+        schema:
+          example: 5f9a3fbd571a1c4068aa40ce
           type: string
         style: simple
       - explode: true
@@ -637,6 +694,15 @@ paths:
       - payment_method
 components:
   parameters:
+    ForUserId:
+      explode: false
+      in: header
+      name: for-user-id
+      required: false
+      schema:
+        example: 5f9a3fbd571a1c4068aa40ce
+        type: string
+      style: simple
     PaymentMethodID:
       explode: false
       in: path

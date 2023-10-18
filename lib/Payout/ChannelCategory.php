@@ -43,6 +43,7 @@ class ChannelCategory
     
     public const OTC = 'OTC';
     
+    public const XENDIT_ENUM_DEFAULT_FALLBACK = 'UNKNOWN_ENUM_VALUE';
 
     private $value;
 
@@ -74,7 +75,8 @@ class ChannelCategory
         return [
             self::BANK,
             self::EWALLET,
-            self::OTC
+            self::OTC,
+            self::XENDIT_ENUM_DEFAULT_FALLBACK
         ];
     }
 }

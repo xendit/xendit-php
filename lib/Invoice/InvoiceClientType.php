@@ -49,6 +49,7 @@ class InvoiceClientType
     
     public const MOBILE = 'MOBILE';
     
+    public const XENDIT_ENUM_DEFAULT_FALLBACK = 'UNKNOWN_ENUM_VALUE';
 
     private $value;
 
@@ -83,7 +84,8 @@ class InvoiceClientType
             self::INTEGRATION,
             self::ON_DEMAND,
             self::RECURRING,
-            self::MOBILE
+            self::MOBILE,
+            self::XENDIT_ENUM_DEFAULT_FALLBACK
         ];
     }
 }

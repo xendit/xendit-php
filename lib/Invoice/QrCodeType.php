@@ -41,6 +41,7 @@ class QrCodeType
     
     public const PROMPTPAY = 'PROMPTPAY';
     
+    public const XENDIT_ENUM_DEFAULT_FALLBACK = 'UNKNOWN_ENUM_VALUE';
 
     private $value;
 
@@ -71,7 +72,8 @@ class QrCodeType
     {
         return [
             self::QRIS,
-            self::PROMPTPAY
+            self::PROMPTPAY,
+            self::XENDIT_ENUM_DEFAULT_FALLBACK
         ];
     }
 }

@@ -11,7 +11,7 @@
 /**
  * Payment Method Service v2
  *
- * The version of the OpenAPI document: 2.89.1
+ * The version of the OpenAPI document: 2.89.2
  */
 
 /**
@@ -48,6 +48,7 @@ class PaymentMethodStatus
     
     public const FAILED = 'FAILED';
     
+    public const XENDIT_ENUM_DEFAULT_FALLBACK = 'UNKNOWN_ENUM_VALUE';
 
     private $value;
 
@@ -82,7 +83,8 @@ class PaymentMethodStatus
             self::INACTIVE,
             self::PENDING,
             self::REQUIRES_ACTION,
-            self::FAILED
+            self::FAILED,
+            self::XENDIT_ENUM_DEFAULT_FALLBACK
         ];
     }
 }

@@ -46,6 +46,7 @@ class TransactionStatuses
     
     public const VOIDED = 'VOIDED';
     
+    public const XENDIT_ENUM_DEFAULT_FALLBACK = 'UNKNOWN_ENUM_VALUE';
 
     private $value;
 
@@ -79,7 +80,8 @@ class TransactionStatuses
             self::PENDING,
             self::FAILED,
             self::REVERSED,
-            self::VOIDED
+            self::VOIDED,
+            self::XENDIT_ENUM_DEFAULT_FALLBACK
         ];
     }
 }

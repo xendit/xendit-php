@@ -42,6 +42,7 @@ class DirectDebitType
     
     public const BANK_REDIRECT = 'BANK_REDIRECT';
     
+    public const XENDIT_ENUM_DEFAULT_FALLBACK = 'UNKNOWN_ENUM_VALUE';
 
     private $value;
 
@@ -73,7 +74,8 @@ class DirectDebitType
         return [
             self::DEBIT_CARD,
             self::BANK_ACCOUNT,
-            self::BANK_REDIRECT
+            self::BANK_REDIRECT,
+            self::XENDIT_ENUM_DEFAULT_FALLBACK
         ];
     }
 }

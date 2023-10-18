@@ -66,13 +66,13 @@ class InvoiceApi
         'createInvoice' => [
             'application/json',
         ],
-        'expireInvoice' => [
-            'application/json',
-        ],
         'getInvoiceById' => [
             'application/json',
         ],
         'getInvoices' => [
+            'application/json',
+        ],
+        'expireInvoice' => [
             'application/json',
         ],
     ];
@@ -135,15 +135,16 @@ class InvoiceApi
      * Create an invoice
      *
      * @param  \Xendit\Invoice\CreateInvoiceRequest $create_invoice_request create_invoice_request (required)
+     * @param  string $for_user_id Business ID of the sub-account merchant (XP feature) (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createInvoice'] to see the possible values for this operation
      *
      * @throws \Xendit\XenditSdkException on non-2xx response
      * @throws \InvalidArgumentException
      * @return \Xendit\Invoice\Invoice
      */
-    public function createInvoice($create_invoice_request, string $contentType = self::contentTypes['createInvoice'][0])
+    public function createInvoice($create_invoice_request, $for_user_id = null, string $contentType = self::contentTypes['createInvoice'][0])
     {
-        list($response) = $this->createInvoiceWithHttpInfo($create_invoice_request, $contentType);
+        list($response) = $this->createInvoiceWithHttpInfo($create_invoice_request, $for_user_id, $contentType);
         return $response;
     }
 
@@ -153,15 +154,16 @@ class InvoiceApi
      * Create an invoice
      *
      * @param  \Xendit\Invoice\CreateInvoiceRequest $create_invoice_request (required)
+     * @param  string $for_user_id Business ID of the sub-account merchant (XP feature) (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createInvoice'] to see the possible values for this operation
      *
      * @throws \Xendit\XenditSdkException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of \Xendit\Invoice\Invoice, HTTP status code, HTTP response headers (array of strings)
      */
-    public function createInvoiceWithHttpInfo($create_invoice_request, string $contentType = self::contentTypes['createInvoice'][0])
+    public function createInvoiceWithHttpInfo($create_invoice_request, $for_user_id = null, string $contentType = self::contentTypes['createInvoice'][0])
     {
-        $request = $this->createInvoiceRequest($create_invoice_request, $contentType);
+        $request = $this->createInvoiceRequest($create_invoice_request, $for_user_id, $contentType);
 
         $options = $this->createHttpClientOption();
         try {
@@ -220,14 +222,15 @@ class InvoiceApi
      * Create an invoice
      *
      * @param  \Xendit\Invoice\CreateInvoiceRequest $create_invoice_request (required)
+     * @param  string $for_user_id Business ID of the sub-account merchant (XP feature) (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createInvoice'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function createInvoiceAsync($create_invoice_request, string $contentType = self::contentTypes['createInvoice'][0])
+    public function createInvoiceAsync($create_invoice_request, $for_user_id = null, string $contentType = self::contentTypes['createInvoice'][0])
     {
-        return $this->createInvoiceAsyncWithHttpInfo($create_invoice_request, $contentType)
+        return $this->createInvoiceAsyncWithHttpInfo($create_invoice_request, $for_user_id, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -241,15 +244,16 @@ class InvoiceApi
      * Create an invoice
      *
      * @param  \Xendit\Invoice\CreateInvoiceRequest $create_invoice_request (required)
+     * @param  string $for_user_id Business ID of the sub-account merchant (XP feature) (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createInvoice'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function createInvoiceAsyncWithHttpInfo($create_invoice_request, string $contentType = self::contentTypes['createInvoice'][0])
+    public function createInvoiceAsyncWithHttpInfo($create_invoice_request, $for_user_id = null, string $contentType = self::contentTypes['createInvoice'][0])
     {
         $returnType = '\Xendit\Invoice\Invoice';
-        $request = $this->createInvoiceRequest($create_invoice_request, $contentType);
+        $request = $this->createInvoiceRequest($create_invoice_request, $for_user_id, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -284,12 +288,13 @@ class InvoiceApi
      * Create request for operation 'createInvoice'
      *
      * @param  \Xendit\Invoice\CreateInvoiceRequest $create_invoice_request (required)
+     * @param  string $for_user_id Business ID of the sub-account merchant (XP feature) (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createInvoice'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function createInvoiceRequest($create_invoice_request, string $contentType = self::contentTypes['createInvoice'][0])
+    public function createInvoiceRequest($create_invoice_request, $for_user_id = null, string $contentType = self::contentTypes['createInvoice'][0])
     {
 
         // verify the required parameter 'create_invoice_request' is set
@@ -300,6 +305,7 @@ class InvoiceApi
         }
 
 
+
         $resourcePath = '/v2/invoices/';
         $formParams = [];
         $queryParams = [];
@@ -308,6 +314,10 @@ class InvoiceApi
         $multipart = false;
 
 
+        // header param: for-user-id
+        if ($for_user_id !== null) {
+            $headerParams['for-user-id'] = ObjectSerializer::toHeaderValue($for_user_id);
+        }
 
 
         $headers = $this->headerSelector->selectHeaders(
@@ -355,256 +365,7 @@ class InvoiceApi
         
         // Xendit's custom headers
         $defaultHeaders['xendit-lib'] = 'php';
-        $defaultHeaders['xendit-lib-ver'] = '3.3.0';
-
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $operationHost = $this->config->getHost();
-        $query = ObjectSerializer::buildQuery($queryParams);
-        return new Request(
-            'POST',
-            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
-            $headers,
-            $httpBody
-        );
-    }
-
-    /**
-     * Operation expireInvoice
-     *
-     * Manually expire an invoice
-     *
-     * @param  string $invoice_id Invoice ID to be expired (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['expireInvoice'] to see the possible values for this operation
-     *
-     * @throws \Xendit\XenditSdkException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return \Xendit\Invoice\Invoice
-     */
-    public function expireInvoice($invoice_id, string $contentType = self::contentTypes['expireInvoice'][0])
-    {
-        list($response) = $this->expireInvoiceWithHttpInfo($invoice_id, $contentType);
-        return $response;
-    }
-
-    /**
-     * Operation expireInvoiceWithHttpInfo
-     *
-     * Manually expire an invoice
-     *
-     * @param  string $invoice_id Invoice ID to be expired (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['expireInvoice'] to see the possible values for this operation
-     *
-     * @throws \Xendit\XenditSdkException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return array of \Xendit\Invoice\Invoice, HTTP status code, HTTP response headers (array of strings)
-     */
-    public function expireInvoiceWithHttpInfo($invoice_id, string $contentType = self::contentTypes['expireInvoice'][0])
-    {
-        $request = $this->expireInvoiceRequest($invoice_id, $contentType);
-
-        $options = $this->createHttpClientOption();
-        try {
-            $response = $this->client->send($request, $options);
-        } catch (RequestException $e) {
-            throw new XenditSdkException(
-                $e->getResponse() && $e->getResponse()->getBody() ? json_decode((string) $e->getResponse()->getBody()) : null,
-                (string) $e->getCode(),
-                $e->getMessage() ? $e->getMessage() : sprintf('Error connecting to the API (%s)', "expireInvoiceRequest")
-            );
-        } catch (ConnectException $e) {
-            throw new XenditSdkException(
-                null,
-                (string) $e->getCode(),
-                $e->getMessage() ? $e->getMessage() : sprintf('Error connecting to the API (%s)', "expireInvoiceRequest")
-            );
-        }  catch (GuzzleException $e) {
-            throw new XenditSdkException(
-                null,
-                (string) $e->getCode(),
-                $e->getMessage() ? $e->getMessage() : sprintf('Error instantiating client for API (%s)', "expireInvoiceRequest")
-            );
-        }
-
-        $statusCode = $response->getStatusCode();
-
-        if ($statusCode < 200 || $statusCode > 299) {
-            $errBodyContent = $response->getBody() ? json_decode((string) $response->getBody()) : null;
-
-            throw new XenditSdkException(
-                $errBodyContent,
-                (string) $statusCode,
-                $response->getReasonPhrase()
-            );
-        }
-        $returnType = '\Xendit\Invoice\Invoice';
-        if ($returnType === '\SplFileObject') {
-            $content = $response->getBody(); //stream goes to serializer
-        } else {
-            $content = (string) $response->getBody();
-            if ($returnType !== 'string') {
-                $content = json_decode($content);
-            }
-        }
-
-        return [
-            ObjectSerializer::deserialize($content, $returnType, []),
-            $response->getStatusCode(),
-            $response->getHeaders()
-        ];
-    }
-
-    /**
-     * Operation expireInvoiceAsync
-     *
-     * Manually expire an invoice
-     *
-     * @param  string $invoice_id Invoice ID to be expired (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['expireInvoice'] to see the possible values for this operation
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     */
-    public function expireInvoiceAsync($invoice_id, string $contentType = self::contentTypes['expireInvoice'][0])
-    {
-        return $this->expireInvoiceAsyncWithHttpInfo($invoice_id, $contentType)
-            ->then(
-                function ($response) {
-                    return $response[0];
-                }
-            );
-    }
-
-    /**
-     * Operation expireInvoiceAsyncWithHttpInfo
-     *
-     * Manually expire an invoice
-     *
-     * @param  string $invoice_id Invoice ID to be expired (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['expireInvoice'] to see the possible values for this operation
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     */
-    public function expireInvoiceAsyncWithHttpInfo($invoice_id, string $contentType = self::contentTypes['expireInvoice'][0])
-    {
-        $returnType = '\Xendit\Invoice\Invoice';
-        $request = $this->expireInvoiceRequest($invoice_id, $contentType);
-
-        return $this->client
-            ->sendAsync($request, $this->createHttpClientOption())
-            ->then(
-                function ($response) use ($returnType) {
-                    if ($returnType === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
-                    } else {
-                        $content = (string) $response->getBody();
-                        if ($returnType !== 'string') {
-                            $content = json_decode($content);
-                        }
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, $returnType, []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-                },
-                function ($e) {
-                    throw new XenditSdkException(
-                        $e->getResponse() && $e->getResponse()->getBody() ? json_decode((string) $e->getResponse()->getBody()) : null,
-                        (string) $e->getCode(),
-                        $e->getMessage() ? $e->getMessage() : sprintf('Error connecting to the API (%s)', "expireInvoiceRequest")
-                    );
-                }
-            );
-    }
-
-    /**
-     * Create request for operation 'expireInvoice'
-     *
-     * @param  string $invoice_id Invoice ID to be expired (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['expireInvoice'] to see the possible values for this operation
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Psr7\Request
-     */
-    public function expireInvoiceRequest($invoice_id, string $contentType = self::contentTypes['expireInvoice'][0])
-    {
-
-        // verify the required parameter 'invoice_id' is set
-        if ($invoice_id === null || (is_array($invoice_id) && count($invoice_id) === 0)) {
-            throw new \InvalidArgumentException(
-                'Missing the required parameter $invoice_id when calling expireInvoice'
-            );
-        }
-
-
-        $resourcePath = '/invoices/{invoice_id}/expire!';
-        $formParams = [];
-        $queryParams = [];
-        $headerParams = [];
-        $httpBody = '';
-        $multipart = false;
-
-
-        // path params
-        if ($invoice_id !== null) {
-            $resourcePath = str_replace(
-                '{' . 'invoice_id' . '}',
-                ObjectSerializer::toPathValue($invoice_id),
-                $resourcePath
-            );
-        }
-
-
-        $headers = $this->headerSelector->selectHeaders(
-            ['application/json', ],
-            $contentType,
-            $multipart
-        );
-
-        // for model (json/xml)
-        if (count($formParams) > 0) {
-            if ($multipart) {
-                $multipartContents = [];
-                foreach ($formParams as $formParamName => $formParamValue) {
-                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
-                    foreach ($formParamValueItems as $formParamValueItem) {
-                        $multipartContents[] = [
-                            'name' => $formParamName,
-                            'contents' => $formParamValueItem
-                        ];
-                    }
-                }
-                // for HTTP post (form)
-                $httpBody = new MultipartStream($multipartContents);
-
-            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
-                # if Content-Type contains "application/json", json_encode the form parameters
-                $httpBody = \GuzzleHttp\Utils::jsonEncode($formParams);
-            } else {
-                // for HTTP post (form)
-                $httpBody = ObjectSerializer::buildQuery($formParams);
-            }
-        }
-
-        // this endpoint requires HTTP basic authentication
-        $headers['Authorization'] = 'Basic ' . base64_encode($this->config->getApiKey() . ":");
-
-        $defaultHeaders = [];
-        
-        // Xendit's custom headers
-        $defaultHeaders['xendit-lib'] = 'php';
-        $defaultHeaders['xendit-lib-ver'] = '3.3.0';
+        $defaultHeaders['xendit-lib-ver'] = '3.4.0';
 
         if ($this->config->getUserAgent()) {
             $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
@@ -632,15 +393,16 @@ class InvoiceApi
      * Get invoice by invoice id
      *
      * @param  string $invoice_id Invoice ID (required)
+     * @param  string $for_user_id Business ID of the sub-account merchant (XP feature) (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getInvoiceById'] to see the possible values for this operation
      *
      * @throws \Xendit\XenditSdkException on non-2xx response
      * @throws \InvalidArgumentException
      * @return \Xendit\Invoice\Invoice
      */
-    public function getInvoiceById($invoice_id, string $contentType = self::contentTypes['getInvoiceById'][0])
+    public function getInvoiceById($invoice_id, $for_user_id = null, string $contentType = self::contentTypes['getInvoiceById'][0])
     {
-        list($response) = $this->getInvoiceByIdWithHttpInfo($invoice_id, $contentType);
+        list($response) = $this->getInvoiceByIdWithHttpInfo($invoice_id, $for_user_id, $contentType);
         return $response;
     }
 
@@ -650,15 +412,16 @@ class InvoiceApi
      * Get invoice by invoice id
      *
      * @param  string $invoice_id Invoice ID (required)
+     * @param  string $for_user_id Business ID of the sub-account merchant (XP feature) (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getInvoiceById'] to see the possible values for this operation
      *
      * @throws \Xendit\XenditSdkException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of \Xendit\Invoice\Invoice, HTTP status code, HTTP response headers (array of strings)
      */
-    public function getInvoiceByIdWithHttpInfo($invoice_id, string $contentType = self::contentTypes['getInvoiceById'][0])
+    public function getInvoiceByIdWithHttpInfo($invoice_id, $for_user_id = null, string $contentType = self::contentTypes['getInvoiceById'][0])
     {
-        $request = $this->getInvoiceByIdRequest($invoice_id, $contentType);
+        $request = $this->getInvoiceByIdRequest($invoice_id, $for_user_id, $contentType);
 
         $options = $this->createHttpClientOption();
         try {
@@ -717,14 +480,15 @@ class InvoiceApi
      * Get invoice by invoice id
      *
      * @param  string $invoice_id Invoice ID (required)
+     * @param  string $for_user_id Business ID of the sub-account merchant (XP feature) (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getInvoiceById'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function getInvoiceByIdAsync($invoice_id, string $contentType = self::contentTypes['getInvoiceById'][0])
+    public function getInvoiceByIdAsync($invoice_id, $for_user_id = null, string $contentType = self::contentTypes['getInvoiceById'][0])
     {
-        return $this->getInvoiceByIdAsyncWithHttpInfo($invoice_id, $contentType)
+        return $this->getInvoiceByIdAsyncWithHttpInfo($invoice_id, $for_user_id, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -738,15 +502,16 @@ class InvoiceApi
      * Get invoice by invoice id
      *
      * @param  string $invoice_id Invoice ID (required)
+     * @param  string $for_user_id Business ID of the sub-account merchant (XP feature) (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getInvoiceById'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function getInvoiceByIdAsyncWithHttpInfo($invoice_id, string $contentType = self::contentTypes['getInvoiceById'][0])
+    public function getInvoiceByIdAsyncWithHttpInfo($invoice_id, $for_user_id = null, string $contentType = self::contentTypes['getInvoiceById'][0])
     {
         $returnType = '\Xendit\Invoice\Invoice';
-        $request = $this->getInvoiceByIdRequest($invoice_id, $contentType);
+        $request = $this->getInvoiceByIdRequest($invoice_id, $for_user_id, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -781,12 +546,13 @@ class InvoiceApi
      * Create request for operation 'getInvoiceById'
      *
      * @param  string $invoice_id Invoice ID (required)
+     * @param  string $for_user_id Business ID of the sub-account merchant (XP feature) (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getInvoiceById'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function getInvoiceByIdRequest($invoice_id, string $contentType = self::contentTypes['getInvoiceById'][0])
+    public function getInvoiceByIdRequest($invoice_id, $for_user_id = null, string $contentType = self::contentTypes['getInvoiceById'][0])
     {
 
         // verify the required parameter 'invoice_id' is set
@@ -797,6 +563,7 @@ class InvoiceApi
         }
 
 
+
         $resourcePath = '/v2/invoices/{invoice_id}';
         $formParams = [];
         $queryParams = [];
@@ -805,6 +572,10 @@ class InvoiceApi
         $multipart = false;
 
 
+        // header param: for-user-id
+        if ($for_user_id !== null) {
+            $headerParams['for-user-id'] = ObjectSerializer::toHeaderValue($for_user_id);
+        }
         // path params
         if ($invoice_id !== null) {
             $resourcePath = str_replace(
@@ -853,7 +624,7 @@ class InvoiceApi
         
         // Xendit's custom headers
         $defaultHeaders['xendit-lib'] = 'php';
-        $defaultHeaders['xendit-lib-ver'] = '3.3.0';
+        $defaultHeaders['xendit-lib-ver'] = '3.4.0';
 
         if ($this->config->getUserAgent()) {
             $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
@@ -880,6 +651,7 @@ class InvoiceApi
      *
      * Get all Invoices
      *
+     * @param  string $for_user_id Business ID of the sub-account merchant (XP feature) (optional)
      * @param  string $external_id external_id (optional)
      * @param  \Invoice\InvoiceStatus[] $statuses statuses (optional)
      * @param  float $limit limit (optional)
@@ -900,9 +672,9 @@ class InvoiceApi
      * @throws \InvalidArgumentException
      * @return \Xendit\Invoice\Invoice[]
      */
-    public function getInvoices($external_id = null, $statuses = null, $limit = null, $created_after = null, $created_before = null, $paid_after = null, $paid_before = null, $expired_after = null, $expired_before = null, $last_invoice = null, $client_types = null, $payment_channels = null, $on_demand_link = null, $recurring_payment_id = null, string $contentType = self::contentTypes['getInvoices'][0])
+    public function getInvoices($for_user_id = null, $external_id = null, $statuses = null, $limit = null, $created_after = null, $created_before = null, $paid_after = null, $paid_before = null, $expired_after = null, $expired_before = null, $last_invoice = null, $client_types = null, $payment_channels = null, $on_demand_link = null, $recurring_payment_id = null, string $contentType = self::contentTypes['getInvoices'][0])
     {
-        list($response) = $this->getInvoicesWithHttpInfo($external_id, $statuses, $limit, $created_after, $created_before, $paid_after, $paid_before, $expired_after, $expired_before, $last_invoice, $client_types, $payment_channels, $on_demand_link, $recurring_payment_id, $contentType);
+        list($response) = $this->getInvoicesWithHttpInfo($for_user_id, $external_id, $statuses, $limit, $created_after, $created_before, $paid_after, $paid_before, $expired_after, $expired_before, $last_invoice, $client_types, $payment_channels, $on_demand_link, $recurring_payment_id, $contentType);
         return $response;
     }
 
@@ -911,6 +683,7 @@ class InvoiceApi
      *
      * Get all Invoices
      *
+     * @param  string $for_user_id Business ID of the sub-account merchant (XP feature) (optional)
      * @param  string $external_id (optional)
      * @param  \Invoice\InvoiceStatus[] $statuses (optional)
      * @param  float $limit (optional)
@@ -931,9 +704,9 @@ class InvoiceApi
      * @throws \InvalidArgumentException
      * @return array of \Xendit\Invoice\Invoice[], HTTP status code, HTTP response headers (array of strings)
      */
-    public function getInvoicesWithHttpInfo($external_id = null, $statuses = null, $limit = null, $created_after = null, $created_before = null, $paid_after = null, $paid_before = null, $expired_after = null, $expired_before = null, $last_invoice = null, $client_types = null, $payment_channels = null, $on_demand_link = null, $recurring_payment_id = null, string $contentType = self::contentTypes['getInvoices'][0])
+    public function getInvoicesWithHttpInfo($for_user_id = null, $external_id = null, $statuses = null, $limit = null, $created_after = null, $created_before = null, $paid_after = null, $paid_before = null, $expired_after = null, $expired_before = null, $last_invoice = null, $client_types = null, $payment_channels = null, $on_demand_link = null, $recurring_payment_id = null, string $contentType = self::contentTypes['getInvoices'][0])
     {
-        $request = $this->getInvoicesRequest($external_id, $statuses, $limit, $created_after, $created_before, $paid_after, $paid_before, $expired_after, $expired_before, $last_invoice, $client_types, $payment_channels, $on_demand_link, $recurring_payment_id, $contentType);
+        $request = $this->getInvoicesRequest($for_user_id, $external_id, $statuses, $limit, $created_after, $created_before, $paid_after, $paid_before, $expired_after, $expired_before, $last_invoice, $client_types, $payment_channels, $on_demand_link, $recurring_payment_id, $contentType);
 
         $options = $this->createHttpClientOption();
         try {
@@ -991,6 +764,7 @@ class InvoiceApi
      *
      * Get all Invoices
      *
+     * @param  string $for_user_id Business ID of the sub-account merchant (XP feature) (optional)
      * @param  string $external_id (optional)
      * @param  \Invoice\InvoiceStatus[] $statuses (optional)
      * @param  float $limit (optional)
@@ -1010,9 +784,9 @@ class InvoiceApi
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function getInvoicesAsync($external_id = null, $statuses = null, $limit = null, $created_after = null, $created_before = null, $paid_after = null, $paid_before = null, $expired_after = null, $expired_before = null, $last_invoice = null, $client_types = null, $payment_channels = null, $on_demand_link = null, $recurring_payment_id = null, string $contentType = self::contentTypes['getInvoices'][0])
+    public function getInvoicesAsync($for_user_id = null, $external_id = null, $statuses = null, $limit = null, $created_after = null, $created_before = null, $paid_after = null, $paid_before = null, $expired_after = null, $expired_before = null, $last_invoice = null, $client_types = null, $payment_channels = null, $on_demand_link = null, $recurring_payment_id = null, string $contentType = self::contentTypes['getInvoices'][0])
     {
-        return $this->getInvoicesAsyncWithHttpInfo($external_id, $statuses, $limit, $created_after, $created_before, $paid_after, $paid_before, $expired_after, $expired_before, $last_invoice, $client_types, $payment_channels, $on_demand_link, $recurring_payment_id, $contentType)
+        return $this->getInvoicesAsyncWithHttpInfo($for_user_id, $external_id, $statuses, $limit, $created_after, $created_before, $paid_after, $paid_before, $expired_after, $expired_before, $last_invoice, $client_types, $payment_channels, $on_demand_link, $recurring_payment_id, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -1025,6 +799,7 @@ class InvoiceApi
      *
      * Get all Invoices
      *
+     * @param  string $for_user_id Business ID of the sub-account merchant (XP feature) (optional)
      * @param  string $external_id (optional)
      * @param  \Invoice\InvoiceStatus[] $statuses (optional)
      * @param  float $limit (optional)
@@ -1044,10 +819,10 @@ class InvoiceApi
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function getInvoicesAsyncWithHttpInfo($external_id = null, $statuses = null, $limit = null, $created_after = null, $created_before = null, $paid_after = null, $paid_before = null, $expired_after = null, $expired_before = null, $last_invoice = null, $client_types = null, $payment_channels = null, $on_demand_link = null, $recurring_payment_id = null, string $contentType = self::contentTypes['getInvoices'][0])
+    public function getInvoicesAsyncWithHttpInfo($for_user_id = null, $external_id = null, $statuses = null, $limit = null, $created_after = null, $created_before = null, $paid_after = null, $paid_before = null, $expired_after = null, $expired_before = null, $last_invoice = null, $client_types = null, $payment_channels = null, $on_demand_link = null, $recurring_payment_id = null, string $contentType = self::contentTypes['getInvoices'][0])
     {
         $returnType = '\Xendit\Invoice\Invoice[]';
-        $request = $this->getInvoicesRequest($external_id, $statuses, $limit, $created_after, $created_before, $paid_after, $paid_before, $expired_after, $expired_before, $last_invoice, $client_types, $payment_channels, $on_demand_link, $recurring_payment_id, $contentType);
+        $request = $this->getInvoicesRequest($for_user_id, $external_id, $statuses, $limit, $created_after, $created_before, $paid_after, $paid_before, $expired_after, $expired_before, $last_invoice, $client_types, $payment_channels, $on_demand_link, $recurring_payment_id, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -1081,6 +856,7 @@ class InvoiceApi
     /**
      * Create request for operation 'getInvoices'
      *
+     * @param  string $for_user_id Business ID of the sub-account merchant (XP feature) (optional)
      * @param  string $external_id (optional)
      * @param  \Invoice\InvoiceStatus[] $statuses (optional)
      * @param  float $limit (optional)
@@ -1100,8 +876,9 @@ class InvoiceApi
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function getInvoicesRequest($external_id = null, $statuses = null, $limit = null, $created_after = null, $created_before = null, $paid_after = null, $paid_before = null, $expired_after = null, $expired_before = null, $last_invoice = null, $client_types = null, $payment_channels = null, $on_demand_link = null, $recurring_payment_id = null, string $contentType = self::contentTypes['getInvoices'][0])
+    public function getInvoicesRequest($for_user_id = null, $external_id = null, $statuses = null, $limit = null, $created_after = null, $created_before = null, $paid_after = null, $paid_before = null, $expired_after = null, $expired_before = null, $last_invoice = null, $client_types = null, $payment_channels = null, $on_demand_link = null, $recurring_payment_id = null, string $contentType = self::contentTypes['getInvoices'][0])
     {
+
 
 
 
@@ -1252,6 +1029,10 @@ class InvoiceApi
             false // required
         ) ?? []);
 
+        // header param: for-user-id
+        if ($for_user_id !== null) {
+            $headerParams['for-user-id'] = ObjectSerializer::toHeaderValue($for_user_id);
+        }
 
 
         $headers = $this->headerSelector->selectHeaders(
@@ -1292,7 +1073,7 @@ class InvoiceApi
         
         // Xendit's custom headers
         $defaultHeaders['xendit-lib'] = 'php';
-        $defaultHeaders['xendit-lib-ver'] = '3.3.0';
+        $defaultHeaders['xendit-lib-ver'] = '3.4.0';
 
         if ($this->config->getUserAgent()) {
             $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
@@ -1308,6 +1089,265 @@ class InvoiceApi
         $query = ObjectSerializer::buildQuery($queryParams);
         return new Request(
             'GET',
+            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation expireInvoice
+     *
+     * Manually expire an invoice
+     *
+     * @param  string $invoice_id Invoice ID to be expired (required)
+     * @param  string $for_user_id Business ID of the sub-account merchant (XP feature) (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['expireInvoice'] to see the possible values for this operation
+     *
+     * @throws \Xendit\XenditSdkException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return \Xendit\Invoice\Invoice
+     */
+    public function expireInvoice($invoice_id, $for_user_id = null, string $contentType = self::contentTypes['expireInvoice'][0])
+    {
+        list($response) = $this->expireInvoiceWithHttpInfo($invoice_id, $for_user_id, $contentType);
+        return $response;
+    }
+
+    /**
+     * Operation expireInvoiceWithHttpInfo
+     *
+     * Manually expire an invoice
+     *
+     * @param  string $invoice_id Invoice ID to be expired (required)
+     * @param  string $for_user_id Business ID of the sub-account merchant (XP feature) (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['expireInvoice'] to see the possible values for this operation
+     *
+     * @throws \Xendit\XenditSdkException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return array of \Xendit\Invoice\Invoice, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function expireInvoiceWithHttpInfo($invoice_id, $for_user_id = null, string $contentType = self::contentTypes['expireInvoice'][0])
+    {
+        $request = $this->expireInvoiceRequest($invoice_id, $for_user_id, $contentType);
+
+        $options = $this->createHttpClientOption();
+        try {
+            $response = $this->client->send($request, $options);
+        } catch (RequestException $e) {
+            throw new XenditSdkException(
+                $e->getResponse() && $e->getResponse()->getBody() ? json_decode((string) $e->getResponse()->getBody()) : null,
+                (string) $e->getCode(),
+                $e->getMessage() ? $e->getMessage() : sprintf('Error connecting to the API (%s)', "expireInvoiceRequest")
+            );
+        } catch (ConnectException $e) {
+            throw new XenditSdkException(
+                null,
+                (string) $e->getCode(),
+                $e->getMessage() ? $e->getMessage() : sprintf('Error connecting to the API (%s)', "expireInvoiceRequest")
+            );
+        }  catch (GuzzleException $e) {
+            throw new XenditSdkException(
+                null,
+                (string) $e->getCode(),
+                $e->getMessage() ? $e->getMessage() : sprintf('Error instantiating client for API (%s)', "expireInvoiceRequest")
+            );
+        }
+
+        $statusCode = $response->getStatusCode();
+
+        if ($statusCode < 200 || $statusCode > 299) {
+            $errBodyContent = $response->getBody() ? json_decode((string) $response->getBody()) : null;
+
+            throw new XenditSdkException(
+                $errBodyContent,
+                (string) $statusCode,
+                $response->getReasonPhrase()
+            );
+        }
+        $returnType = '\Xendit\Invoice\Invoice';
+        if ($returnType === '\SplFileObject') {
+            $content = $response->getBody(); //stream goes to serializer
+        } else {
+            $content = (string) $response->getBody();
+            if ($returnType !== 'string') {
+                $content = json_decode($content);
+            }
+        }
+
+        return [
+            ObjectSerializer::deserialize($content, $returnType, []),
+            $response->getStatusCode(),
+            $response->getHeaders()
+        ];
+    }
+
+    /**
+     * Operation expireInvoiceAsync
+     *
+     * Manually expire an invoice
+     *
+     * @param  string $invoice_id Invoice ID to be expired (required)
+     * @param  string $for_user_id Business ID of the sub-account merchant (XP feature) (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['expireInvoice'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function expireInvoiceAsync($invoice_id, $for_user_id = null, string $contentType = self::contentTypes['expireInvoice'][0])
+    {
+        return $this->expireInvoiceAsyncWithHttpInfo($invoice_id, $for_user_id, $contentType)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation expireInvoiceAsyncWithHttpInfo
+     *
+     * Manually expire an invoice
+     *
+     * @param  string $invoice_id Invoice ID to be expired (required)
+     * @param  string $for_user_id Business ID of the sub-account merchant (XP feature) (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['expireInvoice'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function expireInvoiceAsyncWithHttpInfo($invoice_id, $for_user_id = null, string $contentType = self::contentTypes['expireInvoice'][0])
+    {
+        $returnType = '\Xendit\Invoice\Invoice';
+        $request = $this->expireInvoiceRequest($invoice_id, $for_user_id, $contentType);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    if ($returnType === '\SplFileObject') {
+                        $content = $response->getBody(); //stream goes to serializer
+                    } else {
+                        $content = (string) $response->getBody();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($e) {
+                    throw new XenditSdkException(
+                        $e->getResponse() && $e->getResponse()->getBody() ? json_decode((string) $e->getResponse()->getBody()) : null,
+                        (string) $e->getCode(),
+                        $e->getMessage() ? $e->getMessage() : sprintf('Error connecting to the API (%s)', "expireInvoiceRequest")
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'expireInvoice'
+     *
+     * @param  string $invoice_id Invoice ID to be expired (required)
+     * @param  string $for_user_id Business ID of the sub-account merchant (XP feature) (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['expireInvoice'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    public function expireInvoiceRequest($invoice_id, $for_user_id = null, string $contentType = self::contentTypes['expireInvoice'][0])
+    {
+
+        // verify the required parameter 'invoice_id' is set
+        if ($invoice_id === null || (is_array($invoice_id) && count($invoice_id) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $invoice_id when calling expireInvoice'
+            );
+        }
+
+
+
+        $resourcePath = '/invoices/{invoice_id}/expire!';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+        // header param: for-user-id
+        if ($for_user_id !== null) {
+            $headerParams['for-user-id'] = ObjectSerializer::toHeaderValue($for_user_id);
+        }
+        // path params
+        if ($invoice_id !== null) {
+            $resourcePath = str_replace(
+                '{' . 'invoice_id' . '}',
+                ObjectSerializer::toPathValue($invoice_id),
+                $resourcePath
+            );
+        }
+
+
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/json', ],
+            $contentType,
+            $multipart
+        );
+
+        // for model (json/xml)
+        if (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
+                    foreach ($formParamValueItems as $formParamValueItem) {
+                        $multipartContents[] = [
+                            'name' => $formParamName,
+                            'contents' => $formParamValueItem
+                        ];
+                    }
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                $httpBody = \GuzzleHttp\Utils::jsonEncode($formParams);
+            } else {
+                // for HTTP post (form)
+                $httpBody = ObjectSerializer::buildQuery($formParams);
+            }
+        }
+
+        // this endpoint requires HTTP basic authentication
+        $headers['Authorization'] = 'Basic ' . base64_encode($this->config->getApiKey() . ":");
+
+        $defaultHeaders = [];
+        
+        // Xendit's custom headers
+        $defaultHeaders['xendit-lib'] = 'php';
+        $defaultHeaders['xendit-lib-ver'] = '3.4.0';
+
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $operationHost = $this->config->getHost();
+        $query = ObjectSerializer::buildQuery($queryParams);
+        return new Request(
+            'POST',
             $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
             $headers,
             $httpBody

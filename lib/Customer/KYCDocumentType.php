@@ -52,6 +52,7 @@ class KYCDocumentType
     
     public const BUSINESS_LICENSE = 'BUSINESS_LICENSE';
     
+    public const XENDIT_ENUM_DEFAULT_FALLBACK = 'UNKNOWN_ENUM_VALUE';
 
     private $value;
 
@@ -88,7 +89,8 @@ class KYCDocumentType
             self::PASSPORT,
             self::VISA,
             self::BUSINESS_REGISTRATION,
-            self::BUSINESS_LICENSE
+            self::BUSINESS_LICENSE,
+            self::XENDIT_ENUM_DEFAULT_FALLBACK
         ];
     }
 }

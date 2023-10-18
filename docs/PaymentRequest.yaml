@@ -12,6 +12,14 @@ paths:
       description: Get all payment requests by filter
       operationId: getAllPaymentRequests
       parameters:
+      - explode: false
+        in: header
+        name: for-user-id
+        required: false
+        schema:
+          example: 5f9a3fbd571a1c4068aa40ce
+          type: string
+        style: simple
       - explode: true
         in: query
         name: reference_id
@@ -95,6 +103,14 @@ paths:
       - explode: false
         in: header
         name: idempotency-key
+        required: false
+        schema:
+          example: 5f9a3fbd571a1c4068aa40ce
+          type: string
+        style: simple
+      - explode: false
+        in: header
+        name: for-user-id
         required: false
         schema:
           example: 5f9a3fbd571a1c4068aa40ce
@@ -204,6 +220,14 @@ paths:
       operationId: getPaymentRequestByID
       parameters:
       - explode: false
+        in: header
+        name: for-user-id
+        required: false
+        schema:
+          example: 5f9a3fbd571a1c4068aa40ce
+          type: string
+        style: simple
+      - explode: false
         in: path
         name: paymentRequestId
         required: true
@@ -244,6 +268,14 @@ paths:
       description: Payment Request Authorize
       operationId: authorizePaymentRequest
       parameters:
+      - explode: false
+        in: header
+        name: for-user-id
+        required: false
+        schema:
+          example: 5f9a3fbd571a1c4068aa40ce
+          type: string
+        style: simple
       - explode: false
         in: path
         name: paymentRequestId
@@ -291,6 +323,14 @@ paths:
       operationId: resendPaymentRequestAuth
       parameters:
       - explode: false
+        in: header
+        name: for-user-id
+        required: false
+        schema:
+          example: 5f9a3fbd571a1c4068aa40ce
+          type: string
+        style: simple
+      - explode: false
         in: path
         name: paymentRequestId
         required: true
@@ -331,6 +371,14 @@ paths:
       description: Get Payment Request Capture
       operationId: getPaymentRequestCaptures
       parameters:
+      - explode: false
+        in: header
+        name: for-user-id
+        required: false
+        schema:
+          example: 5f9a3fbd571a1c4068aa40ce
+          type: string
+        style: simple
       - explode: false
         in: path
         name: paymentRequestId
@@ -379,6 +427,14 @@ paths:
       operationId: capturePaymentRequest
       parameters:
       - explode: false
+        in: header
+        name: for-user-id
+        required: false
+        schema:
+          example: 5f9a3fbd571a1c4068aa40ce
+          type: string
+        style: simple
+      - explode: false
         in: path
         name: paymentRequestId
         required: true
@@ -421,6 +477,15 @@ paths:
       - payment_request
 components:
   parameters:
+    ForUserId:
+      explode: false
+      in: header
+      name: for-user-id
+      required: false
+      schema:
+        example: 5f9a3fbd571a1c4068aa40ce
+        type: string
+      style: simple
     IdempotencyKey:
       explode: false
       in: header

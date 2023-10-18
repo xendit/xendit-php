@@ -49,6 +49,7 @@ class PaylaterType
     
     public const ATOME = 'ATOME';
     
+    public const XENDIT_ENUM_DEFAULT_FALLBACK = 'UNKNOWN_ENUM_VALUE';
 
     private $value;
 
@@ -83,7 +84,8 @@ class PaylaterType
             self::UANGME,
             self::BILLEASE,
             self::CASHALO,
-            self::ATOME
+            self::ATOME,
+            self::XENDIT_ENUM_DEFAULT_FALLBACK
         ];
     }
 }

@@ -46,6 +46,7 @@ class EndCustomerStatus
     
     public const DELETED = 'DELETED';
     
+    public const XENDIT_ENUM_DEFAULT_FALLBACK = 'UNKNOWN_ENUM_VALUE';
 
     private $value;
 
@@ -79,7 +80,8 @@ class EndCustomerStatus
             self::INACTIVE,
             self::PENDING,
             self::BLOCKED,
-            self::DELETED
+            self::DELETED,
+            self::XENDIT_ENUM_DEFAULT_FALLBACK
         ];
     }
 }

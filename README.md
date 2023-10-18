@@ -5,7 +5,7 @@
 The official Xendit PHP SDK provides a simple and convenient way to call Xendit's REST API
 in applications written in PHP.
 
-* Package version: 3.3.0
+* Package version: 3.4.0
 
 # Getting Started
 
@@ -28,14 +28,14 @@ To install the bindings via [Composer](https://getcomposer.org/), add the follow
     }
   ],
   "require": {
-    "xendit/xendit-php": "3.3.0"
+    "xendit/xendit-php": "3.4.0"
   }
 }
 ```
 
 Then run `composer install`
 
-### Manual Installation
+### Autoloading
 
 Download the files and include `autoload.php`:
 
@@ -59,14 +59,14 @@ Configuration::setXenditKey('XENDIT_API_KEY');
 
 Find detailed API information and examples for each of our product’s by clicking the links below,
 
-* [Balance](docs/BalanceAndTransaction/BalanceApi.md)
-* [Customer](docs/Customer/CustomerApi.md)
 * [Invoice](docs/Invoice/InvoiceApi.md)
-* [PaymentMethod](docs/PaymentMethod/PaymentMethodApi.md)
 * [PaymentRequest](docs/PaymentRequest/PaymentRequestApi.md)
-* [Payout](docs/Payout/PayoutApi.md)
+* [PaymentMethod](docs/PaymentMethod/PaymentMethodApi.md)
 * [Refund](docs/Refund/RefundApi.md)
+* [Balance](docs/BalanceAndTransaction/BalanceApi.md)
 * [Transaction](docs/BalanceAndTransaction/TransactionApi.md)
+* [Customer](docs/Customer/CustomerApi.md)
+* [Payout](docs/Payout/PayoutApi.md)
 
 All URIs are relative to *https://api.xendit.co*.  For more information about our API, please refer to *https://developers.xendit.co/*.
 

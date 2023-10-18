@@ -10,7 +10,7 @@
 /**
  * Refund Service
  *
- * The version of the OpenAPI document: 1.2.3
+ * The version of the OpenAPI document: 1.3.3
  */
 
 
@@ -61,24 +61,24 @@ class RefundApiTest extends TestCase
     }
 
     /**
-     * Test case for cancelRefund
-     *
-     * .
-     *
-     */
-    public function testCancelRefund()
-    {
-        // TODO: implement
-        $this->markTestIncomplete('Not implemented');
-    }
-
-    /**
      * Test case for createRefund
      *
      * .
      *
      */
     public function testCreateRefund()
+    {
+        // TODO: implement
+        $this->markTestIncomplete('Not implemented');
+    }
+
+    /**
+     * Test case for getRefund
+     *
+     * .
+     *
+     */
+    public function testGetRefund()
     {
         // TODO: implement
         $this->markTestIncomplete('Not implemented');
@@ -97,12 +97,12 @@ class RefundApiTest extends TestCase
     }
 
     /**
-     * Test case for getRefund
+     * Test case for cancelRefund
      *
      * .
      *
      */
-    public function testGetRefund()
+    public function testCancelRefund()
     {
         // TODO: implement
         $this->markTestIncomplete('Not implemented');

@@ -64,6 +64,7 @@ class ChannelsCategories
     
     public const OTHER = 'OTHER';
     
+    public const XENDIT_ENUM_DEFAULT_FALLBACK = 'UNKNOWN_ENUM_VALUE';
 
     private $value;
 
@@ -106,7 +107,8 @@ class ChannelsCategories
             self::VIRTUAL_ACCOUNT,
             self::XENPLATFORM,
             self::DIRECT_BANK_TRANSFER,
-            self::OTHER
+            self::OTHER,
+            self::XENDIT_ENUM_DEFAULT_FALLBACK
         ];
     }
 }

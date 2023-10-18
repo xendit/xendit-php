@@ -40,6 +40,7 @@ class PaymentRequestCaptureMethod
     
     public const MANUAL = 'MANUAL';
     
+    public const XENDIT_ENUM_DEFAULT_FALLBACK = 'UNKNOWN_ENUM_VALUE';
 
     private $value;
 
@@ -70,7 +71,8 @@ class PaymentRequestCaptureMethod
     {
         return [
             self::AUTOMATIC,
-            self::MANUAL
+            self::MANUAL,
+            self::XENDIT_ENUM_DEFAULT_FALLBACK
         ];
     }
 }

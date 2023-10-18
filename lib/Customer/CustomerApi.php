@@ -314,9 +314,9 @@ class CustomerApi
         $multipart = false;
 
 
-        // header param: IDEMPOTENCY-KEY
+        // header param: idempotency-key
         if ($idempotency_key !== null) {
-            $headerParams['IDEMPOTENCY-KEY'] = ObjectSerializer::toHeaderValue($idempotency_key);
+            $headerParams['idempotency-key'] = ObjectSerializer::toHeaderValue($idempotency_key);
         }
         // header param: for-user-id
         if ($for_user_id !== null) {
@@ -369,7 +369,7 @@ class CustomerApi
         
         // Xendit's custom headers
         $defaultHeaders['xendit-lib'] = 'php';
-        $defaultHeaders['xendit-lib-ver'] = '3.3.0';
+        $defaultHeaders['xendit-lib-ver'] = '3.4.0';
 
         if ($this->config->getUserAgent()) {
             $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
@@ -628,7 +628,7 @@ class CustomerApi
         
         // Xendit's custom headers
         $defaultHeaders['xendit-lib'] = 'php';
-        $defaultHeaders['xendit-lib-ver'] = '3.3.0';
+        $defaultHeaders['xendit-lib-ver'] = '3.4.0';
 
         if ($this->config->getUserAgent()) {
             $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
@@ -891,7 +891,7 @@ class CustomerApi
         
         // Xendit's custom headers
         $defaultHeaders['xendit-lib'] = 'php';
-        $defaultHeaders['xendit-lib-ver'] = '3.3.0';
+        $defaultHeaders['xendit-lib-ver'] = '3.4.0';
 
         if ($this->config->getUserAgent()) {
             $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
@@ -1163,7 +1163,7 @@ class CustomerApi
         
         // Xendit's custom headers
         $defaultHeaders['xendit-lib'] = 'php';
-        $defaultHeaders['xendit-lib-ver'] = '3.3.0';
+        $defaultHeaders['xendit-lib-ver'] = '3.4.0';
 
         if ($this->config->getUserAgent()) {
             $defaultHeaders['User-Agent'] = $this->config->getUserAgent();

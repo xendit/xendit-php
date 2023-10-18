@@ -57,6 +57,7 @@ class EwalletType
     
     public const JENIUSPAY = 'JENIUSPAY';
     
+    public const XENDIT_ENUM_DEFAULT_FALLBACK = 'UNKNOWN_ENUM_VALUE';
 
     private $value;
 
@@ -95,7 +96,8 @@ class EwalletType
             self::GRABPAY,
             self::ASTRAPAY,
             self::NEXCASH,
-            self::JENIUSPAY
+            self::JENIUSPAY,
+            self::XENDIT_ENUM_DEFAULT_FALLBACK
         ];
     }
 }

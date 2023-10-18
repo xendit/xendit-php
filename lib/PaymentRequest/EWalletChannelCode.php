@@ -75,6 +75,7 @@ class EWalletChannelCode
     
     public const ALIPAY = 'ALIPAY';
     
+    public const XENDIT_ENUM_DEFAULT_FALLBACK = 'UNKNOWN_ENUM_VALUE';
 
     private $value;
 
@@ -122,7 +123,8 @@ class EWalletChannelCode
             self::WECHATPAY,
             self::LINEPAY,
             self::TRUEMONEY,
-            self::ALIPAY
+            self::ALIPAY,
+            self::XENDIT_ENUM_DEFAULT_FALLBACK
         ];
     }
 }

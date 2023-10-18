@@ -1,6 +1,6 @@
 <?php
 /**
- * CreateRefundDefaultResponse
+ * GetAllRefundsDefaultResponse
  *
  * PHP version 7.4
  *
@@ -11,7 +11,7 @@
 /**
  * Refund Service
  *
- * The version of the OpenAPI document: 1.2.3
+ * The version of the OpenAPI document: 1.3.3
  */
 
 /**
@@ -27,13 +27,13 @@ use \Xendit\ObjectSerializer;
 use \Xendit\Model\ModelInterface;
 
 /**
- * CreateRefundDefaultResponse Class Doc Comment
+ * GetAllRefundsDefaultResponse Class Doc Comment
  *
  * @category Class
  * @package  Xendit
  * @implements \ArrayAccess<string, mixed>
  */
-class CreateRefundDefaultResponse implements ModelInterface, ArrayAccess, \JsonSerializable
+class GetAllRefundsDefaultResponse implements ModelInterface, ArrayAccess, \JsonSerializable
 {
     public const DISCRIMINATOR = null;
 
@@ -42,7 +42,7 @@ class CreateRefundDefaultResponse implements ModelInterface, ArrayAccess, \JsonS
       *
       * @var string
       */
-    protected static $openAPIModelName = 'createRefund_default_response';
+    protected static $openAPIModelName = 'getAllRefunds_default_response';
 
     /**
       * Array of property to type mappings. Used for (de)serialization

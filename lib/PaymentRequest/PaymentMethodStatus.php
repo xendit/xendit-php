@@ -46,6 +46,7 @@ class PaymentMethodStatus
     
     public const FAILED = 'FAILED';
     
+    public const XENDIT_ENUM_DEFAULT_FALLBACK = 'UNKNOWN_ENUM_VALUE';
 
     private $value;
 
@@ -79,7 +80,8 @@ class PaymentMethodStatus
             self::INACTIVE,
             self::PENDING,
             self::EXPIRED,
-            self::FAILED
+            self::FAILED,
+            self::XENDIT_ENUM_DEFAULT_FALLBACK
         ];
     }
 }

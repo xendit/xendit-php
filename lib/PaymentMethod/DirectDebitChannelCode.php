@@ -11,7 +11,7 @@
 /**
  * Payment Method Service v2
  *
- * The version of the OpenAPI document: 2.89.1
+ * The version of the OpenAPI document: 2.89.2
  */
 
 /**
@@ -163,6 +163,7 @@ class DirectDebitChannelCode
     
     public const UOB_FPX_BUSINESS = 'UOB_FPX_BUSINESS';
     
+    public const XENDIT_ENUM_DEFAULT_FALLBACK = 'UNKNOWN_ENUM_VALUE';
 
     private $value;
 
@@ -254,7 +255,8 @@ class DirectDebitChannelCode
             self::PUBLIC_FPX_BUSINESS,
             self::RHB_FPX_BUSINESS,
             self::SCH_FPX_BUSINESS,
-            self::UOB_FPX_BUSINESS
+            self::UOB_FPX_BUSINESS,
+            self::XENDIT_ENUM_DEFAULT_FALLBACK
         ];
     }
 }

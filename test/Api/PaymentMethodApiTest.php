@@ -10,7 +10,7 @@
 /**
  * Payment Method Service v2
  *
- * The version of the OpenAPI document: 2.89.1
+ * The version of the OpenAPI document: 2.89.2
  */
 
 
@@ -61,48 +61,12 @@ class PaymentMethodApiTest extends TestCase
     }
 
     /**
-     * Test case for authPaymentMethod
-     *
-     * Validate a payment method's linking OTP.
-     *
-     */
-    public function testAuthPaymentMethod()
-    {
-        // TODO: implement
-        $this->markTestIncomplete('Not implemented');
-    }
-
-    /**
      * Test case for createPaymentMethod
      *
      * Creates payment method.
      *
      */
     public function testCreatePaymentMethod()
-    {
-        // TODO: implement
-        $this->markTestIncomplete('Not implemented');
-    }
-
-    /**
-     * Test case for expirePaymentMethod
-     *
-     * Expires a payment method.
-     *
-     */
-    public function testExpirePaymentMethod()
-    {
-        // TODO: implement
-        $this->markTestIncomplete('Not implemented');
-    }
-
-    /**
-     * Test case for getAllPaymentMethods
-     *
-     * Get all payment methods by filters.
-     *
-     */
-    public function testGetAllPaymentMethods()
     {
         // TODO: implement
         $this->markTestIncomplete('Not implemented');
@@ -139,6 +103,42 @@ class PaymentMethodApiTest extends TestCase
      *
      */
     public function testPatchPaymentMethod()
+    {
+        // TODO: implement
+        $this->markTestIncomplete('Not implemented');
+    }
+
+    /**
+     * Test case for getAllPaymentMethods
+     *
+     * Get all payment methods by filters.
+     *
+     */
+    public function testGetAllPaymentMethods()
+    {
+        // TODO: implement
+        $this->markTestIncomplete('Not implemented');
+    }
+
+    /**
+     * Test case for expirePaymentMethod
+     *
+     * Expires a payment method.
+     *
+     */
+    public function testExpirePaymentMethod()
+    {
+        // TODO: implement
+        $this->markTestIncomplete('Not implemented');
+    }
+
+    /**
+     * Test case for authPaymentMethod
+     *
+     * Validate a payment method's linking OTP.
+     *
+     */
+    public function testAuthPaymentMethod()
     {
         // TODO: implement
         $this->markTestIncomplete('Not implemented');

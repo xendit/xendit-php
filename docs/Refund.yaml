@@ -2,12 +2,87 @@ openapi: 3.0.0
 info:
   description: This API is used for the unified refund service
   title: Refund Service
-  version: 1.2.3
+  version: 1.3.3
 servers:
 - description: Xendit API Server
   url: https://api.xendit.co
 paths:
   /refunds:
+    get:
+      operationId: getAllRefunds
+      parameters:
+      - explode: false
+        in: header
+        name: for-user-id
+        required: false
+        schema:
+          example: 5f9a3fbd571a1c4068aa40ce
+          type: string
+        style: simple
+      - explode: true
+        in: query
+        name: payment_request_id
+        required: false
+        schema:
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: invoice_id
+        required: false
+        schema:
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: payment_method_type
+        required: false
+        schema:
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: channel_code
+        required: false
+        schema:
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          type: number
+        style: form
+      - explode: true
+        in: query
+        name: after_id
+        required: false
+        schema:
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: before_id
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RefundList'
+          description: OK
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getAllRefunds_default_response'
+          description: Internal server error
+      tags:
+      - refund
     post:
       operationId: createRefund
       parameters:
@@ -17,6 +92,14 @@ paths:
         required: false
         schema:
           example: 9797b5a6-54ad-4511-80a4-ec451346808b
+          type: string
+        style: simple
+      - explode: false
+        in: header
+        name: for-user-id
+        required: false
+        schema:
+          example: 5f9a3fbd571a1c4068aa40ce
           type: string
         style: simple
       requestBody:
@@ -65,7 +148,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/createRefund_default_response'
+                $ref: '#/components/schemas/getAllRefunds_default_response'
           description: Internal server error
       tags:
       - refund
@@ -89,6 +172,14 @@ paths:
           example: 9797b5a6-54ad-4511-80a4-ec451346808b
           type: string
         style: simple
+      - explode: false
+        in: header
+        name: for-user-id
+        required: false
+        schema:
+          example: 5f9a3fbd571a1c4068aa40ce
+          type: string
+        style: simple
       responses:
         "200":
           content:
@@ -100,7 +191,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/createRefund_default_response'
+                $ref: '#/components/schemas/getAllRefunds_default_response'
           description: Internal server error
       tags:
       - refund
@@ -122,6 +213,14 @@ paths:
         required: false
         schema:
           example: 9797b5a6-54ad-4511-80a4-ec451346808b
+          type: string
+        style: simple
+      - explode: false
+        in: header
+        name: for-user-id
+        required: false
+        schema:
+          example: 5f9a3fbd571a1c4068aa40ce
           type: string
         style: simple
       responses:
@@ -153,25 +252,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/createRefund_default_response'
-          description: Internal server error
-      tags:
-      - refund
-  /refunds/:
-    get:
-      operationId: getAllRefunds
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RefundList'
-          description: OK
-        default:
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/createRefund_default_response'
+                $ref: '#/components/schemas/getAllRefunds_default_response'
           description: Internal server error
       tags:
       - refund
@@ -195,12 +276,21 @@ components:
         example: 9797b5a6-54ad-4511-80a4-ec451346808b
         type: string
       style: simple
+    ForUserId:
+      explode: false
+      in: header
+      name: for-user-id
+      required: false
+      schema:
+        example: 5f9a3fbd571a1c4068aa40ce
+        type: string
+      style: simple
   responses:
     InternalServerError:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/createRefund_default_response'
+            $ref: '#/components/schemas/getAllRefunds_default_response'
       description: Internal server error
     StatusBadRequest:
       content:
@@ -399,6 +489,19 @@ components:
           nullable: true
           type: object
       type: object
+    getAllRefunds_default_response:
+      example:
+        error_code: SERVER_ERROR
+        message: An unexpected error occured. Our team has been notified and will
+          troubleshoot the issue.
+      properties:
+        error_code:
+          type: string
+        message:
+          example: An unexpected error occured. Our team has been notified and will
+            troubleshoot the issue.
+          type: string
+      type: object
     createRefund_400_response:
       properties:
         error_code:
@@ -462,18 +565,5 @@ components:
         message:
           example: The payment channel requested is currently experiencing unexpected
             issues.
-          type: string
-      type: object
-    createRefund_default_response:
-      example:
-        error_code: SERVER_ERROR
-        message: An unexpected error occured. Our team has been notified and will
-          troubleshoot the issue.
-      properties:
-        error_code:
-          type: string
-        message:
-          example: An unexpected error occured. Our team has been notified and will
-            troubleshoot the issue.
           type: string
       type: object

@@ -11,7 +11,7 @@
 /**
  * Payment Method Service v2
  *
- * The version of the OpenAPI document: 2.89.1
+ * The version of the OpenAPI document: 2.89.2
  */
 
 /**
@@ -40,6 +40,7 @@ class PaymentMethodReusability
     
     public const ONE_TIME_USE = 'ONE_TIME_USE';
     
+    public const XENDIT_ENUM_DEFAULT_FALLBACK = 'UNKNOWN_ENUM_VALUE';
 
     private $value;
 
@@ -70,7 +71,8 @@ class PaymentMethodReusability
     {
         return [
             self::MULTIPLE_USE,
-            self::ONE_TIME_USE
+            self::ONE_TIME_USE,
+            self::XENDIT_ENUM_DEFAULT_FALLBACK
         ];
     }
 }

@@ -10,6 +10,16 @@ paths:
   /v2/invoices/:
     post:
       operationId: createInvoice
+      parameters:
+      - description: Business ID of the sub-account merchant (XP feature)
+        explode: false
+        in: header
+        name: for-user-id
+        required: false
+        schema:
+          example: 62efe4c33e45694d63f585f8
+          type: string
+        style: simple
       requestBody:
         content:
           application/json:
@@ -130,6 +140,15 @@ paths:
     get:
       operationId: getInvoiceById
       parameters:
+      - description: Business ID of the sub-account merchant (XP feature)
+        explode: false
+        in: header
+        name: for-user-id
+        required: false
+        schema:
+          example: 62efe4c33e45694d63f585f8
+          type: string
+        style: simple
       - description: Invoice ID
         explode: false
         in: path
@@ -185,6 +204,15 @@ paths:
     get:
       operationId: getInvoices
       parameters:
+      - description: Business ID of the sub-account merchant (XP feature)
+        explode: false
+        in: header
+        name: for-user-id
+        required: false
+        schema:
+          example: 62efe4c33e45694d63f585f8
+          type: string
+        style: simple
       - explode: true
         in: query
         name: external_id
@@ -343,6 +371,15 @@ paths:
     post:
       operationId: expireInvoice
       parameters:
+      - description: Business ID of the sub-account merchant (XP feature)
+        explode: false
+        in: header
+        name: for-user-id
+        required: false
+        schema:
+          example: 62efe4c33e45694d63f585f8
+          type: string
+        style: simple
       - description: Invoice ID to be expired
         explode: false
         in: path
@@ -510,6 +547,17 @@ components:
       value:
         error_code: INTERNAL_SERVER_ERROR
         message: Something unxpected happened.
+  parameters:
+    ForUserId:
+      description: Business ID of the sub-account merchant (XP feature)
+      explode: false
+      in: header
+      name: for-user-id
+      required: false
+      schema:
+        example: 62efe4c33e45694d63f585f8
+        type: string
+      style: simple
   schemas:
     UnauthorizedError:
       description: An error object used to indicate unauthorized access to an invoice-related

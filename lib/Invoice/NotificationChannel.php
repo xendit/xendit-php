@@ -45,6 +45,7 @@ class NotificationChannel
     
     public const VIBER = 'viber';
     
+    public const XENDIT_ENUM_DEFAULT_FALLBACK = 'UNKNOWN_ENUM_VALUE';
 
     private $value;
 
@@ -77,7 +78,8 @@ class NotificationChannel
             self::EMAIL,
             self::SMS,
             self::WHATSAPP,
-            self::VIBER
+            self::VIBER,
+            self::XENDIT_ENUM_DEFAULT_FALLBACK
         ];
     }
 }

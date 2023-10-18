@@ -47,6 +47,7 @@ class ChannelAccountType
     
     public const BANK_ACCOUNT = 'BANK_ACCOUNT';
     
+    public const XENDIT_ENUM_DEFAULT_FALLBACK = 'UNKNOWN_ENUM_VALUE';
 
     private $value;
 
@@ -80,7 +81,8 @@ class ChannelAccountType
             self::MOBILE_NO,
             self::PASSPORT,
             self::BUSINESS_REGISTRATION,
-            self::BANK_ACCOUNT
+            self::BANK_ACCOUNT,
+            self::XENDIT_ENUM_DEFAULT_FALLBACK
         ];
     }
 }

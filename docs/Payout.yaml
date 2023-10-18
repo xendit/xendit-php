@@ -57,6 +57,17 @@ paths:
           example: disb-7baa7335-a0b2-4678-bb8c-318c0167f332
           type: string
         style: form
+      - description: The sub-account user-id that you want to make this transaction
+          for. This header is only used if you have access to xenPlatform. See xenPlatform
+          for more information.
+        explode: false
+        in: header
+        name: for-user-id
+        required: false
+        schema:
+          example: 5f9a3fbd571a1c4068aa40ce
+          type: string
+        style: simple
       responses:
         "200":
           content:
@@ -137,7 +148,7 @@ paths:
         name: for-user-id
         required: false
         schema:
-          example: 5dbf20d7c8eb0c0896f811b6
+          example: 5f9a3fbd571a1c4068aa40ce
           type: string
         style: simple
       requestBody:
@@ -280,6 +291,17 @@ paths:
           example: disb-7baa7335-a0b2-4678-bb8c-318c0167f332
           type: string
         style: simple
+      - description: The sub-account user-id that you want to make this transaction
+          for. This header is only used if you have access to xenPlatform. See xenPlatform
+          for more information.
+        explode: false
+        in: header
+        name: for-user-id
+        required: false
+        schema:
+          example: 5f9a3fbd571a1c4068aa40ce
+          type: string
+        style: simple
       responses:
         "200":
           content:
@@ -388,6 +410,17 @@ paths:
           example: "ID_MANDIRI, PH_GCASH"
           type: string
         style: form
+      - description: The sub-account user-id that you want to make this transaction
+          for. This header is only used if you have access to xenPlatform. See xenPlatform
+          for more information.
+        explode: false
+        in: header
+        name: for-user-id
+        required: false
+        schema:
+          example: 5f9a3fbd571a1c4068aa40ce
+          type: string
+        style: simple
       responses:
         "200":
           content:
@@ -436,6 +469,17 @@ paths:
         required: true
         schema:
           example: disb-7baa7335-a0b2-4678-bb8c-318c0167f332
+          type: string
+        style: simple
+      - description: The sub-account user-id that you want to make this transaction
+          for. This header is only used if you have access to xenPlatform. See xenPlatform
+          for more information.
+        explode: false
+        in: header
+        name: for-user-id
+        required: false
+        schema:
+          example: 5f9a3fbd571a1c4068aa40ce
           type: string
         style: simple
       responses:
@@ -505,6 +549,19 @@ paths:
       tags:
       - payout
 components:
+  parameters:
+    ForUserIdHeader:
+      description: The sub-account user-id that you want to make this transaction
+        for. This header is only used if you have access to xenPlatform. See xenPlatform
+        for more information.
+      explode: false
+      in: header
+      name: for-user-id
+      required: false
+      schema:
+        example: 5f9a3fbd571a1c4068aa40ce
+        type: string
+      style: simple
   schemas:
     ReceiptNotification:
       description: Additional notification for completed payout

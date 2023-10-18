@@ -40,6 +40,7 @@ class PaymentRequestInitiator
     
     public const MERCHANT = 'MERCHANT';
     
+    public const XENDIT_ENUM_DEFAULT_FALLBACK = 'UNKNOWN_ENUM_VALUE';
 
     private $value;
 
@@ -70,7 +71,8 @@ class PaymentRequestInitiator
     {
         return [
             self::CUSTOMER,
-            self::MERCHANT
+            self::MERCHANT,
+            self::XENDIT_ENUM_DEFAULT_FALLBACK
         ];
     }
 }

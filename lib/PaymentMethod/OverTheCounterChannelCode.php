@@ -11,7 +11,7 @@
 /**
  * Payment Method Service v2
  *
- * The version of the OpenAPI document: 2.89.1
+ * The version of the OpenAPI document: 2.89.2
  */
 
 /**
@@ -69,6 +69,7 @@ class OverTheCounterChannelCode
     
     public const INDOMARET = 'INDOMARET';
     
+    public const XENDIT_ENUM_DEFAULT_FALLBACK = 'UNKNOWN_ENUM_VALUE';
 
     private $value;
 
@@ -113,7 +114,8 @@ class OverTheCounterChannelCode
             self::SM_BILLS,
             self::ROBINSONS_BILLS,
             self::ALFAMART,
-            self::INDOMARET
+            self::INDOMARET,
+            self::XENDIT_ENUM_DEFAULT_FALLBACK
         ];
     }
 }

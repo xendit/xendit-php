@@ -4,9 +4,65 @@ All URIs are relative to https://api.xendit.co, except if the operation defines 
 
 | Method | HTTP request | Description |
 | ------------- | ------------- | ------------- |
-| [**getAllTransactions()**](TransactionApi.md#getAllTransactions) | **GET** /transactions | Get a list of transactions |
 | [**getTransactionByID()**](TransactionApi.md#getTransactionByID) | **GET** /transactions/{id} | Get a transaction based on its id |
+| [**getAllTransactions()**](TransactionApi.md#getAllTransactions) | **GET** /transactions | Get a list of transactions |
 
+
+## `getTransactionByID()`
+
+```php
+getTransactionByID($id, $for_user_id): \BalanceAndTransaction\TransactionResponse
+```
+
+Get a transaction based on its id
+
+Get single specific transaction by transaction id.
+
+### Example
+
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+use Xendit\Configuration;
+use Xendit\BalanceAndTransaction\TransactionApi;
+
+Configuration::setXenditKey("YOUR_API_KEY_HERE");
+
+$apiInstance = new TransactionApi();
+$id = "'id_example'"; // string
+$for_user_id = "5dbf20d7c8eb0c0896f811b6"; // string | The sub-account user-id that you want to make this transaction for. This header is only used if you have access to xenPlatform. See xenPlatform for more information
+
+try {
+    $result = $apiInstance->getTransactionByID($id, $for_user_id);
+    print_r($result);
+} catch (\Xendit\XenditSdkException $e) {
+    echo 'Exception when calling TransactionApi->getTransactionByID: ', $e->getMessage(), PHP_EOL;
+    echo 'Full Error: ', json_encode($e->getFullError()), PHP_EOL;
+}
+```
+
+### Parameters
+
+| Name | Type | Description  | Notes |
+| ------------- | ------------- | ------------- | ------------- |
+| **id** | **string**|  | |
+| **for_user_id** | **string**| The sub-account user-id that you want to make this transaction for. This header is only used if you have access to xenPlatform. See xenPlatform for more information | [optional] |
+
+### Return type
+
+[**\Xendit\BalanceAndTransaction\TransactionResponse**](TransactionResponse.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+[[Back to README]](../../README.md)
 
 ## `getAllTransactions()`
 
@@ -76,62 +132,6 @@ try {
 ### Return type
 
 [**\Xendit\BalanceAndTransaction\TransactionsResponse**](TransactionsResponse.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
-- **Content-Type**: Not defined
-- **Accept**: `application/json`
-
-[[Back to README]](../../README.md)
-
-## `getTransactionByID()`
-
-```php
-getTransactionByID($id, $for_user_id): \BalanceAndTransaction\TransactionResponse
-```
-
-Get a transaction based on its id
-
-Get single specific transaction by transaction id.
-
-### Example
-
-```php
-<?php
-require_once(__DIR__ . '/vendor/autoload.php');
-
-use Xendit\Configuration;
-use Xendit\BalanceAndTransaction\TransactionApi;
-
-Configuration::setXenditKey("YOUR_API_KEY_HERE");
-
-$apiInstance = new TransactionApi();
-$id = "'id_example'"; // string
-$for_user_id = "5dbf20d7c8eb0c0896f811b6"; // string | The sub-account user-id that you want to make this transaction for. This header is only used if you have access to xenPlatform. See xenPlatform for more information
-
-try {
-    $result = $apiInstance->getTransactionByID($id, $for_user_id);
-    print_r($result);
-} catch (\Xendit\XenditSdkException $e) {
-    echo 'Exception when calling TransactionApi->getTransactionByID: ', $e->getMessage(), PHP_EOL;
-    echo 'Full Error: ', json_encode($e->getFullError()), PHP_EOL;
-}
-```
-
-### Parameters
-
-| Name | Type | Description  | Notes |
-| ------------- | ------------- | ------------- | ------------- |
-| **id** | **string**|  | |
-| **for_user_id** | **string**| The sub-account user-id that you want to make this transaction for. This header is only used if you have access to xenPlatform. See xenPlatform for more information | [optional] |
-
-### Return type
-
-[**\Xendit\BalanceAndTransaction\TransactionResponse**](TransactionResponse.md)
 
 ### Authorization
 

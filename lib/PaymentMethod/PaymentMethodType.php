@@ -11,7 +11,7 @@
 /**
  * Payment Method Service v2
  *
- * The version of the OpenAPI document: 2.89.1
+ * The version of the OpenAPI document: 2.89.2
  */
 
 /**
@@ -52,6 +52,7 @@ class PaymentMethodType
     
     public const VIRTUAL_ACCOUNT = 'VIRTUAL_ACCOUNT';
     
+    public const XENDIT_ENUM_DEFAULT_FALLBACK = 'UNKNOWN_ENUM_VALUE';
 
     private $value;
 
@@ -88,7 +89,8 @@ class PaymentMethodType
             self::EWALLET,
             self::OVER_THE_COUNTER,
             self::QR_CODE,
-            self::VIRTUAL_ACCOUNT
+            self::VIRTUAL_ACCOUNT,
+            self::XENDIT_ENUM_DEFAULT_FALLBACK
         ];
     }
 }

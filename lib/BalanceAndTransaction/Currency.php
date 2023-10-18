@@ -360,6 +360,7 @@ class Currency
     
     public const ZWD = 'ZWD';
     
+    public const XENDIT_ENUM_DEFAULT_FALLBACK = 'UNKNOWN_ENUM_VALUE';
 
     private $value;
 
@@ -550,7 +551,8 @@ class Currency
             self::YER,
             self::ZAR,
             self::ZMW,
-            self::ZWD
+            self::ZWD,
+            self::XENDIT_ENUM_DEFAULT_FALLBACK
         ];
     }
 }

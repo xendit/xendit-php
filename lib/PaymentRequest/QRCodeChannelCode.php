@@ -45,6 +45,7 @@ class QRCodeChannelCode
     
     public const PROMPTPAY = 'PROMPTPAY';
     
+    public const XENDIT_ENUM_DEFAULT_FALLBACK = 'UNKNOWN_ENUM_VALUE';
 
     private $value;
 
@@ -77,7 +78,8 @@ class QRCodeChannelCode
             self::DANA,
             self::RCBC,
             self::LINKAJA,
-            self::PROMPTPAY
+            self::PROMPTPAY,
+            self::XENDIT_ENUM_DEFAULT_FALLBACK
         ];
     }
 }

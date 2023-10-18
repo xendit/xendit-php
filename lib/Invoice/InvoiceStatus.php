@@ -45,6 +45,7 @@ class InvoiceStatus
     
     public const EXPIRED = 'EXPIRED';
     
+    public const XENDIT_ENUM_DEFAULT_FALLBACK = 'UNKNOWN_ENUM_VALUE';
 
     private $value;
 
@@ -77,7 +78,8 @@ class InvoiceStatus
             self::PENDING,
             self::PAID,
             self::SETTLED,
-            self::EXPIRED
+            self::EXPIRED,
+            self::XENDIT_ENUM_DEFAULT_FALLBACK
         ];
     }
 }

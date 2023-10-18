@@ -61,18 +61,6 @@ class PayoutApiTest extends TestCase
     }
 
     /**
-     * Test case for cancelPayout
-     *
-     * API to cancel requested payouts that have not yet been sent to partner banks and e-wallets. Cancellation is possible if the payout has not been sent out via our partner and when payout status is ACCEPTED..
-     *
-     */
-    public function testCancelPayout()
-    {
-        // TODO: implement
-        $this->markTestIncomplete('Not implemented');
-    }
-
-    /**
      * Test case for createPayout
      *
      * API to send money at scale to bank accounts & eWallets.
@@ -115,6 +103,18 @@ class PayoutApiTest extends TestCase
      *
      */
     public function testGetPayouts()
+    {
+        // TODO: implement
+        $this->markTestIncomplete('Not implemented');
+    }
+
+    /**
+     * Test case for cancelPayout
+     *
+     * API to cancel requested payouts that have not yet been sent to partner banks and e-wallets. Cancellation is possible if the payout has not been sent out via our partner and when payout status is ACCEPTED..
+     *
+     */
+    public function testCancelPayout()
     {
         // TODO: implement
         $this->markTestIncomplete('Not implemented');

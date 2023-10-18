@@ -1,6 +1,6 @@
 <?php
 /**
- * CreateRefundDefaultResponseTest
+ * GetAllRefundsDefaultResponseTest
  *
  * PHP version 7.4
  *
@@ -11,7 +11,7 @@
 /**
  * Refund Service
  *
- * The version of the OpenAPI document: 1.2.3
+ * The version of the OpenAPI document: 1.3.3
  */
 
 /**
@@ -24,15 +24,15 @@ namespace Xendit\Test\Model;
 use PHPUnit\Framework\TestCase;
 
 /**
- * CreateRefundDefaultResponseTest Class Doc Comment
+ * GetAllRefundsDefaultResponseTest Class Doc Comment
  *
  * @category    Class
- * @description CreateRefundDefaultResponse
+ * @description GetAllRefundsDefaultResponse
  * @package     Xendit
  * @author      OpenAPI Generator team
  * @link        https://openapi-generator.tech
  */
-class CreateRefundDefaultResponseTest extends TestCase
+class GetAllRefundsDefaultResponseTest extends TestCase
 {
 
     /**
@@ -64,9 +64,9 @@ class CreateRefundDefaultResponseTest extends TestCase
     }
 
     /**
-     * Test "CreateRefundDefaultResponse"
+     * Test "GetAllRefundsDefaultResponse"
      */
-    public function testCreateRefundDefaultResponse()
+    public function testGetAllRefundsDefaultResponse()
     {
         // TODO: implement
         $this->markTestIncomplete('Not implemented');

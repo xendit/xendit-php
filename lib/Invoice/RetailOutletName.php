@@ -55,6 +55,7 @@ class RetailOutletName
     
     public const LBC = 'LBC';
     
+    public const XENDIT_ENUM_DEFAULT_FALLBACK = 'UNKNOWN_ENUM_VALUE';
 
     private $value;
 
@@ -92,7 +93,8 @@ class RetailOutletName
             self::DP_MLHUILLIER,
             self::DP_PALAWAN,
             self::DP_ECPAY_SCHOOL,
-            self::LBC
+            self::LBC,
+            self::XENDIT_ENUM_DEFAULT_FALLBACK
         ];
     }
 }

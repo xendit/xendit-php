@@ -61,48 +61,12 @@ class PaymentRequestApiTest extends TestCase
     }
 
     /**
-     * Test case for authorizePaymentRequest
-     *
-     * Payment Request Authorize.
-     *
-     */
-    public function testAuthorizePaymentRequest()
-    {
-        // TODO: implement
-        $this->markTestIncomplete('Not implemented');
-    }
-
-    /**
-     * Test case for capturePaymentRequest
-     *
-     * Payment Request Capture.
-     *
-     */
-    public function testCapturePaymentRequest()
-    {
-        // TODO: implement
-        $this->markTestIncomplete('Not implemented');
-    }
-
-    /**
      * Test case for createPaymentRequest
      *
      * Create Payment Request.
      *
      */
     public function testCreatePaymentRequest()
-    {
-        // TODO: implement
-        $this->markTestIncomplete('Not implemented');
-    }
-
-    /**
-     * Test case for getAllPaymentRequests
-     *
-     * Get all payment requests by filter.
-     *
-     */
-    public function testGetAllPaymentRequests()
     {
         // TODO: implement
         $this->markTestIncomplete('Not implemented');
@@ -127,6 +91,42 @@ class PaymentRequestApiTest extends TestCase
      *
      */
     public function testGetPaymentRequestCaptures()
+    {
+        // TODO: implement
+        $this->markTestIncomplete('Not implemented');
+    }
+
+    /**
+     * Test case for getAllPaymentRequests
+     *
+     * Get all payment requests by filter.
+     *
+     */
+    public function testGetAllPaymentRequests()
+    {
+        // TODO: implement
+        $this->markTestIncomplete('Not implemented');
+    }
+
+    /**
+     * Test case for capturePaymentRequest
+     *
+     * Payment Request Capture.
+     *
+     */
+    public function testCapturePaymentRequest()
+    {
+        // TODO: implement
+        $this->markTestIncomplete('Not implemented');
+    }
+
+    /**
+     * Test case for authorizePaymentRequest
+     *
+     * Payment Request Authorize.
+     *
+     */
+    public function testAuthorizePaymentRequest()
     {
         // TODO: implement
         $this->markTestIncomplete('Not implemented');

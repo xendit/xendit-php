@@ -1,8 +1,8 @@
-# # CreateRefundDefaultResponse
+# # GetAllRefundsDefaultResponse
 
 
 ```php
-use Xendit\Refund\CreateRefundDefaultResponse;
+use Xendit\Refund\GetAllRefundsDefaultResponse;
 ```
 ## Properties
 

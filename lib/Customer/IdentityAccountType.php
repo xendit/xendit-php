@@ -48,6 +48,7 @@ class IdentityAccountType
     
     public const QR_CODE = 'QR_CODE';
     
+    public const XENDIT_ENUM_DEFAULT_FALLBACK = 'UNKNOWN_ENUM_VALUE';
 
     private $value;
 
@@ -82,7 +83,8 @@ class IdentityAccountType
             self::CREDIT_CARD,
             self::PAY_LATER,
             self::OTC,
-            self::QR_CODE
+            self::QR_CODE,
+            self::XENDIT_ENUM_DEFAULT_FALLBACK
         ];
     }
 }

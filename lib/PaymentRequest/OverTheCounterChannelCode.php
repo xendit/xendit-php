@@ -69,6 +69,7 @@ class OverTheCounterChannelCode
     
     public const INDOMARET = 'INDOMARET';
     
+    public const XENDIT_ENUM_DEFAULT_FALLBACK = 'UNKNOWN_ENUM_VALUE';
 
     private $value;
 
@@ -113,7 +114,8 @@ class OverTheCounterChannelCode
             self::SM_BILLS,
             self::ROBINSONS_BILLS,
             self::ALFAMART,
-            self::INDOMARET
+            self::INDOMARET,
+            self::XENDIT_ENUM_DEFAULT_FALLBACK
         ];
     }
 }

@@ -63,10 +63,10 @@ class TransactionApi
 
     /** @var string[] $contentTypes **/
     public const contentTypes = [
-        'getAllTransactions' => [
+        'getTransactionByID' => [
             'application/json',
         ],
-        'getTransactionByID' => [
+        'getAllTransactions' => [
             'application/json',
         ],
     ];
@@ -121,6 +121,268 @@ class TransactionApi
     public function getConfig()
     {
         return $this->config;
+    }
+
+    /**
+     * Operation getTransactionByID
+     *
+     * Get a transaction based on its id
+     *
+     * @param  string $id id (required)
+     * @param  string $for_user_id The sub-account user-id that you want to make this transaction for. This header is only used if you have access to xenPlatform. See xenPlatform for more information (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getTransactionByID'] to see the possible values for this operation
+     *
+     * @throws \Xendit\XenditSdkException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return \Xendit\BalanceAndTransaction\TransactionResponse
+     */
+    public function getTransactionByID($id, $for_user_id = null, string $contentType = self::contentTypes['getTransactionByID'][0])
+    {
+        list($response) = $this->getTransactionByIDWithHttpInfo($id, $for_user_id, $contentType);
+        return $response;
+    }
+
+    /**
+     * Operation getTransactionByIDWithHttpInfo
+     *
+     * Get a transaction based on its id
+     *
+     * @param  string $id (required)
+     * @param  string $for_user_id The sub-account user-id that you want to make this transaction for. This header is only used if you have access to xenPlatform. See xenPlatform for more information (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getTransactionByID'] to see the possible values for this operation
+     *
+     * @throws \Xendit\XenditSdkException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return array of \Xendit\BalanceAndTransaction\TransactionResponse, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function getTransactionByIDWithHttpInfo($id, $for_user_id = null, string $contentType = self::contentTypes['getTransactionByID'][0])
+    {
+        $request = $this->getTransactionByIDRequest($id, $for_user_id, $contentType);
+
+        $options = $this->createHttpClientOption();
+        try {
+            $response = $this->client->send($request, $options);
+        } catch (RequestException $e) {
+            throw new XenditSdkException(
+                $e->getResponse() && $e->getResponse()->getBody() ? json_decode((string) $e->getResponse()->getBody()) : null,
+                (string) $e->getCode(),
+                $e->getMessage() ? $e->getMessage() : sprintf('Error connecting to the API (%s)', "getTransactionByIDRequest")
+            );
+        } catch (ConnectException $e) {
+            throw new XenditSdkException(
+                null,
+                (string) $e->getCode(),
+                $e->getMessage() ? $e->getMessage() : sprintf('Error connecting to the API (%s)', "getTransactionByIDRequest")
+            );
+        }  catch (GuzzleException $e) {
+            throw new XenditSdkException(
+                null,
+                (string) $e->getCode(),
+                $e->getMessage() ? $e->getMessage() : sprintf('Error instantiating client for API (%s)', "getTransactionByIDRequest")
+            );
+        }
+
+        $statusCode = $response->getStatusCode();
+
+        if ($statusCode < 200 || $statusCode > 299) {
+            $errBodyContent = $response->getBody() ? json_decode((string) $response->getBody()) : null;
+
+            throw new XenditSdkException(
+                $errBodyContent,
+                (string) $statusCode,
+                $response->getReasonPhrase()
+            );
+        }
+        $returnType = '\Xendit\BalanceAndTransaction\TransactionResponse';
+        if ($returnType === '\SplFileObject') {
+            $content = $response->getBody(); //stream goes to serializer
+        } else {
+            $content = (string) $response->getBody();
+            if ($returnType !== 'string') {
+                $content = json_decode($content);
+            }
+        }
+
+        return [
+            ObjectSerializer::deserialize($content, $returnType, []),
+            $response->getStatusCode(),
+            $response->getHeaders()
+        ];
+    }
+
+    /**
+     * Operation getTransactionByIDAsync
+     *
+     * Get a transaction based on its id
+     *
+     * @param  string $id (required)
+     * @param  string $for_user_id The sub-account user-id that you want to make this transaction for. This header is only used if you have access to xenPlatform. See xenPlatform for more information (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getTransactionByID'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function getTransactionByIDAsync($id, $for_user_id = null, string $contentType = self::contentTypes['getTransactionByID'][0])
+    {
+        return $this->getTransactionByIDAsyncWithHttpInfo($id, $for_user_id, $contentType)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation getTransactionByIDAsyncWithHttpInfo
+     *
+     * Get a transaction based on its id
+     *
+     * @param  string $id (required)
+     * @param  string $for_user_id The sub-account user-id that you want to make this transaction for. This header is only used if you have access to xenPlatform. See xenPlatform for more information (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getTransactionByID'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function getTransactionByIDAsyncWithHttpInfo($id, $for_user_id = null, string $contentType = self::contentTypes['getTransactionByID'][0])
+    {
+        $returnType = '\Xendit\BalanceAndTransaction\TransactionResponse';
+        $request = $this->getTransactionByIDRequest($id, $for_user_id, $contentType);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    if ($returnType === '\SplFileObject') {
+                        $content = $response->getBody(); //stream goes to serializer
+                    } else {
+                        $content = (string) $response->getBody();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($e) {
+                    throw new XenditSdkException(
+                        $e->getResponse() && $e->getResponse()->getBody() ? json_decode((string) $e->getResponse()->getBody()) : null,
+                        (string) $e->getCode(),
+                        $e->getMessage() ? $e->getMessage() : sprintf('Error connecting to the API (%s)', "getTransactionByIDRequest")
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'getTransactionByID'
+     *
+     * @param  string $id (required)
+     * @param  string $for_user_id The sub-account user-id that you want to make this transaction for. This header is only used if you have access to xenPlatform. See xenPlatform for more information (optional)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getTransactionByID'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    public function getTransactionByIDRequest($id, $for_user_id = null, string $contentType = self::contentTypes['getTransactionByID'][0])
+    {
+
+        // verify the required parameter 'id' is set
+        if ($id === null || (is_array($id) && count($id) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $id when calling getTransactionByID'
+            );
+        }
+        if (!preg_match("/^txn_[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/", $id)) {
+            throw new \InvalidArgumentException("invalid value for \"id\" when calling TransactionApi.getTransactionByID, must conform to the pattern /^txn_[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/.");
+        }
+        
+
+
+        $resourcePath = '/transactions/{id}';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+        // header param: for-user-id
+        if ($for_user_id !== null) {
+            $headerParams['for-user-id'] = ObjectSerializer::toHeaderValue($for_user_id);
+        }
+        // path params
+        if ($id !== null) {
+            $resourcePath = str_replace(
+                '{' . 'id' . '}',
+                ObjectSerializer::toPathValue($id),
+                $resourcePath
+            );
+        }
+
+
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/json', ],
+            $contentType,
+            $multipart
+        );
+
+        // for model (json/xml)
+        if (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
+                    foreach ($formParamValueItems as $formParamValueItem) {
+                        $multipartContents[] = [
+                            'name' => $formParamName,
+                            'contents' => $formParamValueItem
+                        ];
+                    }
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                $httpBody = \GuzzleHttp\Utils::jsonEncode($formParams);
+            } else {
+                // for HTTP post (form)
+                $httpBody = ObjectSerializer::buildQuery($formParams);
+            }
+        }
+
+        // this endpoint requires HTTP basic authentication
+        $headers['Authorization'] = 'Basic ' . base64_encode($this->config->getApiKey() . ":");
+
+        $defaultHeaders = [];
+        
+        // Xendit's custom headers
+        $defaultHeaders['xendit-lib'] = 'php';
+        $defaultHeaders['xendit-lib-ver'] = '3.4.0';
+
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $operationHost = $this->config->getHost();
+        $query = ObjectSerializer::buildQuery($queryParams);
+        return new Request(
+            'GET',
+            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
     }
 
     /**
@@ -544,269 +806,7 @@ class TransactionApi
         
         // Xendit's custom headers
         $defaultHeaders['xendit-lib'] = 'php';
-        $defaultHeaders['xendit-lib-ver'] = '3.3.0';
-
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $operationHost = $this->config->getHost();
-        $query = ObjectSerializer::buildQuery($queryParams);
-        return new Request(
-            'GET',
-            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
-            $headers,
-            $httpBody
-        );
-    }
-
-    /**
-     * Operation getTransactionByID
-     *
-     * Get a transaction based on its id
-     *
-     * @param  string $id id (required)
-     * @param  string $for_user_id The sub-account user-id that you want to make this transaction for. This header is only used if you have access to xenPlatform. See xenPlatform for more information (optional)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getTransactionByID'] to see the possible values for this operation
-     *
-     * @throws \Xendit\XenditSdkException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return \Xendit\BalanceAndTransaction\TransactionResponse
-     */
-    public function getTransactionByID($id, $for_user_id = null, string $contentType = self::contentTypes['getTransactionByID'][0])
-    {
-        list($response) = $this->getTransactionByIDWithHttpInfo($id, $for_user_id, $contentType);
-        return $response;
-    }
-
-    /**
-     * Operation getTransactionByIDWithHttpInfo
-     *
-     * Get a transaction based on its id
-     *
-     * @param  string $id (required)
-     * @param  string $for_user_id The sub-account user-id that you want to make this transaction for. This header is only used if you have access to xenPlatform. See xenPlatform for more information (optional)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getTransactionByID'] to see the possible values for this operation
-     *
-     * @throws \Xendit\XenditSdkException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return array of \Xendit\BalanceAndTransaction\TransactionResponse, HTTP status code, HTTP response headers (array of strings)
-     */
-    public function getTransactionByIDWithHttpInfo($id, $for_user_id = null, string $contentType = self::contentTypes['getTransactionByID'][0])
-    {
-        $request = $this->getTransactionByIDRequest($id, $for_user_id, $contentType);
-
-        $options = $this->createHttpClientOption();
-        try {
-            $response = $this->client->send($request, $options);
-        } catch (RequestException $e) {
-            throw new XenditSdkException(
-                $e->getResponse() && $e->getResponse()->getBody() ? json_decode((string) $e->getResponse()->getBody()) : null,
-                (string) $e->getCode(),
-                $e->getMessage() ? $e->getMessage() : sprintf('Error connecting to the API (%s)', "getTransactionByIDRequest")
-            );
-        } catch (ConnectException $e) {
-            throw new XenditSdkException(
-                null,
-                (string) $e->getCode(),
-                $e->getMessage() ? $e->getMessage() : sprintf('Error connecting to the API (%s)', "getTransactionByIDRequest")
-            );
-        }  catch (GuzzleException $e) {
-            throw new XenditSdkException(
-                null,
-                (string) $e->getCode(),
-                $e->getMessage() ? $e->getMessage() : sprintf('Error instantiating client for API (%s)', "getTransactionByIDRequest")
-            );
-        }
-
-        $statusCode = $response->getStatusCode();
-
-        if ($statusCode < 200 || $statusCode > 299) {
-            $errBodyContent = $response->getBody() ? json_decode((string) $response->getBody()) : null;
-
-            throw new XenditSdkException(
-                $errBodyContent,
-                (string) $statusCode,
-                $response->getReasonPhrase()
-            );
-        }
-        $returnType = '\Xendit\BalanceAndTransaction\TransactionResponse';
-        if ($returnType === '\SplFileObject') {
-            $content = $response->getBody(); //stream goes to serializer
-        } else {
-            $content = (string) $response->getBody();
-            if ($returnType !== 'string') {
-                $content = json_decode($content);
-            }
-        }
-
-        return [
-            ObjectSerializer::deserialize($content, $returnType, []),
-            $response->getStatusCode(),
-            $response->getHeaders()
-        ];
-    }
-
-    /**
-     * Operation getTransactionByIDAsync
-     *
-     * Get a transaction based on its id
-     *
-     * @param  string $id (required)
-     * @param  string $for_user_id The sub-account user-id that you want to make this transaction for. This header is only used if you have access to xenPlatform. See xenPlatform for more information (optional)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getTransactionByID'] to see the possible values for this operation
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     */
-    public function getTransactionByIDAsync($id, $for_user_id = null, string $contentType = self::contentTypes['getTransactionByID'][0])
-    {
-        return $this->getTransactionByIDAsyncWithHttpInfo($id, $for_user_id, $contentType)
-            ->then(
-                function ($response) {
-                    return $response[0];
-                }
-            );
-    }
-
-    /**
-     * Operation getTransactionByIDAsyncWithHttpInfo
-     *
-     * Get a transaction based on its id
-     *
-     * @param  string $id (required)
-     * @param  string $for_user_id The sub-account user-id that you want to make this transaction for. This header is only used if you have access to xenPlatform. See xenPlatform for more information (optional)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getTransactionByID'] to see the possible values for this operation
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     */
-    public function getTransactionByIDAsyncWithHttpInfo($id, $for_user_id = null, string $contentType = self::contentTypes['getTransactionByID'][0])
-    {
-        $returnType = '\Xendit\BalanceAndTransaction\TransactionResponse';
-        $request = $this->getTransactionByIDRequest($id, $for_user_id, $contentType);
-
-        return $this->client
-            ->sendAsync($request, $this->createHttpClientOption())
-            ->then(
-                function ($response) use ($returnType) {
-                    if ($returnType === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
-                    } else {
-                        $content = (string) $response->getBody();
-                        if ($returnType !== 'string') {
-                            $content = json_decode($content);
-                        }
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, $returnType, []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-                },
-                function ($e) {
-                    throw new XenditSdkException(
-                        $e->getResponse() && $e->getResponse()->getBody() ? json_decode((string) $e->getResponse()->getBody()) : null,
-                        (string) $e->getCode(),
-                        $e->getMessage() ? $e->getMessage() : sprintf('Error connecting to the API (%s)', "getTransactionByIDRequest")
-                    );
-                }
-            );
-    }
-
-    /**
-     * Create request for operation 'getTransactionByID'
-     *
-     * @param  string $id (required)
-     * @param  string $for_user_id The sub-account user-id that you want to make this transaction for. This header is only used if you have access to xenPlatform. See xenPlatform for more information (optional)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getTransactionByID'] to see the possible values for this operation
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Psr7\Request
-     */
-    public function getTransactionByIDRequest($id, $for_user_id = null, string $contentType = self::contentTypes['getTransactionByID'][0])
-    {
-
-        // verify the required parameter 'id' is set
-        if ($id === null || (is_array($id) && count($id) === 0)) {
-            throw new \InvalidArgumentException(
-                'Missing the required parameter $id when calling getTransactionByID'
-            );
-        }
-        if (!preg_match("/^txn_[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/", $id)) {
-            throw new \InvalidArgumentException("invalid value for \"id\" when calling TransactionApi.getTransactionByID, must conform to the pattern /^txn_[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/.");
-        }
-        
-
-
-        $resourcePath = '/transactions/{id}';
-        $formParams = [];
-        $queryParams = [];
-        $headerParams = [];
-        $httpBody = '';
-        $multipart = false;
-
-
-        // header param: for-user-id
-        if ($for_user_id !== null) {
-            $headerParams['for-user-id'] = ObjectSerializer::toHeaderValue($for_user_id);
-        }
-        // path params
-        if ($id !== null) {
-            $resourcePath = str_replace(
-                '{' . 'id' . '}',
-                ObjectSerializer::toPathValue($id),
-                $resourcePath
-            );
-        }
-
-
-        $headers = $this->headerSelector->selectHeaders(
-            ['application/json', ],
-            $contentType,
-            $multipart
-        );
-
-        // for model (json/xml)
-        if (count($formParams) > 0) {
-            if ($multipart) {
-                $multipartContents = [];
-                foreach ($formParams as $formParamName => $formParamValue) {
-                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
-                    foreach ($formParamValueItems as $formParamValueItem) {
-                        $multipartContents[] = [
-                            'name' => $formParamName,
-                            'contents' => $formParamValueItem
-                        ];
-                    }
-                }
-                // for HTTP post (form)
-                $httpBody = new MultipartStream($multipartContents);
-
-            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
-                # if Content-Type contains "application/json", json_encode the form parameters
-                $httpBody = \GuzzleHttp\Utils::jsonEncode($formParams);
-            } else {
-                // for HTTP post (form)
-                $httpBody = ObjectSerializer::buildQuery($formParams);
-            }
-        }
-
-        // this endpoint requires HTTP basic authentication
-        $headers['Authorization'] = 'Basic ' . base64_encode($this->config->getApiKey() . ":");
-
-        $defaultHeaders = [];
-        
-        // Xendit's custom headers
-        $defaultHeaders['xendit-lib'] = 'php';
-        $defaultHeaders['xendit-lib-ver'] = '3.3.0';
+        $defaultHeaders['xendit-lib-ver'] = '3.4.0';
 
         if ($this->config->getUserAgent()) {
             $defaultHeaders['User-Agent'] = $this->config->getUserAgent();

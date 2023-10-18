@@ -62,6 +62,7 @@ class TransactionTypes
     
     public const OTHER = 'OTHER';
     
+    public const XENDIT_ENUM_DEFAULT_FALLBACK = 'UNKNOWN_ENUM_VALUE';
 
     private $value;
 
@@ -103,7 +104,8 @@ class TransactionTypes
             self::CASHBACK,
             self::TOPUP,
             self::WITHDRAWAL,
-            self::OTHER
+            self::OTHER,
+            self::XENDIT_ENUM_DEFAULT_FALLBACK
         ];
     }
 }

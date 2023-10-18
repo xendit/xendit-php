@@ -47,6 +47,7 @@ class InvoiceCurrency
     
     public const PHP = 'PHP';
     
+    public const XENDIT_ENUM_DEFAULT_FALLBACK = 'UNKNOWN_ENUM_VALUE';
 
     private $value;
 
@@ -80,7 +81,8 @@ class InvoiceCurrency
             self::USD,
             self::THB,
             self::VND,
-            self::PHP
+            self::PHP,
+            self::XENDIT_ENUM_DEFAULT_FALLBACK
         ];
     }
 }

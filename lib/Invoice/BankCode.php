@@ -57,6 +57,7 @@ class BankCode
     
     public const BNC = 'BNC';
     
+    public const XENDIT_ENUM_DEFAULT_FALLBACK = 'UNKNOWN_ENUM_VALUE';
 
     private $value;
 
@@ -95,7 +96,8 @@ class BankCode
             self::BJB,
             self::SAHABAT_SAMPOERNA,
             self::CIMB,
-            self::BNC
+            self::BNC,
+            self::XENDIT_ENUM_DEFAULT_FALLBACK
         ];
     }
 }

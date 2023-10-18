@@ -75,6 +75,7 @@ class DirectDebitType
     
     public const DC_CHINABANK = 'DC_CHINABANK';
     
+    public const XENDIT_ENUM_DEFAULT_FALLBACK = 'UNKNOWN_ENUM_VALUE';
 
     private $value;
 
@@ -122,7 +123,8 @@ class DirectDebitType
             self::DD_RCBC,
             self::DD_CHINABANK,
             self::BA_CHINABANK,
-            self::DC_CHINABANK
+            self::DC_CHINABANK,
+            self::XENDIT_ENUM_DEFAULT_FALLBACK
         ];
     }
 }

@@ -46,6 +46,7 @@ class PaymentRequestCurrency
     
     public const MYR = 'MYR';
     
+    public const XENDIT_ENUM_DEFAULT_FALLBACK = 'UNKNOWN_ENUM_VALUE';
 
     private $value;
 
@@ -79,7 +80,8 @@ class PaymentRequestCurrency
             self::PHP,
             self::VND,
             self::THB,
-            self::MYR
+            self::MYR,
+            self::XENDIT_ENUM_DEFAULT_FALLBACK
         ];
     }
 }

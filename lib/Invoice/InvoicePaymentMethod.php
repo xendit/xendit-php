@@ -57,6 +57,7 @@ class InvoicePaymentMethod
     
     public const PAYLATER = 'PAYLATER';
     
+    public const XENDIT_ENUM_DEFAULT_FALLBACK = 'UNKNOWN_ENUM_VALUE';
 
     private $value;
 
@@ -95,7 +96,8 @@ class InvoicePaymentMethod
             self::EWALLET,
             self::DIRECT_DEBIT,
             self::BANK_TRANSFER,
-            self::PAYLATER
+            self::PAYLATER,
+            self::XENDIT_ENUM_DEFAULT_FALLBACK
         ];
     }
 }

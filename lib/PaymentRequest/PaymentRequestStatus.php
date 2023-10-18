@@ -52,6 +52,7 @@ class PaymentRequestStatus
     
     public const AWAITING_CAPTURE = 'AWAITING_CAPTURE';
     
+    public const XENDIT_ENUM_DEFAULT_FALLBACK = 'UNKNOWN_ENUM_VALUE';
 
     private $value;
 
@@ -88,7 +89,8 @@ class PaymentRequestStatus
             self::FAILED,
             self::VOIDED,
             self::UNKNOWN,
-            self::AWAITING_CAPTURE
+            self::AWAITING_CAPTURE,
+            self::XENDIT_ENUM_DEFAULT_FALLBACK
         ];
     }
 }

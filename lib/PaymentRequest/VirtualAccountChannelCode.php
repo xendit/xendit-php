@@ -67,6 +67,7 @@ class VirtualAccountChannelCode
     
     public const STANDARD_CHARTERED = 'STANDARD_CHARTERED';
     
+    public const XENDIT_ENUM_DEFAULT_FALLBACK = 'UNKNOWN_ENUM_VALUE';
 
     private $value;
 
@@ -110,7 +111,8 @@ class VirtualAccountChannelCode
             self::VIETCAPITAL,
             self::WOORI,
             self::MSB,
-            self::STANDARD_CHARTERED
+            self::STANDARD_CHARTERED,
+            self::XENDIT_ENUM_DEFAULT_FALLBACK
         ];
     }
 }

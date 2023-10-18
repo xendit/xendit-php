@@ -56,6 +56,7 @@ class KYCDocumentSubType
     
     public const OTHERS = 'OTHERS';
     
+    public const XENDIT_ENUM_DEFAULT_FALLBACK = 'UNKNOWN_ENUM_VALUE';
 
     private $value;
 
@@ -94,7 +95,8 @@ class KYCDocumentSubType
             self::STUDENT_ID,
             self::MILITARY_ID,
             self::MEDICAL_ID,
-            self::OTHERS
+            self::OTHERS,
+            self::XENDIT_ENUM_DEFAULT_FALLBACK
         ];
     }
 }

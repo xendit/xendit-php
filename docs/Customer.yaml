@@ -69,7 +69,7 @@ paths:
       - description: A unique key to prevent processing duplicate requests.
         explode: false
         in: header
-        name: IDEMPOTENCY-KEY
+        name: idempotency-key
         required: false
         schema:
           example: idempotency-123

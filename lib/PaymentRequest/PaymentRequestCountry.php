@@ -46,6 +46,7 @@ class PaymentRequestCountry
     
     public const MY = 'MY';
     
+    public const XENDIT_ENUM_DEFAULT_FALLBACK = 'UNKNOWN_ENUM_VALUE';
 
     private $value;
 
@@ -79,7 +80,8 @@ class PaymentRequestCountry
             self::PH,
             self::VN,
             self::TH,
-            self::MY
+            self::MY,
+            self::XENDIT_ENUM_DEFAULT_FALLBACK
         ];
     }
 }

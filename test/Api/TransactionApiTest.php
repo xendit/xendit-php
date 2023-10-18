@@ -61,24 +61,24 @@ class TransactionApiTest extends TestCase
     }
 
     /**
-     * Test case for getAllTransactions
-     *
-     * Get a list of transactions.
-     *
-     */
-    public function testGetAllTransactions()
-    {
-        // TODO: implement
-        $this->markTestIncomplete('Not implemented');
-    }
-
-    /**
      * Test case for getTransactionByID
      *
      * Get a transaction based on its id.
      *
      */
     public function testGetTransactionByID()
+    {
+        // TODO: implement
+        $this->markTestIncomplete('Not implemented');
+    }
+
+    /**
+     * Test case for getAllTransactions
+     *
+     * Get a list of transactions.
+     *
+     */
+    public function testGetAllTransactions()
     {
         // TODO: implement
         $this->markTestIncomplete('Not implemented');
