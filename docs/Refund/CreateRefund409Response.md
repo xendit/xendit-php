@@ -4,12 +4,13 @@
 ```php
 use Xendit\Refund\CreateRefund409Response;
 ```
+
 ## Properties
 
-| Name | Type | Description | Examples | Notes |
-| ------------ | ------------- | ------------- | ------------- | -------------|
-| **error_code** | **string** |  | DUPLICATE_ERROR |  [optional] |
-| **message** | **string** |  | duplicate value on idempotency_key, try again with a new key |  [optional] |
+| Name | Type | Required | Description | Examples |
+|------------|:-------------:|:-------------:|-------------|:-------------:|
+| **error_code** | **string** |  |  | DUPLICATE_ERROR |
+| **message** | **string** |  |  | duplicate value on idempotency_key, try again with a new key |
 
 
 [[Back to README]](../../README.md)

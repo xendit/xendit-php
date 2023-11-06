@@ -11,7 +11,7 @@
 /**
  * Payment Requests
  *
- * The version of the OpenAPI document: 1.44.1
+ * The version of the OpenAPI document: 1.45.1
  */
 
 /**
@@ -45,6 +45,8 @@ class PaymentRequestCurrency
     public const THB = 'THB';
     
     public const MYR = 'MYR';
+    
+    public const USD = 'USD';
     
     public const XENDIT_ENUM_DEFAULT_FALLBACK = 'UNKNOWN_ENUM_VALUE';
 
@@ -81,6 +83,7 @@ class PaymentRequestCurrency
             self::VND,
             self::THB,
             self::MYR,
+            self::USD,
             self::XENDIT_ENUM_DEFAULT_FALLBACK
         ];
     }

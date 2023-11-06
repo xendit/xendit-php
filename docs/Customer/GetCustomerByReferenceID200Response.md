@@ -4,12 +4,13 @@
 ```php
 use Xendit\Customer\GetCustomerByReferenceID200Response;
 ```
+
 ## Properties
 
-| Name | Type | Description | Examples | Notes |
-| ------------ | ------------- | ------------- | ------------- | -------------|
-| **has_more** | **bool** |  | null |  [optional] |
-| **data** | [**array**](Customer.md) |  | null |  [optional] |
+| Name | Type | Required | Description | Examples |
+|------------|:-------------:|:-------------:|-------------|:-------------:|
+| **has_more** | **bool** |  |  | null |
+| **data** | [**array**](Customer.md) |  |  | null |
 
 
 [[Back to README]](../../README.md)

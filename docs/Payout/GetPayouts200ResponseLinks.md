@@ -4,13 +4,14 @@
 ```php
 use Xendit\Payout\GetPayouts200ResponseLinks;
 ```
+
 ## Properties
 
-| Name | Type | Description | Examples | Notes |
-| ------------ | ------------- | ------------- | ------------- | -------------|
-| **href** | **string** |  | null |  [optional] |
-| **rel** | **string** |  | null |  [optional] |
-| **method** | **string** |  | null |  [optional] |
+| Name | Type | Required | Description | Examples |
+|------------|:-------------:|:-------------:|-------------|:-------------:|
+| **href** | **string** |  |  | null |
+| **rel** | **string** |  |  | null |
+| **method** | **string** |  |  | null |
 
 
 [[Back to README]](../../README.md)

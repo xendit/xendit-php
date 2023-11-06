@@ -4,12 +4,13 @@
 ```php
 use Xendit\PaymentMethod\GetAllPaymentMethods400Response;
 ```
+
 ## Properties
 
-| Name | Type | Description | Examples | Notes |
-| ------------ | ------------- | ------------- | ------------- | -------------|
-| **error_code** | **string** |  | null |  [optional] |
-| **message** | **string** |  | An internal server error occurred |  [optional] |
+| Name | Type | Required | Description | Examples |
+|------------|:-------------:|:-------------:|-------------|:-------------:|
+| **error_code** | **string** |  |  | null |
+| **message** | **string** |  |  | An internal server error occurred |
 
 
 [[Back to README]](../../README.md)

@@ -4,21 +4,22 @@
 ```php
 use Xendit\Customer\IndividualDetail;
 ```
+
 ## Properties
 
-| Name | Type | Description | Examples | Notes |
-| ------------ | ------------- | ------------- | ------------- | -------------|
-| **given_names** | **string** |  | null |  [optional] |
-| **given_names_non_roman** | **string** |  | null |  [optional] |
-| **middle_name** | **string** |  | null |  [optional] |
-| **surname** | **string** |  | null |  [optional] |
-| **surname_non_roman** | **string** |  | null |  [optional] |
-| **mother_maiden_name** | **string** |  | null |  [optional] |
-| **gender** | **string** |  | null |  [optional] |
-| **date_of_birth** | **string** |  | 2017-07-21 |  [optional] |
-| **nationality** | **string** | ISO3166-2 country code | ID |  [optional] |
-| **place_of_birth** | **string** |  | null |  [optional] |
-| **employment** | [**EmploymentDetail**](EmploymentDetail.md) |  | null |  [optional] |
+| Name | Type | Required | Description | Examples |
+|------------|:-------------:|:-------------:|-------------|:-------------:|
+| **given_names** | **string** |  |  | null |
+| **given_names_non_roman** | **string** |  |  | null |
+| **middle_name** | **string** |  |  | null |
+| **surname** | **string** |  |  | null |
+| **surname_non_roman** | **string** |  |  | null |
+| **mother_maiden_name** | **string** |  |  | null |
+| **gender** | **string** |  |  | null |
+| **date_of_birth** | **string** |  |  | 2017-07-21 |
+| **nationality** | **string** |  | ISO3166-2 country code | ID |
+| **place_of_birth** | **string** |  |  | null |
+| **employment** | [**EmploymentDetail**](EmploymentDetail.md) |  |  | null |
 
 
 [[Back to README]](../../README.md)

@@ -1,9 +1,10 @@
 # # ChannelAccountType
-
+Available account types (applicable for MY_DUITNOW)
 
 ```php
 use Xendit\Payout\ChannelAccountType;
 ```
+
 
     ## Enum
 
@@ -20,6 +21,6 @@ use Xendit\Payout\ChannelAccountType;
     
         * `XENDIT_ENUM_DEFAULT_FALLBACK` (value: `UNKNOWN_ENUM_VALUE`)
 
-    If you encounter `UNKNOWN_ENUM_VALUE`, it means that this ENUM is unavailable in your current SDK version. Please upgrade to get the newest ENUM.
+If you encounter `UNKNOWN_ENUM_VALUE`, it means that this ENUM is unavailable in your current SDK version. Please upgrade to get the newest ENUM.
 
 [[Back to README]](../../README.md)

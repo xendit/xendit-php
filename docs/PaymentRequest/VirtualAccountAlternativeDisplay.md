@@ -1,15 +1,16 @@
 # # VirtualAccountAlternativeDisplay
-
+Alternative Display Object
 
 ```php
 use Xendit\PaymentRequest\VirtualAccountAlternativeDisplay;
 ```
+
 ## Properties
 
-| Name | Type | Description | Examples | Notes |
-| ------------ | ------------- | ------------- | ------------- | -------------|
-| **type** | **string** | Type of the alternative display | null |  [optional] [readonly] |
-| **data** | **string** | Data payload of the given alternative display | null |  [optional] |
+| Name | Type | Required | Description | Examples |
+|------------|:-------------:|:-------------:|-------------|:-------------:|
+| **type** | **string** |  | Type of the alternative display | null |
+| **data** | **string** |  | Data payload of the given alternative display | null |
 
 
 [[Back to README]](../../README.md)

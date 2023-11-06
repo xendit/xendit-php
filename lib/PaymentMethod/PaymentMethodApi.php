@@ -10,7 +10,7 @@
 /**
  * Payment Method Service v2
  *
- * The version of the OpenAPI document: 2.89.2
+ * The version of the OpenAPI document: 2.91.2
  */
 
 /**
@@ -371,7 +371,7 @@ class PaymentMethodApi
         
         // Xendit's custom headers
         $defaultHeaders['xendit-lib'] = 'php';
-        $defaultHeaders['xendit-lib-ver'] = '3.4.0';
+        $defaultHeaders['xendit-lib-ver'] = '3.6.0';
 
         if ($this->config->getUserAgent()) {
             $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
@@ -630,7 +630,7 @@ class PaymentMethodApi
         
         // Xendit's custom headers
         $defaultHeaders['xendit-lib'] = 'php';
-        $defaultHeaders['xendit-lib-ver'] = '3.4.0';
+        $defaultHeaders['xendit-lib-ver'] = '3.6.0';
 
         if ($this->config->getUserAgent()) {
             $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
@@ -1069,7 +1069,7 @@ class PaymentMethodApi
         
         // Xendit's custom headers
         $defaultHeaders['xendit-lib'] = 'php';
-        $defaultHeaders['xendit-lib-ver'] = '3.4.0';
+        $defaultHeaders['xendit-lib-ver'] = '3.6.0';
 
         if ($this->config->getUserAgent()) {
             $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
@@ -1341,7 +1341,7 @@ class PaymentMethodApi
         
         // Xendit's custom headers
         $defaultHeaders['xendit-lib'] = 'php';
-        $defaultHeaders['xendit-lib-ver'] = '3.4.0';
+        $defaultHeaders['xendit-lib-ver'] = '3.6.0';
 
         if ($this->config->getUserAgent()) {
             $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
@@ -1718,7 +1718,7 @@ class PaymentMethodApi
         
         // Xendit's custom headers
         $defaultHeaders['xendit-lib'] = 'php';
-        $defaultHeaders['xendit-lib-ver'] = '3.4.0';
+        $defaultHeaders['xendit-lib-ver'] = '3.6.0';
 
         if ($this->config->getUserAgent()) {
             $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
@@ -1990,7 +1990,7 @@ class PaymentMethodApi
         
         // Xendit's custom headers
         $defaultHeaders['xendit-lib'] = 'php';
-        $defaultHeaders['xendit-lib-ver'] = '3.4.0';
+        $defaultHeaders['xendit-lib-ver'] = '3.6.0';
 
         if ($this->config->getUserAgent()) {
             $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
@@ -2262,7 +2262,7 @@ class PaymentMethodApi
         
         // Xendit's custom headers
         $defaultHeaders['xendit-lib'] = 'php';
-        $defaultHeaders['xendit-lib-ver'] = '3.4.0';
+        $defaultHeaders['xendit-lib-ver'] = '3.6.0';
 
         if ($this->config->getUserAgent()) {
             $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
@@ -2497,7 +2497,7 @@ class PaymentMethodApi
         
         // Xendit's custom headers
         $defaultHeaders['xendit-lib'] = 'php';
-        $defaultHeaders['xendit-lib-ver'] = '3.4.0';
+        $defaultHeaders['xendit-lib-ver'] = '3.6.0';
 
         if ($this->config->getUserAgent()) {
             $defaultHeaders['User-Agent'] = $this->config->getUserAgent();

@@ -4,12 +4,13 @@
 ```php
 use Xendit\Refund\CreateRefund503Response;
 ```
+
 ## Properties
 
-| Name | Type | Description | Examples | Notes |
-| ------------ | ------------- | ------------- | ------------- | -------------|
-| **error_code** | **string** |  | CHANNEL_UNAVAILABLE |  [optional] |
-| **message** | **string** |  | The payment channel requested is currently experiencing unexpected issues. |  [optional] |
+| Name | Type | Required | Description | Examples |
+|------------|:-------------:|:-------------:|-------------|:-------------:|
+| **error_code** | **string** |  |  | CHANNEL_UNAVAILABLE |
+| **message** | **string** |  |  | The payment channel requested is currently experiencing unexpected issues. |
 
 
 [[Back to README]](../../README.md)

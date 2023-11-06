@@ -4,12 +4,13 @@
 ```php
 use Xendit\Customer\ResponseDataNotFound;
 ```
+
 ## Properties
 
-| Name | Type | Description | Examples | Notes |
-| ------------ | ------------- | ------------- | ------------- | -------------|
-| **error_code** | **string** |  | DATA_NOT_FOUND |  [optional] |
-| **message** | **mixed** |  | Provided customer_id does not exist |  [optional] |
+| Name | Type | Required | Description | Examples |
+|------------|:-------------:|:-------------:|-------------|:-------------:|
+| **error_code** | **string** |  |  | DATA_NOT_FOUND |
+| **message** | **mixed** |  |  | Provided customer_id does not exist |
 
 
 [[Back to README]](../../README.md)

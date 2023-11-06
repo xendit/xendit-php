@@ -10,7 +10,7 @@
 /**
  * Payment Requests
  *
- * The version of the OpenAPI document: 1.44.1
+ * The version of the OpenAPI document: 1.45.1
  */
 
 /**

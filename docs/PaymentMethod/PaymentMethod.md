@@ -4,32 +4,33 @@
 ```php
 use Xendit\PaymentMethod\PaymentMethod;
 ```
+
 ## Properties
 
-| Name | Type | Description | Examples | Notes |
-| ------------ | ------------- | ------------- | ------------- | -------------|
-| **id** | **string** |  | null |  |
-| **business_id** | **string** |  | null |  [optional] |
-| **type** | [**PaymentMethodType**](PaymentMethodType.md) |  | null |  [optional] |
-| **country** | [**PaymentMethodCountry**](PaymentMethodCountry.md) |  | null |  [optional] |
-| **customer_id** | **string** |  | null |  [optional] |
-| **customer** | **object** |  | null |  [optional] |
-| **reference_id** | **string** |  | null |  [optional] |
-| **description** | **string** |  | null |  [optional] |
-| **status** | [**PaymentMethodStatus**](PaymentMethodStatus.md) |  | null |  [optional] |
-| **reusability** | [**PaymentMethodReusability**](PaymentMethodReusability.md) |  | null |  [optional] |
-| **actions** | [**array**](PaymentMethodAction.md) |  | null |  [optional] |
-| **metadata** | **object** |  | null |  [optional] |
-| **billing_information** | [**BillingInformation**](BillingInformation.md) |  | null |  [optional] |
-| **failure_code** | **string** |  | null |  [optional] |
-| **created** | **\DateTime** |  | 2016-08-29T09:12:33.001Z |  [optional] |
-| **updated** | **\DateTime** |  | 2016-08-29T09:12:33.001Z |  [optional] |
-| **ewallet** | [**EWallet**](EWallet.md) |  | null |  [optional] |
-| **direct_debit** | [**DirectDebit**](DirectDebit.md) |  | null |  [optional] |
-| **over_the_counter** | [**OverTheCounter**](OverTheCounter.md) |  | null |  [optional] |
-| **card** | [**Card**](Card.md) |  | null |  [optional] |
-| **qr_code** | [**QRCode**](QRCode.md) |  | null |  [optional] |
-| **virtual_account** | [**VirtualAccount**](VirtualAccount.md) |  | null |  [optional] |
+| Name | Type | Required | Description | Examples |
+|------------|:-------------:|:-------------:|-------------|:-------------:|
+| **id** | **string** | ☑️ |  | null |
+| **business_id** | **string** |  |  | null |
+| **type** | [**PaymentMethodType**](PaymentMethodType.md) |  |  | null |
+| **country** | [**PaymentMethodCountry**](PaymentMethodCountry.md) |  |  | null |
+| **customer_id** | **string** |  |  | null |
+| **customer** | **object** |  |  | null |
+| **reference_id** | **string** |  |  | null |
+| **description** | **string** |  |  | null |
+| **status** | [**PaymentMethodStatus**](PaymentMethodStatus.md) |  |  | null |
+| **reusability** | [**PaymentMethodReusability**](PaymentMethodReusability.md) |  |  | null |
+| **actions** | [**array**](PaymentMethodAction.md) |  |  | null |
+| **metadata** | **object** |  |  | null |
+| **billing_information** | [**BillingInformation**](BillingInformation.md) |  |  | null |
+| **failure_code** | **string** |  |  | null |
+| **created** | **\DateTime** |  |  | 2016-08-29T09:12:33.001Z |
+| **updated** | **\DateTime** |  |  | 2016-08-29T09:12:33.001Z |
+| **ewallet** | [**EWallet**](EWallet.md) |  |  | null |
+| **direct_debit** | [**DirectDebit**](DirectDebit.md) |  |  | null |
+| **over_the_counter** | [**OverTheCounter**](OverTheCounter.md) |  |  | null |
+| **card** | [**Card**](Card.md) |  |  | null |
+| **qr_code** | [**QRCode**](QRCode.md) |  |  | null |
+| **virtual_account** | [**VirtualAccount**](VirtualAccount.md) |  |  | null |
 
 
 [[Back to README]](../../README.md)

@@ -10,7 +10,7 @@
 /**
  * Transaction Service V4 API
  *
- * The version of the OpenAPI document: 3.4.3
+ * The version of the OpenAPI document: 3.5.0
  */
 
 /**
@@ -367,7 +367,7 @@ class BalanceApi
         
         // Xendit's custom headers
         $defaultHeaders['xendit-lib'] = 'php';
-        $defaultHeaders['xendit-lib-ver'] = '3.4.0';
+        $defaultHeaders['xendit-lib-ver'] = '3.6.0';
 
         if ($this->config->getUserAgent()) {
             $defaultHeaders['User-Agent'] = $this->config->getUserAgent();

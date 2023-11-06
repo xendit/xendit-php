@@ -4,24 +4,25 @@
 ```php
 use Xendit\PaymentRequest\PaymentRequestParameters;
 ```
+
 ## Properties
 
-| Name | Type | Description | Examples | Notes |
-| ------------ | ------------- | ------------- | ------------- | -------------|
-| **reference_id** | **string** |  | null |  [optional] |
-| **amount** | **float** |  | null |  [optional] |
-| **currency** | [**PaymentRequestCurrency**](PaymentRequestCurrency.md) |  | null |  |
-| **payment_method** | [**PaymentMethodParameters**](PaymentMethodParameters.md) |  | null |  [optional] |
-| **description** | **string** |  | null |  [optional] |
-| **capture_method** | [**PaymentRequestCaptureMethod**](PaymentRequestCaptureMethod.md) |  | null |  [optional] |
-| **initiator** | [**PaymentRequestInitiator**](PaymentRequestInitiator.md) |  | null |  [optional] |
-| **payment_method_id** | **string** |  | null |  [optional] |
-| **channel_properties** | [**PaymentRequestParametersChannelProperties**](PaymentRequestParametersChannelProperties.md) |  | null |  [optional] |
-| **shipping_information** | [**PaymentRequestShippingInformation**](PaymentRequestShippingInformation.md) |  | null |  [optional] |
-| **items** | [**array**](PaymentRequestBasketItem.md) |  | null |  [optional] |
-| **customer_id** | **string** |  | null |  [optional] |
-| **customer** | **object** |  | null |  [optional] |
-| **metadata** | **object** |  | null |  [optional] |
+| Name | Type | Required | Description | Examples |
+|------------|:-------------:|:-------------:|-------------|:-------------:|
+| **reference_id** | **string** |  |  | null |
+| **amount** | **float** |  |  | null |
+| **currency** | [**PaymentRequestCurrency**](PaymentRequestCurrency.md) | ☑️ |  | null |
+| **payment_method** | [**PaymentMethodParameters**](PaymentMethodParameters.md) |  |  | null |
+| **description** | **string** |  |  | null |
+| **capture_method** | [**PaymentRequestCaptureMethod**](PaymentRequestCaptureMethod.md) |  |  | null |
+| **initiator** | [**PaymentRequestInitiator**](PaymentRequestInitiator.md) |  |  | null |
+| **payment_method_id** | **string** |  |  | null |
+| **channel_properties** | [**PaymentRequestParametersChannelProperties**](PaymentRequestParametersChannelProperties.md) |  |  | null |
+| **shipping_information** | [**PaymentRequestShippingInformation**](PaymentRequestShippingInformation.md) |  |  | null |
+| **items** | [**array**](PaymentRequestBasketItem.md) |  |  | null |
+| **customer_id** | **string** |  |  | null |
+| **customer** | **object** |  |  | null |
+| **metadata** | **object** |  |  | null |
 
 
 [[Back to README]](../../README.md)

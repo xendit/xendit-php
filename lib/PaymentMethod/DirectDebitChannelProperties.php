@@ -11,7 +11,7 @@
 /**
  * Payment Method Service v2
  *
- * The version of the OpenAPI document: 2.89.2
+ * The version of the OpenAPI document: 2.91.2
  */
 
 /**
@@ -58,7 +58,8 @@ class DirectDebitChannelProperties implements ModelInterface, ArrayAccess, \Json
         'card_expiry' => 'string',
         'email' => 'string',
         'identity_document_number' => 'string',
-        'require_auth' => 'bool'
+        'require_auth' => 'bool',
+        'account_number' => 'string'
     ];
 
     /**
@@ -76,7 +77,8 @@ class DirectDebitChannelProperties implements ModelInterface, ArrayAccess, \Json
         'card_expiry' => null,
         'email' => null,
         'identity_document_number' => null,
-        'require_auth' => null
+        'require_auth' => null,
+        'account_number' => null
     ];
 
     /**
@@ -92,7 +94,8 @@ class DirectDebitChannelProperties implements ModelInterface, ArrayAccess, \Json
 		'card_expiry' => true,
 		'email' => true,
 		'identity_document_number' => true,
-		'require_auth' => true
+		'require_auth' => true,
+		'account_number' => true
     ];
 
     /**
@@ -188,7 +191,8 @@ class DirectDebitChannelProperties implements ModelInterface, ArrayAccess, \Json
         'card_expiry' => 'card_expiry',
         'email' => 'email',
         'identity_document_number' => 'identity_document_number',
-        'require_auth' => 'require_auth'
+        'require_auth' => 'require_auth',
+        'account_number' => 'account_number'
     ];
 
     /**
@@ -204,7 +208,8 @@ class DirectDebitChannelProperties implements ModelInterface, ArrayAccess, \Json
         'card_expiry' => 'setCardExpiry',
         'email' => 'setEmail',
         'identity_document_number' => 'setIdentityDocumentNumber',
-        'require_auth' => 'setRequireAuth'
+        'require_auth' => 'setRequireAuth',
+        'account_number' => 'setAccountNumber'
     ];
 
     /**
@@ -220,7 +225,8 @@ class DirectDebitChannelProperties implements ModelInterface, ArrayAccess, \Json
         'card_expiry' => 'getCardExpiry',
         'email' => 'getEmail',
         'identity_document_number' => 'getIdentityDocumentNumber',
-        'require_auth' => 'getRequireAuth'
+        'require_auth' => 'getRequireAuth',
+        'account_number' => 'getAccountNumber'
     ];
 
     /**
@@ -288,6 +294,7 @@ class DirectDebitChannelProperties implements ModelInterface, ArrayAccess, \Json
         $this->setIfExists('email', $data ?? [], null);
         $this->setIfExists('identity_document_number', $data ?? [], null);
         $this->setIfExists('require_auth', $data ?? [], null);
+        $this->setIfExists('account_number', $data ?? [], null);
     }
 
     /**
@@ -593,6 +600,40 @@ class DirectDebitChannelProperties implements ModelInterface, ArrayAccess, \Json
             }
         }
         $this->container['require_auth'] = $require_auth;
+
+        return $this;
+    }
+
+    /**
+     * Gets account_number
+     *
+     * @return string|null
+     */
+    public function getAccountNumber()
+    {
+        return $this->container['account_number'];
+    }
+
+    /**
+     * Sets account_number
+     *
+     * @param string|null $account_number Account number of the customer
+     *
+     * @return self
+     */
+    public function setAccountNumber($account_number)
+    {
+        if (is_null($account_number)) {
+            array_push($this->openAPINullablesSetToNull, 'account_number');
+        } else {
+            $nullablesSetToNull = $this->getOpenAPINullablesSetToNull();
+            $index = array_search('account_number', $nullablesSetToNull);
+            if ($index !== FALSE) {
+                unset($nullablesSetToNull[$index]);
+                $this->setOpenAPINullablesSetToNull($nullablesSetToNull);
+            }
+        }
+        $this->container['account_number'] = $account_number;
 
         return $this;
     }

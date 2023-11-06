@@ -1,15 +1,16 @@
 # # Paylater
-
+An object representing paylater details for invoices.
 
 ```php
 use Xendit\Invoice\Paylater;
 ```
+
 ## Properties
 
-| Name | Type | Description | Examples | Notes |
-| ------------ | ------------- | ------------- | ------------- | -------------|
-| **paylater_type** | [**PaylaterType**](PaylaterType.md) |  | null |  |
-| **should_exclude** | **bool** | Indicates whether this paylater option should be excluded. | null |  [optional] |
+| Name | Type | Required | Description | Examples |
+|------------|:-------------:|:-------------:|-------------|:-------------:|
+| **paylater_type** | [**PaylaterType**](PaylaterType.md) | ☑️ |  | null |
+| **should_exclude** | **bool** |  | Indicates whether this paylater option should be excluded. | null |
 
 
 [[Back to README]](../../README.md)

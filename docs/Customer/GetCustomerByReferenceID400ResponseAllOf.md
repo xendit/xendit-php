@@ -4,12 +4,13 @@
 ```php
 use Xendit\Customer\GetCustomerByReferenceID400ResponseAllOf;
 ```
+
 ## Properties
 
-| Name | Type | Description | Examples | Notes |
-| ------------ | ------------- | ------------- | ------------- | -------------|
-| **error_code** | **string** |  | ENTITY_NOT_FOUND_ERROR |  [optional] |
-| **message** | **mixed** |  | Entity does not exist |  [optional] |
+| Name | Type | Required | Description | Examples |
+|------------|:-------------:|:-------------:|-------------|:-------------:|
+| **error_code** | **string** |  |  | ENTITY_NOT_FOUND_ERROR |
+| **message** | **mixed** |  |  | Entity does not exist |
 
 
 [[Back to README]](../../README.md)

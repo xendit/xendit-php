@@ -4,12 +4,13 @@
 ```php
 use Xendit\Refund\CreateRefund403Response;
 ```
+
 ## Properties
 
-| Name | Type | Description | Examples | Notes |
-| ------------ | ------------- | ------------- | ------------- | -------------|
-| **error_code** | **string** |  | UNAUTHORIZED |  [optional] |
-| **message** | **string** |  | No valid API key provided |  [optional] |
+| Name | Type | Required | Description | Examples |
+|------------|:-------------:|:-------------:|-------------|:-------------:|
+| **error_code** | **string** |  |  | UNAUTHORIZED |
+| **message** | **string** |  |  | No valid API key provided |
 
 
 [[Back to README]](../../README.md)

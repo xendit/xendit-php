@@ -11,7 +11,7 @@
 /**
  * Payment Method Service v2
  *
- * The version of the OpenAPI document: 2.89.2
+ * The version of the OpenAPI document: 2.91.2
  */
 
 /**
@@ -77,6 +77,8 @@ class EWalletChannelCode
     
     public const ALIPAY = 'ALIPAY';
     
+    public const TOUCHANDGO = 'TOUCHANDGO';
+    
     public const XENDIT_ENUM_DEFAULT_FALLBACK = 'UNKNOWN_ENUM_VALUE';
 
     private $value;
@@ -127,6 +129,7 @@ class EWalletChannelCode
             self::LINEPAY,
             self::TRUEMONEY,
             self::ALIPAY,
+            self::TOUCHANDGO,
             self::XENDIT_ENUM_DEFAULT_FALLBACK
         ];
     }

@@ -1,15 +1,16 @@
 # # AlternativeDisplayItem
-
+An object representing alternative display of a VA.
 
 ```php
 use Xendit\Invoice\AlternativeDisplayItem;
 ```
+
 ## Properties
 
-| Name | Type | Description | Examples | Notes |
-| ------------ | ------------- | ------------- | ------------- | -------------|
-| **type** | **string** | Represent type of alternative display. | null |  [optional] |
-| **value** | **string** | Represent value of alternative display value. | null |  [optional] |
+| Name | Type | Required | Description | Examples |
+|------------|:-------------:|:-------------:|-------------|:-------------:|
+| **type** | **string** |  | Represent type of alternative display. | null |
+| **value** | **string** |  | Represent value of alternative display value. | null |
 
 
 [[Back to README]](../../README.md)

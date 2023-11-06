@@ -11,7 +11,7 @@
 /**
  * Payment Method Service v2
  *
- * The version of the OpenAPI document: 2.89.2
+ * The version of the OpenAPI document: 2.91.2
  */
 
 /**
@@ -53,7 +53,8 @@ class DirectDebitDebitCard implements ModelInterface, ArrayAccess, \JsonSerializ
         'mobile_number' => 'string',
         'card_last_four' => 'string',
         'card_expiry' => 'string',
-        'email' => 'string'
+        'email' => 'string',
+        'account_number' => 'string'
     ];
 
     /**
@@ -67,7 +68,8 @@ class DirectDebitDebitCard implements ModelInterface, ArrayAccess, \JsonSerializ
         'mobile_number' => null,
         'card_last_four' => null,
         'card_expiry' => null,
-        'email' => null
+        'email' => null,
+        'account_number' => null
     ];
 
     /**
@@ -79,7 +81,8 @@ class DirectDebitDebitCard implements ModelInterface, ArrayAccess, \JsonSerializ
         'mobile_number' => true,
 		'card_last_four' => true,
 		'card_expiry' => true,
-		'email' => true
+		'email' => true,
+		'account_number' => true
     ];
 
     /**
@@ -171,7 +174,8 @@ class DirectDebitDebitCard implements ModelInterface, ArrayAccess, \JsonSerializ
         'mobile_number' => 'mobile_number',
         'card_last_four' => 'card_last_four',
         'card_expiry' => 'card_expiry',
-        'email' => 'email'
+        'email' => 'email',
+        'account_number' => 'account_number'
     ];
 
     /**
@@ -183,7 +187,8 @@ class DirectDebitDebitCard implements ModelInterface, ArrayAccess, \JsonSerializ
         'mobile_number' => 'setMobileNumber',
         'card_last_four' => 'setCardLastFour',
         'card_expiry' => 'setCardExpiry',
-        'email' => 'setEmail'
+        'email' => 'setEmail',
+        'account_number' => 'setAccountNumber'
     ];
 
     /**
@@ -195,7 +200,8 @@ class DirectDebitDebitCard implements ModelInterface, ArrayAccess, \JsonSerializ
         'mobile_number' => 'getMobileNumber',
         'card_last_four' => 'getCardLastFour',
         'card_expiry' => 'getCardExpiry',
-        'email' => 'getEmail'
+        'email' => 'getEmail',
+        'account_number' => 'getAccountNumber'
     ];
 
     /**
@@ -259,6 +265,7 @@ class DirectDebitDebitCard implements ModelInterface, ArrayAccess, \JsonSerializ
         $this->setIfExists('card_last_four', $data ?? [], null);
         $this->setIfExists('card_expiry', $data ?? [], null);
         $this->setIfExists('email', $data ?? [], null);
+        $this->setIfExists('account_number', $data ?? [], null);
     }
 
     /**
@@ -435,6 +442,40 @@ class DirectDebitDebitCard implements ModelInterface, ArrayAccess, \JsonSerializ
             }
         }
         $this->container['email'] = $email;
+
+        return $this;
+    }
+
+    /**
+     * Gets account_number
+     *
+     * @return string|null
+     */
+    public function getAccountNumber()
+    {
+        return $this->container['account_number'];
+    }
+
+    /**
+     * Sets account_number
+     *
+     * @param string|null $account_number Account number of the customer
+     *
+     * @return self
+     */
+    public function setAccountNumber($account_number)
+    {
+        if (is_null($account_number)) {
+            array_push($this->openAPINullablesSetToNull, 'account_number');
+        } else {
+            $nullablesSetToNull = $this->getOpenAPINullablesSetToNull();
+            $index = array_search('account_number', $nullablesSetToNull);
+            if ($index !== FALSE) {
+                unset($nullablesSetToNull[$index]);
+                $this->setOpenAPINullablesSetToNull($nullablesSetToNull);
+            }
+        }
+        $this->container['account_number'] = $account_number;
 
         return $this;
     }

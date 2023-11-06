@@ -4,12 +4,13 @@
 ```php
 use Xendit\PaymentRequest\CaptureParameters;
 ```
+
 ## Properties
 
-| Name | Type | Description | Examples | Notes |
-| ------------ | ------------- | ------------- | ------------- | -------------|
-| **reference_id** | **string** |  | null |  [optional] |
-| **capture_amount** | **float** |  | null |  |
+| Name | Type | Required | Description | Examples |
+|------------|:-------------:|:-------------:|-------------|:-------------:|
+| **reference_id** | **string** |  |  | null |
+| **capture_amount** | **float** | ☑️ |  | null |
 
 
 [[Back to README]](../../README.md)

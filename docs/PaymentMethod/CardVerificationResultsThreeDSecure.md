@@ -4,15 +4,16 @@
 ```php
 use Xendit\PaymentMethod\CardVerificationResultsThreeDSecure;
 ```
+
 ## Properties
 
-| Name | Type | Description | Examples | Notes |
-| ------------ | ------------- | ------------- | ------------- | -------------|
-| **three_d_secure_flow** | **string** |  | null |  [optional] |
-| **eci_code** | **string** |  | null |  [optional] |
-| **three_d_secure_result** | **string** |  | null |  [optional] |
-| **three_d_secure_result_reason** | **string** |  | null |  [optional] |
-| **three_d_secure_version** | **string** |  | null |  [optional] |
+| Name | Type | Required | Description | Examples |
+|------------|:-------------:|:-------------:|-------------|:-------------:|
+| **three_d_secure_flow** | **string** |  |  | null |
+| **eci_code** | **string** |  |  | null |
+| **three_d_secure_result** | **string** |  |  | null |
+| **three_d_secure_result_reason** | **string** |  |  | null |
+| **three_d_secure_version** | **string** |  |  | null |
 
 
 [[Back to README]](../../README.md)

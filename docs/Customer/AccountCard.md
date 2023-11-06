@@ -4,11 +4,12 @@
 ```php
 use Xendit\Customer\AccountCard;
 ```
+
 ## Properties
 
-| Name | Type | Description | Examples | Notes |
-| ------------ | ------------- | ------------- | ------------- | -------------|
-| **token_id** | **string** | The token id returned in tokenisation | null |  [optional] |
+| Name | Type | Required | Description | Examples |
+|------------|:-------------:|:-------------:|-------------|:-------------:|
+| **token_id** | **string** |  | The token id returned in tokenisation | null |
 
 
 [[Back to README]](../../README.md)

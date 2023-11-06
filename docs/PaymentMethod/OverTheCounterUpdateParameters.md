@@ -4,12 +4,13 @@
 ```php
 use Xendit\PaymentMethod\OverTheCounterUpdateParameters;
 ```
+
 ## Properties
 
-| Name | Type | Description | Examples | Notes |
-| ------------ | ------------- | ------------- | ------------- | -------------|
-| **amount** | **float** |  | null |  [optional] |
-| **channel_properties** | [**OverTheCounterChannelPropertiesUpdate**](OverTheCounterChannelPropertiesUpdate.md) |  | null |  [optional] |
+| Name | Type | Required | Description | Examples |
+|------------|:-------------:|:-------------:|-------------|:-------------:|
+| **amount** | **float** |  |  | null |
+| **channel_properties** | [**OverTheCounterChannelPropertiesUpdate**](OverTheCounterChannelPropertiesUpdate.md) |  |  | null |
 
 
 [[Back to README]](../../README.md)

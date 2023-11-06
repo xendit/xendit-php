@@ -4,18 +4,19 @@
 ```php
 use Xendit\Customer\KYCDocumentRequest;
 ```
+
 ## Properties
 
-| Name | Type | Description | Examples | Notes |
-| ------------ | ------------- | ------------- | ------------- | -------------|
-| **country** | **string** | ISO3166-2 country code | ID |  [optional] |
-| **type** | [**KYCDocumentType**](KYCDocumentType.md) |  | null |  [optional] |
-| **sub_type** | [**KYCDocumentSubType**](KYCDocumentSubType.md) |  | null |  [optional] |
-| **document_name** | **string** |  | KTP |  [optional] |
-| **document_number** | **string** |  | AA123467890 |  [optional] |
-| **expires_at** | **string** |  | 2017-07-21 |  [optional] |
-| **holder_name** | **string** |  | John Doe |  [optional] |
-| **document_images** | **string[]** |  | null |  [optional] |
+| Name | Type | Required | Description | Examples |
+|------------|:-------------:|:-------------:|-------------|:-------------:|
+| **country** | **string** |  | ISO3166-2 country code | ID |
+| **type** | [**KYCDocumentType**](KYCDocumentType.md) |  |  | null |
+| **sub_type** | [**KYCDocumentSubType**](KYCDocumentSubType.md) |  |  | null |
+| **document_name** | **string** |  |  | KTP |
+| **document_number** | **string** |  |  | AA123467890 |
+| **expires_at** | **string** |  |  | 2017-07-21 |
+| **holder_name** | **string** |  |  | John Doe |
+| **document_images** | **string[]** |  |  | null |
 
 
 [[Back to README]](../../README.md)

@@ -4,11 +4,12 @@
 ```php
 use Xendit\PaymentRequest\EWalletAllOf;
 ```
+
 ## Properties
 
-| Name | Type | Description | Examples | Notes |
-| ------------ | ------------- | ------------- | ------------- | -------------|
-| **account** | [**EWalletAccount**](EWalletAccount.md) |  | null |  [optional] |
+| Name | Type | Required | Description | Examples |
+|------------|:-------------:|:-------------:|-------------|:-------------:|
+| **account** | [**EWalletAccount**](EWalletAccount.md) |  |  | null |
 
 
 [[Back to README]](../../README.md)

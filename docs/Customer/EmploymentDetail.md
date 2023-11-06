@@ -4,13 +4,14 @@
 ```php
 use Xendit\Customer\EmploymentDetail;
 ```
+
 ## Properties
 
-| Name | Type | Description | Examples | Notes |
-| ------------ | ------------- | ------------- | ------------- | -------------|
-| **employer_name** | **string** | Name of employer | null |  [optional] |
-| **nature_of_business** | **string** | Industry or nature of business | null |  [optional] |
-| **role_description** | **string** | Occupation or title | null |  [optional] |
+| Name | Type | Required | Description | Examples |
+|------------|:-------------:|:-------------:|-------------|:-------------:|
+| **employer_name** | **string** |  | Name of employer | null |
+| **nature_of_business** | **string** |  | Industry or nature of business | null |
+| **role_description** | **string** |  | Occupation or title | null |
 
 
 [[Back to README]](../../README.md)

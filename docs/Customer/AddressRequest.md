@@ -4,20 +4,21 @@
 ```php
 use Xendit\Customer\AddressRequest;
 ```
+
 ## Properties
 
-| Name | Type | Description | Examples | Notes |
-| ------------ | ------------- | ------------- | ------------- | -------------|
-| **category** | **string** | Home, work or provincial | null |  [optional] |
-| **country_code** | **string** | ISO3166-2 country code | ID |  [optional] |
-| **province_state** | **string** |  | null |  [optional] |
-| **city** | **string** |  | null |  [optional] |
-| **suburb** | **string** |  | null |  [optional] |
-| **postal_code** | **string** |  | null |  [optional] |
-| **line_1** | **string** |  | null |  [optional] |
-| **line_2** | **string** |  | null |  [optional] |
-| **status** | [**AddressStatus**](AddressStatus.md) |  | null |  [optional] |
-| **is_primary** | **bool** |  | null |  [optional] [default to false] |
+| Name | Type | Required | Description | Examples |
+|------------|:-------------:|:-------------:|-------------|:-------------:|
+| **category** | **string** |  | Home, work or provincial | null |
+| **country_code** | **string** |  | ISO3166-2 country code | ID |
+| **province_state** | **string** |  |  | null |
+| **city** | **string** |  |  | null |
+| **suburb** | **string** |  |  | null |
+| **postal_code** | **string** |  |  | null |
+| **line_1** | **string** |  |  | null |
+| **line_2** | **string** |  |  | null |
+| **status** | [**AddressStatus**](AddressStatus.md) |  |  | null |
+| **is_primary** | **bool** |  |  | null |
 
 
 [[Back to README]](../../README.md)

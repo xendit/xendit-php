@@ -11,7 +11,7 @@
 /**
  * Payment Requests
  *
- * The version of the OpenAPI document: 1.44.1
+ * The version of the OpenAPI document: 1.45.1
  */
 
 /**
@@ -67,6 +67,8 @@ class VirtualAccountChannelCode
     
     public const STANDARD_CHARTERED = 'STANDARD_CHARTERED';
     
+    public const AMBANK = 'AMBANK';
+    
     public const XENDIT_ENUM_DEFAULT_FALLBACK = 'UNKNOWN_ENUM_VALUE';
 
     private $value;
@@ -112,6 +114,7 @@ class VirtualAccountChannelCode
             self::WOORI,
             self::MSB,
             self::STANDARD_CHARTERED,
+            self::AMBANK,
             self::XENDIT_ENUM_DEFAULT_FALLBACK
         ];
     }

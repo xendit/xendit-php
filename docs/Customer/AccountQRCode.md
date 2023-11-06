@@ -4,11 +4,12 @@
 ```php
 use Xendit\Customer\AccountQRCode;
 ```
+
 ## Properties
 
-| Name | Type | Description | Examples | Notes |
-| ------------ | ------------- | ------------- | ------------- | -------------|
-| **qr_string** | **string** | String representation of the QR Code image | null |  [optional] |
+| Name | Type | Required | Description | Examples |
+|------------|:-------------:|:-------------:|-------------|:-------------:|
+| **qr_string** | **string** |  | String representation of the QR Code image | null |
 
 
 [[Back to README]](../../README.md)
