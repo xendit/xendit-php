@@ -30,7 +30,7 @@ final class InvoiceAPITest extends TestCase
             $payload = [
                 'amount' => 10000,
                 'invoice_duration' => 172800,
-                'external_id' => $_ENV['BUSINESS_ID'] . "_" .time(),
+                'external_id' => getenv('BUSINESS_ID') . "_" .time(),
                 'description' => 'Test Invoice',
                 'currency' => 'IDR',
                 'reminder_time' => 1
@@ -56,10 +56,12 @@ final class InvoiceAPITest extends TestCase
         }
     }
 
+
     public function testGetInvoiceById(): void
     {
         try {
-            $response = $this->apiInstance->getInvoiceById(invoice_id:"654a103b5e6dfa587b6025c3");
+            $invoice_id = "654a103b5e6dfa587b6025c3";
+            $response = $this->apiInstance->getInvoiceById($invoice_id);
             print_r("getInvoiceById:" . $response . "\n");
 
             $this->assertNotNull($response);
