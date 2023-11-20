@@ -25,7 +25,8 @@
         "ext-json": "*",
         "ext-mbstring": "*",
         "guzzlehttp/guzzle": "^7.3",
-        "guzzlehttp/psr7": "^1.7 || ^2.0"
+        "guzzlehttp/psr7": "^1.7 || ^2.0",
+        "vlucas/phpdotenv": "^5.5"
     },
     "require-dev": {
         "phpunit/phpunit": "^8.0 || ^9.0",
@@ -36,5 +37,9 @@
     },
     "autoload-dev": {
         "psr-4": { "Xendit\\Test\\" : "test/" }
+    },
+    "scripts": {
+        "test": "DEVELOPMENT_API_KEY=$DEVELOPMENT_API_KEY phpunit",
+        "filtered-test": "DEVELOPMENT_API_KEY=$DEVELOPMENT_API_KEY phpunit --filter PaymentAPITest"
     }
 }
