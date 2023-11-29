@@ -11,7 +11,7 @@
 /**
  * Refund Service
  *
- * The version of the OpenAPI document: 1.3.3
+ * The version of the OpenAPI document: 1.3.4
  */
 
 /**
@@ -234,6 +234,7 @@ class CreateRefund400Response implements ModelInterface, ArrayAccess, \JsonSeria
     public const ERROR_CODE_PARTIAL_REFUND_NOT_SUPPORTED = 'PARTIAL_REFUND_NOT_SUPPORTED';
     public const ERROR_CODE_REFUND_NOT_SUPPORTED = 'REFUND_NOT_SUPPORTED';
     public const ERROR_CODE_TRANSACTION_NOT_FOUND = 'TRANSACTION_NOT_FOUND';
+    public const ERROR_CODE_REFUND_IN_PROGRESS = 'REFUND_IN_PROGRESS';
 
     /**
      * Gets allowable values of the enum
@@ -250,6 +251,7 @@ class CreateRefund400Response implements ModelInterface, ArrayAccess, \JsonSeria
             self::ERROR_CODE_PARTIAL_REFUND_NOT_SUPPORTED,
             self::ERROR_CODE_REFUND_NOT_SUPPORTED,
             self::ERROR_CODE_TRANSACTION_NOT_FOUND,
+            self::ERROR_CODE_REFUND_IN_PROGRESS,
         ];
     }
 

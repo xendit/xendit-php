@@ -68,7 +68,7 @@ $create_invoice_request = new Xendit\Invoice\CreateInvoiceRequest([
   'currency' => 'IDR',
   'reminder_time' => 1
 ]); // \Xendit\Invoice\CreateInvoiceRequest
-$for_user_id = "62efe4c33e45694d63f585f8"; // string | Business ID of the sub-account merchant (XP feature)
+$for_user_id = "62efe4c33e45694d63f585f0"; // string | Business ID of the sub-account merchant (XP feature)
 
 try {
     $result = $apiInstance->createInvoice($create_invoice_request, $for_user_id);
@@ -113,7 +113,7 @@ Configuration::setXenditKey("YOUR_API_KEY_HERE");
 
 $apiInstance = new InvoiceApi();
 $invoice_id = "62efe4c33e45294d63f585f2"; // string | Invoice ID
-$for_user_id = "62efe4c33e45694d63f585f8"; // string | Business ID of the sub-account merchant (XP feature)
+$for_user_id = "62efe4c33e45694d63f585f0"; // string | Business ID of the sub-account merchant (XP feature)
 
 try {
     $result = $apiInstance->getInvoiceById($invoice_id, $for_user_id);
@@ -170,7 +170,7 @@ use Xendit\Invoice\InvoiceApi;
 Configuration::setXenditKey("YOUR_API_KEY_HERE");
 
 $apiInstance = new InvoiceApi();
-$for_user_id = "62efe4c33e45694d63f585f8"; // string | Business ID of the sub-account merchant (XP feature)
+$for_user_id = "62efe4c33e45694d63f585f0"; // string | Business ID of the sub-account merchant (XP feature)
 $external_id = "test-external"; // string
 $statuses = ["PENDING","SETTLED"]; // \Invoice\InvoiceStatus[]
 $limit = 10; // float
@@ -229,7 +229,7 @@ Configuration::setXenditKey("YOUR_API_KEY_HERE");
 
 $apiInstance = new InvoiceApi();
 $invoice_id = "5f4708b7bd394b0400b96276"; // string | Invoice ID to be expired
-$for_user_id = "62efe4c33e45694d63f585f8"; // string | Business ID of the sub-account merchant (XP feature)
+$for_user_id = "62efe4c33e45694d63f585f0"; // string | Business ID of the sub-account merchant (XP feature)
 
 try {
     $result = $apiInstance->expireInvoice($invoice_id, $for_user_id);
@@ -240,5 +240,50 @@ try {
 }
 ```
 
+
+## Callback Objects
+Use the following callback objects provided by Xendit to receive callbacks (also known as webhooks) that Xendit sends you on events, such as successful payments. Note that the example is meant to illustrate the contents of the callback object -- you will not need to instantiate these objects in practice
+### InvoiceCallback Object
+>Invoice Callback Object
+
+Model Documentation: [InvoiceCallback](/InvoiceCallback.md)
+#### Usage Example
+Note that the example is meant to illustrate the contents of the callback object -- you will not need to instantiate these objects in practice
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+use Xendit\Invoice\InvoiceCallback;
+
+$invoice_callback = new InvoiceCallback([
+  'id' => '593f4ed1c3d3bb7f39733d83',
+  'external_id' => 'testing-invoice',
+  'user_id' => '5848fdf860053555135587e7',
+  'payment_method' => 'RETAIL_OUTLET',
+  'status' => 'PAID',
+  'merchant_name' => 'Xendit',
+  'amount' => 2000000,
+  'paid_amount' => 2000000,
+  'paid_at' => '2020-01-14T02=>32=>50.912Z',
+  'payer_email' => 'test@xendit.co',
+  'description' => 'Invoice webhook test',
+  'created' => '2020-01-13T02=>32=>49.827Z',
+  'updated' => '2020-01-13T02=>32=>50.912Z',
+  'currency' => 'IDR',
+  'payment_channel' => 'ALFAMART',
+  'payment_destination' => 'TEST815'
+]);
+```
+
+You may then use the callback object in your webhook or callback handler like so,
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+function simulateInvoiceCallback(InvoiceCallback $invoice_callback) {
+    echo $invoice_callback->getId();
+    // do things here with the callback
+}
+```
 
 [[Back to README]](../README.md)

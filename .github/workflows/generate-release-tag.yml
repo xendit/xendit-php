@@ -4,10 +4,67 @@ on:
     types: [create-release-tag]
 
 jobs:
-  build:
+  testing:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        php-version:
+          - "7.4"
+          - "8.0"
+          - "8.1"
+          - "8.2"
+
     steps:
       - uses: actions/checkout@v3
+
+      - name: Print php version
+        run: echo ${{ matrix.php-version }}
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-version }}
+
+      - name: Print php version
+        run: php --version
+
+      - name: Install dependencies
+        run: composer install
+
+      - name: Run Tests
+        run: DEVELOPMENT_API_KEY=${{ secrets.DEVELOPMENT_API_KEY }} BUSINESS_ID=${{ secrets.BUSINESS_ID }} composer test
+
+  send-test-result:
+    name: Slack Notification
+    needs: [testing]
+    if: always() && (needs.testing.result == 'success' || needs.testing.result == 'failure')
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Set Slack Color
+      id: set_color
+      run: |
+        if [ "${{ needs.testing.result }}" == "success" ]; then
+          echo "color=good" >> $GITHUB_ENV
+        else
+          echo "color=danger" >> $GITHUB_ENV
+        fi
+
+    - name: Send Slack Notification
+      uses: rtCamp/action-slack-notify@v2
+      env:
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+        SLACK_TITLE: "[xendi-php] CI pipeline for ${{ github.event.client_payload.version }}"
+        SLACK_MESSAGE: 'Test Result: ${{ needs.testing.result }}'
+        SLACK_COLOR: ${{ steps.set_color.outputs.color }}
+
+  publish:
+    runs-on: ubuntu-latest
+    needs: testing
+    steps:
+      - uses: actions/checkout@v3
+
       - name: Set the value in bash
         id: parse-changelog
         run: |

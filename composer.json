@@ -1,6 +1,6 @@
 {
     "name": "xendit/xendit-php",
-    "version": "3.6.0",
+    "version": "3.7.0",
     "description": "Xendit PHP SDK",
     "keywords": [
         "openapitools",
@@ -39,7 +39,7 @@
         "psr-4": { "Xendit\\Test\\" : "test/" }
     },
     "scripts": {
-        "test": "DEVELOPMENT_API_KEY=$DEVELOPMENT_API_KEY phpunit",
-        "filtered-test": "DEVELOPMENT_API_KEY=$DEVELOPMENT_API_KEY phpunit --filter PaymentAPITest"
+        "test": "DEVELOPMENT_API_KEY=$DEVELOPMENT_API_KEY BUSINESS_ID=$BUSINESS_ID phpunit",
+        "filtered-test": "DEVELOPMENT_API_KEY=$DEVELOPMENT_API_KEY BUSINESS_ID=$BUSINESS_ID phpunit --filter PaymentAPITest"
     }
 }

@@ -510,4 +510,70 @@ try {
 ```
 
 
+## Callback Objects
+Use the following callback objects provided by Xendit to receive callbacks (also known as webhooks) that Xendit sends you on events, such as successful payments. Note that the example is meant to illustrate the contents of the callback object -- you will not need to instantiate these objects in practice
+### PaymentMethodCallback Object
+>Callback for active or expired E-Wallet or Direct Debit account linking, Virtual Accounts or QR strings
+
+Model Documentation: [PaymentMethodCallback](/PaymentMethodCallback.md)
+#### Usage Example
+Note that the example is meant to illustrate the contents of the callback object -- you will not need to instantiate these objects in practice
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+use Xendit\PaymentMethod\PaymentMethodCallback;
+
+$payment_method_callback = new PaymentMethodCallback([
+  'event' => 'payment_method.activated',
+  'data' => [
+    'id' => 'pm-6ff0b6f2-f5de-457f-b08f-bc98fbae485a',
+    'card' => null,
+    'type' => 'DIRECT_DEBIT',
+    'status' => 'ACTIVE',
+    'country' => 'PH',
+    'created' => '2022-08-12T13=>30=>26.579048Z',
+    'ewallet' => null,
+    'qr_code' => null,
+    'updated' => '2022-08-12T13=>30=>58.908220358Z',
+    'metadata' => null,
+    'customer_id' => 'e2878b4c-d57e-4a2c-922d-c0313c2800a3',
+    'description' => null,
+    'reusability' => 'MULTIPLE_USE',
+    'direct_debit' => [
+      'type' => 'BANK_ACCOUNT',
+      'debit_card' => null,
+      'bank_account' => [
+        'bank_account_hash' => 'b4dfa99c9b60c77f2e3962b73c098945',
+        'masked_bank_account_number' => 'XXXXXX1234'
+      ],
+      'channel_code' => 'BPI',
+      'channel_properties' => [
+        'failure_return_url' => 'https://your-redirect-website.com/failure',
+        'success_return_url' => 'https://your-redirect-website.com/success'
+      ]
+    ],
+    'failure_code' => null,
+    'reference_id' => '620b9df4-fe69-4bfd-b9d4-5cba6861db8a',
+    'virtual_account' => null,
+    'over_the_counter' => null,
+    'billing_information' => null,
+    'direct_bank_transfer' => null
+  ],
+  'created' => '2022-08-12T13=>30=>59.074277334Z',
+  'business_id' => '5f27a14a9bf05c73dd040bc8'
+]);
+```
+
+You may then use the callback object in your webhook or callback handler like so,
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+function simulatePaymentMethodCallback(PaymentMethodCallback $payment_method_callback) {
+    echo $payment_method_callback->getId();
+    // do things here with the callback
+}
+```
+
 [[Back to README]](../README.md)

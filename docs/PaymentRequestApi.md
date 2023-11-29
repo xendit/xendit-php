@@ -532,4 +532,88 @@ try {
 ```
 
 
+## Callback Objects
+Use the following callback objects provided by Xendit to receive callbacks (also known as webhooks) that Xendit sends you on events, such as successful payments. Note that the example is meant to illustrate the contents of the callback object -- you will not need to instantiate these objects in practice
+### PaymentCallback Object
+>Callback for successful or failed payments made via the Payments API
+
+Model Documentation: [PaymentCallback](/PaymentCallback.md)
+#### Usage Example
+Note that the example is meant to illustrate the contents of the callback object -- you will not need to instantiate these objects in practice
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+use Xendit\PaymentRequest\PaymentCallback;
+
+$payment_callback = new PaymentCallback([
+  'event' => 'payment.succeeded',
+  'data' => [
+    'id' => 'ddpy-3cd658ae-25b9-4659-aa36-596ae41a809f',
+    'amount' => 1000,
+    'status' => 'SUCCEEDED',
+    'country' => 'PH',
+    'created' => '2022-08-12T13=>30=>40.9209Z',
+    'updated' => '2022-08-12T13=>30=>58.729373Z',
+    'currency' => 'PHP',
+    'metadata' => [
+      'sku' => 'ABCDEFGH'
+    ],
+    'customer_id' => 'c832697e-a62d-46fa-a383-24930b155e81',
+    'reference_id' => '25cfd0f9-baee-44ca-9a12-6debe03f3c22',
+    'payment_method' => [
+      'id' => 'pm-951b1ad9-1fbb-4724-a744-8956ab6ed17f',
+      'card' => null,
+      'type' => 'DIRECT_DEBIT',
+      'status' => 'ACTIVE',
+      'created' => '2022-08-12T13=>30=>26.579048Z',
+      'ewallet' => null,
+      'qr_code' => null,
+      'updated' => '2022-08-12T13=>30=>40.221525Z',
+      'metadata' => [
+        'sku' => 'ABCDEFGH'
+      ],
+      'description' => null,
+      'reusability' => 'MULTIPLE_USE',
+      'direct_debit' => [
+        'type' => 'BANK_ACCOUNT',
+        'debit_card' => null,
+        'bank_account' => [
+          'bank_account_hash' => 'b4dfa99c9b60c77f2e3962b73c098945',
+          'masked_bank_account_number' => 'XXXXXX1234'
+        ],
+        'channel_code' => 'BPI',
+        'channel_properties' => [
+          'failure_return_url' => 'https://your-redirect-website.com/failure',
+          'success_return_url' => 'https://your-redirect-website.com/success'
+        ]
+      ],
+      'reference_id' => '620b9df4-fe69-4bfd-b9d4-5cba6861db8a',
+      'virtual_account' => null,
+      'over_the_counter' => null,
+      'direct_bank_transfer' => null
+    ],
+    'description' => null,
+    'failure_code' => null,
+    'payment_detail' => null,
+    'channel_properties' => null,
+    'payment_request_id' => 'pr-5b26cae1-545b-49e9-855e-f85128f3e705'
+  ],
+  'created' => '2022-08-12T13=>30=>58.986Z',
+  'business_id' => '5f27a14a9bf05c73dd040bc8',
+  'api_version' => null
+]);
+```
+
+You may then use the callback object in your webhook or callback handler like so,
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+function simulatePaymentCallback(PaymentCallback $payment_callback) {
+    echo $payment_callback->getId();
+    // do things here with the callback
+}
+```
+
 [[Back to README]](../README.md)
