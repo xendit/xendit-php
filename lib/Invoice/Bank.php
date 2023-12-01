@@ -73,7 +73,7 @@ class Bank implements ModelInterface, ArrayAccess, \JsonSerializable
         'bank_branch' => null,
         'bank_account_number' => null,
         'account_holder_name' => null,
-        'transfer_amount' => null,
+        'transfer_amount' => 'double',
         'alternative_displays' => null
     ];
 

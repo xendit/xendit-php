@@ -104,7 +104,7 @@ class Invoice implements ModelInterface, ArrayAccess, \JsonSerializable
         'merchant_name' => null,
         'merchant_profile_picture_url' => null,
         'locale' => null,
-        'amount' => null,
+        'amount' => 'double',
         'expiry_date' => 'date-time',
         'invoice_url' => null,
         'available_banks' => null,

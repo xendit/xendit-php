@@ -67,7 +67,7 @@ class RetailOutlet implements ModelInterface, ArrayAccess, \JsonSerializable
     protected static $openAPIFormats = [
         'retail_outlet_name' => null,
         'payment_code' => null,
-        'transfer_amount' => null,
+        'transfer_amount' => 'double',
         'merchant_name' => null
     ];
 

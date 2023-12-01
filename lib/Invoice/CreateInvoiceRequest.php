@@ -82,7 +82,7 @@ class CreateInvoiceRequest implements ModelInterface, ArrayAccess, \JsonSerializ
       */
     protected static $openAPIFormats = [
         'external_id' => null,
-        'amount' => null,
+        'amount' => 'double',
         'payer_email' => null,
         'description' => null,
         'invoice_duration' => null,
