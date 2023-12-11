@@ -229,7 +229,7 @@ Use the following callback objects provided by Xendit to receive callbacks (also
 ### RefundCallback Object
 >Callback for successful or failed Refunds made via the Payments API
 
-Model Documentation: [RefundCallback](/RefundCallback.md)
+Model Documentation: [RefundCallback](Refund/RefundCallback.md)
 #### Usage Example
 Note that the example is meant to illustrate the contents of the callback object -- you will not need to instantiate these objects in practice
 ```php

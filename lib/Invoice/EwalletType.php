@@ -11,7 +11,7 @@
 /**
  * xendit-invoice-service
  *
- * The version of the OpenAPI document: 1.5.0
+ * The version of the OpenAPI document: 1.6.0
  */
 
 /**
@@ -57,6 +57,16 @@ class EwalletType
     
     public const JENIUSPAY = 'JENIUSPAY';
     
+    public const MOMO = 'MOMO';
+    
+    public const ZALOPAY = 'ZALOPAY';
+    
+    public const VIETTELPAY = 'VIETTELPAY';
+    
+    public const VNPTWALLET = 'VNPTWALLET';
+    
+    public const APPOTA = 'APPOTA';
+    
     public const XENDIT_ENUM_DEFAULT_FALLBACK = 'UNKNOWN_ENUM_VALUE';
 
     private $value;
@@ -97,6 +107,11 @@ class EwalletType
             self::ASTRAPAY,
             self::NEXCASH,
             self::JENIUSPAY,
+            self::MOMO,
+            self::ZALOPAY,
+            self::VIETTELPAY,
+            self::VNPTWALLET,
+            self::APPOTA,
             self::XENDIT_ENUM_DEFAULT_FALLBACK
         ];
     }

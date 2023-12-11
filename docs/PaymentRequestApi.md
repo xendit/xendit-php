@@ -537,7 +537,7 @@ Use the following callback objects provided by Xendit to receive callbacks (also
 ### PaymentCallback Object
 >Callback for successful or failed payments made via the Payments API
 
-Model Documentation: [PaymentCallback](/PaymentCallback.md)
+Model Documentation: [PaymentCallback](PaymentRequest/PaymentCallback.md)
 #### Usage Example
 Note that the example is meant to illustrate the contents of the callback object -- you will not need to instantiate these objects in practice
 ```php

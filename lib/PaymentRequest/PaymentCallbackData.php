@@ -62,7 +62,7 @@ class PaymentCallbackData implements ModelInterface, ArrayAccess, \JsonSerializa
         'payment_method' => '\Xendit\PaymentRequest\PaymentMethod',
         'channel_properties' => '\Xendit\PaymentRequest\PaymentRequestChannelProperties',
         'payment_detail' => 'object',
-        'failure_code' => 'object',
+        'failure_code' => 'string',
         'created' => 'string',
         'updated' => 'string',
         'metadata' => 'object'
@@ -736,7 +736,7 @@ class PaymentCallbackData implements ModelInterface, ArrayAccess, \JsonSerializa
     /**
      * Gets failure_code
      *
-     * @return object|null
+     * @return string|null
      */
     public function getFailureCode()
     {
@@ -746,7 +746,7 @@ class PaymentCallbackData implements ModelInterface, ArrayAccess, \JsonSerializa
     /**
      * Sets failure_code
      *
-     * @param object|null $failure_code failure_code
+     * @param string|null $failure_code failure_code
      *
      * @return self
      */

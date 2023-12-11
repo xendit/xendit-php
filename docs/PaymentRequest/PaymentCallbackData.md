@@ -20,7 +20,7 @@ use Xendit\PaymentRequest\PaymentCallbackData;
 | **payment_method** | [**PaymentMethod**](PaymentMethod.md) | ☑️ |  | null |
 | **channel_properties** | [**PaymentRequestChannelProperties**](PaymentRequestChannelProperties.md) |  |  | null |
 | **payment_detail** | **object** |  |  | null |
-| **failure_code** | **object** |  |  | null |
+| **failure_code** | **string** |  |  | null |
 | **created** | **string** | ☑️ |  | null |
 | **updated** | **string** | ☑️ |  | null |
 | **metadata** | **object** |  |  | null |

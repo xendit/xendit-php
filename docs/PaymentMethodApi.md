@@ -515,7 +515,7 @@ Use the following callback objects provided by Xendit to receive callbacks (also
 ### PaymentMethodCallback Object
 >Callback for active or expired E-Wallet or Direct Debit account linking, Virtual Accounts or QR strings
 
-Model Documentation: [PaymentMethodCallback](/PaymentMethodCallback.md)
+Model Documentation: [PaymentMethodCallback](PaymentMethod/PaymentMethodCallback.md)
 #### Usage Example
 Note that the example is meant to illustrate the contents of the callback object -- you will not need to instantiate these objects in practice
 ```php

@@ -246,7 +246,7 @@ Use the following callback objects provided by Xendit to receive callbacks (also
 ### InvoiceCallback Object
 >Invoice Callback Object
 
-Model Documentation: [InvoiceCallback](/InvoiceCallback.md)
+Model Documentation: [InvoiceCallback](Invoice/InvoiceCallback.md)
 #### Usage Example
 Note that the example is meant to illustrate the contents of the callback object -- you will not need to instantiate these objects in practice
 ```php

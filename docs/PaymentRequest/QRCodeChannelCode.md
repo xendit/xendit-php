@@ -9,6 +9,8 @@ use Xendit\PaymentRequest\QRCodeChannelCode;
     ## Enum
 
     
+        * `QRIS` (value: `'QRIS'`)
+    
         * `DANA` (value: `'DANA'`)
     
         * `RCBC` (value: `'RCBC'`)

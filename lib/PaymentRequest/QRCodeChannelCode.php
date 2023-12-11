@@ -37,6 +37,8 @@ class QRCodeChannelCode
      * Possible values of this enum
      */
     
+    public const QRIS = 'QRIS';
+    
     public const DANA = 'DANA';
     
     public const RCBC = 'RCBC';
@@ -75,6 +77,7 @@ class QRCodeChannelCode
     public static function getAllowableEnumValues()
     {
         return [
+            self::QRIS,
             self::DANA,
             self::RCBC,
             self::LINKAJA,
