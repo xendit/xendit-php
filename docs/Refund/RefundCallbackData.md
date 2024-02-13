@@ -10,7 +10,7 @@ use Xendit\Refund\RefundCallbackData;
 | Name | Type | Required | Description | Examples |
 |------------|:-------------:|:-------------:|-------------|:-------------:|
 | **id** | **string** | ☑️ |  | rfd-3ece8615-41b7-4983-a3f0-a037430b6036 |
-| **payment_request_id** | **string** | ☑️ |  | pr-f4a6f77c-4835-4630-9617-2cdc34ee26ee |
+| **payment_id** | **string** | ☑️ |  | pr-f4a6f77c-4835-4630-9617-2cdc34ee26ee |
 | **invoice_id** | **string** |  |  | null |
 | **payment_method_type** | **string** | ☑️ |  | null |
 | **amount** | **float** | ☑️ |  | 1500 |

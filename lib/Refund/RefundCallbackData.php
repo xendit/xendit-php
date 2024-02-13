@@ -51,7 +51,7 @@ class RefundCallbackData implements ModelInterface, ArrayAccess, \JsonSerializab
       */
     protected static $openAPITypes = [
         'id' => 'string',
-        'payment_request_id' => 'string',
+        'payment_id' => 'string',
         'invoice_id' => 'string',
         'payment_method_type' => 'string',
         'amount' => 'float',
@@ -77,7 +77,7 @@ class RefundCallbackData implements ModelInterface, ArrayAccess, \JsonSerializab
       */
     protected static $openAPIFormats = [
         'id' => null,
-        'payment_request_id' => null,
+        'payment_id' => null,
         'invoice_id' => null,
         'payment_method_type' => null,
         'amount' => 'double',
@@ -101,7 +101,7 @@ class RefundCallbackData implements ModelInterface, ArrayAccess, \JsonSerializab
       */
     protected static array $openAPINullables = [
         'id' => false,
-		'payment_request_id' => false,
+		'payment_id' => false,
 		'invoice_id' => true,
 		'payment_method_type' => false,
 		'amount' => false,
@@ -205,7 +205,7 @@ class RefundCallbackData implements ModelInterface, ArrayAccess, \JsonSerializab
      */
     protected static $attributeMap = [
         'id' => 'id',
-        'payment_request_id' => 'payment_request_id',
+        'payment_id' => 'payment_id',
         'invoice_id' => 'invoice_id',
         'payment_method_type' => 'payment_method_type',
         'amount' => 'amount',
@@ -229,7 +229,7 @@ class RefundCallbackData implements ModelInterface, ArrayAccess, \JsonSerializab
      */
     protected static $setters = [
         'id' => 'setId',
-        'payment_request_id' => 'setPaymentRequestId',
+        'payment_id' => 'setPaymentId',
         'invoice_id' => 'setInvoiceId',
         'payment_method_type' => 'setPaymentMethodType',
         'amount' => 'setAmount',
@@ -253,7 +253,7 @@ class RefundCallbackData implements ModelInterface, ArrayAccess, \JsonSerializab
      */
     protected static $getters = [
         'id' => 'getId',
-        'payment_request_id' => 'getPaymentRequestId',
+        'payment_id' => 'getPaymentId',
         'invoice_id' => 'getInvoiceId',
         'payment_method_type' => 'getPaymentMethodType',
         'amount' => 'getAmount',
@@ -328,7 +328,7 @@ class RefundCallbackData implements ModelInterface, ArrayAccess, \JsonSerializab
     public function __construct(array $data = null)
     {
         $this->setIfExists('id', $data ?? [], null);
-        $this->setIfExists('payment_request_id', $data ?? [], null);
+        $this->setIfExists('payment_id', $data ?? [], null);
         $this->setIfExists('invoice_id', $data ?? [], null);
         $this->setIfExists('payment_method_type', $data ?? [], null);
         $this->setIfExists('amount', $data ?? [], null);
@@ -375,8 +375,8 @@ class RefundCallbackData implements ModelInterface, ArrayAccess, \JsonSerializab
         if ($this->container['id'] === null) {
             $invalidProperties[] = "'id' can't be null";
         }
-        if ($this->container['payment_request_id'] === null) {
-            $invalidProperties[] = "'payment_request_id' can't be null";
+        if ($this->container['payment_id'] === null) {
+            $invalidProperties[] = "'payment_id' can't be null";
         }
         if ($this->container['payment_method_type'] === null) {
             $invalidProperties[] = "'payment_method_type' can't be null";
@@ -448,28 +448,28 @@ class RefundCallbackData implements ModelInterface, ArrayAccess, \JsonSerializab
     }
 
     /**
-     * Gets payment_request_id
+     * Gets payment_id
      *
      * @return string
      */
-    public function getPaymentRequestId()
+    public function getPaymentId()
     {
-        return $this->container['payment_request_id'];
+        return $this->container['payment_id'];
     }
 
     /**
-     * Sets payment_request_id
+     * Sets payment_id
      *
-     * @param string $payment_request_id payment_request_id
+     * @param string $payment_id payment_id
      *
      * @return self
      */
-    public function setPaymentRequestId($payment_request_id)
+    public function setPaymentId($payment_id)
     {
-        if (is_null($payment_request_id)) {
-            throw new \InvalidArgumentException('non-nullable payment_request_id cannot be null');
+        if (is_null($payment_id)) {
+            throw new \InvalidArgumentException('non-nullable payment_id cannot be null');
         }
-        $this->container['payment_request_id'] = $payment_request_id;
+        $this->container['payment_id'] = $payment_id;
 
         return $this;
     }
