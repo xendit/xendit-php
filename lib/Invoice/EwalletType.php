@@ -11,7 +11,7 @@
 /**
  * xendit-invoice-service
  *
- * The version of the OpenAPI document: 1.6.0
+ * The version of the OpenAPI document: 1.7.6
  */
 
 /**
@@ -67,6 +67,14 @@ class EwalletType
     
     public const APPOTA = 'APPOTA';
     
+    public const LINEPAY = 'LINEPAY';
+    
+    public const TRUEMONEY = 'TRUEMONEY';
+    
+    public const WECHATPAY = 'WECHATPAY';
+    
+    public const TOUCHNGO = 'TOUCHNGO';
+    
     public const XENDIT_ENUM_DEFAULT_FALLBACK = 'UNKNOWN_ENUM_VALUE';
 
     private $value;
@@ -112,6 +120,10 @@ class EwalletType
             self::VIETTELPAY,
             self::VNPTWALLET,
             self::APPOTA,
+            self::LINEPAY,
+            self::TRUEMONEY,
+            self::WECHATPAY,
+            self::TOUCHNGO,
             self::XENDIT_ENUM_DEFAULT_FALLBACK
         ];
     }

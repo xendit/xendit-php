@@ -42,6 +42,7 @@ use Xendit\Invoice\Invoice;
 | **customer** | [**CustomerObject**](CustomerObject.md) |  |  | null |
 | **customer_notification_preference** | [**NotificationPreference**](NotificationPreference.md) |  |  | null |
 | **fees** | [**array**](InvoiceFee.md) |  | An array of fees associated with the invoice. | null |
+| **channel_properties** | [**ChannelProperties**](ChannelProperties.md) |  |  | null |
 
 
 [[Back to README]](../../README.md)

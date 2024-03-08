@@ -29,6 +29,7 @@ use Xendit\Invoice\CreateInvoiceRequest;
 | **reminder_time_unit** | **string** |  | The unit of the reminder time. | null |
 | **items** | [**array**](InvoiceItem.md) |  | An array of items included in the invoice. | null |
 | **fees** | [**array**](InvoiceFee.md) |  | An array of fees associated with the invoice. | null |
+| **channel_properties** | [**ChannelProperties**](ChannelProperties.md) |  |  | null |
 
 
 [[Back to README]](../../README.md)

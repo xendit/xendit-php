@@ -11,7 +11,7 @@
 /**
  * xendit-invoice-service
  *
- * The version of the OpenAPI document: 1.6.0
+ * The version of the OpenAPI document: 1.7.6
  */
 
 /**
@@ -57,6 +57,10 @@ class BankCode
     
     public const BNC = 'BNC';
     
+    public const HANA = 'HANA';
+    
+    public const MUAMALAT = 'MUAMALAT';
+    
     public const XENDIT_ENUM_DEFAULT_FALLBACK = 'UNKNOWN_ENUM_VALUE';
 
     private $value;
@@ -97,6 +101,8 @@ class BankCode
             self::SAHABAT_SAMPOERNA,
             self::CIMB,
             self::BNC,
+            self::HANA,
+            self::MUAMALAT,
             self::XENDIT_ENUM_DEFAULT_FALLBACK
         ];
     }

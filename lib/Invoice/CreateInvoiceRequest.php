@@ -11,7 +11,7 @@
 /**
  * xendit-invoice-service
  *
- * The version of the OpenAPI document: 1.6.0
+ * The version of the OpenAPI document: 1.7.6
  */
 
 /**
@@ -70,7 +70,8 @@ class CreateInvoiceRequest implements ModelInterface, ArrayAccess, \JsonSerializ
         'local' => 'string',
         'reminder_time_unit' => 'string',
         'items' => '\Xendit\Invoice\InvoiceItem[]',
-        'fees' => '\Xendit\Invoice\InvoiceFee[]'
+        'fees' => '\Xendit\Invoice\InvoiceFee[]',
+        'channel_properties' => '\Xendit\Invoice\ChannelProperties'
     ];
 
     /**
@@ -100,7 +101,8 @@ class CreateInvoiceRequest implements ModelInterface, ArrayAccess, \JsonSerializ
         'local' => null,
         'reminder_time_unit' => null,
         'items' => null,
-        'fees' => null
+        'fees' => null,
+        'channel_properties' => null
     ];
 
     /**
@@ -128,7 +130,8 @@ class CreateInvoiceRequest implements ModelInterface, ArrayAccess, \JsonSerializ
 		'local' => false,
 		'reminder_time_unit' => false,
 		'items' => false,
-		'fees' => false
+		'fees' => false,
+		'channel_properties' => false
     ];
 
     /**
@@ -236,7 +239,8 @@ class CreateInvoiceRequest implements ModelInterface, ArrayAccess, \JsonSerializ
         'local' => 'local',
         'reminder_time_unit' => 'reminder_time_unit',
         'items' => 'items',
-        'fees' => 'fees'
+        'fees' => 'fees',
+        'channel_properties' => 'channel_properties'
     ];
 
     /**
@@ -264,7 +268,8 @@ class CreateInvoiceRequest implements ModelInterface, ArrayAccess, \JsonSerializ
         'local' => 'setLocal',
         'reminder_time_unit' => 'setReminderTimeUnit',
         'items' => 'setItems',
-        'fees' => 'setFees'
+        'fees' => 'setFees',
+        'channel_properties' => 'setChannelProperties'
     ];
 
     /**
@@ -292,7 +297,8 @@ class CreateInvoiceRequest implements ModelInterface, ArrayAccess, \JsonSerializ
         'local' => 'getLocal',
         'reminder_time_unit' => 'getReminderTimeUnit',
         'items' => 'getItems',
-        'fees' => 'getFees'
+        'fees' => 'getFees',
+        'channel_properties' => 'getChannelProperties'
     ];
 
     /**
@@ -372,6 +378,7 @@ class CreateInvoiceRequest implements ModelInterface, ArrayAccess, \JsonSerializ
         $this->setIfExists('reminder_time_unit', $data ?? [], null);
         $this->setIfExists('items', $data ?? [], null);
         $this->setIfExists('fees', $data ?? [], null);
+        $this->setIfExists('channel_properties', $data ?? [], null);
     }
 
     /**
@@ -958,6 +965,33 @@ class CreateInvoiceRequest implements ModelInterface, ArrayAccess, \JsonSerializ
             throw new \InvalidArgumentException('non-nullable fees cannot be null');
         }
         $this->container['fees'] = $fees;
+
+        return $this;
+    }
+
+    /**
+     * Gets channel_properties
+     *
+     * @return \Invoice\ChannelProperties|null
+     */
+    public function getChannelProperties()
+    {
+        return $this->container['channel_properties'];
+    }
+
+    /**
+     * Sets channel_properties
+     *
+     * @param \Invoice\ChannelProperties|null $channel_properties channel_properties
+     *
+     * @return self
+     */
+    public function setChannelProperties($channel_properties)
+    {
+        if (is_null($channel_properties)) {
+            throw new \InvalidArgumentException('non-nullable channel_properties cannot be null');
+        }
+        $this->container['channel_properties'] = $channel_properties;
 
         return $this;
     }

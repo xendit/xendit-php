@@ -11,7 +11,7 @@
 /**
  * xendit-invoice-service
  *
- * The version of the OpenAPI document: 1.6.0
+ * The version of the OpenAPI document: 1.7.6
  */
 
 /**
@@ -53,7 +53,6 @@ class NotificationPreference implements ModelInterface, ArrayAccess, \JsonSerial
     protected static $openAPITypes = [
         'invoice_created' => '\Xendit\Invoice\NotificationChannel[]',
         'invoice_reminder' => '\Xendit\Invoice\NotificationChannel[]',
-        'invoice_expired' => '\Xendit\Invoice\NotificationChannel[]',
         'invoice_paid' => '\Xendit\Invoice\NotificationChannel[]'
     ];
 
@@ -67,7 +66,6 @@ class NotificationPreference implements ModelInterface, ArrayAccess, \JsonSerial
     protected static $openAPIFormats = [
         'invoice_created' => null,
         'invoice_reminder' => null,
-        'invoice_expired' => null,
         'invoice_paid' => null
     ];
 
@@ -79,7 +77,6 @@ class NotificationPreference implements ModelInterface, ArrayAccess, \JsonSerial
     protected static array $openAPINullables = [
         'invoice_created' => false,
 		'invoice_reminder' => false,
-		'invoice_expired' => false,
 		'invoice_paid' => false
     ];
 
@@ -171,7 +168,6 @@ class NotificationPreference implements ModelInterface, ArrayAccess, \JsonSerial
     protected static $attributeMap = [
         'invoice_created' => 'invoice_created',
         'invoice_reminder' => 'invoice_reminder',
-        'invoice_expired' => 'invoice_expired',
         'invoice_paid' => 'invoice_paid'
     ];
 
@@ -183,7 +179,6 @@ class NotificationPreference implements ModelInterface, ArrayAccess, \JsonSerial
     protected static $setters = [
         'invoice_created' => 'setInvoiceCreated',
         'invoice_reminder' => 'setInvoiceReminder',
-        'invoice_expired' => 'setInvoiceExpired',
         'invoice_paid' => 'setInvoicePaid'
     ];
 
@@ -195,7 +190,6 @@ class NotificationPreference implements ModelInterface, ArrayAccess, \JsonSerial
     protected static $getters = [
         'invoice_created' => 'getInvoiceCreated',
         'invoice_reminder' => 'getInvoiceReminder',
-        'invoice_expired' => 'getInvoiceExpired',
         'invoice_paid' => 'getInvoicePaid'
     ];
 
@@ -258,7 +252,6 @@ class NotificationPreference implements ModelInterface, ArrayAccess, \JsonSerial
     {
         $this->setIfExists('invoice_created', $data ?? [], null);
         $this->setIfExists('invoice_reminder', $data ?? [], null);
-        $this->setIfExists('invoice_expired', $data ?? [], null);
         $this->setIfExists('invoice_paid', $data ?? [], null);
     }
 
@@ -354,33 +347,6 @@ class NotificationPreference implements ModelInterface, ArrayAccess, \JsonSerial
             throw new \InvalidArgumentException('non-nullable invoice_reminder cannot be null');
         }
         $this->container['invoice_reminder'] = $invoice_reminder;
-
-        return $this;
-    }
-
-    /**
-     * Gets invoice_expired
-     *
-     * @return \Invoice\NotificationChannel[]|null
-     */
-    public function getInvoiceExpired()
-    {
-        return $this->container['invoice_expired'];
-    }
-
-    /**
-     * Sets invoice_expired
-     *
-     * @param \Invoice\NotificationChannel[]|null $invoice_expired Notification channels for expired invoices.
-     *
-     * @return self
-     */
-    public function setInvoiceExpired($invoice_expired)
-    {
-        if (is_null($invoice_expired)) {
-            throw new \InvalidArgumentException('non-nullable invoice_expired cannot be null');
-        }
-        $this->container['invoice_expired'] = $invoice_expired;
 
         return $this;
     }

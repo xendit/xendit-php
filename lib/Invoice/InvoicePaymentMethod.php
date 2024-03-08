@@ -11,7 +11,7 @@
 /**
  * xendit-invoice-service
  *
- * The version of the OpenAPI document: 1.6.0
+ * The version of the OpenAPI document: 1.7.6
  */
 
 /**
@@ -57,6 +57,8 @@ class InvoicePaymentMethod
     
     public const PAYLATER = 'PAYLATER';
     
+    public const CRYPTOCURRENCY = 'CRYPTOCURRENCY';
+    
     public const XENDIT_ENUM_DEFAULT_FALLBACK = 'UNKNOWN_ENUM_VALUE';
 
     private $value;
@@ -97,6 +99,7 @@ class InvoicePaymentMethod
             self::DIRECT_DEBIT,
             self::BANK_TRANSFER,
             self::PAYLATER,
+            self::CRYPTOCURRENCY,
             self::XENDIT_ENUM_DEFAULT_FALLBACK
         ];
     }

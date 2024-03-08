@@ -11,7 +11,6 @@ use Xendit\Invoice\NotificationPreference;
 |------------|:-------------:|:-------------:|-------------|:-------------:|
 | **invoice_created** | [**array**](NotificationChannel.md) |  | Notification channels for when an invoice is created. | null |
 | **invoice_reminder** | [**array**](NotificationChannel.md) |  | Notification channels for invoice reminders. | null |
-| **invoice_expired** | [**array**](NotificationChannel.md) |  | Notification channels for expired invoices. | null |
 | **invoice_paid** | [**array**](NotificationChannel.md) |  | Notification channels for when an invoice is paid. | null |
 
 

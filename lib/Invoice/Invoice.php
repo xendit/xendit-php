@@ -11,7 +11,7 @@
 /**
  * xendit-invoice-service
  *
- * The version of the OpenAPI document: 1.6.0
+ * The version of the OpenAPI document: 1.7.6
  */
 
 /**
@@ -83,7 +83,8 @@ class Invoice implements ModelInterface, ArrayAccess, \JsonSerializable
         'reminder_date' => '\DateTime',
         'customer' => '\Xendit\Invoice\CustomerObject',
         'customer_notification_preference' => '\Xendit\Invoice\NotificationPreference',
-        'fees' => '\Xendit\Invoice\InvoiceFee[]'
+        'fees' => '\Xendit\Invoice\InvoiceFee[]',
+        'channel_properties' => '\Xendit\Invoice\ChannelProperties'
     ];
 
     /**
@@ -126,7 +127,8 @@ class Invoice implements ModelInterface, ArrayAccess, \JsonSerializable
         'reminder_date' => 'date-time',
         'customer' => null,
         'customer_notification_preference' => null,
-        'fees' => null
+        'fees' => null,
+        'channel_properties' => null
     ];
 
     /**
@@ -167,7 +169,8 @@ class Invoice implements ModelInterface, ArrayAccess, \JsonSerializable
 		'reminder_date' => false,
 		'customer' => false,
 		'customer_notification_preference' => false,
-		'fees' => false
+		'fees' => false,
+		'channel_properties' => false
     ];
 
     /**
@@ -288,7 +291,8 @@ class Invoice implements ModelInterface, ArrayAccess, \JsonSerializable
         'reminder_date' => 'reminder_date',
         'customer' => 'customer',
         'customer_notification_preference' => 'customer_notification_preference',
-        'fees' => 'fees'
+        'fees' => 'fees',
+        'channel_properties' => 'channel_properties'
     ];
 
     /**
@@ -329,7 +333,8 @@ class Invoice implements ModelInterface, ArrayAccess, \JsonSerializable
         'reminder_date' => 'setReminderDate',
         'customer' => 'setCustomer',
         'customer_notification_preference' => 'setCustomerNotificationPreference',
-        'fees' => 'setFees'
+        'fees' => 'setFees',
+        'channel_properties' => 'setChannelProperties'
     ];
 
     /**
@@ -370,7 +375,8 @@ class Invoice implements ModelInterface, ArrayAccess, \JsonSerializable
         'reminder_date' => 'getReminderDate',
         'customer' => 'getCustomer',
         'customer_notification_preference' => 'getCustomerNotificationPreference',
-        'fees' => 'getFees'
+        'fees' => 'getFees',
+        'channel_properties' => 'getChannelProperties'
     ];
 
     /**
@@ -463,6 +469,7 @@ class Invoice implements ModelInterface, ArrayAccess, \JsonSerializable
         $this->setIfExists('customer', $data ?? [], null);
         $this->setIfExists('customer_notification_preference', $data ?? [], null);
         $this->setIfExists('fees', $data ?? [], null);
+        $this->setIfExists('channel_properties', $data ?? [], null);
     }
 
     /**
@@ -1445,6 +1452,33 @@ class Invoice implements ModelInterface, ArrayAccess, \JsonSerializable
             throw new \InvalidArgumentException('non-nullable fees cannot be null');
         }
         $this->container['fees'] = $fees;
+
+        return $this;
+    }
+
+    /**
+     * Gets channel_properties
+     *
+     * @return \Invoice\ChannelProperties|null
+     */
+    public function getChannelProperties()
+    {
+        return $this->container['channel_properties'];
+    }
+
+    /**
+     * Sets channel_properties
+     *
+     * @param \Invoice\ChannelProperties|null $channel_properties channel_properties
+     *
+     * @return self
+     */
+    public function setChannelProperties($channel_properties)
+    {
+        if (is_null($channel_properties)) {
+            throw new \InvalidArgumentException('non-nullable channel_properties cannot be null');
+        }
+        $this->container['channel_properties'] = $channel_properties;
 
         return $this;
     }

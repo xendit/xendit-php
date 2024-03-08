@@ -1,6 +1,6 @@
 <?php
 /**
- * DirectDebit
+ * ChannelProperties
  *
  * PHP version 7.4
  *
@@ -27,14 +27,14 @@ use \Xendit\ObjectSerializer;
 use \Xendit\Model\ModelInterface;
 
 /**
- * DirectDebit Class Doc Comment
+ * ChannelProperties Class Doc Comment
  *
  * @category Class
- * @description An object representing direct debit details for invoices.
+ * @description An object representing channel-specific properties.
  * @package  Xendit
  * @implements \ArrayAccess<string, mixed>
  */
-class DirectDebit implements ModelInterface, ArrayAccess, \JsonSerializable
+class ChannelProperties implements ModelInterface, ArrayAccess, \JsonSerializable
 {
     public const DISCRIMINATOR = null;
 
@@ -43,7 +43,7 @@ class DirectDebit implements ModelInterface, ArrayAccess, \JsonSerializable
       *
       * @var string
       */
-    protected static $openAPIModelName = 'DirectDebit';
+    protected static $openAPIModelName = 'ChannelProperties';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
@@ -51,7 +51,7 @@ class DirectDebit implements ModelInterface, ArrayAccess, \JsonSerializable
       * @var string[]
       */
     protected static $openAPITypes = [
-        'direct_debit_type' => '\Xendit\Invoice\DirectDebitType'
+        'cards' => '\Xendit\Invoice\ChannelPropertiesCards'
     ];
 
     /**
@@ -62,7 +62,7 @@ class DirectDebit implements ModelInterface, ArrayAccess, \JsonSerializable
       * @psalm-var array<string, string|null>
       */
     protected static $openAPIFormats = [
-        'direct_debit_type' => null
+        'cards' => null
     ];
 
     /**
@@ -71,7 +71,7 @@ class DirectDebit implements ModelInterface, ArrayAccess, \JsonSerializable
       * @var boolean[]
       */
     protected static array $openAPINullables = [
-        'direct_debit_type' => false
+        'cards' => false
     ];
 
     /**
@@ -160,7 +160,7 @@ class DirectDebit implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $attributeMap = [
-        'direct_debit_type' => 'direct_debit_type'
+        'cards' => 'cards'
     ];
 
     /**
@@ -169,7 +169,7 @@ class DirectDebit implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $setters = [
-        'direct_debit_type' => 'setDirectDebitType'
+        'cards' => 'setCards'
     ];
 
     /**
@@ -178,7 +178,7 @@ class DirectDebit implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $getters = [
-        'direct_debit_type' => 'getDirectDebitType'
+        'cards' => 'getCards'
     ];
 
     /**
@@ -238,7 +238,7 @@ class DirectDebit implements ModelInterface, ArrayAccess, \JsonSerializable
      */
     public function __construct(array $data = null)
     {
-        $this->setIfExists('direct_debit_type', $data ?? [], null);
+        $this->setIfExists('cards', $data ?? [], null);
     }
 
     /**
@@ -268,9 +268,6 @@ class DirectDebit implements ModelInterface, ArrayAccess, \JsonSerializable
     {
         $invalidProperties = [];
 
-        if ($this->container['direct_debit_type'] === null) {
-            $invalidProperties[] = "'direct_debit_type' can't be null";
-        }
         return $invalidProperties;
     }
 
@@ -287,28 +284,28 @@ class DirectDebit implements ModelInterface, ArrayAccess, \JsonSerializable
 
 
     /**
-     * Gets direct_debit_type
+     * Gets cards
      *
-     * @return \Invoice\DirectDebitType
+     * @return \Invoice\ChannelPropertiesCards|null
      */
-    public function getDirectDebitType()
+    public function getCards()
     {
-        return $this->container['direct_debit_type'];
+        return $this->container['cards'];
     }
 
     /**
-     * Sets direct_debit_type
+     * Sets cards
      *
-     * @param \Invoice\DirectDebitType $direct_debit_type direct_debit_type
+     * @param \Invoice\ChannelPropertiesCards|null $cards cards
      *
      * @return self
      */
-    public function setDirectDebitType($direct_debit_type)
+    public function setCards($cards)
     {
-        if (is_null($direct_debit_type)) {
-            throw new \InvalidArgumentException('non-nullable direct_debit_type cannot be null');
+        if (is_null($cards)) {
+            throw new \InvalidArgumentException('non-nullable cards cannot be null');
         }
-        $this->container['direct_debit_type'] = $direct_debit_type;
+        $this->container['cards'] = $cards;
 
         return $this;
     }
