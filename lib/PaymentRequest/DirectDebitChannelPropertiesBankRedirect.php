@@ -11,7 +11,7 @@
 /**
  * Payment Requests
  *
- * The version of the OpenAPI document: 1.45.2
+ * The version of the OpenAPI document: 1.59.0
  */
 
 /**
@@ -51,6 +51,7 @@ class DirectDebitChannelPropertiesBankRedirect implements ModelInterface, ArrayA
       * @var string[]
       */
     protected static $openAPITypes = [
+        'email' => 'string',
         'mobile_number' => 'string',
         'success_return_url' => 'string',
         'failure_return_url' => 'string'
@@ -64,6 +65,7 @@ class DirectDebitChannelPropertiesBankRedirect implements ModelInterface, ArrayA
       * @psalm-var array<string, string|null>
       */
     protected static $openAPIFormats = [
+        'email' => null,
         'mobile_number' => null,
         'success_return_url' => 'uri',
         'failure_return_url' => 'uri'
@@ -75,7 +77,8 @@ class DirectDebitChannelPropertiesBankRedirect implements ModelInterface, ArrayA
       * @var boolean[]
       */
     protected static array $openAPINullables = [
-        'mobile_number' => false,
+        'email' => false,
+		'mobile_number' => false,
 		'success_return_url' => false,
 		'failure_return_url' => false
     ];
@@ -166,6 +169,7 @@ class DirectDebitChannelPropertiesBankRedirect implements ModelInterface, ArrayA
      * @var string[]
      */
     protected static $attributeMap = [
+        'email' => 'email',
         'mobile_number' => 'mobile_number',
         'success_return_url' => 'success_return_url',
         'failure_return_url' => 'failure_return_url'
@@ -177,6 +181,7 @@ class DirectDebitChannelPropertiesBankRedirect implements ModelInterface, ArrayA
      * @var string[]
      */
     protected static $setters = [
+        'email' => 'setEmail',
         'mobile_number' => 'setMobileNumber',
         'success_return_url' => 'setSuccessReturnUrl',
         'failure_return_url' => 'setFailureReturnUrl'
@@ -188,6 +193,7 @@ class DirectDebitChannelPropertiesBankRedirect implements ModelInterface, ArrayA
      * @var string[]
      */
     protected static $getters = [
+        'email' => 'getEmail',
         'mobile_number' => 'getMobileNumber',
         'success_return_url' => 'getSuccessReturnUrl',
         'failure_return_url' => 'getFailureReturnUrl'
@@ -250,6 +256,7 @@ class DirectDebitChannelPropertiesBankRedirect implements ModelInterface, ArrayA
      */
     public function __construct(array $data = null)
     {
+        $this->setIfExists('email', $data ?? [], null);
         $this->setIfExists('mobile_number', $data ?? [], null);
         $this->setIfExists('success_return_url', $data ?? [], null);
         $this->setIfExists('failure_return_url', $data ?? [], null);
@@ -296,6 +303,33 @@ class DirectDebitChannelPropertiesBankRedirect implements ModelInterface, ArrayA
         return count($this->listInvalidProperties()) === 0;
     }
 
+
+    /**
+     * Gets email
+     *
+     * @return string|null
+     */
+    public function getEmail()
+    {
+        return $this->container['email'];
+    }
+
+    /**
+     * Sets email
+     *
+     * @param string|null $email email
+     *
+     * @return self
+     */
+    public function setEmail($email)
+    {
+        if (is_null($email)) {
+            throw new \InvalidArgumentException('non-nullable email cannot be null');
+        }
+        $this->container['email'] = $email;
+
+        return $this;
+    }
 
     /**
      * Gets mobile_number

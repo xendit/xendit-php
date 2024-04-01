@@ -9,7 +9,8 @@ use Xendit\PaymentMethod\Card;
 
 | Name | Type | Required | Description | Examples |
 |------------|:-------------:|:-------------:|-------------|:-------------:|
-| **currency** | **string** | ☑️ |  | null |
+| **channel_code** | [**CardChannelCode**](CardChannelCode.md) |  |  | null |
+| **currency** | **string** |  |  | null |
 | **channel_properties** | [**CardChannelProperties**](CardChannelProperties.md) | ☑️ |  | null |
 | **card_information** | [**TokenizedCardInformation**](TokenizedCardInformation.md) |  |  | null |
 | **card_verification_results** | [**CardVerificationResults**](CardVerificationResults.md) |  |  | null |

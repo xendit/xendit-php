@@ -21,6 +21,8 @@ use Xendit\PaymentRequest\DirectDebitChannelCode;
     
         * `BPI` (value: `'BPI'`)
     
+        * `BPI_RECURRING` (value: `'BPI_RECURRING'`)
+    
         * `BDO` (value: `'BDO'`)
     
         * `CIMBNIAGA` (value: `'CIMBNIAGA'`)
@@ -31,7 +33,9 @@ use Xendit\PaymentRequest\DirectDebitChannelCode;
     
         * `UBP` (value: `'UBP'`)
     
-        * `AUTODEBIT_UBP` (value: `'AUTODEBIT_UBP'`)
+        * `UBP_EADA` (value: `'UBP_EADA'`)
+    
+        * `UBP_DEBIT_PULL` (value: `'UBP_DEBIT_PULL'`)
     
         * `CHINABANK` (value: `'CHINABANK'`)
     
@@ -134,6 +138,36 @@ use Xendit\PaymentRequest\DirectDebitChannelCode;
         * `SCH_FPX_BUSINESS` (value: `'SCH_FPX_BUSINESS'`)
     
         * `UOB_FPX_BUSINESS` (value: `'UOB_FPX_BUSINESS'`)
+    
+        * `BDO_ONLINE_BANKING` (value: `'BDO_ONLINE_BANKING'`)
+    
+        * `BPI_ONLINE_BANKING` (value: `'BPI_ONLINE_BANKING'`)
+    
+        * `UNIONBANK_ONLINE_BANKING` (value: `'UNIONBANK_ONLINE_BANKING'`)
+    
+        * `BOC_ONLINE_BANKING` (value: `'BOC_ONLINE_BANKING'`)
+    
+        * `CHINABANK_ONLINE_BANKING` (value: `'CHINABANK_ONLINE_BANKING'`)
+    
+        * `INSTAPAY_ONLINE_BANKING` (value: `'INSTAPAY_ONLINE_BANKING'`)
+    
+        * `LANDBANK_ONLINE_BANKING` (value: `'LANDBANK_ONLINE_BANKING'`)
+    
+        * `MAYBANK_ONLINE_BANKING` (value: `'MAYBANK_ONLINE_BANKING'`)
+    
+        * `METROBANK_ONLINE_BANKING` (value: `'METROBANK_ONLINE_BANKING'`)
+    
+        * `PNB_ONLINE_BANKING` (value: `'PNB_ONLINE_BANKING'`)
+    
+        * `PSBANK_ONLINE_BANKING` (value: `'PSBANK_ONLINE_BANKING'`)
+    
+        * `PESONET_ONLINE_BANKING` (value: `'PESONET_ONLINE_BANKING'`)
+    
+        * `RCBC_ONLINE_BANKING` (value: `'RCBC_ONLINE_BANKING'`)
+    
+        * `ROBINSONS_BANK_ONLINE_BANKING` (value: `'ROBINSONS_BANK_ONLINE_BANKING'`)
+    
+        * `SECURITY_BANK_ONLINE_BANKING` (value: `'SECURITY_BANK_ONLINE_BANKING'`)
     
         * `XENDIT_ENUM_DEFAULT_FALLBACK` (value: `UNKNOWN_ENUM_VALUE`)
 

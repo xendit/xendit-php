@@ -11,7 +11,7 @@
 /**
  * Payment Requests
  *
- * The version of the OpenAPI document: 1.45.2
+ * The version of the OpenAPI document: 1.59.0
  */
 
 /**
@@ -52,6 +52,8 @@ class PaymentRequestStatus
     
     public const AWAITING_CAPTURE = 'AWAITING_CAPTURE';
     
+    public const EXPIRED = 'EXPIRED';
+    
     public const XENDIT_ENUM_DEFAULT_FALLBACK = 'UNKNOWN_ENUM_VALUE';
 
     private $value;
@@ -90,6 +92,7 @@ class PaymentRequestStatus
             self::VOIDED,
             self::UNKNOWN,
             self::AWAITING_CAPTURE,
+            self::EXPIRED,
             self::XENDIT_ENUM_DEFAULT_FALLBACK
         ];
     }

@@ -11,7 +11,7 @@
 /**
  * Payment Requests
  *
- * The version of the OpenAPI document: 1.45.2
+ * The version of the OpenAPI document: 1.59.0
  */
 
 /**
@@ -55,7 +55,8 @@ class CardChannelProperties implements ModelInterface, ArrayAccess, \JsonSeriali
         'success_return_url' => 'string',
         'failure_return_url' => 'string',
         'cardonfile_type' => 'string',
-        'merchant_id_tag' => 'string'
+        'merchant_id_tag' => 'string',
+        'expires_at' => '\DateTime'
     ];
 
     /**
@@ -70,7 +71,8 @@ class CardChannelProperties implements ModelInterface, ArrayAccess, \JsonSeriali
         'success_return_url' => null,
         'failure_return_url' => null,
         'cardonfile_type' => null,
-        'merchant_id_tag' => null
+        'merchant_id_tag' => null,
+        'expires_at' => 'date-time'
     ];
 
     /**
@@ -83,7 +85,8 @@ class CardChannelProperties implements ModelInterface, ArrayAccess, \JsonSeriali
 		'success_return_url' => true,
 		'failure_return_url' => true,
 		'cardonfile_type' => true,
-		'merchant_id_tag' => false
+		'merchant_id_tag' => false,
+		'expires_at' => false
     ];
 
     /**
@@ -176,7 +179,8 @@ class CardChannelProperties implements ModelInterface, ArrayAccess, \JsonSeriali
         'success_return_url' => 'success_return_url',
         'failure_return_url' => 'failure_return_url',
         'cardonfile_type' => 'cardonfile_type',
-        'merchant_id_tag' => 'merchant_id_tag'
+        'merchant_id_tag' => 'merchant_id_tag',
+        'expires_at' => 'expires_at'
     ];
 
     /**
@@ -189,7 +193,8 @@ class CardChannelProperties implements ModelInterface, ArrayAccess, \JsonSeriali
         'success_return_url' => 'setSuccessReturnUrl',
         'failure_return_url' => 'setFailureReturnUrl',
         'cardonfile_type' => 'setCardonfileType',
-        'merchant_id_tag' => 'setMerchantIdTag'
+        'merchant_id_tag' => 'setMerchantIdTag',
+        'expires_at' => 'setExpiresAt'
     ];
 
     /**
@@ -202,7 +207,8 @@ class CardChannelProperties implements ModelInterface, ArrayAccess, \JsonSeriali
         'success_return_url' => 'getSuccessReturnUrl',
         'failure_return_url' => 'getFailureReturnUrl',
         'cardonfile_type' => 'getCardonfileType',
-        'merchant_id_tag' => 'getMerchantIdTag'
+        'merchant_id_tag' => 'getMerchantIdTag',
+        'expires_at' => 'getExpiresAt'
     ];
 
     /**
@@ -267,6 +273,7 @@ class CardChannelProperties implements ModelInterface, ArrayAccess, \JsonSeriali
         $this->setIfExists('failure_return_url', $data ?? [], null);
         $this->setIfExists('cardonfile_type', $data ?? [], null);
         $this->setIfExists('merchant_id_tag', $data ?? [], null);
+        $this->setIfExists('expires_at', $data ?? [], null);
     }
 
     /**
@@ -488,6 +495,33 @@ class CardChannelProperties implements ModelInterface, ArrayAccess, \JsonSeriali
             throw new \InvalidArgumentException('non-nullable merchant_id_tag cannot be null');
         }
         $this->container['merchant_id_tag'] = $merchant_id_tag;
+
+        return $this;
+    }
+
+    /**
+     * Gets expires_at
+     *
+     * @return \DateTime|null
+     */
+    public function getExpiresAt()
+    {
+        return $this->container['expires_at'];
+    }
+
+    /**
+     * Sets expires_at
+     *
+     * @param \DateTime|null $expires_at expires_at
+     *
+     * @return self
+     */
+    public function setExpiresAt($expires_at)
+    {
+        if (is_null($expires_at)) {
+            throw new \InvalidArgumentException('non-nullable expires_at cannot be null');
+        }
+        $this->container['expires_at'] = $expires_at;
 
         return $this;
     }

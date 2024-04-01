@@ -11,7 +11,7 @@
 /**
  * Payment Requests
  *
- * The version of the OpenAPI document: 1.45.2
+ * The version of the OpenAPI document: 1.59.0
  */
 
 /**
@@ -50,6 +50,7 @@ class Card implements ModelInterface, ArrayAccess, \JsonSerializable
       * @var string[]
       */
     protected static $openAPITypes = [
+        'channel_code' => '\Xendit\PaymentRequest\CardChannelCode',
         'currency' => '\Xendit\PaymentRequest\PaymentRequestCurrency',
         'channel_properties' => '\Xendit\PaymentRequest\CardChannelProperties',
         'card_information' => '\Xendit\PaymentRequest\CardInformation',
@@ -64,6 +65,7 @@ class Card implements ModelInterface, ArrayAccess, \JsonSerializable
       * @psalm-var array<string, string|null>
       */
     protected static $openAPIFormats = [
+        'channel_code' => null,
         'currency' => null,
         'channel_properties' => null,
         'card_information' => null,
@@ -76,7 +78,8 @@ class Card implements ModelInterface, ArrayAccess, \JsonSerializable
       * @var boolean[]
       */
     protected static array $openAPINullables = [
-        'currency' => false,
+        'channel_code' => false,
+		'currency' => false,
 		'channel_properties' => false,
 		'card_information' => false,
 		'card_verification_results' => true
@@ -168,6 +171,7 @@ class Card implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $attributeMap = [
+        'channel_code' => 'channel_code',
         'currency' => 'currency',
         'channel_properties' => 'channel_properties',
         'card_information' => 'card_information',
@@ -180,6 +184,7 @@ class Card implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $setters = [
+        'channel_code' => 'setChannelCode',
         'currency' => 'setCurrency',
         'channel_properties' => 'setChannelProperties',
         'card_information' => 'setCardInformation',
@@ -192,6 +197,7 @@ class Card implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $getters = [
+        'channel_code' => 'getChannelCode',
         'currency' => 'getCurrency',
         'channel_properties' => 'getChannelProperties',
         'card_information' => 'getCardInformation',
@@ -255,6 +261,7 @@ class Card implements ModelInterface, ArrayAccess, \JsonSerializable
      */
     public function __construct(array $data = null)
     {
+        $this->setIfExists('channel_code', $data ?? [], null);
         $this->setIfExists('currency', $data ?? [], null);
         $this->setIfExists('channel_properties', $data ?? [], null);
         $this->setIfExists('card_information', $data ?? [], null);
@@ -288,14 +295,8 @@ class Card implements ModelInterface, ArrayAccess, \JsonSerializable
     {
         $invalidProperties = [];
 
-        if ($this->container['currency'] === null) {
-            $invalidProperties[] = "'currency' can't be null";
-        }
         if ($this->container['channel_properties'] === null) {
             $invalidProperties[] = "'channel_properties' can't be null";
-        }
-        if ($this->container['card_information'] === null) {
-            $invalidProperties[] = "'card_information' can't be null";
         }
         return $invalidProperties;
     }
@@ -313,9 +314,36 @@ class Card implements ModelInterface, ArrayAccess, \JsonSerializable
 
 
     /**
+     * Gets channel_code
+     *
+     * @return \PaymentRequest\CardChannelCode|null
+     */
+    public function getChannelCode()
+    {
+        return $this->container['channel_code'];
+    }
+
+    /**
+     * Sets channel_code
+     *
+     * @param \PaymentRequest\CardChannelCode|null $channel_code channel_code
+     *
+     * @return self
+     */
+    public function setChannelCode($channel_code)
+    {
+        if (is_null($channel_code)) {
+            throw new \InvalidArgumentException('non-nullable channel_code cannot be null');
+        }
+        $this->container['channel_code'] = $channel_code;
+
+        return $this;
+    }
+
+    /**
      * Gets currency
      *
-     * @return \PaymentRequest\PaymentRequestCurrency
+     * @return \PaymentRequest\PaymentRequestCurrency|null
      */
     public function getCurrency()
     {
@@ -325,7 +353,7 @@ class Card implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets currency
      *
-     * @param \PaymentRequest\PaymentRequestCurrency $currency currency
+     * @param \PaymentRequest\PaymentRequestCurrency|null $currency currency
      *
      * @return self
      */
@@ -369,7 +397,7 @@ class Card implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Gets card_information
      *
-     * @return \PaymentRequest\CardInformation
+     * @return \PaymentRequest\CardInformation|null
      */
     public function getCardInformation()
     {
@@ -379,7 +407,7 @@ class Card implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets card_information
      *
-     * @param \PaymentRequest\CardInformation $card_information card_information
+     * @param \PaymentRequest\CardInformation|null $card_information card_information
      *
      * @return self
      */

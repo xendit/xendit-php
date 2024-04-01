@@ -47,6 +47,8 @@ use Xendit\PaymentRequest\VirtualAccountChannelCode;
     
         * `MUAMALAT` (value: `'MUAMALAT'`)
     
+        * `BANK_TRANSFER` (value: `'BANK_TRANSFER'`)
+    
         * `XENDIT_ENUM_DEFAULT_FALLBACK` (value: `UNKNOWN_ENUM_VALUE`)
 
 If you encounter `UNKNOWN_ENUM_VALUE`, it means that this ENUM is unavailable in your current SDK version. Please upgrade to get the newest ENUM.

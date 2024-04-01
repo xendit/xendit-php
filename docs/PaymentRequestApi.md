@@ -27,6 +27,7 @@ All URIs are relative to https://api.xendit.co, except if the operation defines 
 | [**capturePaymentRequest()**](PaymentRequestApi.md#capturepaymentrequest-function) | **POST** /payment_requests/{paymentRequestId}/captures | Payment Request Capture |
 | [**authorizePaymentRequest()**](PaymentRequestApi.md#authorizepaymentrequest-function) | **POST** /payment_requests/{paymentRequestId}/auth | Payment Request Authorize |
 | [**resendPaymentRequestAuth()**](PaymentRequestApi.md#resendpaymentrequestauth-function) | **POST** /payment_requests/{paymentRequestId}/auth/resend | Payment Request Resend Auth |
+| [**simulatePaymentRequestPayment()**](PaymentRequestApi.md#simulatepaymentrequestpayment-function) | **POST** /payment_requests/{paymentRequestId}/payments/simulate | Payment Request Simulate Payment |
 
 
 ## `createPaymentRequest()` Function
@@ -527,6 +528,50 @@ try {
     print_r($result);
 } catch (\Xendit\XenditSdkException $e) {
     echo 'Exception when calling PaymentRequestApi->resendPaymentRequestAuth: ', $e->getMessage(), PHP_EOL;
+    echo 'Full Error: ', json_encode($e->getFullError()), PHP_EOL;
+}
+```
+
+
+## `simulatePaymentRequestPayment()` Function
+
+```php
+simulatePaymentRequestPayment($payment_request_id): \PaymentRequest\PaymentSimulation
+```
+
+Payment Request Simulate Payment
+    Payment Request Simulate Payment
+
+| Name          |    Value 	     |
+|--------------------|:-------------:|
+| Function Name | `simulatePaymentRequestPayment` |
+| Request Parameters  |  [SimulatePaymentRequestPaymentRequestParams](#request-parameters--SimulatePaymentRequestPaymentRequestParams)	 |
+| Return Type  |  [**\Xendit\PaymentRequest\PaymentSimulation**](PaymentRequest/PaymentSimulation.md) |
+
+### Request Parameters - SimulatePaymentRequestPaymentRequestParams
+
+|Name | Type | Required |Default |
+|-------------|:-------------:|:-------------:|-------------| 
+| **payment_request_id** | **string** | ☑️ |  |
+
+### Usage Example
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+use Xendit\Configuration;
+use Xendit\PaymentRequest\PaymentRequestApi;
+
+Configuration::setXenditKey("YOUR_API_KEY_HERE");
+
+$apiInstance = new PaymentRequestApi();
+$payment_request_id = "pr-1fdaf346-dd2e-4b6c-b938-124c7167a822"; // string
+
+try {
+    $result = $apiInstance->simulatePaymentRequestPayment($payment_request_id);
+    print_r($result);
+} catch (\Xendit\XenditSdkException $e) {
+    echo 'Exception when calling PaymentRequestApi->simulatePaymentRequestPayment: ', $e->getMessage(), PHP_EOL;
     echo 'Full Error: ', json_encode($e->getFullError()), PHP_EOL;
 }
 ```

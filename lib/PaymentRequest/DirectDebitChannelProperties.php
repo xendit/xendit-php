@@ -11,7 +11,7 @@
 /**
  * Payment Requests
  *
- * The version of the OpenAPI document: 1.45.2
+ * The version of the OpenAPI document: 1.59.0
  */
 
 /**
@@ -50,14 +50,14 @@ class DirectDebitChannelProperties implements ModelInterface, ArrayAccess, \Json
       * @var string[]
       */
     protected static $openAPITypes = [
+        'email' => 'string',
         'mobile_number' => 'string',
         'success_return_url' => 'string',
         'failure_return_url' => 'string',
         'identity_document_number' => 'string',
         'account_number' => 'string',
         'card_last_four' => 'string',
-        'card_expiry' => 'string',
-        'email' => 'string'
+        'card_expiry' => 'string'
     ];
 
     /**
@@ -68,14 +68,14 @@ class DirectDebitChannelProperties implements ModelInterface, ArrayAccess, \Json
       * @psalm-var array<string, string|null>
       */
     protected static $openAPIFormats = [
+        'email' => null,
         'mobile_number' => null,
         'success_return_url' => 'uri',
         'failure_return_url' => 'uri',
         'identity_document_number' => null,
         'account_number' => null,
         'card_last_four' => null,
-        'card_expiry' => null,
-        'email' => null
+        'card_expiry' => null
     ];
 
     /**
@@ -84,14 +84,14 @@ class DirectDebitChannelProperties implements ModelInterface, ArrayAccess, \Json
       * @var boolean[]
       */
     protected static array $openAPINullables = [
-        'mobile_number' => false,
+        'email' => false,
+		'mobile_number' => false,
 		'success_return_url' => false,
 		'failure_return_url' => false,
 		'identity_document_number' => false,
 		'account_number' => false,
 		'card_last_four' => false,
-		'card_expiry' => false,
-		'email' => false
+		'card_expiry' => false
     ];
 
     /**
@@ -180,14 +180,14 @@ class DirectDebitChannelProperties implements ModelInterface, ArrayAccess, \Json
      * @var string[]
      */
     protected static $attributeMap = [
+        'email' => 'email',
         'mobile_number' => 'mobile_number',
         'success_return_url' => 'success_return_url',
         'failure_return_url' => 'failure_return_url',
         'identity_document_number' => 'identity_document_number',
         'account_number' => 'account_number',
         'card_last_four' => 'card_last_four',
-        'card_expiry' => 'card_expiry',
-        'email' => 'email'
+        'card_expiry' => 'card_expiry'
     ];
 
     /**
@@ -196,14 +196,14 @@ class DirectDebitChannelProperties implements ModelInterface, ArrayAccess, \Json
      * @var string[]
      */
     protected static $setters = [
+        'email' => 'setEmail',
         'mobile_number' => 'setMobileNumber',
         'success_return_url' => 'setSuccessReturnUrl',
         'failure_return_url' => 'setFailureReturnUrl',
         'identity_document_number' => 'setIdentityDocumentNumber',
         'account_number' => 'setAccountNumber',
         'card_last_four' => 'setCardLastFour',
-        'card_expiry' => 'setCardExpiry',
-        'email' => 'setEmail'
+        'card_expiry' => 'setCardExpiry'
     ];
 
     /**
@@ -212,14 +212,14 @@ class DirectDebitChannelProperties implements ModelInterface, ArrayAccess, \Json
      * @var string[]
      */
     protected static $getters = [
+        'email' => 'getEmail',
         'mobile_number' => 'getMobileNumber',
         'success_return_url' => 'getSuccessReturnUrl',
         'failure_return_url' => 'getFailureReturnUrl',
         'identity_document_number' => 'getIdentityDocumentNumber',
         'account_number' => 'getAccountNumber',
         'card_last_four' => 'getCardLastFour',
-        'card_expiry' => 'getCardExpiry',
-        'email' => 'getEmail'
+        'card_expiry' => 'getCardExpiry'
     ];
 
     /**
@@ -279,6 +279,7 @@ class DirectDebitChannelProperties implements ModelInterface, ArrayAccess, \Json
      */
     public function __construct(array $data = null)
     {
+        $this->setIfExists('email', $data ?? [], null);
         $this->setIfExists('mobile_number', $data ?? [], null);
         $this->setIfExists('success_return_url', $data ?? [], null);
         $this->setIfExists('failure_return_url', $data ?? [], null);
@@ -286,7 +287,6 @@ class DirectDebitChannelProperties implements ModelInterface, ArrayAccess, \Json
         $this->setIfExists('account_number', $data ?? [], null);
         $this->setIfExists('card_last_four', $data ?? [], null);
         $this->setIfExists('card_expiry', $data ?? [], null);
-        $this->setIfExists('email', $data ?? [], null);
     }
 
     /**
@@ -330,6 +330,33 @@ class DirectDebitChannelProperties implements ModelInterface, ArrayAccess, \Json
         return count($this->listInvalidProperties()) === 0;
     }
 
+
+    /**
+     * Gets email
+     *
+     * @return string|null
+     */
+    public function getEmail()
+    {
+        return $this->container['email'];
+    }
+
+    /**
+     * Sets email
+     *
+     * @param string|null $email Email address of the customer that is registered to the partner channel
+     *
+     * @return self
+     */
+    public function setEmail($email)
+    {
+        if (is_null($email)) {
+            throw new \InvalidArgumentException('non-nullable email cannot be null');
+        }
+        $this->container['email'] = $email;
+
+        return $this;
+    }
 
     /**
      * Gets mobile_number
@@ -516,33 +543,6 @@ class DirectDebitChannelProperties implements ModelInterface, ArrayAccess, \Json
             throw new \InvalidArgumentException('non-nullable card_expiry cannot be null');
         }
         $this->container['card_expiry'] = $card_expiry;
-
-        return $this;
-    }
-
-    /**
-     * Gets email
-     *
-     * @return string|null
-     */
-    public function getEmail()
-    {
-        return $this->container['email'];
-    }
-
-    /**
-     * Sets email
-     *
-     * @param string|null $email Email address of the customer that is registered to the partner channel
-     *
-     * @return self
-     */
-    public function setEmail($email)
-    {
-        if (is_null($email)) {
-            throw new \InvalidArgumentException('non-nullable email cannot be null');
-        }
-        $this->container['email'] = $email;
 
         return $this;
     }

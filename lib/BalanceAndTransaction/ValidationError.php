@@ -11,7 +11,7 @@
 /**
  * Transaction Service V4 API
  *
- * The version of the OpenAPI document: 3.5.2
+ * The version of the OpenAPI document: 5.4.0
  */
 
 /**

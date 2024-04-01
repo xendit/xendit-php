@@ -11,7 +11,7 @@
 /**
  * Payment Requests
  *
- * The version of the OpenAPI document: 1.45.2
+ * The version of the OpenAPI document: 1.59.0
  */
 
 /**
@@ -49,6 +49,8 @@ class DirectDebitChannelCode
     
     public const BPI = 'BPI';
     
+    public const BPI_RECURRING = 'BPI_RECURRING';
+    
     public const BDO = 'BDO';
     
     public const CIMBNIAGA = 'CIMBNIAGA';
@@ -59,7 +61,9 @@ class DirectDebitChannelCode
     
     public const UBP = 'UBP';
     
-    public const AUTODEBIT_UBP = 'AUTODEBIT_UBP';
+    public const UBP_EADA = 'UBP_EADA';
+    
+    public const UBP_DEBIT_PULL = 'UBP_DEBIT_PULL';
     
     public const CHINABANK = 'CHINABANK';
     
@@ -163,6 +167,36 @@ class DirectDebitChannelCode
     
     public const UOB_FPX_BUSINESS = 'UOB_FPX_BUSINESS';
     
+    public const BDO_ONLINE_BANKING = 'BDO_ONLINE_BANKING';
+    
+    public const BPI_ONLINE_BANKING = 'BPI_ONLINE_BANKING';
+    
+    public const UNIONBANK_ONLINE_BANKING = 'UNIONBANK_ONLINE_BANKING';
+    
+    public const BOC_ONLINE_BANKING = 'BOC_ONLINE_BANKING';
+    
+    public const CHINABANK_ONLINE_BANKING = 'CHINABANK_ONLINE_BANKING';
+    
+    public const INSTAPAY_ONLINE_BANKING = 'INSTAPAY_ONLINE_BANKING';
+    
+    public const LANDBANK_ONLINE_BANKING = 'LANDBANK_ONLINE_BANKING';
+    
+    public const MAYBANK_ONLINE_BANKING = 'MAYBANK_ONLINE_BANKING';
+    
+    public const METROBANK_ONLINE_BANKING = 'METROBANK_ONLINE_BANKING';
+    
+    public const PNB_ONLINE_BANKING = 'PNB_ONLINE_BANKING';
+    
+    public const PSBANK_ONLINE_BANKING = 'PSBANK_ONLINE_BANKING';
+    
+    public const PESONET_ONLINE_BANKING = 'PESONET_ONLINE_BANKING';
+    
+    public const RCBC_ONLINE_BANKING = 'RCBC_ONLINE_BANKING';
+    
+    public const ROBINSONS_BANK_ONLINE_BANKING = 'ROBINSONS_BANK_ONLINE_BANKING';
+    
+    public const SECURITY_BANK_ONLINE_BANKING = 'SECURITY_BANK_ONLINE_BANKING';
+    
     public const XENDIT_ENUM_DEFAULT_FALLBACK = 'UNKNOWN_ENUM_VALUE';
 
     private $value;
@@ -199,12 +233,14 @@ class DirectDebitChannelCode
             self::BNI,
             self::MANDIRI,
             self::BPI,
+            self::BPI_RECURRING,
             self::BDO,
             self::CIMBNIAGA,
             self::MTB,
             self::RCBC,
             self::UBP,
-            self::AUTODEBIT_UBP,
+            self::UBP_EADA,
+            self::UBP_DEBIT_PULL,
             self::CHINABANK,
             self::BAY,
             self::KTB,
@@ -256,6 +292,21 @@ class DirectDebitChannelCode
             self::RHB_FPX_BUSINESS,
             self::SCH_FPX_BUSINESS,
             self::UOB_FPX_BUSINESS,
+            self::BDO_ONLINE_BANKING,
+            self::BPI_ONLINE_BANKING,
+            self::UNIONBANK_ONLINE_BANKING,
+            self::BOC_ONLINE_BANKING,
+            self::CHINABANK_ONLINE_BANKING,
+            self::INSTAPAY_ONLINE_BANKING,
+            self::LANDBANK_ONLINE_BANKING,
+            self::MAYBANK_ONLINE_BANKING,
+            self::METROBANK_ONLINE_BANKING,
+            self::PNB_ONLINE_BANKING,
+            self::PSBANK_ONLINE_BANKING,
+            self::PESONET_ONLINE_BANKING,
+            self::RCBC_ONLINE_BANKING,
+            self::ROBINSONS_BANK_ONLINE_BANKING,
+            self::SECURITY_BANK_ONLINE_BANKING,
             self::XENDIT_ENUM_DEFAULT_FALLBACK
         ];
     }

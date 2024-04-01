@@ -11,7 +11,7 @@
 /**
  * Payment Requests
  *
- * The version of the OpenAPI document: 1.45.2
+ * The version of the OpenAPI document: 1.59.0
  */
 
 /**
@@ -60,7 +60,9 @@ class CardInformation implements ModelInterface, ArrayAccess, \JsonSerializable
         'type' => 'string',
         'network' => 'string',
         'country' => 'string',
-        'issuer' => 'string'
+        'issuer' => 'string',
+        'card_number' => 'string',
+        'one_time_token' => 'string'
     ];
 
     /**
@@ -80,7 +82,9 @@ class CardInformation implements ModelInterface, ArrayAccess, \JsonSerializable
         'type' => null,
         'network' => null,
         'country' => null,
-        'issuer' => null
+        'issuer' => null,
+        'card_number' => null,
+        'one_time_token' => null
     ];
 
     /**
@@ -98,7 +102,9 @@ class CardInformation implements ModelInterface, ArrayAccess, \JsonSerializable
 		'type' => false,
 		'network' => false,
 		'country' => false,
-		'issuer' => false
+		'issuer' => false,
+		'card_number' => false,
+		'one_time_token' => false
     ];
 
     /**
@@ -196,7 +202,9 @@ class CardInformation implements ModelInterface, ArrayAccess, \JsonSerializable
         'type' => 'type',
         'network' => 'network',
         'country' => 'country',
-        'issuer' => 'issuer'
+        'issuer' => 'issuer',
+        'card_number' => 'card_number',
+        'one_time_token' => 'one_time_token'
     ];
 
     /**
@@ -214,7 +222,9 @@ class CardInformation implements ModelInterface, ArrayAccess, \JsonSerializable
         'type' => 'setType',
         'network' => 'setNetwork',
         'country' => 'setCountry',
-        'issuer' => 'setIssuer'
+        'issuer' => 'setIssuer',
+        'card_number' => 'setCardNumber',
+        'one_time_token' => 'setOneTimeToken'
     ];
 
     /**
@@ -232,7 +242,9 @@ class CardInformation implements ModelInterface, ArrayAccess, \JsonSerializable
         'type' => 'getType',
         'network' => 'getNetwork',
         'country' => 'getCountry',
-        'issuer' => 'getIssuer'
+        'issuer' => 'getIssuer',
+        'card_number' => 'getCardNumber',
+        'one_time_token' => 'getOneTimeToken'
     ];
 
     /**
@@ -323,6 +335,8 @@ class CardInformation implements ModelInterface, ArrayAccess, \JsonSerializable
         $this->setIfExists('network', $data ?? [], null);
         $this->setIfExists('country', $data ?? [], null);
         $this->setIfExists('issuer', $data ?? [], null);
+        $this->setIfExists('card_number', $data ?? [], null);
+        $this->setIfExists('one_time_token', $data ?? [], null);
     }
 
     /**
@@ -352,18 +366,6 @@ class CardInformation implements ModelInterface, ArrayAccess, \JsonSerializable
     {
         $invalidProperties = [];
 
-        if ($this->container['token_id'] === null) {
-            $invalidProperties[] = "'token_id' can't be null";
-        }
-        if ($this->container['masked_card_number'] === null) {
-            $invalidProperties[] = "'masked_card_number' can't be null";
-        }
-        if ($this->container['expiry_month'] === null) {
-            $invalidProperties[] = "'expiry_month' can't be null";
-        }
-        if ($this->container['expiry_year'] === null) {
-            $invalidProperties[] = "'expiry_year' can't be null";
-        }
         $allowedValues = $this->getNetworkAllowableValues();
         if (!is_null($this->container['network']) && !in_array($this->container['network'], $allowedValues, true)) {
             $invalidProperties[] = sprintf(
@@ -391,7 +393,7 @@ class CardInformation implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Gets token_id
      *
-     * @return string
+     * @return string|null
      */
     public function getTokenId()
     {
@@ -401,7 +403,7 @@ class CardInformation implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets token_id
      *
-     * @param string $token_id token_id
+     * @param string|null $token_id token_id
      *
      * @return self
      */
@@ -418,7 +420,7 @@ class CardInformation implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Gets masked_card_number
      *
-     * @return string
+     * @return string|null
      */
     public function getMaskedCardNumber()
     {
@@ -428,7 +430,7 @@ class CardInformation implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets masked_card_number
      *
-     * @param string $masked_card_number 1st 6 and last 4 digits of the card
+     * @param string|null $masked_card_number 1st 6 and last 4 digits of the card
      *
      * @return self
      */
@@ -445,7 +447,7 @@ class CardInformation implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Gets expiry_month
      *
-     * @return string
+     * @return string|null
      */
     public function getExpiryMonth()
     {
@@ -455,7 +457,7 @@ class CardInformation implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets expiry_month
      *
-     * @param string $expiry_month Card expiry month in MM format
+     * @param string|null $expiry_month Card expiry month in MM format
      *
      * @return self
      */
@@ -472,7 +474,7 @@ class CardInformation implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Gets expiry_year
      *
-     * @return string
+     * @return string|null
      */
     public function getExpiryYear()
     {
@@ -482,7 +484,7 @@ class CardInformation implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets expiry_year
      *
-     * @param string $expiry_year Card expiry month in YY format
+     * @param string|null $expiry_year Card expiry month in YY format
      *
      * @return self
      */
@@ -671,6 +673,60 @@ class CardInformation implements ModelInterface, ArrayAccess, \JsonSerializable
             throw new \InvalidArgumentException('non-nullable issuer cannot be null');
         }
         $this->container['issuer'] = $issuer;
+
+        return $this;
+    }
+
+    /**
+     * Gets card_number
+     *
+     * @return string|null
+     */
+    public function getCardNumber()
+    {
+        return $this->container['card_number'];
+    }
+
+    /**
+     * Sets card_number
+     *
+     * @param string|null $card_number card_number
+     *
+     * @return self
+     */
+    public function setCardNumber($card_number)
+    {
+        if (is_null($card_number)) {
+            throw new \InvalidArgumentException('non-nullable card_number cannot be null');
+        }
+        $this->container['card_number'] = $card_number;
+
+        return $this;
+    }
+
+    /**
+     * Gets one_time_token
+     *
+     * @return string|null
+     */
+    public function getOneTimeToken()
+    {
+        return $this->container['one_time_token'];
+    }
+
+    /**
+     * Sets one_time_token
+     *
+     * @param string|null $one_time_token one_time_token
+     *
+     * @return self
+     */
+    public function setOneTimeToken($one_time_token)
+    {
+        if (is_null($one_time_token)) {
+            throw new \InvalidArgumentException('non-nullable one_time_token cannot be null');
+        }
+        $this->container['one_time_token'] = $one_time_token;
 
         return $this;
     }

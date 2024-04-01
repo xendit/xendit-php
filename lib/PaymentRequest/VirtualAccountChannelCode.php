@@ -11,7 +11,7 @@
 /**
  * Payment Requests
  *
- * The version of the OpenAPI document: 1.45.2
+ * The version of the OpenAPI document: 1.59.0
  */
 
 /**
@@ -75,6 +75,8 @@ class VirtualAccountChannelCode
     
     public const MUAMALAT = 'MUAMALAT';
     
+    public const BANK_TRANSFER = 'BANK_TRANSFER';
+    
     public const XENDIT_ENUM_DEFAULT_FALLBACK = 'UNKNOWN_ENUM_VALUE';
 
     private $value;
@@ -124,6 +126,7 @@ class VirtualAccountChannelCode
             self::BNC,
             self::HANA,
             self::MUAMALAT,
+            self::BANK_TRANSFER,
             self::XENDIT_ENUM_DEFAULT_FALLBACK
         ];
     }

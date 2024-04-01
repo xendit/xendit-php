@@ -13,6 +13,7 @@ use Xendit\PaymentRequest\PaymentMethodParameters;
 | **reusability** | [**PaymentMethodReusability**](PaymentMethodReusability.md) | ☑️ |  | null |
 | **description** | **string** |  |  | null |
 | **reference_id** | **string** |  |  | null |
+| **card** | [**CardParameters**](CardParameters.md) |  |  | null |
 | **direct_debit** | [**DirectDebitParameters**](DirectDebitParameters.md) |  |  | null |
 | **ewallet** | [**EWalletParameters**](EWalletParameters.md) |  |  | null |
 | **over_the_counter** | [**OverTheCounterParameters**](OverTheCounterParameters.md) |  |  | null |

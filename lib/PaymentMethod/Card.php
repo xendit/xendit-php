@@ -11,7 +11,7 @@
 /**
  * Payment Method Service v2
  *
- * The version of the OpenAPI document: 2.91.2
+ * The version of the OpenAPI document: 2.99.0
  */
 
 /**
@@ -51,6 +51,7 @@ class Card implements ModelInterface, ArrayAccess, \JsonSerializable
       * @var string[]
       */
     protected static $openAPITypes = [
+        'channel_code' => '\Xendit\PaymentMethod\CardChannelCode',
         'currency' => 'string',
         'channel_properties' => '\Xendit\PaymentMethod\CardChannelProperties',
         'card_information' => '\Xendit\PaymentMethod\TokenizedCardInformation',
@@ -65,6 +66,7 @@ class Card implements ModelInterface, ArrayAccess, \JsonSerializable
       * @psalm-var array<string, string|null>
       */
     protected static $openAPIFormats = [
+        'channel_code' => null,
         'currency' => null,
         'channel_properties' => null,
         'card_information' => null,
@@ -77,7 +79,8 @@ class Card implements ModelInterface, ArrayAccess, \JsonSerializable
       * @var boolean[]
       */
     protected static array $openAPINullables = [
-        'currency' => true,
+        'channel_code' => false,
+		'currency' => true,
 		'channel_properties' => true,
 		'card_information' => false,
 		'card_verification_results' => true
@@ -169,6 +172,7 @@ class Card implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $attributeMap = [
+        'channel_code' => 'channel_code',
         'currency' => 'currency',
         'channel_properties' => 'channel_properties',
         'card_information' => 'card_information',
@@ -181,6 +185,7 @@ class Card implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $setters = [
+        'channel_code' => 'setChannelCode',
         'currency' => 'setCurrency',
         'channel_properties' => 'setChannelProperties',
         'card_information' => 'setCardInformation',
@@ -193,6 +198,7 @@ class Card implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $getters = [
+        'channel_code' => 'getChannelCode',
         'currency' => 'getCurrency',
         'channel_properties' => 'getChannelProperties',
         'card_information' => 'getCardInformation',
@@ -256,6 +262,7 @@ class Card implements ModelInterface, ArrayAccess, \JsonSerializable
      */
     public function __construct(array $data = null)
     {
+        $this->setIfExists('channel_code', $data ?? [], null);
         $this->setIfExists('currency', $data ?? [], null);
         $this->setIfExists('channel_properties', $data ?? [], null);
         $this->setIfExists('card_information', $data ?? [], null);
@@ -289,9 +296,6 @@ class Card implements ModelInterface, ArrayAccess, \JsonSerializable
     {
         $invalidProperties = [];
 
-        if ($this->container['currency'] === null) {
-            $invalidProperties[] = "'currency' can't be null";
-        }
         if ($this->container['channel_properties'] === null) {
             $invalidProperties[] = "'channel_properties' can't be null";
         }
@@ -311,9 +315,36 @@ class Card implements ModelInterface, ArrayAccess, \JsonSerializable
 
 
     /**
+     * Gets channel_code
+     *
+     * @return \PaymentMethod\CardChannelCode|null
+     */
+    public function getChannelCode()
+    {
+        return $this->container['channel_code'];
+    }
+
+    /**
+     * Sets channel_code
+     *
+     * @param \PaymentMethod\CardChannelCode|null $channel_code channel_code
+     *
+     * @return self
+     */
+    public function setChannelCode($channel_code)
+    {
+        if (is_null($channel_code)) {
+            throw new \InvalidArgumentException('non-nullable channel_code cannot be null');
+        }
+        $this->container['channel_code'] = $channel_code;
+
+        return $this;
+    }
+
+    /**
      * Gets currency
      *
-     * @return string
+     * @return string|null
      */
     public function getCurrency()
     {
@@ -323,7 +354,7 @@ class Card implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets currency
      *
-     * @param string $currency currency
+     * @param string|null $currency currency
      *
      * @return self
      */

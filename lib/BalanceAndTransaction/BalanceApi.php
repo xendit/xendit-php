@@ -10,7 +10,7 @@
 /**
  * Transaction Service V4 API
  *
- * The version of the OpenAPI document: 3.5.2
+ * The version of the OpenAPI document: 5.4.0
  */
 
 /**
@@ -127,6 +127,7 @@ class BalanceApi
      *
      * @param  string $account_type The selected balance type (optional, default to 'CASH')
      * @param  string $currency Currency for filter for customers with multi currency accounts (optional)
+     * @param  \DateTime $at_timestamp The timestamp you want to use as the limit for balance retrieval (optional)
      * @param  string $for_user_id The sub-account user-id that you want to make this transaction for. This header is only used if you have access to xenPlatform. See xenPlatform for more information (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getBalance'] to see the possible values for this operation
      *
@@ -134,9 +135,9 @@ class BalanceApi
      * @throws \InvalidArgumentException
      * @return \Xendit\BalanceAndTransaction\Balance
      */
-    public function getBalance($account_type = 'CASH', $currency = null, $for_user_id = null, string $contentType = self::contentTypes['getBalance'][0])
+    public function getBalance($account_type = 'CASH', $currency = null, $at_timestamp = null, $for_user_id = null, string $contentType = self::contentTypes['getBalance'][0])
     {
-        list($response) = $this->getBalanceWithHttpInfo($account_type, $currency, $for_user_id, $contentType);
+        list($response) = $this->getBalanceWithHttpInfo($account_type, $currency, $at_timestamp, $for_user_id, $contentType);
         return $response;
     }
 
@@ -147,6 +148,7 @@ class BalanceApi
      *
      * @param  string $account_type The selected balance type (optional, default to 'CASH')
      * @param  string $currency Currency for filter for customers with multi currency accounts (optional)
+     * @param  \DateTime $at_timestamp The timestamp you want to use as the limit for balance retrieval (optional)
      * @param  string $for_user_id The sub-account user-id that you want to make this transaction for. This header is only used if you have access to xenPlatform. See xenPlatform for more information (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getBalance'] to see the possible values for this operation
      *
@@ -154,9 +156,9 @@ class BalanceApi
      * @throws \InvalidArgumentException
      * @return array of \Xendit\BalanceAndTransaction\Balance, HTTP status code, HTTP response headers (array of strings)
      */
-    public function getBalanceWithHttpInfo($account_type = 'CASH', $currency = null, $for_user_id = null, string $contentType = self::contentTypes['getBalance'][0])
+    public function getBalanceWithHttpInfo($account_type = 'CASH', $currency = null, $at_timestamp = null, $for_user_id = null, string $contentType = self::contentTypes['getBalance'][0])
     {
-        $request = $this->getBalanceRequest($account_type, $currency, $for_user_id, $contentType);
+        $request = $this->getBalanceRequest($account_type, $currency, $at_timestamp, $for_user_id, $contentType);
 
         $options = $this->createHttpClientOption();
         try {
@@ -216,15 +218,16 @@ class BalanceApi
      *
      * @param  string $account_type The selected balance type (optional, default to 'CASH')
      * @param  string $currency Currency for filter for customers with multi currency accounts (optional)
+     * @param  \DateTime $at_timestamp The timestamp you want to use as the limit for balance retrieval (optional)
      * @param  string $for_user_id The sub-account user-id that you want to make this transaction for. This header is only used if you have access to xenPlatform. See xenPlatform for more information (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getBalance'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function getBalanceAsync($account_type = 'CASH', $currency = null, $for_user_id = null, string $contentType = self::contentTypes['getBalance'][0])
+    public function getBalanceAsync($account_type = 'CASH', $currency = null, $at_timestamp = null, $for_user_id = null, string $contentType = self::contentTypes['getBalance'][0])
     {
-        return $this->getBalanceAsyncWithHttpInfo($account_type, $currency, $for_user_id, $contentType)
+        return $this->getBalanceAsyncWithHttpInfo($account_type, $currency, $at_timestamp, $for_user_id, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -239,16 +242,17 @@ class BalanceApi
      *
      * @param  string $account_type The selected balance type (optional, default to 'CASH')
      * @param  string $currency Currency for filter for customers with multi currency accounts (optional)
+     * @param  \DateTime $at_timestamp The timestamp you want to use as the limit for balance retrieval (optional)
      * @param  string $for_user_id The sub-account user-id that you want to make this transaction for. This header is only used if you have access to xenPlatform. See xenPlatform for more information (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getBalance'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function getBalanceAsyncWithHttpInfo($account_type = 'CASH', $currency = null, $for_user_id = null, string $contentType = self::contentTypes['getBalance'][0])
+    public function getBalanceAsyncWithHttpInfo($account_type = 'CASH', $currency = null, $at_timestamp = null, $for_user_id = null, string $contentType = self::contentTypes['getBalance'][0])
     {
         $returnType = '\Xendit\BalanceAndTransaction\Balance';
-        $request = $this->getBalanceRequest($account_type, $currency, $for_user_id, $contentType);
+        $request = $this->getBalanceRequest($account_type, $currency, $at_timestamp, $for_user_id, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -284,14 +288,16 @@ class BalanceApi
      *
      * @param  string $account_type The selected balance type (optional, default to 'CASH')
      * @param  string $currency Currency for filter for customers with multi currency accounts (optional)
+     * @param  \DateTime $at_timestamp The timestamp you want to use as the limit for balance retrieval (optional)
      * @param  string $for_user_id The sub-account user-id that you want to make this transaction for. This header is only used if you have access to xenPlatform. See xenPlatform for more information (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getBalance'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function getBalanceRequest($account_type = 'CASH', $currency = null, $for_user_id = null, string $contentType = self::contentTypes['getBalance'][0])
+    public function getBalanceRequest($account_type = 'CASH', $currency = null, $at_timestamp = null, $for_user_id = null, string $contentType = self::contentTypes['getBalance'][0])
     {
+
 
 
 
@@ -317,6 +323,15 @@ class BalanceApi
         $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
             $currency,
             'currency', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $at_timestamp,
+            'at_timestamp', // param base name
             'string', // openApiType
             'form', // style
             true, // explode
@@ -367,7 +382,7 @@ class BalanceApi
         
         // Xendit's custom headers
         $defaultHeaders['xendit-lib'] = 'php';
-        $defaultHeaders['xendit-lib-ver'] = '4.3.0';
+        $defaultHeaders['xendit-lib-ver'] = '5.0.0';
 
         if ($this->config->getUserAgent()) {
             $defaultHeaders['User-Agent'] = $this->config->getUserAgent();

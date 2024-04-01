@@ -11,7 +11,7 @@
 /**
  * Transaction Service V4 API
  *
- * The version of the OpenAPI document: 3.5.2
+ * The version of the OpenAPI document: 5.4.0
  */
 
 /**
@@ -249,6 +249,7 @@ class FeeResponse implements ModelInterface, ArrayAccess, \JsonSerializable
     public const STATUS_COMPLETED = 'COMPLETED';
     public const STATUS_CANCELED = 'CANCELED';
     public const STATUS_REVERSED = 'REVERSED';
+    public const STATUS_NOT_APPLICABLE = 'NOT_APPLICABLE';
 
     /**
      * Gets allowable values of the enum
@@ -262,6 +263,7 @@ class FeeResponse implements ModelInterface, ArrayAccess, \JsonSerializable
             self::STATUS_COMPLETED,
             self::STATUS_CANCELED,
             self::STATUS_REVERSED,
+            self::STATUS_NOT_APPLICABLE,
         ];
     }
 

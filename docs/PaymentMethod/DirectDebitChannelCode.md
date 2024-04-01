@@ -17,6 +17,10 @@ use Xendit\PaymentMethod\DirectDebitChannelCode;
     
         * `BPI` (value: `'BPI'`)
     
+        * `AUTODEBIT_BPI` (value: `'AUTODEBIT_BPI'`)
+    
+        * `BPI_RECURRING` (value: `'BPI_RECURRING'`)
+    
         * `BRI` (value: `'BRI'`)
     
         * `BNI` (value: `'BNI'`)
@@ -54,6 +58,8 @@ use Xendit\PaymentMethod\DirectDebitChannelCode;
         * `BDO_EPAY` (value: `'BDO_EPAY'`)
     
         * `AUTODEBIT_UBP` (value: `'AUTODEBIT_UBP'`)
+    
+        * `UBP_DEBIT_PULL` (value: `'UBP_DEBIT_PULL'`)
     
         * `AFFIN_FPX` (value: `'AFFIN_FPX'`)
     

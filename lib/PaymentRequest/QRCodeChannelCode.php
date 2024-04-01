@@ -11,7 +11,7 @@
 /**
  * Payment Requests
  *
- * The version of the OpenAPI document: 1.45.2
+ * The version of the OpenAPI document: 1.59.0
  */
 
 /**
@@ -46,6 +46,10 @@ class QRCodeChannelCode
     public const LINKAJA = 'LINKAJA';
     
     public const PROMPTPAY = 'PROMPTPAY';
+    
+    public const XENDIT = 'XENDIT';
+    
+    public const QRPH = 'QRPH';
     
     public const XENDIT_ENUM_DEFAULT_FALLBACK = 'UNKNOWN_ENUM_VALUE';
 
@@ -82,6 +86,8 @@ class QRCodeChannelCode
             self::RCBC,
             self::LINKAJA,
             self::PROMPTPAY,
+            self::XENDIT,
+            self::QRPH,
             self::XENDIT_ENUM_DEFAULT_FALLBACK
         ];
     }

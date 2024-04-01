@@ -11,7 +11,7 @@
 /**
  * Payment Method Service v2
  *
- * The version of the OpenAPI document: 2.91.2
+ * The version of the OpenAPI document: 2.99.0
  */
 
 /**
@@ -69,6 +69,12 @@ class VirtualAccountChannelCode
     
     public const AMBANK = 'AMBANK';
     
+    public const BNC = 'BNC';
+    
+    public const HANA = 'HANA';
+    
+    public const MUAMALAT = 'MUAMALAT';
+    
     public const XENDIT_ENUM_DEFAULT_FALLBACK = 'UNKNOWN_ENUM_VALUE';
 
     private $value;
@@ -115,6 +121,9 @@ class VirtualAccountChannelCode
             self::MSB,
             self::STANDARD_CHARTERED,
             self::AMBANK,
+            self::BNC,
+            self::HANA,
+            self::MUAMALAT,
             self::XENDIT_ENUM_DEFAULT_FALLBACK
         ];
     }

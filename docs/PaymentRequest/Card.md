@@ -9,9 +9,10 @@ use Xendit\PaymentRequest\Card;
 
 | Name | Type | Required | Description | Examples |
 |------------|:-------------:|:-------------:|-------------|:-------------:|
-| **currency** | [**PaymentRequestCurrency**](PaymentRequestCurrency.md) | ☑️ |  | null |
+| **channel_code** | [**CardChannelCode**](CardChannelCode.md) |  |  | null |
+| **currency** | [**PaymentRequestCurrency**](PaymentRequestCurrency.md) |  |  | null |
 | **channel_properties** | [**CardChannelProperties**](CardChannelProperties.md) | ☑️ |  | null |
-| **card_information** | [**CardInformation**](CardInformation.md) | ☑️ |  | null |
+| **card_information** | [**CardInformation**](CardInformation.md) |  |  | null |
 | **card_verification_results** | [**CardVerificationResults**](CardVerificationResults.md) |  |  | null |
 
 

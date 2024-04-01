@@ -11,7 +11,7 @@
 /**
  * Payment Method Service v2
  *
- * The version of the OpenAPI document: 2.91.2
+ * The version of the OpenAPI document: 2.99.0
  */
 
 /**
@@ -44,6 +44,10 @@ class DirectDebitChannelCode
     public const BDO = 'BDO';
     
     public const BPI = 'BPI';
+    
+    public const AUTODEBIT_BPI = 'AUTODEBIT_BPI';
+    
+    public const BPI_RECURRING = 'BPI_RECURRING';
     
     public const BRI = 'BRI';
     
@@ -82,6 +86,8 @@ class DirectDebitChannelCode
     public const BDO_EPAY = 'BDO_EPAY';
     
     public const AUTODEBIT_UBP = 'AUTODEBIT_UBP';
+    
+    public const UBP_DEBIT_PULL = 'UBP_DEBIT_PULL';
     
     public const AFFIN_FPX = 'AFFIN_FPX';
     
@@ -197,6 +203,8 @@ class DirectDebitChannelCode
             self::BCA_ONEKLIK,
             self::BDO,
             self::BPI,
+            self::AUTODEBIT_BPI,
+            self::BPI_RECURRING,
             self::BRI,
             self::BNI,
             self::CHINABANK,
@@ -216,6 +224,7 @@ class DirectDebitChannelCode
             self::SCB_MB,
             self::BDO_EPAY,
             self::AUTODEBIT_UBP,
+            self::UBP_DEBIT_PULL,
             self::AFFIN_FPX,
             self::AGRO_FPX,
             self::ALLIANCE_FPX,

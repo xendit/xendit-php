@@ -11,7 +11,7 @@
 /**
  * Payment Requests
  *
- * The version of the OpenAPI document: 1.45.2
+ * The version of the OpenAPI document: 1.59.0
  */
 
 /**
@@ -52,11 +52,13 @@ class EWalletChannelProperties implements ModelInterface, ArrayAccess, \JsonSeri
       */
     protected static $openAPITypes = [
         'success_return_url' => 'string',
+        'pending_return_url' => 'string',
         'failure_return_url' => 'string',
         'cancel_return_url' => 'string',
         'redeem_points' => 'string',
         'mobile_number' => 'string',
-        'cashtag' => 'string'
+        'cashtag' => 'string',
+        'promotion_label' => 'string'
     ];
 
     /**
@@ -68,11 +70,13 @@ class EWalletChannelProperties implements ModelInterface, ArrayAccess, \JsonSeri
       */
     protected static $openAPIFormats = [
         'success_return_url' => null,
+        'pending_return_url' => null,
         'failure_return_url' => null,
         'cancel_return_url' => null,
         'redeem_points' => null,
         'mobile_number' => null,
-        'cashtag' => null
+        'cashtag' => null,
+        'promotion_label' => null
     ];
 
     /**
@@ -82,11 +86,13 @@ class EWalletChannelProperties implements ModelInterface, ArrayAccess, \JsonSeri
       */
     protected static array $openAPINullables = [
         'success_return_url' => false,
+		'pending_return_url' => false,
 		'failure_return_url' => false,
 		'cancel_return_url' => false,
 		'redeem_points' => false,
 		'mobile_number' => false,
-		'cashtag' => false
+		'cashtag' => false,
+		'promotion_label' => false
     ];
 
     /**
@@ -176,11 +182,13 @@ class EWalletChannelProperties implements ModelInterface, ArrayAccess, \JsonSeri
      */
     protected static $attributeMap = [
         'success_return_url' => 'success_return_url',
+        'pending_return_url' => 'pending_return_url',
         'failure_return_url' => 'failure_return_url',
         'cancel_return_url' => 'cancel_return_url',
         'redeem_points' => 'redeem_points',
         'mobile_number' => 'mobile_number',
-        'cashtag' => 'cashtag'
+        'cashtag' => 'cashtag',
+        'promotion_label' => 'promotion_label'
     ];
 
     /**
@@ -190,11 +198,13 @@ class EWalletChannelProperties implements ModelInterface, ArrayAccess, \JsonSeri
      */
     protected static $setters = [
         'success_return_url' => 'setSuccessReturnUrl',
+        'pending_return_url' => 'setPendingReturnUrl',
         'failure_return_url' => 'setFailureReturnUrl',
         'cancel_return_url' => 'setCancelReturnUrl',
         'redeem_points' => 'setRedeemPoints',
         'mobile_number' => 'setMobileNumber',
-        'cashtag' => 'setCashtag'
+        'cashtag' => 'setCashtag',
+        'promotion_label' => 'setPromotionLabel'
     ];
 
     /**
@@ -204,11 +214,13 @@ class EWalletChannelProperties implements ModelInterface, ArrayAccess, \JsonSeri
      */
     protected static $getters = [
         'success_return_url' => 'getSuccessReturnUrl',
+        'pending_return_url' => 'getPendingReturnUrl',
         'failure_return_url' => 'getFailureReturnUrl',
         'cancel_return_url' => 'getCancelReturnUrl',
         'redeem_points' => 'getRedeemPoints',
         'mobile_number' => 'getMobileNumber',
-        'cashtag' => 'getCashtag'
+        'cashtag' => 'getCashtag',
+        'promotion_label' => 'getPromotionLabel'
     ];
 
     /**
@@ -269,11 +281,13 @@ class EWalletChannelProperties implements ModelInterface, ArrayAccess, \JsonSeri
     public function __construct(array $data = null)
     {
         $this->setIfExists('success_return_url', $data ?? [], null);
+        $this->setIfExists('pending_return_url', $data ?? [], null);
         $this->setIfExists('failure_return_url', $data ?? [], null);
         $this->setIfExists('cancel_return_url', $data ?? [], null);
         $this->setIfExists('redeem_points', $data ?? [], null);
         $this->setIfExists('mobile_number', $data ?? [], null);
         $this->setIfExists('cashtag', $data ?? [], null);
+        $this->setIfExists('promotion_label', $data ?? [], null);
     }
 
     /**
@@ -305,6 +319,10 @@ class EWalletChannelProperties implements ModelInterface, ArrayAccess, \JsonSeri
 
         if (!is_null($this->container['success_return_url']) && !preg_match("/^\\S{1,255}:\/\/\\S{0,1000}$/", $this->container['success_return_url'])) {
             $invalidProperties[] = "invalid value for 'success_return_url', must be conform to the pattern /^\\S{1,255}:\/\/\\S{0,1000}$/.";
+        }
+
+        if (!is_null($this->container['pending_return_url']) && !preg_match("/^\\S{1,255}:\/\/\\S{0,1000}$/", $this->container['pending_return_url'])) {
+            $invalidProperties[] = "invalid value for 'pending_return_url', must be conform to the pattern /^\\S{1,255}:\/\/\\S{0,1000}$/.";
         }
 
         if (!is_null($this->container['failure_return_url']) && !preg_match("/^\\S{1,255}:\/\/\\S{0,1000}$/", $this->container['failure_return_url'])) {
@@ -358,6 +376,38 @@ class EWalletChannelProperties implements ModelInterface, ArrayAccess, \JsonSeri
         }
 
         $this->container['success_return_url'] = $success_return_url;
+
+        return $this;
+    }
+
+    /**
+     * Gets pending_return_url
+     *
+     * @return string|null
+     */
+    public function getPendingReturnUrl()
+    {
+        return $this->container['pending_return_url'];
+    }
+
+    /**
+     * Sets pending_return_url
+     *
+     * @param string|null $pending_return_url URL where the end-customer is redirected if the authorization is successful
+     *
+     * @return self
+     */
+    public function setPendingReturnUrl($pending_return_url)
+    {
+        if (is_null($pending_return_url)) {
+            throw new \InvalidArgumentException('non-nullable pending_return_url cannot be null');
+        }
+
+        if ((!preg_match("/^\\S{1,255}:\/\/\\S{0,1000}$/", $pending_return_url))) {
+            throw new \InvalidArgumentException("invalid value for \$pending_return_url when calling EWalletChannelProperties., must conform to the pattern /^\\S{1,255}:\/\/\\S{0,1000}$/.");
+        }
+
+        $this->container['pending_return_url'] = $pending_return_url;
 
         return $this;
     }
@@ -503,6 +553,33 @@ class EWalletChannelProperties implements ModelInterface, ArrayAccess, \JsonSeri
             throw new \InvalidArgumentException('non-nullable cashtag cannot be null');
         }
         $this->container['cashtag'] = $cashtag;
+
+        return $this;
+    }
+
+    /**
+     * Gets promotion_label
+     *
+     * @return string|null
+     */
+    public function getPromotionLabel()
+    {
+        return $this->container['promotion_label'];
+    }
+
+    /**
+     * Sets promotion_label
+     *
+     * @param string|null $promotion_label promotion_label
+     *
+     * @return self
+     */
+    public function setPromotionLabel($promotion_label)
+    {
+        if (is_null($promotion_label)) {
+            throw new \InvalidArgumentException('non-nullable promotion_label cannot be null');
+        }
+        $this->container['promotion_label'] = $promotion_label;
 
         return $this;
     }

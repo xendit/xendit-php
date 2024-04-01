@@ -11,7 +11,7 @@
 /**
  * Payment Requests
  *
- * The version of the OpenAPI document: 1.45.2
+ * The version of the OpenAPI document: 1.59.0
  */
 
 /**
@@ -75,7 +75,7 @@ class EWalletChannelCode
     
     public const ALIPAY = 'ALIPAY';
     
-    public const TOUCHANDGO = 'TOUCHANDGO';
+    public const TOUCHNGO = 'TOUCHNGO';
     
     public const XENDIT_ENUM_DEFAULT_FALLBACK = 'UNKNOWN_ENUM_VALUE';
 
@@ -126,7 +126,7 @@ class EWalletChannelCode
             self::LINEPAY,
             self::TRUEMONEY,
             self::ALIPAY,
-            self::TOUCHANDGO,
+            self::TOUCHNGO,
             self::XENDIT_ENUM_DEFAULT_FALLBACK
         ];
     }

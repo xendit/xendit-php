@@ -11,7 +11,7 @@
 /**
  * Payment Requests
  *
- * The version of the OpenAPI document: 1.45.2
+ * The version of the OpenAPI document: 1.59.0
  */
 
 /**
@@ -54,6 +54,7 @@ class PaymentMethodParameters implements ModelInterface, ArrayAccess, \JsonSeria
         'reusability' => '\Xendit\PaymentRequest\PaymentMethodReusability',
         'description' => 'string',
         'reference_id' => 'string',
+        'card' => '\Xendit\PaymentRequest\CardParameters',
         'direct_debit' => '\Xendit\PaymentRequest\DirectDebitParameters',
         'ewallet' => '\Xendit\PaymentRequest\EWalletParameters',
         'over_the_counter' => '\Xendit\PaymentRequest\OverTheCounterParameters',
@@ -73,6 +74,7 @@ class PaymentMethodParameters implements ModelInterface, ArrayAccess, \JsonSeria
         'reusability' => null,
         'description' => null,
         'reference_id' => null,
+        'card' => null,
         'direct_debit' => null,
         'ewallet' => null,
         'over_the_counter' => null,
@@ -90,6 +92,7 @@ class PaymentMethodParameters implements ModelInterface, ArrayAccess, \JsonSeria
 		'reusability' => false,
 		'description' => true,
 		'reference_id' => false,
+		'card' => true,
 		'direct_debit' => true,
 		'ewallet' => true,
 		'over_the_counter' => true,
@@ -187,6 +190,7 @@ class PaymentMethodParameters implements ModelInterface, ArrayAccess, \JsonSeria
         'reusability' => 'reusability',
         'description' => 'description',
         'reference_id' => 'reference_id',
+        'card' => 'card',
         'direct_debit' => 'direct_debit',
         'ewallet' => 'ewallet',
         'over_the_counter' => 'over_the_counter',
@@ -204,6 +208,7 @@ class PaymentMethodParameters implements ModelInterface, ArrayAccess, \JsonSeria
         'reusability' => 'setReusability',
         'description' => 'setDescription',
         'reference_id' => 'setReferenceId',
+        'card' => 'setCard',
         'direct_debit' => 'setDirectDebit',
         'ewallet' => 'setEwallet',
         'over_the_counter' => 'setOverTheCounter',
@@ -221,6 +226,7 @@ class PaymentMethodParameters implements ModelInterface, ArrayAccess, \JsonSeria
         'reusability' => 'getReusability',
         'description' => 'getDescription',
         'reference_id' => 'getReferenceId',
+        'card' => 'getCard',
         'direct_debit' => 'getDirectDebit',
         'ewallet' => 'getEwallet',
         'over_the_counter' => 'getOverTheCounter',
@@ -289,6 +295,7 @@ class PaymentMethodParameters implements ModelInterface, ArrayAccess, \JsonSeria
         $this->setIfExists('reusability', $data ?? [], null);
         $this->setIfExists('description', $data ?? [], null);
         $this->setIfExists('reference_id', $data ?? [], null);
+        $this->setIfExists('card', $data ?? [], null);
         $this->setIfExists('direct_debit', $data ?? [], null);
         $this->setIfExists('ewallet', $data ?? [], null);
         $this->setIfExists('over_the_counter', $data ?? [], null);
@@ -455,6 +462,40 @@ class PaymentMethodParameters implements ModelInterface, ArrayAccess, \JsonSeria
             throw new \InvalidArgumentException('non-nullable reference_id cannot be null');
         }
         $this->container['reference_id'] = $reference_id;
+
+        return $this;
+    }
+
+    /**
+     * Gets card
+     *
+     * @return \PaymentRequest\CardParameters|null
+     */
+    public function getCard()
+    {
+        return $this->container['card'];
+    }
+
+    /**
+     * Sets card
+     *
+     * @param \PaymentRequest\CardParameters|null $card card
+     *
+     * @return self
+     */
+    public function setCard($card)
+    {
+        if (is_null($card)) {
+            array_push($this->openAPINullablesSetToNull, 'card');
+        } else {
+            $nullablesSetToNull = $this->getOpenAPINullablesSetToNull();
+            $index = array_search('card', $nullablesSetToNull);
+            if ($index !== FALSE) {
+                unset($nullablesSetToNull[$index]);
+                $this->setOpenAPINullablesSetToNull($nullablesSetToNull);
+            }
+        }
+        $this->container['card'] = $card;
 
         return $this;
     }

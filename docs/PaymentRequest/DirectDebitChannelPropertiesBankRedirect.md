@@ -9,6 +9,7 @@ use Xendit\PaymentRequest\DirectDebitChannelPropertiesBankRedirect;
 
 | Name | Type | Required | Description | Examples |
 |------------|:-------------:|:-------------:|-------------|:-------------:|
+| **email** | **string** |  |  | null |
 | **mobile_number** | **string** |  | Mobile number of the customer that is registered to channel | null |
 | **success_return_url** | **string** |  |  | null |
 | **failure_return_url** | **string** |  |  | null |

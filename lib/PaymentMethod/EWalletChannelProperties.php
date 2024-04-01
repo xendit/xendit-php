@@ -11,7 +11,7 @@
 /**
  * Payment Method Service v2
  *
- * The version of the OpenAPI document: 2.91.2
+ * The version of the OpenAPI document: 2.99.0
  */
 
 /**
@@ -54,6 +54,7 @@ class EWalletChannelProperties implements ModelInterface, ArrayAccess, \JsonSeri
         'success_return_url' => 'string',
         'failure_return_url' => 'string',
         'cancel_return_url' => 'string',
+        'pending_return_url' => 'string',
         'mobile_number' => 'string',
         'redeem_points' => 'string',
         'cashtag' => 'string'
@@ -70,6 +71,7 @@ class EWalletChannelProperties implements ModelInterface, ArrayAccess, \JsonSeri
         'success_return_url' => null,
         'failure_return_url' => null,
         'cancel_return_url' => null,
+        'pending_return_url' => null,
         'mobile_number' => null,
         'redeem_points' => null,
         'cashtag' => null
@@ -84,6 +86,7 @@ class EWalletChannelProperties implements ModelInterface, ArrayAccess, \JsonSeri
         'success_return_url' => false,
 		'failure_return_url' => false,
 		'cancel_return_url' => false,
+		'pending_return_url' => false,
 		'mobile_number' => false,
 		'redeem_points' => false,
 		'cashtag' => false
@@ -178,6 +181,7 @@ class EWalletChannelProperties implements ModelInterface, ArrayAccess, \JsonSeri
         'success_return_url' => 'success_return_url',
         'failure_return_url' => 'failure_return_url',
         'cancel_return_url' => 'cancel_return_url',
+        'pending_return_url' => 'pending_return_url',
         'mobile_number' => 'mobile_number',
         'redeem_points' => 'redeem_points',
         'cashtag' => 'cashtag'
@@ -192,6 +196,7 @@ class EWalletChannelProperties implements ModelInterface, ArrayAccess, \JsonSeri
         'success_return_url' => 'setSuccessReturnUrl',
         'failure_return_url' => 'setFailureReturnUrl',
         'cancel_return_url' => 'setCancelReturnUrl',
+        'pending_return_url' => 'setPendingReturnUrl',
         'mobile_number' => 'setMobileNumber',
         'redeem_points' => 'setRedeemPoints',
         'cashtag' => 'setCashtag'
@@ -206,6 +211,7 @@ class EWalletChannelProperties implements ModelInterface, ArrayAccess, \JsonSeri
         'success_return_url' => 'getSuccessReturnUrl',
         'failure_return_url' => 'getFailureReturnUrl',
         'cancel_return_url' => 'getCancelReturnUrl',
+        'pending_return_url' => 'getPendingReturnUrl',
         'mobile_number' => 'getMobileNumber',
         'redeem_points' => 'getRedeemPoints',
         'cashtag' => 'getCashtag'
@@ -271,6 +277,7 @@ class EWalletChannelProperties implements ModelInterface, ArrayAccess, \JsonSeri
         $this->setIfExists('success_return_url', $data ?? [], null);
         $this->setIfExists('failure_return_url', $data ?? [], null);
         $this->setIfExists('cancel_return_url', $data ?? [], null);
+        $this->setIfExists('pending_return_url', $data ?? [], null);
         $this->setIfExists('mobile_number', $data ?? [], null);
         $this->setIfExists('redeem_points', $data ?? [], null);
         $this->setIfExists('cashtag', $data ?? [], null);
@@ -313,6 +320,10 @@ class EWalletChannelProperties implements ModelInterface, ArrayAccess, \JsonSeri
 
         if (!is_null($this->container['cancel_return_url']) && !preg_match("/^\\S{1,255}:\/\/\\S{0,1000}$/", $this->container['cancel_return_url'])) {
             $invalidProperties[] = "invalid value for 'cancel_return_url', must be conform to the pattern /^\\S{1,255}:\/\/\\S{0,1000}$/.";
+        }
+
+        if (!is_null($this->container['pending_return_url']) && !preg_match("/^\\S{1,255}:\/\/\\S{0,1000}$/", $this->container['pending_return_url'])) {
+            $invalidProperties[] = "invalid value for 'pending_return_url', must be conform to the pattern /^\\S{1,255}:\/\/\\S{0,1000}$/.";
         }
 
         if (!is_null($this->container['cashtag']) && !preg_match("/^[$][a-zA-Z0-9_]{3,15}$/", $this->container['cashtag'])) {
@@ -426,6 +437,38 @@ class EWalletChannelProperties implements ModelInterface, ArrayAccess, \JsonSeri
         }
 
         $this->container['cancel_return_url'] = $cancel_return_url;
+
+        return $this;
+    }
+
+    /**
+     * Gets pending_return_url
+     *
+     * @return string|null
+     */
+    public function getPendingReturnUrl()
+    {
+        return $this->container['pending_return_url'];
+    }
+
+    /**
+     * Sets pending_return_url
+     *
+     * @param string|null $pending_return_url URL where the end-customer is redirected if the authorization is pending
+     *
+     * @return self
+     */
+    public function setPendingReturnUrl($pending_return_url)
+    {
+        if (is_null($pending_return_url)) {
+            throw new \InvalidArgumentException('non-nullable pending_return_url cannot be null');
+        }
+
+        if ((!preg_match("/^\\S{1,255}:\/\/\\S{0,1000}$/", $pending_return_url))) {
+            throw new \InvalidArgumentException("invalid value for \$pending_return_url when calling EWalletChannelProperties., must conform to the pattern /^\\S{1,255}:\/\/\\S{0,1000}$/.");
+        }
+
+        $this->container['pending_return_url'] = $pending_return_url;
 
         return $this;
     }

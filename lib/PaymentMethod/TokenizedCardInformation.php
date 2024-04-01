@@ -11,7 +11,7 @@
 /**
  * Payment Method Service v2
  *
- * The version of the OpenAPI document: 2.91.2
+ * The version of the OpenAPI document: 2.99.0
  */
 
 /**
@@ -60,7 +60,9 @@ class TokenizedCardInformation implements ModelInterface, ArrayAccess, \JsonSeri
         'type' => 'string',
         'network' => 'string',
         'country' => 'string',
-        'issuer' => 'string'
+        'issuer' => 'string',
+        'card_number' => 'string',
+        'one_time_token' => 'string'
     ];
 
     /**
@@ -80,7 +82,9 @@ class TokenizedCardInformation implements ModelInterface, ArrayAccess, \JsonSeri
         'type' => null,
         'network' => null,
         'country' => null,
-        'issuer' => null
+        'issuer' => null,
+        'card_number' => null,
+        'one_time_token' => null
     ];
 
     /**
@@ -98,7 +102,9 @@ class TokenizedCardInformation implements ModelInterface, ArrayAccess, \JsonSeri
 		'type' => false,
 		'network' => false,
 		'country' => false,
-		'issuer' => false
+		'issuer' => false,
+		'card_number' => false,
+		'one_time_token' => false
     ];
 
     /**
@@ -196,7 +202,9 @@ class TokenizedCardInformation implements ModelInterface, ArrayAccess, \JsonSeri
         'type' => 'type',
         'network' => 'network',
         'country' => 'country',
-        'issuer' => 'issuer'
+        'issuer' => 'issuer',
+        'card_number' => 'card_number',
+        'one_time_token' => 'one_time_token'
     ];
 
     /**
@@ -214,7 +222,9 @@ class TokenizedCardInformation implements ModelInterface, ArrayAccess, \JsonSeri
         'type' => 'setType',
         'network' => 'setNetwork',
         'country' => 'setCountry',
-        'issuer' => 'setIssuer'
+        'issuer' => 'setIssuer',
+        'card_number' => 'setCardNumber',
+        'one_time_token' => 'setOneTimeToken'
     ];
 
     /**
@@ -232,7 +242,9 @@ class TokenizedCardInformation implements ModelInterface, ArrayAccess, \JsonSeri
         'type' => 'getType',
         'network' => 'getNetwork',
         'country' => 'getCountry',
-        'issuer' => 'getIssuer'
+        'issuer' => 'getIssuer',
+        'card_number' => 'getCardNumber',
+        'one_time_token' => 'getOneTimeToken'
     ];
 
     /**
@@ -302,6 +314,8 @@ class TokenizedCardInformation implements ModelInterface, ArrayAccess, \JsonSeri
         $this->setIfExists('network', $data ?? [], null);
         $this->setIfExists('country', $data ?? [], null);
         $this->setIfExists('issuer', $data ?? [], null);
+        $this->setIfExists('card_number', $data ?? [], null);
+        $this->setIfExists('one_time_token', $data ?? [], null);
     }
 
     /**
@@ -331,33 +345,6 @@ class TokenizedCardInformation implements ModelInterface, ArrayAccess, \JsonSeri
     {
         $invalidProperties = [];
 
-        if ($this->container['token_id'] === null) {
-            $invalidProperties[] = "'token_id' can't be null";
-        }
-        if ($this->container['masked_card_number'] === null) {
-            $invalidProperties[] = "'masked_card_number' can't be null";
-        }
-        if ($this->container['expiry_month'] === null) {
-            $invalidProperties[] = "'expiry_month' can't be null";
-        }
-        if ($this->container['expiry_year'] === null) {
-            $invalidProperties[] = "'expiry_year' can't be null";
-        }
-        if ($this->container['fingerprint'] === null) {
-            $invalidProperties[] = "'fingerprint' can't be null";
-        }
-        if ($this->container['type'] === null) {
-            $invalidProperties[] = "'type' can't be null";
-        }
-        if ($this->container['network'] === null) {
-            $invalidProperties[] = "'network' can't be null";
-        }
-        if ($this->container['country'] === null) {
-            $invalidProperties[] = "'country' can't be null";
-        }
-        if ($this->container['issuer'] === null) {
-            $invalidProperties[] = "'issuer' can't be null";
-        }
         return $invalidProperties;
     }
 
@@ -376,7 +363,7 @@ class TokenizedCardInformation implements ModelInterface, ArrayAccess, \JsonSeri
     /**
      * Gets token_id
      *
-     * @return string
+     * @return string|null
      */
     public function getTokenId()
     {
@@ -386,7 +373,7 @@ class TokenizedCardInformation implements ModelInterface, ArrayAccess, \JsonSeri
     /**
      * Sets token_id
      *
-     * @param string $token_id token_id
+     * @param string|null $token_id token_id
      *
      * @return self
      */
@@ -403,7 +390,7 @@ class TokenizedCardInformation implements ModelInterface, ArrayAccess, \JsonSeri
     /**
      * Gets masked_card_number
      *
-     * @return string
+     * @return string|null
      */
     public function getMaskedCardNumber()
     {
@@ -413,7 +400,7 @@ class TokenizedCardInformation implements ModelInterface, ArrayAccess, \JsonSeri
     /**
      * Sets masked_card_number
      *
-     * @param string $masked_card_number 1st 6 and last 4 digits of the card
+     * @param string|null $masked_card_number 1st 6 and last 4 digits of the card
      *
      * @return self
      */
@@ -464,7 +451,7 @@ class TokenizedCardInformation implements ModelInterface, ArrayAccess, \JsonSeri
     /**
      * Gets expiry_month
      *
-     * @return string
+     * @return string|null
      */
     public function getExpiryMonth()
     {
@@ -474,7 +461,7 @@ class TokenizedCardInformation implements ModelInterface, ArrayAccess, \JsonSeri
     /**
      * Sets expiry_month
      *
-     * @param string $expiry_month Card expiry month in MM format
+     * @param string|null $expiry_month Card expiry month in MM format
      *
      * @return self
      */
@@ -491,7 +478,7 @@ class TokenizedCardInformation implements ModelInterface, ArrayAccess, \JsonSeri
     /**
      * Gets expiry_year
      *
-     * @return string
+     * @return string|null
      */
     public function getExpiryYear()
     {
@@ -501,7 +488,7 @@ class TokenizedCardInformation implements ModelInterface, ArrayAccess, \JsonSeri
     /**
      * Sets expiry_year
      *
-     * @param string $expiry_year Card expiry month in YY format
+     * @param string|null $expiry_year Card expiry month in YY format
      *
      * @return self
      */
@@ -518,7 +505,7 @@ class TokenizedCardInformation implements ModelInterface, ArrayAccess, \JsonSeri
     /**
      * Gets fingerprint
      *
-     * @return string
+     * @return string|null
      */
     public function getFingerprint()
     {
@@ -528,7 +515,7 @@ class TokenizedCardInformation implements ModelInterface, ArrayAccess, \JsonSeri
     /**
      * Sets fingerprint
      *
-     * @param string $fingerprint Xendit-generated identifier for the unique card number. Multiple payment method objects can be created for the same account - e.g. if the user first creates a one-time payment request, and then later on creates a multiple-use payment method using the same account.   The fingerprint helps to identify the unique account being used.
+     * @param string|null $fingerprint Xendit-generated identifier for the unique card number. Multiple payment method objects can be created for the same account - e.g. if the user first creates a one-time payment request, and then later on creates a multiple-use payment method using the same account.   The fingerprint helps to identify the unique account being used.
      *
      * @return self
      */
@@ -545,7 +532,7 @@ class TokenizedCardInformation implements ModelInterface, ArrayAccess, \JsonSeri
     /**
      * Gets type
      *
-     * @return string
+     * @return string|null
      */
     public function getType()
     {
@@ -555,7 +542,7 @@ class TokenizedCardInformation implements ModelInterface, ArrayAccess, \JsonSeri
     /**
      * Sets type
      *
-     * @param string $type Whether the card is a credit or debit card
+     * @param string|null $type Whether the card is a credit or debit card
      *
      * @return self
      */
@@ -572,7 +559,7 @@ class TokenizedCardInformation implements ModelInterface, ArrayAccess, \JsonSeri
     /**
      * Gets network
      *
-     * @return string
+     * @return string|null
      */
     public function getNetwork()
     {
@@ -582,7 +569,7 @@ class TokenizedCardInformation implements ModelInterface, ArrayAccess, \JsonSeri
     /**
      * Sets network
      *
-     * @param string $network Card network - VISA, MASTERCARD, JCB, AMEX, DISCOVER, BCA
+     * @param string|null $network Card network - VISA, MASTERCARD, JCB, AMEX, DISCOVER, BCA
      *
      * @return self
      */
@@ -599,7 +586,7 @@ class TokenizedCardInformation implements ModelInterface, ArrayAccess, \JsonSeri
     /**
      * Gets country
      *
-     * @return string
+     * @return string|null
      */
     public function getCountry()
     {
@@ -609,7 +596,7 @@ class TokenizedCardInformation implements ModelInterface, ArrayAccess, \JsonSeri
     /**
      * Sets country
      *
-     * @param string $country Country where the card was issued ISO 3166-1 Alpha-2
+     * @param string|null $country Country where the card was issued ISO 3166-1 Alpha-2
      *
      * @return self
      */
@@ -626,7 +613,7 @@ class TokenizedCardInformation implements ModelInterface, ArrayAccess, \JsonSeri
     /**
      * Gets issuer
      *
-     * @return string
+     * @return string|null
      */
     public function getIssuer()
     {
@@ -636,7 +623,7 @@ class TokenizedCardInformation implements ModelInterface, ArrayAccess, \JsonSeri
     /**
      * Sets issuer
      *
-     * @param string $issuer Issuer of the card, most often an issuing bank For example, “BCA”, “MANDIRI”
+     * @param string|null $issuer Issuer of the card, most often an issuing bank For example, “BCA”, “MANDIRI”
      *
      * @return self
      */
@@ -646,6 +633,60 @@ class TokenizedCardInformation implements ModelInterface, ArrayAccess, \JsonSeri
             throw new \InvalidArgumentException('non-nullable issuer cannot be null');
         }
         $this->container['issuer'] = $issuer;
+
+        return $this;
+    }
+
+    /**
+     * Gets card_number
+     *
+     * @return string|null
+     */
+    public function getCardNumber()
+    {
+        return $this->container['card_number'];
+    }
+
+    /**
+     * Sets card_number
+     *
+     * @param string|null $card_number card_number
+     *
+     * @return self
+     */
+    public function setCardNumber($card_number)
+    {
+        if (is_null($card_number)) {
+            throw new \InvalidArgumentException('non-nullable card_number cannot be null');
+        }
+        $this->container['card_number'] = $card_number;
+
+        return $this;
+    }
+
+    /**
+     * Gets one_time_token
+     *
+     * @return string|null
+     */
+    public function getOneTimeToken()
+    {
+        return $this->container['one_time_token'];
+    }
+
+    /**
+     * Sets one_time_token
+     *
+     * @param string|null $one_time_token one_time_token
+     *
+     * @return self
+     */
+    public function setOneTimeToken($one_time_token)
+    {
+        if (is_null($one_time_token)) {
+            throw new \InvalidArgumentException('non-nullable one_time_token cannot be null');
+        }
+        $this->container['one_time_token'] = $one_time_token;
 
         return $this;
     }

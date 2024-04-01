@@ -10,7 +10,7 @@
 /**
  * Payment Requests
  *
- * The version of the OpenAPI document: 1.45.2
+ * The version of the OpenAPI document: 1.59.0
  */
 
 /**
@@ -82,6 +82,9 @@ class PaymentRequestApi
             'application/json',
         ],
         'resendPaymentRequestAuth' => [
+            'application/json',
+        ],
+        'simulatePaymentRequestPayment' => [
             'application/json',
         ],
     ];
@@ -378,7 +381,7 @@ class PaymentRequestApi
         
         // Xendit's custom headers
         $defaultHeaders['xendit-lib'] = 'php';
-        $defaultHeaders['xendit-lib-ver'] = '4.3.0';
+        $defaultHeaders['xendit-lib-ver'] = '5.0.0';
 
         if ($this->config->getUserAgent()) {
             $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
@@ -637,7 +640,7 @@ class PaymentRequestApi
         
         // Xendit's custom headers
         $defaultHeaders['xendit-lib'] = 'php';
-        $defaultHeaders['xendit-lib-ver'] = '4.3.0';
+        $defaultHeaders['xendit-lib-ver'] = '5.0.0';
 
         if ($this->config->getUserAgent()) {
             $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
@@ -911,7 +914,7 @@ class PaymentRequestApi
         
         // Xendit's custom headers
         $defaultHeaders['xendit-lib'] = 'php';
-        $defaultHeaders['xendit-lib-ver'] = '4.3.0';
+        $defaultHeaders['xendit-lib-ver'] = '5.0.0';
 
         if ($this->config->getUserAgent()) {
             $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
@@ -1240,7 +1243,7 @@ class PaymentRequestApi
         
         // Xendit's custom headers
         $defaultHeaders['xendit-lib'] = 'php';
-        $defaultHeaders['xendit-lib-ver'] = '4.3.0';
+        $defaultHeaders['xendit-lib-ver'] = '5.0.0';
 
         if ($this->config->getUserAgent()) {
             $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
@@ -1512,7 +1515,7 @@ class PaymentRequestApi
         
         // Xendit's custom headers
         $defaultHeaders['xendit-lib'] = 'php';
-        $defaultHeaders['xendit-lib-ver'] = '4.3.0';
+        $defaultHeaders['xendit-lib-ver'] = '5.0.0';
 
         if ($this->config->getUserAgent()) {
             $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
@@ -1784,7 +1787,7 @@ class PaymentRequestApi
         
         // Xendit's custom headers
         $defaultHeaders['xendit-lib'] = 'php';
-        $defaultHeaders['xendit-lib-ver'] = '4.3.0';
+        $defaultHeaders['xendit-lib-ver'] = '5.0.0';
 
         if ($this->config->getUserAgent()) {
             $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
@@ -2043,7 +2046,256 @@ class PaymentRequestApi
         
         // Xendit's custom headers
         $defaultHeaders['xendit-lib'] = 'php';
-        $defaultHeaders['xendit-lib-ver'] = '4.3.0';
+        $defaultHeaders['xendit-lib-ver'] = '5.0.0';
+
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $operationHost = $this->config->getHost();
+        $query = ObjectSerializer::buildQuery($queryParams);
+        return new Request(
+            'POST',
+            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation simulatePaymentRequestPayment
+     *
+     * Payment Request Simulate Payment
+     *
+     * @param  string $payment_request_id payment_request_id (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['simulatePaymentRequestPayment'] to see the possible values for this operation
+     *
+     * @throws \Xendit\XenditSdkException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return \Xendit\PaymentRequest\PaymentSimulation
+     */
+    public function simulatePaymentRequestPayment($payment_request_id, string $contentType = self::contentTypes['simulatePaymentRequestPayment'][0])
+    {
+        list($response) = $this->simulatePaymentRequestPaymentWithHttpInfo($payment_request_id, $contentType);
+        return $response;
+    }
+
+    /**
+     * Operation simulatePaymentRequestPaymentWithHttpInfo
+     *
+     * Payment Request Simulate Payment
+     *
+     * @param  string $payment_request_id (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['simulatePaymentRequestPayment'] to see the possible values for this operation
+     *
+     * @throws \Xendit\XenditSdkException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return array of \Xendit\PaymentRequest\PaymentSimulation, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function simulatePaymentRequestPaymentWithHttpInfo($payment_request_id, string $contentType = self::contentTypes['simulatePaymentRequestPayment'][0])
+    {
+        $request = $this->simulatePaymentRequestPaymentRequest($payment_request_id, $contentType);
+
+        $options = $this->createHttpClientOption();
+        try {
+            $response = $this->client->send($request, $options);
+        } catch (RequestException $e) {
+            throw new XenditSdkException(
+                $e->getResponse() && $e->getResponse()->getBody() ? json_decode((string) $e->getResponse()->getBody()) : null,
+                (string) $e->getCode(),
+                $e->getMessage() ? $e->getMessage() : sprintf('Error connecting to the API (%s)', "simulatePaymentRequestPaymentRequest")
+            );
+        } catch (ConnectException $e) {
+            throw new XenditSdkException(
+                null,
+                (string) $e->getCode(),
+                $e->getMessage() ? $e->getMessage() : sprintf('Error connecting to the API (%s)', "simulatePaymentRequestPaymentRequest")
+            );
+        }  catch (GuzzleException $e) {
+            throw new XenditSdkException(
+                null,
+                (string) $e->getCode(),
+                $e->getMessage() ? $e->getMessage() : sprintf('Error instantiating client for API (%s)', "simulatePaymentRequestPaymentRequest")
+            );
+        }
+
+        $statusCode = $response->getStatusCode();
+
+        if ($statusCode < 200 || $statusCode > 299) {
+            $errBodyContent = $response->getBody() ? json_decode((string) $response->getBody()) : null;
+
+            throw new XenditSdkException(
+                $errBodyContent,
+                (string) $statusCode,
+                $response->getReasonPhrase()
+            );
+        }
+        $returnType = '\Xendit\PaymentRequest\PaymentSimulation';
+        if ($returnType === '\SplFileObject') {
+            $content = $response->getBody(); //stream goes to serializer
+        } else {
+            $content = (string) $response->getBody();
+            if ($returnType !== 'string') {
+                $content = json_decode($content);
+            }
+        }
+
+        return [
+            ObjectSerializer::deserialize($content, $returnType, []),
+            $response->getStatusCode(),
+            $response->getHeaders()
+        ];
+    }
+
+    /**
+     * Operation simulatePaymentRequestPaymentAsync
+     *
+     * Payment Request Simulate Payment
+     *
+     * @param  string $payment_request_id (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['simulatePaymentRequestPayment'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function simulatePaymentRequestPaymentAsync($payment_request_id, string $contentType = self::contentTypes['simulatePaymentRequestPayment'][0])
+    {
+        return $this->simulatePaymentRequestPaymentAsyncWithHttpInfo($payment_request_id, $contentType)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation simulatePaymentRequestPaymentAsyncWithHttpInfo
+     *
+     * Payment Request Simulate Payment
+     *
+     * @param  string $payment_request_id (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['simulatePaymentRequestPayment'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function simulatePaymentRequestPaymentAsyncWithHttpInfo($payment_request_id, string $contentType = self::contentTypes['simulatePaymentRequestPayment'][0])
+    {
+        $returnType = '\Xendit\PaymentRequest\PaymentSimulation';
+        $request = $this->simulatePaymentRequestPaymentRequest($payment_request_id, $contentType);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    if ($returnType === '\SplFileObject') {
+                        $content = $response->getBody(); //stream goes to serializer
+                    } else {
+                        $content = (string) $response->getBody();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($e) {
+                    throw new XenditSdkException(
+                        $e->getResponse() && $e->getResponse()->getBody() ? json_decode((string) $e->getResponse()->getBody()) : null,
+                        (string) $e->getCode(),
+                        $e->getMessage() ? $e->getMessage() : sprintf('Error connecting to the API (%s)', "simulatePaymentRequestPaymentRequest")
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'simulatePaymentRequestPayment'
+     *
+     * @param  string $payment_request_id (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['simulatePaymentRequestPayment'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    public function simulatePaymentRequestPaymentRequest($payment_request_id, string $contentType = self::contentTypes['simulatePaymentRequestPayment'][0])
+    {
+
+        // verify the required parameter 'payment_request_id' is set
+        if ($payment_request_id === null || (is_array($payment_request_id) && count($payment_request_id) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $payment_request_id when calling simulatePaymentRequestPayment'
+            );
+        }
+
+
+        $resourcePath = '/payment_requests/{paymentRequestId}/payments/simulate';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+        // path params
+        if ($payment_request_id !== null) {
+            $resourcePath = str_replace(
+                '{' . 'paymentRequestId' . '}',
+                ObjectSerializer::toPathValue($payment_request_id),
+                $resourcePath
+            );
+        }
+
+
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/json', ],
+            $contentType,
+            $multipart
+        );
+
+        // for model (json/xml)
+        if (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
+                    foreach ($formParamValueItems as $formParamValueItem) {
+                        $multipartContents[] = [
+                            'name' => $formParamName,
+                            'contents' => $formParamValueItem
+                        ];
+                    }
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                $httpBody = \GuzzleHttp\Utils::jsonEncode($formParams);
+            } else {
+                // for HTTP post (form)
+                $httpBody = ObjectSerializer::buildQuery($formParams);
+            }
+        }
+
+        // this endpoint requires HTTP basic authentication
+        $headers['Authorization'] = 'Basic ' . base64_encode($this->config->getApiKey() . ":");
+
+        $defaultHeaders = [];
+        
+        // Xendit's custom headers
+        $defaultHeaders['xendit-lib'] = 'php';
+        $defaultHeaders['xendit-lib-ver'] = '5.0.0';
 
         if ($this->config->getUserAgent()) {
             $defaultHeaders['User-Agent'] = $this->config->getUserAgent();

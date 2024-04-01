@@ -9,8 +9,10 @@ docs/PaymentRequest/Capture.md
 docs/PaymentRequest/CaptureListResponse.md
 docs/PaymentRequest/CaptureParameters.md
 docs/PaymentRequest/Card.md
+docs/PaymentRequest/CardChannelCode.md
 docs/PaymentRequest/CardChannelProperties.md
 docs/PaymentRequest/CardInformation.md
+docs/PaymentRequest/CardParameters.md
 docs/PaymentRequest/CardVerificationResults.md
 docs/PaymentRequest/CardVerificationResultsThreeDSecure.md
 docs/PaymentRequest/DirectDebit.md
@@ -60,6 +62,7 @@ docs/PaymentRequest/PaymentRequestParametersChannelProperties.md
 docs/PaymentRequest/PaymentRequestParametersChannelPropertiesAllOf.md
 docs/PaymentRequest/PaymentRequestShippingInformation.md
 docs/PaymentRequest/PaymentRequestStatus.md
+docs/PaymentRequest/PaymentSimulation.md
 docs/PaymentRequest/QRCode.md
 docs/PaymentRequest/QRCodeChannelCode.md
 docs/PaymentRequest/QRCodeChannelProperties.md
@@ -80,8 +83,10 @@ lib/PaymentRequest/Capture.php
 lib/PaymentRequest/CaptureListResponse.php
 lib/PaymentRequest/CaptureParameters.php
 lib/PaymentRequest/Card.php
+lib/PaymentRequest/CardChannelCode.php
 lib/PaymentRequest/CardChannelProperties.php
 lib/PaymentRequest/CardInformation.php
+lib/PaymentRequest/CardParameters.php
 lib/PaymentRequest/CardVerificationResults.php
 lib/PaymentRequest/CardVerificationResultsThreeDSecure.php
 lib/PaymentRequest/DirectDebit.php
@@ -132,6 +137,7 @@ lib/PaymentRequest/PaymentRequestParametersChannelProperties.php
 lib/PaymentRequest/PaymentRequestParametersChannelPropertiesAllOf.php
 lib/PaymentRequest/PaymentRequestShippingInformation.php
 lib/PaymentRequest/PaymentRequestStatus.php
+lib/PaymentRequest/PaymentSimulation.php
 lib/PaymentRequest/QRCode.php
 lib/PaymentRequest/QRCodeChannelCode.php
 lib/PaymentRequest/QRCodeChannelProperties.php
@@ -148,8 +154,10 @@ test/Api/PaymentRequestApiTest.php
 test/Model/PaymentRequest/CaptureListResponseTest.php
 test/Model/PaymentRequest/CaptureParametersTest.php
 test/Model/PaymentRequest/CaptureTest.php
+test/Model/PaymentRequest/CardChannelCodeTest.php
 test/Model/PaymentRequest/CardChannelPropertiesTest.php
 test/Model/PaymentRequest/CardInformationTest.php
+test/Model/PaymentRequest/CardParametersTest.php
 test/Model/PaymentRequest/CardTest.php
 test/Model/PaymentRequest/CardVerificationResultsTest.php
 test/Model/PaymentRequest/CardVerificationResultsThreeDSecureTest.php
@@ -200,6 +208,7 @@ test/Model/PaymentRequest/PaymentRequestParametersTest.php
 test/Model/PaymentRequest/PaymentRequestShippingInformationTest.php
 test/Model/PaymentRequest/PaymentRequestStatusTest.php
 test/Model/PaymentRequest/PaymentRequestTest.php
+test/Model/PaymentRequest/PaymentSimulationTest.php
 test/Model/PaymentRequest/QRCodeChannelCodeTest.php
 test/Model/PaymentRequest/QRCodeChannelPropertiesTest.php
 test/Model/PaymentRequest/QRCodeParametersTest.php

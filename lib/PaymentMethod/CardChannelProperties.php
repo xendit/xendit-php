@@ -11,7 +11,7 @@
 /**
  * Payment Method Service v2
  *
- * The version of the OpenAPI document: 2.91.2
+ * The version of the OpenAPI document: 2.99.0
  */
 
 /**
@@ -54,7 +54,8 @@ class CardChannelProperties implements ModelInterface, ArrayAccess, \JsonSeriali
         'skip_three_d_secure' => 'bool',
         'success_return_url' => 'string',
         'failure_return_url' => 'string',
-        'cardonfile_type' => 'string'
+        'cardonfile_type' => 'string',
+        'expires_at' => '\DateTime'
     ];
 
     /**
@@ -68,7 +69,8 @@ class CardChannelProperties implements ModelInterface, ArrayAccess, \JsonSeriali
         'skip_three_d_secure' => null,
         'success_return_url' => null,
         'failure_return_url' => null,
-        'cardonfile_type' => null
+        'cardonfile_type' => null,
+        'expires_at' => 'date-time'
     ];
 
     /**
@@ -80,7 +82,8 @@ class CardChannelProperties implements ModelInterface, ArrayAccess, \JsonSeriali
         'skip_three_d_secure' => true,
 		'success_return_url' => true,
 		'failure_return_url' => true,
-		'cardonfile_type' => true
+		'cardonfile_type' => true,
+		'expires_at' => false
     ];
 
     /**
@@ -172,7 +175,8 @@ class CardChannelProperties implements ModelInterface, ArrayAccess, \JsonSeriali
         'skip_three_d_secure' => 'skip_three_d_secure',
         'success_return_url' => 'success_return_url',
         'failure_return_url' => 'failure_return_url',
-        'cardonfile_type' => 'cardonfile_type'
+        'cardonfile_type' => 'cardonfile_type',
+        'expires_at' => 'expires_at'
     ];
 
     /**
@@ -184,7 +188,8 @@ class CardChannelProperties implements ModelInterface, ArrayAccess, \JsonSeriali
         'skip_three_d_secure' => 'setSkipThreeDSecure',
         'success_return_url' => 'setSuccessReturnUrl',
         'failure_return_url' => 'setFailureReturnUrl',
-        'cardonfile_type' => 'setCardonfileType'
+        'cardonfile_type' => 'setCardonfileType',
+        'expires_at' => 'setExpiresAt'
     ];
 
     /**
@@ -196,7 +201,8 @@ class CardChannelProperties implements ModelInterface, ArrayAccess, \JsonSeriali
         'skip_three_d_secure' => 'getSkipThreeDSecure',
         'success_return_url' => 'getSuccessReturnUrl',
         'failure_return_url' => 'getFailureReturnUrl',
-        'cardonfile_type' => 'getCardonfileType'
+        'cardonfile_type' => 'getCardonfileType',
+        'expires_at' => 'getExpiresAt'
     ];
 
     /**
@@ -277,6 +283,7 @@ class CardChannelProperties implements ModelInterface, ArrayAccess, \JsonSeriali
         $this->setIfExists('success_return_url', $data ?? [], null);
         $this->setIfExists('failure_return_url', $data ?? [], null);
         $this->setIfExists('cardonfile_type', $data ?? [], null);
+        $this->setIfExists('expires_at', $data ?? [], null);
     }
 
     /**
@@ -490,6 +497,33 @@ class CardChannelProperties implements ModelInterface, ArrayAccess, \JsonSeriali
             );
         }
         $this->container['cardonfile_type'] = $cardonfile_type;
+
+        return $this;
+    }
+
+    /**
+     * Gets expires_at
+     *
+     * @return \DateTime|null
+     */
+    public function getExpiresAt()
+    {
+        return $this->container['expires_at'];
+    }
+
+    /**
+     * Sets expires_at
+     *
+     * @param \DateTime|null $expires_at expires_at
+     *
+     * @return self
+     */
+    public function setExpiresAt($expires_at)
+    {
+        if (is_null($expires_at)) {
+            throw new \InvalidArgumentException('non-nullable expires_at cannot be null');
+        }
+        $this->container['expires_at'] = $expires_at;
 
         return $this;
     }
