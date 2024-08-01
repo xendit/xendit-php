@@ -18,6 +18,7 @@ use Xendit\PaymentMethod\DirectDebitChannelProperties;
 | **identity_document_number** | **string** |  | Identity number of the customer registered to the partner channel | 1234567891113 |
 | **require_auth** | **bool** |  |  | null |
 | **account_number** | **string** |  | Account number of the customer | 1234567891113 |
+| **destination_account_id** | **string** |  | Destination Account ID for BaaS topups | 12341234 |
 
 
 [[Back to README]](../../README.md)

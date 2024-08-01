@@ -11,7 +11,7 @@
 /**
  * Payment Requests
  *
- * The version of the OpenAPI document: 1.59.0
+ * The version of the OpenAPI document: 1.70.0
  */
 
 /**
@@ -56,7 +56,9 @@ class CardChannelProperties implements ModelInterface, ArrayAccess, \JsonSeriali
         'failure_return_url' => 'string',
         'cardonfile_type' => 'string',
         'merchant_id_tag' => 'string',
-        'expires_at' => '\DateTime'
+        'expires_at' => '\DateTime',
+        'installment_configuration' => '\Xendit\PaymentRequest\CardInstallmentConfiguration',
+        'skip_authorization' => 'bool'
     ];
 
     /**
@@ -72,7 +74,9 @@ class CardChannelProperties implements ModelInterface, ArrayAccess, \JsonSeriali
         'failure_return_url' => null,
         'cardonfile_type' => null,
         'merchant_id_tag' => null,
-        'expires_at' => 'date-time'
+        'expires_at' => 'date-time',
+        'installment_configuration' => null,
+        'skip_authorization' => null
     ];
 
     /**
@@ -86,7 +90,9 @@ class CardChannelProperties implements ModelInterface, ArrayAccess, \JsonSeriali
 		'failure_return_url' => true,
 		'cardonfile_type' => true,
 		'merchant_id_tag' => false,
-		'expires_at' => false
+		'expires_at' => false,
+		'installment_configuration' => true,
+		'skip_authorization' => false
     ];
 
     /**
@@ -180,7 +186,9 @@ class CardChannelProperties implements ModelInterface, ArrayAccess, \JsonSeriali
         'failure_return_url' => 'failure_return_url',
         'cardonfile_type' => 'cardonfile_type',
         'merchant_id_tag' => 'merchant_id_tag',
-        'expires_at' => 'expires_at'
+        'expires_at' => 'expires_at',
+        'installment_configuration' => 'installment_configuration',
+        'skip_authorization' => 'skip_authorization'
     ];
 
     /**
@@ -194,7 +202,9 @@ class CardChannelProperties implements ModelInterface, ArrayAccess, \JsonSeriali
         'failure_return_url' => 'setFailureReturnUrl',
         'cardonfile_type' => 'setCardonfileType',
         'merchant_id_tag' => 'setMerchantIdTag',
-        'expires_at' => 'setExpiresAt'
+        'expires_at' => 'setExpiresAt',
+        'installment_configuration' => 'setInstallmentConfiguration',
+        'skip_authorization' => 'setSkipAuthorization'
     ];
 
     /**
@@ -208,7 +218,9 @@ class CardChannelProperties implements ModelInterface, ArrayAccess, \JsonSeriali
         'failure_return_url' => 'getFailureReturnUrl',
         'cardonfile_type' => 'getCardonfileType',
         'merchant_id_tag' => 'getMerchantIdTag',
-        'expires_at' => 'getExpiresAt'
+        'expires_at' => 'getExpiresAt',
+        'installment_configuration' => 'getInstallmentConfiguration',
+        'skip_authorization' => 'getSkipAuthorization'
     ];
 
     /**
@@ -274,6 +286,8 @@ class CardChannelProperties implements ModelInterface, ArrayAccess, \JsonSeriali
         $this->setIfExists('cardonfile_type', $data ?? [], null);
         $this->setIfExists('merchant_id_tag', $data ?? [], null);
         $this->setIfExists('expires_at', $data ?? [], null);
+        $this->setIfExists('installment_configuration', $data ?? [], null);
+        $this->setIfExists('skip_authorization', $data ?? [], null);
     }
 
     /**
@@ -522,6 +536,67 @@ class CardChannelProperties implements ModelInterface, ArrayAccess, \JsonSeriali
             throw new \InvalidArgumentException('non-nullable expires_at cannot be null');
         }
         $this->container['expires_at'] = $expires_at;
+
+        return $this;
+    }
+
+    /**
+     * Gets installment_configuration
+     *
+     * @return \PaymentRequest\CardInstallmentConfiguration|null
+     */
+    public function getInstallmentConfiguration()
+    {
+        return $this->container['installment_configuration'];
+    }
+
+    /**
+     * Sets installment_configuration
+     *
+     * @param \PaymentRequest\CardInstallmentConfiguration|null $installment_configuration installment_configuration
+     *
+     * @return self
+     */
+    public function setInstallmentConfiguration($installment_configuration)
+    {
+        if (is_null($installment_configuration)) {
+            array_push($this->openAPINullablesSetToNull, 'installment_configuration');
+        } else {
+            $nullablesSetToNull = $this->getOpenAPINullablesSetToNull();
+            $index = array_search('installment_configuration', $nullablesSetToNull);
+            if ($index !== FALSE) {
+                unset($nullablesSetToNull[$index]);
+                $this->setOpenAPINullablesSetToNull($nullablesSetToNull);
+            }
+        }
+        $this->container['installment_configuration'] = $installment_configuration;
+
+        return $this;
+    }
+
+    /**
+     * Gets skip_authorization
+     *
+     * @return bool|null
+     */
+    public function getSkipAuthorization()
+    {
+        return $this->container['skip_authorization'];
+    }
+
+    /**
+     * Sets skip_authorization
+     *
+     * @param bool|null $skip_authorization To indicate whether to skip the authorization phase
+     *
+     * @return self
+     */
+    public function setSkipAuthorization($skip_authorization)
+    {
+        if (is_null($skip_authorization)) {
+            throw new \InvalidArgumentException('non-nullable skip_authorization cannot be null');
+        }
+        $this->container['skip_authorization'] = $skip_authorization;
 
         return $this;
     }

@@ -11,7 +11,7 @@
 /**
  * Payment Method Service v2
  *
- * The version of the OpenAPI document: 2.99.0
+ * The version of the OpenAPI document: 2.128.0
  */
 
 /**
@@ -302,6 +302,10 @@ class PaymentMethodUpdateParameters implements ModelInterface, ArrayAccess, \Jso
     {
         $invalidProperties = [];
 
+        if (!is_null($this->container['reference_id']) && (mb_strlen($this->container['reference_id']) > 255)) {
+            $invalidProperties[] = "invalid value for 'reference_id', the character length must be smaller than or equal to 255.";
+        }
+
         return $invalidProperties;
     }
 
@@ -366,6 +370,10 @@ class PaymentMethodUpdateParameters implements ModelInterface, ArrayAccess, \Jso
         if (is_null($reference_id)) {
             throw new \InvalidArgumentException('non-nullable reference_id cannot be null');
         }
+        if ((mb_strlen($reference_id) > 255)) {
+            throw new \InvalidArgumentException('invalid length for $reference_id when calling PaymentMethodUpdateParameters., must be smaller than or equal to 255.');
+        }
+
         $this->container['reference_id'] = $reference_id;
 
         return $this;

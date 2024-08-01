@@ -1,6 +1,6 @@
 <?php
 /**
- * SimulatePaymentRequest
+ * CardInstallmentConfiguration
  *
  * PHP version 7.4
  *
@@ -27,13 +27,14 @@ use \Xendit\ObjectSerializer;
 use \Xendit\Model\ModelInterface;
 
 /**
- * SimulatePaymentRequest Class Doc Comment
+ * CardInstallmentConfiguration Class Doc Comment
  *
  * @category Class
+ * @description Card Installment Configuration
  * @package  Xendit
  * @implements \ArrayAccess<string, mixed>
  */
-class SimulatePaymentRequest implements ModelInterface, ArrayAccess, \JsonSerializable
+class CardInstallmentConfiguration implements ModelInterface, ArrayAccess, \JsonSerializable
 {
     public const DISCRIMINATOR = null;
 
@@ -42,7 +43,7 @@ class SimulatePaymentRequest implements ModelInterface, ArrayAccess, \JsonSerial
       *
       * @var string
       */
-    protected static $openAPIModelName = 'simulatePayment_request';
+    protected static $openAPIModelName = 'CardInstallmentConfiguration';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
@@ -50,7 +51,9 @@ class SimulatePaymentRequest implements ModelInterface, ArrayAccess, \JsonSerial
       * @var string[]
       */
     protected static $openAPITypes = [
-        'amount' => 'float'
+        'terms' => 'int',
+        'interval' => 'string',
+        'code' => 'string'
     ];
 
     /**
@@ -61,7 +64,9 @@ class SimulatePaymentRequest implements ModelInterface, ArrayAccess, \JsonSerial
       * @psalm-var array<string, string|null>
       */
     protected static $openAPIFormats = [
-        'amount' => 'double'
+        'terms' => null,
+        'interval' => null,
+        'code' => null
     ];
 
     /**
@@ -70,7 +75,9 @@ class SimulatePaymentRequest implements ModelInterface, ArrayAccess, \JsonSerial
       * @var boolean[]
       */
     protected static array $openAPINullables = [
-        'amount' => false
+        'terms' => false,
+		'interval' => false,
+		'code' => true
     ];
 
     /**
@@ -159,7 +166,9 @@ class SimulatePaymentRequest implements ModelInterface, ArrayAccess, \JsonSerial
      * @var string[]
      */
     protected static $attributeMap = [
-        'amount' => 'amount'
+        'terms' => 'terms',
+        'interval' => 'interval',
+        'code' => 'code'
     ];
 
     /**
@@ -168,7 +177,9 @@ class SimulatePaymentRequest implements ModelInterface, ArrayAccess, \JsonSerial
      * @var string[]
      */
     protected static $setters = [
-        'amount' => 'setAmount'
+        'terms' => 'setTerms',
+        'interval' => 'setInterval',
+        'code' => 'setCode'
     ];
 
     /**
@@ -177,7 +188,9 @@ class SimulatePaymentRequest implements ModelInterface, ArrayAccess, \JsonSerial
      * @var string[]
      */
     protected static $getters = [
-        'amount' => 'getAmount'
+        'terms' => 'getTerms',
+        'interval' => 'getInterval',
+        'code' => 'getCode'
     ];
 
     /**
@@ -237,7 +250,9 @@ class SimulatePaymentRequest implements ModelInterface, ArrayAccess, \JsonSerial
      */
     public function __construct(array $data = null)
     {
-        $this->setIfExists('amount', $data ?? [], null);
+        $this->setIfExists('terms', $data ?? [], null);
+        $this->setIfExists('interval', $data ?? [], null);
+        $this->setIfExists('code', $data ?? [], null);
     }
 
     /**
@@ -283,28 +298,89 @@ class SimulatePaymentRequest implements ModelInterface, ArrayAccess, \JsonSerial
 
 
     /**
-     * Gets amount
+     * Gets terms
      *
-     * @return float|null
+     * @return int|null
      */
-    public function getAmount()
+    public function getTerms()
     {
-        return $this->container['amount'];
+        return $this->container['terms'];
     }
 
     /**
-     * Sets amount
+     * Sets terms
      *
-     * @param float|null $amount amount
+     * @param int|null $terms terms
      *
      * @return self
      */
-    public function setAmount($amount)
+    public function setTerms($terms)
     {
-        if (is_null($amount)) {
-            throw new \InvalidArgumentException('non-nullable amount cannot be null');
+        if (is_null($terms)) {
+            throw new \InvalidArgumentException('non-nullable terms cannot be null');
         }
-        $this->container['amount'] = $amount;
+        $this->container['terms'] = $terms;
+
+        return $this;
+    }
+
+    /**
+     * Gets interval
+     *
+     * @return string|null
+     */
+    public function getInterval()
+    {
+        return $this->container['interval'];
+    }
+
+    /**
+     * Sets interval
+     *
+     * @param string|null $interval interval
+     *
+     * @return self
+     */
+    public function setInterval($interval)
+    {
+        if (is_null($interval)) {
+            throw new \InvalidArgumentException('non-nullable interval cannot be null');
+        }
+        $this->container['interval'] = $interval;
+
+        return $this;
+    }
+
+    /**
+     * Gets code
+     *
+     * @return string|null
+     */
+    public function getCode()
+    {
+        return $this->container['code'];
+    }
+
+    /**
+     * Sets code
+     *
+     * @param string|null $code code
+     *
+     * @return self
+     */
+    public function setCode($code)
+    {
+        if (is_null($code)) {
+            array_push($this->openAPINullablesSetToNull, 'code');
+        } else {
+            $nullablesSetToNull = $this->getOpenAPINullablesSetToNull();
+            $index = array_search('code', $nullablesSetToNull);
+            if ($index !== FALSE) {
+                unset($nullablesSetToNull[$index]);
+                $this->setOpenAPINullablesSetToNull($nullablesSetToNull);
+            }
+        }
+        $this->container['code'] = $code;
 
         return $this;
     }

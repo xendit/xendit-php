@@ -11,7 +11,7 @@
 /**
  * Payment Method Service v2
  *
- * The version of the OpenAPI document: 2.99.0
+ * The version of the OpenAPI document: 2.128.0
  */
 
 /**
@@ -37,7 +37,19 @@ class CardChannelCode
      * Possible values of this enum
      */
     
+    public const BAY_CARD_INSTALLMENT = 'BAY_CARD_INSTALLMENT';
+    
+    public const BBL_CARD_INSTALLMENT = 'BBL_CARD_INSTALLMENT';
+    
     public const GPN = 'GPN';
+    
+    public const KBANK_CARD_INSTALLMENT = 'KBANK_CARD_INSTALLMENT';
+    
+    public const KTB_CARD_INSTALLMENT = 'KTB_CARD_INSTALLMENT';
+    
+    public const SCB_CARD_INSTALLMENT = 'SCB_CARD_INSTALLMENT';
+    
+    public const TTB_CARD_INSTALLMENT = 'TTB_CARD_INSTALLMENT';
     
     public const XENDIT_ENUM_DEFAULT_FALLBACK = 'UNKNOWN_ENUM_VALUE';
 
@@ -69,7 +81,13 @@ class CardChannelCode
     public static function getAllowableEnumValues()
     {
         return [
+            self::BAY_CARD_INSTALLMENT,
+            self::BBL_CARD_INSTALLMENT,
             self::GPN,
+            self::KBANK_CARD_INSTALLMENT,
+            self::KTB_CARD_INSTALLMENT,
+            self::SCB_CARD_INSTALLMENT,
+            self::TTB_CARD_INSTALLMENT,
             self::XENDIT_ENUM_DEFAULT_FALLBACK
         ];
     }

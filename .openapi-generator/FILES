@@ -12,6 +12,7 @@ docs/PaymentRequest/Card.md
 docs/PaymentRequest/CardChannelCode.md
 docs/PaymentRequest/CardChannelProperties.md
 docs/PaymentRequest/CardInformation.md
+docs/PaymentRequest/CardInstallmentConfiguration.md
 docs/PaymentRequest/CardParameters.md
 docs/PaymentRequest/CardVerificationResults.md
 docs/PaymentRequest/CardVerificationResultsThreeDSecure.md
@@ -86,6 +87,7 @@ lib/PaymentRequest/Card.php
 lib/PaymentRequest/CardChannelCode.php
 lib/PaymentRequest/CardChannelProperties.php
 lib/PaymentRequest/CardInformation.php
+lib/PaymentRequest/CardInstallmentConfiguration.php
 lib/PaymentRequest/CardParameters.php
 lib/PaymentRequest/CardVerificationResults.php
 lib/PaymentRequest/CardVerificationResultsThreeDSecure.php
@@ -157,6 +159,7 @@ test/Model/PaymentRequest/CaptureTest.php
 test/Model/PaymentRequest/CardChannelCodeTest.php
 test/Model/PaymentRequest/CardChannelPropertiesTest.php
 test/Model/PaymentRequest/CardInformationTest.php
+test/Model/PaymentRequest/CardInstallmentConfigurationTest.php
 test/Model/PaymentRequest/CardParametersTest.php
 test/Model/PaymentRequest/CardTest.php
 test/Model/PaymentRequest/CardVerificationResultsTest.php

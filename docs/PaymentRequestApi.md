@@ -33,7 +33,7 @@ All URIs are relative to https://api.xendit.co, except if the operation defines 
 ## `createPaymentRequest()` Function
 
 ```php
-createPaymentRequest($idempotency_key, $for_user_id, $payment_request_parameters): \PaymentRequest\PaymentRequest
+createPaymentRequest($idempotency_key, $for_user_id, $with_split_rule, $payment_request_parameters): \PaymentRequest\PaymentRequest
 ```
 
 Create Payment Request
@@ -51,6 +51,7 @@ Create Payment Request
 |-------------|:-------------:|:-------------:|-------------| 
 | **idempotency_key** | **string** |  |  |
 | **for_user_id** | **string** |  |  |
+| **with_split_rule** | **string** |  |  |
 | **payment_request_parameters** | [**PaymentRequestParameters**](PaymentRequest/PaymentRequestParameters.md) |  |  |
 
 ### Usage Example
@@ -68,6 +69,7 @@ Configuration::setXenditKey("YOUR_API_KEY_HERE");
 $apiInstance = new PaymentRequestApi();
 $idempotency_key = "5f9a3fbd571a1c4068aa40ce"; // string
 $for_user_id = "5f9a3fbd571a1c4068aa40cf"; // string
+$with_split_rule = "splitru_c676f55d-a9e0-47f2-b672-77564d57a40b"; // string
 $payment_request_parameters = new Xendit\PaymentRequest\PaymentRequestParameters([
   'reference_id' => 'example-ref-1234',
   'amount' => 15000,
@@ -86,7 +88,7 @@ $payment_request_parameters = new Xendit\PaymentRequest\PaymentRequestParameters
 ]); // \Xendit\PaymentRequest\PaymentRequestParameters
 
 try {
-    $result = $apiInstance->createPaymentRequest($idempotency_key, $for_user_id, $payment_request_parameters);
+    $result = $apiInstance->createPaymentRequest($idempotency_key, $for_user_id, $with_split_rule, $payment_request_parameters);
         print_r($result);
 } catch (\Xendit\XenditSdkException $e) {
     echo 'Exception when calling PaymentRequestApi->createPaymentRequest: ', $e->getMessage(), PHP_EOL;
@@ -107,6 +109,7 @@ Configuration::setXenditKey("YOUR_API_KEY_HERE");
 $apiInstance = new PaymentRequestApi();
 $idempotency_key = "5f9a3fbd571a1c4068aa40ce"; // string
 $for_user_id = "5f9a3fbd571a1c4068aa40cf"; // string
+$with_split_rule = "splitru_c676f55d-a9e0-47f2-b672-77564d57a40b"; // string
 $payment_request_parameters = new Xendit\PaymentRequest\PaymentRequestParameters([
   'reference_id' => 'example-ref-1234',
   'amount' => 15000,
@@ -124,7 +127,7 @@ $payment_request_parameters = new Xendit\PaymentRequest\PaymentRequestParameters
 ]); // \Xendit\PaymentRequest\PaymentRequestParameters
 
 try {
-    $result = $apiInstance->createPaymentRequest($idempotency_key, $for_user_id, $payment_request_parameters);
+    $result = $apiInstance->createPaymentRequest($idempotency_key, $for_user_id, $with_split_rule, $payment_request_parameters);
         print_r($result);
 } catch (\Xendit\XenditSdkException $e) {
     echo 'Exception when calling PaymentRequestApi->createPaymentRequest: ', $e->getMessage(), PHP_EOL;
@@ -145,6 +148,7 @@ Configuration::setXenditKey("YOUR_API_KEY_HERE");
 $apiInstance = new PaymentRequestApi();
 $idempotency_key = "5f9a3fbd571a1c4068aa40ce"; // string
 $for_user_id = "5f9a3fbd571a1c4068aa40cf"; // string
+$with_split_rule = "splitru_c676f55d-a9e0-47f2-b672-77564d57a40b"; // string
 $payment_request_parameters = new Xendit\PaymentRequest\PaymentRequestParameters([
   'reference_id' => 'example-ref-1234',
   'currency' => 'IDR',
@@ -168,7 +172,7 @@ $payment_request_parameters = new Xendit\PaymentRequest\PaymentRequestParameters
 ]); // \Xendit\PaymentRequest\PaymentRequestParameters
 
 try {
-    $result = $apiInstance->createPaymentRequest($idempotency_key, $for_user_id, $payment_request_parameters);
+    $result = $apiInstance->createPaymentRequest($idempotency_key, $for_user_id, $with_split_rule, $payment_request_parameters);
         print_r($result);
 } catch (\Xendit\XenditSdkException $e) {
     echo 'Exception when calling PaymentRequestApi->createPaymentRequest: ', $e->getMessage(), PHP_EOL;
@@ -189,6 +193,7 @@ Configuration::setXenditKey("YOUR_API_KEY_HERE");
 $apiInstance = new PaymentRequestApi();
 $idempotency_key = "5f9a3fbd571a1c4068aa40ce"; // string
 $for_user_id = "5f9a3fbd571a1c4068aa40cf"; // string
+$with_split_rule = "splitru_c676f55d-a9e0-47f2-b672-77564d57a40b"; // string
 $payment_request_parameters = new Xendit\PaymentRequest\PaymentRequestParameters([
   'reference_id' => 'example-ref-1234',
   'amount' => 1500,
@@ -200,7 +205,7 @@ $payment_request_parameters = new Xendit\PaymentRequest\PaymentRequestParameters
 ]); // \Xendit\PaymentRequest\PaymentRequestParameters
 
 try {
-    $result = $apiInstance->createPaymentRequest($idempotency_key, $for_user_id, $payment_request_parameters);
+    $result = $apiInstance->createPaymentRequest($idempotency_key, $for_user_id, $with_split_rule, $payment_request_parameters);
         print_r($result);
 } catch (\Xendit\XenditSdkException $e) {
     echo 'Exception when calling PaymentRequestApi->createPaymentRequest: ', $e->getMessage(), PHP_EOL;
@@ -221,6 +226,7 @@ Configuration::setXenditKey("YOUR_API_KEY_HERE");
 $apiInstance = new PaymentRequestApi();
 $idempotency_key = "5f9a3fbd571a1c4068aa40ce"; // string
 $for_user_id = "5f9a3fbd571a1c4068aa40cf"; // string
+$with_split_rule = "splitru_c676f55d-a9e0-47f2-b672-77564d57a40b"; // string
 $payment_request_parameters = new Xendit\PaymentRequest\PaymentRequestParameters([
   'reference_id' => 'example-ref-1234',
   'amount' => 15000,
@@ -232,7 +238,7 @@ $payment_request_parameters = new Xendit\PaymentRequest\PaymentRequestParameters
 ]); // \Xendit\PaymentRequest\PaymentRequestParameters
 
 try {
-    $result = $apiInstance->createPaymentRequest($idempotency_key, $for_user_id, $payment_request_parameters);
+    $result = $apiInstance->createPaymentRequest($idempotency_key, $for_user_id, $with_split_rule, $payment_request_parameters);
         print_r($result);
 } catch (\Xendit\XenditSdkException $e) {
     echo 'Exception when calling PaymentRequestApi->createPaymentRequest: ', $e->getMessage(), PHP_EOL;

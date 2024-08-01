@@ -11,7 +11,7 @@
 /**
  * Payment Requests
  *
- * The version of the OpenAPI document: 1.59.0
+ * The version of the OpenAPI document: 1.70.0
  */
 
 /**
@@ -43,7 +43,7 @@ class DirectDebitChannelCode
     
     public const BRI = 'BRI';
     
-    public const BNI = 'BNI';
+    public const BNI_AUTOPAY = 'BNI_AUTOPAY';
     
     public const MANDIRI = 'MANDIRI';
     
@@ -230,7 +230,7 @@ class DirectDebitChannelCode
             self::BCA_KLIKPAY,
             self::BCA_ONEKLIK,
             self::BRI,
-            self::BNI,
+            self::BNI_AUTOPAY,
             self::MANDIRI,
             self::BPI,
             self::BPI_RECURRING,

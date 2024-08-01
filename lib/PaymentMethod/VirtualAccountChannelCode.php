@@ -11,7 +11,7 @@
 /**
  * Payment Method Service v2
  *
- * The version of the OpenAPI document: 2.99.0
+ * The version of the OpenAPI document: 2.128.0
  */
 
 /**
@@ -65,15 +65,25 @@ class VirtualAccountChannelCode
     
     public const MSB = 'MSB';
     
+    public const VPB = 'VPB';
+    
+    public const BIDV = 'BIDV';
+    
+    public const CAKE = 'CAKE';
+    
     public const STANDARD_CHARTERED = 'STANDARD_CHARTERED';
     
     public const AMBANK = 'AMBANK';
+    
+    public const UOB = 'UOB';
     
     public const BNC = 'BNC';
     
     public const HANA = 'HANA';
     
     public const MUAMALAT = 'MUAMALAT';
+    
+    public const BANK_TRANSFER = 'BANK_TRANSFER';
     
     public const XENDIT_ENUM_DEFAULT_FALLBACK = 'UNKNOWN_ENUM_VALUE';
 
@@ -119,11 +129,16 @@ class VirtualAccountChannelCode
             self::VIETCAPITAL,
             self::WOORI,
             self::MSB,
+            self::VPB,
+            self::BIDV,
+            self::CAKE,
             self::STANDARD_CHARTERED,
             self::AMBANK,
+            self::UOB,
             self::BNC,
             self::HANA,
             self::MUAMALAT,
+            self::BANK_TRANSFER,
             self::XENDIT_ENUM_DEFAULT_FALLBACK
         ];
     }

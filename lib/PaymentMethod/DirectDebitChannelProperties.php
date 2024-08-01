@@ -11,7 +11,7 @@
 /**
  * Payment Method Service v2
  *
- * The version of the OpenAPI document: 2.99.0
+ * The version of the OpenAPI document: 2.128.0
  */
 
 /**
@@ -59,7 +59,8 @@ class DirectDebitChannelProperties implements ModelInterface, ArrayAccess, \Json
         'email' => 'string',
         'identity_document_number' => 'string',
         'require_auth' => 'bool',
-        'account_number' => 'string'
+        'account_number' => 'string',
+        'destination_account_id' => 'string'
     ];
 
     /**
@@ -78,7 +79,8 @@ class DirectDebitChannelProperties implements ModelInterface, ArrayAccess, \Json
         'email' => null,
         'identity_document_number' => null,
         'require_auth' => null,
-        'account_number' => null
+        'account_number' => null,
+        'destination_account_id' => null
     ];
 
     /**
@@ -95,7 +97,8 @@ class DirectDebitChannelProperties implements ModelInterface, ArrayAccess, \Json
 		'email' => true,
 		'identity_document_number' => true,
 		'require_auth' => true,
-		'account_number' => true
+		'account_number' => true,
+		'destination_account_id' => true
     ];
 
     /**
@@ -192,7 +195,8 @@ class DirectDebitChannelProperties implements ModelInterface, ArrayAccess, \Json
         'email' => 'email',
         'identity_document_number' => 'identity_document_number',
         'require_auth' => 'require_auth',
-        'account_number' => 'account_number'
+        'account_number' => 'account_number',
+        'destination_account_id' => 'destination_account_id'
     ];
 
     /**
@@ -209,7 +213,8 @@ class DirectDebitChannelProperties implements ModelInterface, ArrayAccess, \Json
         'email' => 'setEmail',
         'identity_document_number' => 'setIdentityDocumentNumber',
         'require_auth' => 'setRequireAuth',
-        'account_number' => 'setAccountNumber'
+        'account_number' => 'setAccountNumber',
+        'destination_account_id' => 'setDestinationAccountId'
     ];
 
     /**
@@ -226,7 +231,8 @@ class DirectDebitChannelProperties implements ModelInterface, ArrayAccess, \Json
         'email' => 'getEmail',
         'identity_document_number' => 'getIdentityDocumentNumber',
         'require_auth' => 'getRequireAuth',
-        'account_number' => 'getAccountNumber'
+        'account_number' => 'getAccountNumber',
+        'destination_account_id' => 'getDestinationAccountId'
     ];
 
     /**
@@ -295,6 +301,7 @@ class DirectDebitChannelProperties implements ModelInterface, ArrayAccess, \Json
         $this->setIfExists('identity_document_number', $data ?? [], null);
         $this->setIfExists('require_auth', $data ?? [], null);
         $this->setIfExists('account_number', $data ?? [], null);
+        $this->setIfExists('destination_account_id', $data ?? [], null);
     }
 
     /**
@@ -634,6 +641,40 @@ class DirectDebitChannelProperties implements ModelInterface, ArrayAccess, \Json
             }
         }
         $this->container['account_number'] = $account_number;
+
+        return $this;
+    }
+
+    /**
+     * Gets destination_account_id
+     *
+     * @return string|null
+     */
+    public function getDestinationAccountId()
+    {
+        return $this->container['destination_account_id'];
+    }
+
+    /**
+     * Sets destination_account_id
+     *
+     * @param string|null $destination_account_id Destination Account ID for BaaS topups
+     *
+     * @return self
+     */
+    public function setDestinationAccountId($destination_account_id)
+    {
+        if (is_null($destination_account_id)) {
+            array_push($this->openAPINullablesSetToNull, 'destination_account_id');
+        } else {
+            $nullablesSetToNull = $this->getOpenAPINullablesSetToNull();
+            $index = array_search('destination_account_id', $nullablesSetToNull);
+            if ($index !== FALSE) {
+                unset($nullablesSetToNull[$index]);
+                $this->setOpenAPINullablesSetToNull($nullablesSetToNull);
+            }
+        }
+        $this->container['destination_account_id'] = $destination_account_id;
 
         return $this;
     }

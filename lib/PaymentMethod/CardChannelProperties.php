@@ -11,7 +11,7 @@
 /**
  * Payment Method Service v2
  *
- * The version of the OpenAPI document: 2.99.0
+ * The version of the OpenAPI document: 2.128.0
  */
 
 /**
@@ -55,7 +55,9 @@ class CardChannelProperties implements ModelInterface, ArrayAccess, \JsonSeriali
         'success_return_url' => 'string',
         'failure_return_url' => 'string',
         'cardonfile_type' => 'string',
-        'expires_at' => '\DateTime'
+        'expires_at' => '\DateTime',
+        'installment_configuration' => '\Xendit\PaymentMethod\CardInstallmentConfiguration',
+        'merchant_id_tag' => 'string'
     ];
 
     /**
@@ -70,7 +72,9 @@ class CardChannelProperties implements ModelInterface, ArrayAccess, \JsonSeriali
         'success_return_url' => null,
         'failure_return_url' => null,
         'cardonfile_type' => null,
-        'expires_at' => 'date-time'
+        'expires_at' => 'date-time',
+        'installment_configuration' => null,
+        'merchant_id_tag' => null
     ];
 
     /**
@@ -83,7 +87,9 @@ class CardChannelProperties implements ModelInterface, ArrayAccess, \JsonSeriali
 		'success_return_url' => true,
 		'failure_return_url' => true,
 		'cardonfile_type' => true,
-		'expires_at' => false
+		'expires_at' => false,
+		'installment_configuration' => true,
+		'merchant_id_tag' => false
     ];
 
     /**
@@ -176,7 +182,9 @@ class CardChannelProperties implements ModelInterface, ArrayAccess, \JsonSeriali
         'success_return_url' => 'success_return_url',
         'failure_return_url' => 'failure_return_url',
         'cardonfile_type' => 'cardonfile_type',
-        'expires_at' => 'expires_at'
+        'expires_at' => 'expires_at',
+        'installment_configuration' => 'installment_configuration',
+        'merchant_id_tag' => 'merchant_id_tag'
     ];
 
     /**
@@ -189,7 +197,9 @@ class CardChannelProperties implements ModelInterface, ArrayAccess, \JsonSeriali
         'success_return_url' => 'setSuccessReturnUrl',
         'failure_return_url' => 'setFailureReturnUrl',
         'cardonfile_type' => 'setCardonfileType',
-        'expires_at' => 'setExpiresAt'
+        'expires_at' => 'setExpiresAt',
+        'installment_configuration' => 'setInstallmentConfiguration',
+        'merchant_id_tag' => 'setMerchantIdTag'
     ];
 
     /**
@@ -202,7 +212,9 @@ class CardChannelProperties implements ModelInterface, ArrayAccess, \JsonSeriali
         'success_return_url' => 'getSuccessReturnUrl',
         'failure_return_url' => 'getFailureReturnUrl',
         'cardonfile_type' => 'getCardonfileType',
-        'expires_at' => 'getExpiresAt'
+        'expires_at' => 'getExpiresAt',
+        'installment_configuration' => 'getInstallmentConfiguration',
+        'merchant_id_tag' => 'getMerchantIdTag'
     ];
 
     /**
@@ -284,6 +296,8 @@ class CardChannelProperties implements ModelInterface, ArrayAccess, \JsonSeriali
         $this->setIfExists('failure_return_url', $data ?? [], null);
         $this->setIfExists('cardonfile_type', $data ?? [], null);
         $this->setIfExists('expires_at', $data ?? [], null);
+        $this->setIfExists('installment_configuration', $data ?? [], null);
+        $this->setIfExists('merchant_id_tag', $data ?? [], null);
     }
 
     /**
@@ -524,6 +538,67 @@ class CardChannelProperties implements ModelInterface, ArrayAccess, \JsonSeriali
             throw new \InvalidArgumentException('non-nullable expires_at cannot be null');
         }
         $this->container['expires_at'] = $expires_at;
+
+        return $this;
+    }
+
+    /**
+     * Gets installment_configuration
+     *
+     * @return \PaymentMethod\CardInstallmentConfiguration|null
+     */
+    public function getInstallmentConfiguration()
+    {
+        return $this->container['installment_configuration'];
+    }
+
+    /**
+     * Sets installment_configuration
+     *
+     * @param \PaymentMethod\CardInstallmentConfiguration|null $installment_configuration installment_configuration
+     *
+     * @return self
+     */
+    public function setInstallmentConfiguration($installment_configuration)
+    {
+        if (is_null($installment_configuration)) {
+            array_push($this->openAPINullablesSetToNull, 'installment_configuration');
+        } else {
+            $nullablesSetToNull = $this->getOpenAPINullablesSetToNull();
+            $index = array_search('installment_configuration', $nullablesSetToNull);
+            if ($index !== FALSE) {
+                unset($nullablesSetToNull[$index]);
+                $this->setOpenAPINullablesSetToNull($nullablesSetToNull);
+            }
+        }
+        $this->container['installment_configuration'] = $installment_configuration;
+
+        return $this;
+    }
+
+    /**
+     * Gets merchant_id_tag
+     *
+     * @return string|null
+     */
+    public function getMerchantIdTag()
+    {
+        return $this->container['merchant_id_tag'];
+    }
+
+    /**
+     * Sets merchant_id_tag
+     *
+     * @param string|null $merchant_id_tag Tag for a Merchant ID that you want to associate this payment with. For merchants using their own MIDs to specify which MID they want to use
+     *
+     * @return self
+     */
+    public function setMerchantIdTag($merchant_id_tag)
+    {
+        if (is_null($merchant_id_tag)) {
+            throw new \InvalidArgumentException('non-nullable merchant_id_tag cannot be null');
+        }
+        $this->container['merchant_id_tag'] = $merchant_id_tag;
 
         return $this;
     }

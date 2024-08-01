@@ -11,7 +11,7 @@
 /**
  * Payment Requests
  *
- * The version of the OpenAPI document: 1.59.0
+ * The version of the OpenAPI document: 1.70.0
  */
 
 /**
@@ -65,9 +65,15 @@ class VirtualAccountChannelCode
     
     public const MSB = 'MSB';
     
+    public const VPB = 'VPB';
+    
+    public const BIDV = 'BIDV';
+    
     public const STANDARD_CHARTERED = 'STANDARD_CHARTERED';
     
     public const AMBANK = 'AMBANK';
+    
+    public const UOB = 'UOB';
     
     public const BNC = 'BNC';
     
@@ -121,8 +127,11 @@ class VirtualAccountChannelCode
             self::VIETCAPITAL,
             self::WOORI,
             self::MSB,
+            self::VPB,
+            self::BIDV,
             self::STANDARD_CHARTERED,
             self::AMBANK,
+            self::UOB,
             self::BNC,
             self::HANA,
             self::MUAMALAT,

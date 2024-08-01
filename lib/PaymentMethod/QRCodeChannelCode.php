@@ -11,7 +11,7 @@
 /**
  * Payment Method Service v2
  *
- * The version of the OpenAPI document: 2.99.0
+ * The version of the OpenAPI document: 2.128.0
  */
 
 /**
@@ -49,6 +49,8 @@ class QRCodeChannelCode
     
     public const XENDIT = 'XENDIT';
     
+    public const QRPH = 'QRPH';
+    
     public const XENDIT_ENUM_DEFAULT_FALLBACK = 'UNKNOWN_ENUM_VALUE';
 
     private $value;
@@ -85,6 +87,7 @@ class QRCodeChannelCode
             self::PROMPTPAY,
             self::LINKAJA,
             self::XENDIT,
+            self::QRPH,
             self::XENDIT_ENUM_DEFAULT_FALLBACK
         ];
     }

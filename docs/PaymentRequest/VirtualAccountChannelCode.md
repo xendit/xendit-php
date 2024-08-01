@@ -37,9 +37,15 @@ use Xendit\PaymentRequest\VirtualAccountChannelCode;
     
         * `MSB` (value: `'MSB'`)
     
+        * `VPB` (value: `'VPB'`)
+    
+        * `BIDV` (value: `'BIDV'`)
+    
         * `STANDARD_CHARTERED` (value: `'STANDARD_CHARTERED'`)
     
         * `AMBANK` (value: `'AMBANK'`)
+    
+        * `UOB` (value: `'UOB'`)
     
         * `BNC` (value: `'BNC'`)
     

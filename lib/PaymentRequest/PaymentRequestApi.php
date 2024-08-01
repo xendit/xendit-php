@@ -10,7 +10,7 @@
 /**
  * Payment Requests
  *
- * The version of the OpenAPI document: 1.59.0
+ * The version of the OpenAPI document: 1.70.0
  */
 
 /**
@@ -148,6 +148,7 @@ class PaymentRequestApi
      *
      * @param  string $idempotency_key idempotency_key (optional)
      * @param  string $for_user_id for_user_id (optional)
+     * @param  string $with_split_rule with_split_rule (optional)
      * @param  \Xendit\PaymentRequest\PaymentRequestParameters $payment_request_parameters payment_request_parameters (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createPaymentRequest'] to see the possible values for this operation
      *
@@ -155,9 +156,9 @@ class PaymentRequestApi
      * @throws \InvalidArgumentException
      * @return \Xendit\PaymentRequest\PaymentRequest
      */
-    public function createPaymentRequest($idempotency_key = null, $for_user_id = null, $payment_request_parameters = null, string $contentType = self::contentTypes['createPaymentRequest'][0])
+    public function createPaymentRequest($idempotency_key = null, $for_user_id = null, $with_split_rule = null, $payment_request_parameters = null, string $contentType = self::contentTypes['createPaymentRequest'][0])
     {
-        list($response) = $this->createPaymentRequestWithHttpInfo($idempotency_key, $for_user_id, $payment_request_parameters, $contentType);
+        list($response) = $this->createPaymentRequestWithHttpInfo($idempotency_key, $for_user_id, $with_split_rule, $payment_request_parameters, $contentType);
         return $response;
     }
 
@@ -168,6 +169,7 @@ class PaymentRequestApi
      *
      * @param  string $idempotency_key (optional)
      * @param  string $for_user_id (optional)
+     * @param  string $with_split_rule (optional)
      * @param  \Xendit\PaymentRequest\PaymentRequestParameters $payment_request_parameters (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createPaymentRequest'] to see the possible values for this operation
      *
@@ -175,9 +177,9 @@ class PaymentRequestApi
      * @throws \InvalidArgumentException
      * @return array of \Xendit\PaymentRequest\PaymentRequest, HTTP status code, HTTP response headers (array of strings)
      */
-    public function createPaymentRequestWithHttpInfo($idempotency_key = null, $for_user_id = null, $payment_request_parameters = null, string $contentType = self::contentTypes['createPaymentRequest'][0])
+    public function createPaymentRequestWithHttpInfo($idempotency_key = null, $for_user_id = null, $with_split_rule = null, $payment_request_parameters = null, string $contentType = self::contentTypes['createPaymentRequest'][0])
     {
-        $request = $this->createPaymentRequestRequest($idempotency_key, $for_user_id, $payment_request_parameters, $contentType);
+        $request = $this->createPaymentRequestRequest($idempotency_key, $for_user_id, $with_split_rule, $payment_request_parameters, $contentType);
 
         $options = $this->createHttpClientOption();
         try {
@@ -237,15 +239,16 @@ class PaymentRequestApi
      *
      * @param  string $idempotency_key (optional)
      * @param  string $for_user_id (optional)
+     * @param  string $with_split_rule (optional)
      * @param  \Xendit\PaymentRequest\PaymentRequestParameters $payment_request_parameters (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createPaymentRequest'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function createPaymentRequestAsync($idempotency_key = null, $for_user_id = null, $payment_request_parameters = null, string $contentType = self::contentTypes['createPaymentRequest'][0])
+    public function createPaymentRequestAsync($idempotency_key = null, $for_user_id = null, $with_split_rule = null, $payment_request_parameters = null, string $contentType = self::contentTypes['createPaymentRequest'][0])
     {
-        return $this->createPaymentRequestAsyncWithHttpInfo($idempotency_key, $for_user_id, $payment_request_parameters, $contentType)
+        return $this->createPaymentRequestAsyncWithHttpInfo($idempotency_key, $for_user_id, $with_split_rule, $payment_request_parameters, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -260,16 +263,17 @@ class PaymentRequestApi
      *
      * @param  string $idempotency_key (optional)
      * @param  string $for_user_id (optional)
+     * @param  string $with_split_rule (optional)
      * @param  \Xendit\PaymentRequest\PaymentRequestParameters $payment_request_parameters (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createPaymentRequest'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function createPaymentRequestAsyncWithHttpInfo($idempotency_key = null, $for_user_id = null, $payment_request_parameters = null, string $contentType = self::contentTypes['createPaymentRequest'][0])
+    public function createPaymentRequestAsyncWithHttpInfo($idempotency_key = null, $for_user_id = null, $with_split_rule = null, $payment_request_parameters = null, string $contentType = self::contentTypes['createPaymentRequest'][0])
     {
         $returnType = '\Xendit\PaymentRequest\PaymentRequest';
-        $request = $this->createPaymentRequestRequest($idempotency_key, $for_user_id, $payment_request_parameters, $contentType);
+        $request = $this->createPaymentRequestRequest($idempotency_key, $for_user_id, $with_split_rule, $payment_request_parameters, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -305,14 +309,16 @@ class PaymentRequestApi
      *
      * @param  string $idempotency_key (optional)
      * @param  string $for_user_id (optional)
+     * @param  string $with_split_rule (optional)
      * @param  \Xendit\PaymentRequest\PaymentRequestParameters $payment_request_parameters (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createPaymentRequest'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function createPaymentRequestRequest($idempotency_key = null, $for_user_id = null, $payment_request_parameters = null, string $contentType = self::contentTypes['createPaymentRequest'][0])
+    public function createPaymentRequestRequest($idempotency_key = null, $for_user_id = null, $with_split_rule = null, $payment_request_parameters = null, string $contentType = self::contentTypes['createPaymentRequest'][0])
     {
+
 
 
 
@@ -333,6 +339,10 @@ class PaymentRequestApi
         // header param: for-user-id
         if ($for_user_id !== null) {
             $headerParams['for-user-id'] = ObjectSerializer::toHeaderValue($for_user_id);
+        }
+        // header param: with-split-rule
+        if ($with_split_rule !== null) {
+            $headerParams['with-split-rule'] = ObjectSerializer::toHeaderValue($with_split_rule);
         }
 
 
@@ -381,7 +391,7 @@ class PaymentRequestApi
         
         // Xendit's custom headers
         $defaultHeaders['xendit-lib'] = 'php';
-        $defaultHeaders['xendit-lib-ver'] = '5.0.0';
+        $defaultHeaders['xendit-lib-ver'] = '6.0.0';
 
         if ($this->config->getUserAgent()) {
             $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
@@ -640,7 +650,7 @@ class PaymentRequestApi
         
         // Xendit's custom headers
         $defaultHeaders['xendit-lib'] = 'php';
-        $defaultHeaders['xendit-lib-ver'] = '5.0.0';
+        $defaultHeaders['xendit-lib-ver'] = '6.0.0';
 
         if ($this->config->getUserAgent()) {
             $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
@@ -914,7 +924,7 @@ class PaymentRequestApi
         
         // Xendit's custom headers
         $defaultHeaders['xendit-lib'] = 'php';
-        $defaultHeaders['xendit-lib-ver'] = '5.0.0';
+        $defaultHeaders['xendit-lib-ver'] = '6.0.0';
 
         if ($this->config->getUserAgent()) {
             $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
@@ -1243,7 +1253,7 @@ class PaymentRequestApi
         
         // Xendit's custom headers
         $defaultHeaders['xendit-lib'] = 'php';
-        $defaultHeaders['xendit-lib-ver'] = '5.0.0';
+        $defaultHeaders['xendit-lib-ver'] = '6.0.0';
 
         if ($this->config->getUserAgent()) {
             $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
@@ -1515,7 +1525,7 @@ class PaymentRequestApi
         
         // Xendit's custom headers
         $defaultHeaders['xendit-lib'] = 'php';
-        $defaultHeaders['xendit-lib-ver'] = '5.0.0';
+        $defaultHeaders['xendit-lib-ver'] = '6.0.0';
 
         if ($this->config->getUserAgent()) {
             $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
@@ -1787,7 +1797,7 @@ class PaymentRequestApi
         
         // Xendit's custom headers
         $defaultHeaders['xendit-lib'] = 'php';
-        $defaultHeaders['xendit-lib-ver'] = '5.0.0';
+        $defaultHeaders['xendit-lib-ver'] = '6.0.0';
 
         if ($this->config->getUserAgent()) {
             $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
@@ -2046,7 +2056,7 @@ class PaymentRequestApi
         
         // Xendit's custom headers
         $defaultHeaders['xendit-lib'] = 'php';
-        $defaultHeaders['xendit-lib-ver'] = '5.0.0';
+        $defaultHeaders['xendit-lib-ver'] = '6.0.0';
 
         if ($this->config->getUserAgent()) {
             $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
@@ -2295,7 +2305,7 @@ class PaymentRequestApi
         
         // Xendit's custom headers
         $defaultHeaders['xendit-lib'] = 'php';
-        $defaultHeaders['xendit-lib-ver'] = '5.0.0';
+        $defaultHeaders['xendit-lib-ver'] = '6.0.0';
 
         if ($this->config->getUserAgent()) {
             $defaultHeaders['User-Agent'] = $this->config->getUserAgent();

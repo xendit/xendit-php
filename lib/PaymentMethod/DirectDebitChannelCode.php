@@ -11,7 +11,7 @@
 /**
  * Payment Method Service v2
  *
- * The version of the OpenAPI document: 2.99.0
+ * The version of the OpenAPI document: 2.128.0
  */
 
 /**
@@ -45,13 +45,11 @@ class DirectDebitChannelCode
     
     public const BPI = 'BPI';
     
-    public const AUTODEBIT_BPI = 'AUTODEBIT_BPI';
-    
     public const BPI_RECURRING = 'BPI_RECURRING';
     
     public const BRI = 'BRI';
     
-    public const BNI = 'BNI';
+    public const BNI_AUTOPAY = 'BNI_AUTOPAY';
     
     public const CHINABANK = 'CHINABANK';
     
@@ -85,7 +83,7 @@ class DirectDebitChannelCode
     
     public const BDO_EPAY = 'BDO_EPAY';
     
-    public const AUTODEBIT_UBP = 'AUTODEBIT_UBP';
+    public const UBP_EADA = 'UBP_EADA';
     
     public const UBP_DEBIT_PULL = 'UBP_DEBIT_PULL';
     
@@ -169,6 +167,60 @@ class DirectDebitChannelCode
     
     public const UOB_FPX_BUSINESS = 'UOB_FPX_BUSINESS';
     
+    public const BDO_ONLINE_BANKING = 'BDO_ONLINE_BANKING';
+    
+    public const BPI_ONLINE_BANKING = 'BPI_ONLINE_BANKING';
+    
+    public const UNIONBANK_ONLINE_BANKING = 'UNIONBANK_ONLINE_BANKING';
+    
+    public const BOC_ONLINE_BANKING = 'BOC_ONLINE_BANKING';
+    
+    public const CHINABANK_ONLINE_BANKING = 'CHINABANK_ONLINE_BANKING';
+    
+    public const INSTAPAY_ONLINE_BANKING = 'INSTAPAY_ONLINE_BANKING';
+    
+    public const LANDBANK_ONLINE_BANKING = 'LANDBANK_ONLINE_BANKING';
+    
+    public const MAYBANK_ONLINE_BANKING = 'MAYBANK_ONLINE_BANKING';
+    
+    public const METROBANK_ONLINE_BANKING = 'METROBANK_ONLINE_BANKING';
+    
+    public const PNB_ONLINE_BANKING = 'PNB_ONLINE_BANKING';
+    
+    public const PSBANK_ONLINE_BANKING = 'PSBANK_ONLINE_BANKING';
+    
+    public const PESONET_ONLINE_BANKING = 'PESONET_ONLINE_BANKING';
+    
+    public const RCBC_ONLINE_BANKING = 'RCBC_ONLINE_BANKING';
+    
+    public const ROBINSONS_BANK_ONLINE_BANKING = 'ROBINSONS_BANK_ONLINE_BANKING';
+    
+    public const SECURITY_BANK_ONLINE_BANKING = 'SECURITY_BANK_ONLINE_BANKING';
+    
+    public const AUTODEBIT_UBP = 'AUTODEBIT_UBP';
+    
+    public const AUTODEBIT_BPI = 'AUTODEBIT_BPI';
+    
+    public const GBW_BBL_MOBILE_BANKING = 'GBW_BBL_MOBILE_BANKING';
+    
+    public const GBW_KBANK_MOBILE_BANKING = 'GBW_KBANK_MOBILE_BANKING';
+    
+    public const GBW_KTB_MOBILE_BANKING = 'GBW_KTB_MOBILE_BANKING';
+    
+    public const GBW_SCB_MOBILE_BANKING = 'GBW_SCB_MOBILE_BANKING';
+    
+    public const GBW_BAY_MOBILE_BANKING = 'GBW_BAY_MOBILE_BANKING';
+    
+    public const GBW_BBL = 'GBW_BBL';
+    
+    public const GBW_KBANK = 'GBW_KBANK';
+    
+    public const GBW_KTB = 'GBW_KTB';
+    
+    public const GBW_SCB = 'GBW_SCB';
+    
+    public const GBW_BAY = 'GBW_BAY';
+    
     public const XENDIT_ENUM_DEFAULT_FALLBACK = 'UNKNOWN_ENUM_VALUE';
 
     private $value;
@@ -203,10 +255,9 @@ class DirectDebitChannelCode
             self::BCA_ONEKLIK,
             self::BDO,
             self::BPI,
-            self::AUTODEBIT_BPI,
             self::BPI_RECURRING,
             self::BRI,
-            self::BNI,
+            self::BNI_AUTOPAY,
             self::CHINABANK,
             self::CIMBNIAGA,
             self::MTB,
@@ -223,7 +274,7 @@ class DirectDebitChannelCode
             self::BBL_MB,
             self::SCB_MB,
             self::BDO_EPAY,
-            self::AUTODEBIT_UBP,
+            self::UBP_EADA,
             self::UBP_DEBIT_PULL,
             self::AFFIN_FPX,
             self::AGRO_FPX,
@@ -265,6 +316,33 @@ class DirectDebitChannelCode
             self::RHB_FPX_BUSINESS,
             self::SCH_FPX_BUSINESS,
             self::UOB_FPX_BUSINESS,
+            self::BDO_ONLINE_BANKING,
+            self::BPI_ONLINE_BANKING,
+            self::UNIONBANK_ONLINE_BANKING,
+            self::BOC_ONLINE_BANKING,
+            self::CHINABANK_ONLINE_BANKING,
+            self::INSTAPAY_ONLINE_BANKING,
+            self::LANDBANK_ONLINE_BANKING,
+            self::MAYBANK_ONLINE_BANKING,
+            self::METROBANK_ONLINE_BANKING,
+            self::PNB_ONLINE_BANKING,
+            self::PSBANK_ONLINE_BANKING,
+            self::PESONET_ONLINE_BANKING,
+            self::RCBC_ONLINE_BANKING,
+            self::ROBINSONS_BANK_ONLINE_BANKING,
+            self::SECURITY_BANK_ONLINE_BANKING,
+            self::AUTODEBIT_UBP,
+            self::AUTODEBIT_BPI,
+            self::GBW_BBL_MOBILE_BANKING,
+            self::GBW_KBANK_MOBILE_BANKING,
+            self::GBW_KTB_MOBILE_BANKING,
+            self::GBW_SCB_MOBILE_BANKING,
+            self::GBW_BAY_MOBILE_BANKING,
+            self::GBW_BBL,
+            self::GBW_KBANK,
+            self::GBW_KTB,
+            self::GBW_SCB,
+            self::GBW_BAY,
             self::XENDIT_ENUM_DEFAULT_FALLBACK
         ];
     }
