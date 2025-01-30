@@ -11,7 +11,7 @@
 /**
  * xendit-invoice-service
  *
- * The version of the OpenAPI document: 1.7.6
+ * The version of the OpenAPI document: 1.8.7
  */
 
 /**
@@ -40,6 +40,8 @@ class QrCodeType
     public const QRIS = 'QRIS';
     
     public const PROMPTPAY = 'PROMPTPAY';
+    
+    public const QRPH = 'QRPH';
     
     public const XENDIT_ENUM_DEFAULT_FALLBACK = 'UNKNOWN_ENUM_VALUE';
 
@@ -73,6 +75,7 @@ class QrCodeType
         return [
             self::QRIS,
             self::PROMPTPAY,
+            self::QRPH,
             self::XENDIT_ENUM_DEFAULT_FALLBACK
         ];
     }

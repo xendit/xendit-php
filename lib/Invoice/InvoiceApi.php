@@ -10,7 +10,7 @@
 /**
  * xendit-invoice-service
  *
- * The version of the OpenAPI document: 1.7.6
+ * The version of the OpenAPI document: 1.8.7
  */
 
 /**
@@ -365,7 +365,7 @@ class InvoiceApi
         
         // Xendit's custom headers
         $defaultHeaders['xendit-lib'] = 'php';
-        $defaultHeaders['xendit-lib-ver'] = '6.0.0';
+        $defaultHeaders['xendit-lib-ver'] = '6.1.0';
 
         if ($this->config->getUserAgent()) {
             $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
@@ -624,7 +624,7 @@ class InvoiceApi
         
         // Xendit's custom headers
         $defaultHeaders['xendit-lib'] = 'php';
-        $defaultHeaders['xendit-lib-ver'] = '6.0.0';
+        $defaultHeaders['xendit-lib-ver'] = '6.1.0';
 
         if ($this->config->getUserAgent()) {
             $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
@@ -1073,7 +1073,7 @@ class InvoiceApi
         
         // Xendit's custom headers
         $defaultHeaders['xendit-lib'] = 'php';
-        $defaultHeaders['xendit-lib-ver'] = '6.0.0';
+        $defaultHeaders['xendit-lib-ver'] = '6.1.0';
 
         if ($this->config->getUserAgent()) {
             $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
@@ -1332,7 +1332,7 @@ class InvoiceApi
         
         // Xendit's custom headers
         $defaultHeaders['xendit-lib'] = 'php';
-        $defaultHeaders['xendit-lib-ver'] = '6.0.0';
+        $defaultHeaders['xendit-lib-ver'] = '6.1.0';
 
         if ($this->config->getUserAgent()) {
             $defaultHeaders['User-Agent'] = $this->config->getUserAgent();

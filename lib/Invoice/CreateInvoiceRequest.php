@@ -11,7 +11,7 @@
 /**
  * xendit-invoice-service
  *
- * The version of the OpenAPI document: 1.7.6
+ * The version of the OpenAPI document: 1.8.7
  */
 
 /**
@@ -67,11 +67,12 @@ class CreateInvoiceRequest implements ModelInterface, ArrayAccess, \JsonSerializ
         'should_authenticate_credit_card' => 'bool',
         'currency' => 'string',
         'reminder_time' => 'float',
-        'local' => 'string',
+        'locale' => 'string',
         'reminder_time_unit' => 'string',
         'items' => '\Xendit\Invoice\InvoiceItem[]',
         'fees' => '\Xendit\Invoice\InvoiceFee[]',
-        'channel_properties' => '\Xendit\Invoice\ChannelProperties'
+        'channel_properties' => '\Xendit\Invoice\ChannelProperties',
+        'metadata' => 'object'
     ];
 
     /**
@@ -98,11 +99,12 @@ class CreateInvoiceRequest implements ModelInterface, ArrayAccess, \JsonSerializ
         'should_authenticate_credit_card' => null,
         'currency' => null,
         'reminder_time' => null,
-        'local' => null,
+        'locale' => null,
         'reminder_time_unit' => null,
         'items' => null,
         'fees' => null,
-        'channel_properties' => null
+        'channel_properties' => null,
+        'metadata' => null
     ];
 
     /**
@@ -127,11 +129,12 @@ class CreateInvoiceRequest implements ModelInterface, ArrayAccess, \JsonSerializ
 		'should_authenticate_credit_card' => false,
 		'currency' => false,
 		'reminder_time' => false,
-		'local' => false,
+		'locale' => false,
 		'reminder_time_unit' => false,
 		'items' => false,
 		'fees' => false,
-		'channel_properties' => false
+		'channel_properties' => false,
+		'metadata' => false
     ];
 
     /**
@@ -236,11 +239,12 @@ class CreateInvoiceRequest implements ModelInterface, ArrayAccess, \JsonSerializ
         'should_authenticate_credit_card' => 'should_authenticate_credit_card',
         'currency' => 'currency',
         'reminder_time' => 'reminder_time',
-        'local' => 'local',
+        'locale' => 'locale',
         'reminder_time_unit' => 'reminder_time_unit',
         'items' => 'items',
         'fees' => 'fees',
-        'channel_properties' => 'channel_properties'
+        'channel_properties' => 'channel_properties',
+        'metadata' => 'metadata'
     ];
 
     /**
@@ -265,11 +269,12 @@ class CreateInvoiceRequest implements ModelInterface, ArrayAccess, \JsonSerializ
         'should_authenticate_credit_card' => 'setShouldAuthenticateCreditCard',
         'currency' => 'setCurrency',
         'reminder_time' => 'setReminderTime',
-        'local' => 'setLocal',
+        'locale' => 'setLocale',
         'reminder_time_unit' => 'setReminderTimeUnit',
         'items' => 'setItems',
         'fees' => 'setFees',
-        'channel_properties' => 'setChannelProperties'
+        'channel_properties' => 'setChannelProperties',
+        'metadata' => 'setMetadata'
     ];
 
     /**
@@ -294,11 +299,12 @@ class CreateInvoiceRequest implements ModelInterface, ArrayAccess, \JsonSerializ
         'should_authenticate_credit_card' => 'getShouldAuthenticateCreditCard',
         'currency' => 'getCurrency',
         'reminder_time' => 'getReminderTime',
-        'local' => 'getLocal',
+        'locale' => 'getLocale',
         'reminder_time_unit' => 'getReminderTimeUnit',
         'items' => 'getItems',
         'fees' => 'getFees',
-        'channel_properties' => 'getChannelProperties'
+        'channel_properties' => 'getChannelProperties',
+        'metadata' => 'getMetadata'
     ];
 
     /**
@@ -374,11 +380,12 @@ class CreateInvoiceRequest implements ModelInterface, ArrayAccess, \JsonSerializ
         $this->setIfExists('should_authenticate_credit_card', $data ?? [], null);
         $this->setIfExists('currency', $data ?? [], null);
         $this->setIfExists('reminder_time', $data ?? [], null);
-        $this->setIfExists('local', $data ?? [], null);
+        $this->setIfExists('locale', $data ?? [], null);
         $this->setIfExists('reminder_time_unit', $data ?? [], null);
         $this->setIfExists('items', $data ?? [], null);
         $this->setIfExists('fees', $data ?? [], null);
         $this->setIfExists('channel_properties', $data ?? [], null);
+        $this->setIfExists('metadata', $data ?? [], null);
     }
 
     /**
@@ -862,28 +869,28 @@ class CreateInvoiceRequest implements ModelInterface, ArrayAccess, \JsonSerializ
     }
 
     /**
-     * Gets local
+     * Gets locale
      *
      * @return string|null
      */
-    public function getLocal()
+    public function getLocale()
     {
-        return $this->container['local'];
+        return $this->container['locale'];
     }
 
     /**
-     * Sets local
+     * Sets locale
      *
-     * @param string|null $local The local.
+     * @param string|null $locale The default language to display.
      *
      * @return self
      */
-    public function setLocal($local)
+    public function setLocale($locale)
     {
-        if (is_null($local)) {
-            throw new \InvalidArgumentException('non-nullable local cannot be null');
+        if (is_null($locale)) {
+            throw new \InvalidArgumentException('non-nullable locale cannot be null');
         }
-        $this->container['local'] = $local;
+        $this->container['locale'] = $locale;
 
         return $this;
     }
@@ -992,6 +999,35 @@ class CreateInvoiceRequest implements ModelInterface, ArrayAccess, \JsonSerializ
             throw new \InvalidArgumentException('non-nullable channel_properties cannot be null');
         }
         $this->container['channel_properties'] = $channel_properties;
+
+        return $this;
+    }
+
+    /**
+     * Gets metadata
+     *
+     * @return object|null
+     */
+    public function getMetadata()
+    {
+        return $this->container['metadata'];
+    }
+
+    /**
+     * Sets metadata
+     *
+     * @param object|null $metadata A free-format JSON for additional information that you may use. Object can be up to 50 keys, with key names up to 40 characters long and values up to 500 characters long.
+     *
+     * @return self
+     */
+    public function setMetadata($metadata)
+    {
+        if (is_null($metadata)) {
+            throw new \InvalidArgumentException('non-nullable metadata cannot be null');
+        }
+
+
+        $this->container['metadata'] = $metadata;
 
         return $this;
     }

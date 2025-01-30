@@ -25,11 +25,12 @@ use Xendit\Invoice\CreateInvoiceRequest;
 | **should_authenticate_credit_card** | **bool** |  | Indicates whether credit card authentication is required. | null |
 | **currency** | **string** |  | The currency of the invoice. | null |
 | **reminder_time** | **float** |  | The reminder time. | null |
-| **local** | **string** |  | The local. | null |
+| **locale** | **string** |  | The default language to display. | null |
 | **reminder_time_unit** | **string** |  | The unit of the reminder time. | null |
 | **items** | [**array**](InvoiceItem.md) |  | An array of items included in the invoice. | null |
 | **fees** | [**array**](InvoiceFee.md) |  | An array of fees associated with the invoice. | null |
 | **channel_properties** | [**ChannelProperties**](ChannelProperties.md) |  |  | null |
+| **metadata** | **object** |  | A free-format JSON for additional information that you may use. Object can be up to 50 keys, with key names up to 40 characters long and values up to 500 characters long. | null |
 
 
 [[Back to README]](../../README.md)

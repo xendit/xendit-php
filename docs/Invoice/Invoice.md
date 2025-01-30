@@ -43,6 +43,7 @@ use Xendit\Invoice\Invoice;
 | **customer_notification_preference** | [**NotificationPreference**](NotificationPreference.md) |  |  | null |
 | **fees** | [**array**](InvoiceFee.md) |  | An array of fees associated with the invoice. | null |
 | **channel_properties** | [**ChannelProperties**](ChannelProperties.md) |  |  | null |
+| **metadata** | **object** |  | A free-format JSON for additional information that you may use. Object can be up to 50 keys, with key names up to 40 characters long and values up to 500 characters long. | null |
 
 
 [[Back to README]](../../README.md)

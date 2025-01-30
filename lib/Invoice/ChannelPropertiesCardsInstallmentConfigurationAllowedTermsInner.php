@@ -1,6 +1,6 @@
 <?php
 /**
- * RetailOutlet
+ * ChannelPropertiesCardsInstallmentConfigurationAllowedTermsInner
  *
  * PHP version 7.4
  *
@@ -27,14 +27,13 @@ use \Xendit\ObjectSerializer;
 use \Xendit\Model\ModelInterface;
 
 /**
- * RetailOutlet Class Doc Comment
+ * ChannelPropertiesCardsInstallmentConfigurationAllowedTermsInner Class Doc Comment
  *
  * @category Class
- * @description An object representing retail outlet details for invoices.
  * @package  Xendit
  * @implements \ArrayAccess<string, mixed>
  */
-class RetailOutlet implements ModelInterface, ArrayAccess, \JsonSerializable
+class ChannelPropertiesCardsInstallmentConfigurationAllowedTermsInner implements ModelInterface, ArrayAccess, \JsonSerializable
 {
     public const DISCRIMINATOR = null;
 
@@ -43,7 +42,7 @@ class RetailOutlet implements ModelInterface, ArrayAccess, \JsonSerializable
       *
       * @var string
       */
-    protected static $openAPIModelName = 'RetailOutlet';
+    protected static $openAPIModelName = 'ChannelPropertiesCards_installment_configuration_allowed_terms_inner';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
@@ -51,10 +50,8 @@ class RetailOutlet implements ModelInterface, ArrayAccess, \JsonSerializable
       * @var string[]
       */
     protected static $openAPITypes = [
-        'retail_outlet_name' => '\Xendit\Invoice\RetailOutletName',
-        'payment_code' => 'string',
-        'transfer_amount' => 'float',
-        'merchant_name' => 'string'
+        'issuer' => 'string',
+        'allowed_terms' => 'float[]'
     ];
 
     /**
@@ -65,10 +62,8 @@ class RetailOutlet implements ModelInterface, ArrayAccess, \JsonSerializable
       * @psalm-var array<string, string|null>
       */
     protected static $openAPIFormats = [
-        'retail_outlet_name' => null,
-        'payment_code' => null,
-        'transfer_amount' => 'double',
-        'merchant_name' => null
+        'issuer' => null,
+        'allowed_terms' => null
     ];
 
     /**
@@ -77,10 +72,8 @@ class RetailOutlet implements ModelInterface, ArrayAccess, \JsonSerializable
       * @var boolean[]
       */
     protected static array $openAPINullables = [
-        'retail_outlet_name' => false,
-		'payment_code' => false,
-		'transfer_amount' => false,
-		'merchant_name' => false
+        'issuer' => false,
+		'allowed_terms' => false
     ];
 
     /**
@@ -169,10 +162,8 @@ class RetailOutlet implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $attributeMap = [
-        'retail_outlet_name' => 'retail_outlet_name',
-        'payment_code' => 'payment_code',
-        'transfer_amount' => 'transfer_amount',
-        'merchant_name' => 'merchant_name'
+        'issuer' => 'issuer',
+        'allowed_terms' => 'allowed_terms'
     ];
 
     /**
@@ -181,10 +172,8 @@ class RetailOutlet implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $setters = [
-        'retail_outlet_name' => 'setRetailOutletName',
-        'payment_code' => 'setPaymentCode',
-        'transfer_amount' => 'setTransferAmount',
-        'merchant_name' => 'setMerchantName'
+        'issuer' => 'setIssuer',
+        'allowed_terms' => 'setAllowedTerms'
     ];
 
     /**
@@ -193,10 +182,8 @@ class RetailOutlet implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $getters = [
-        'retail_outlet_name' => 'getRetailOutletName',
-        'payment_code' => 'getPaymentCode',
-        'transfer_amount' => 'getTransferAmount',
-        'merchant_name' => 'getMerchantName'
+        'issuer' => 'getIssuer',
+        'allowed_terms' => 'getAllowedTerms'
     ];
 
     /**
@@ -256,10 +243,8 @@ class RetailOutlet implements ModelInterface, ArrayAccess, \JsonSerializable
      */
     public function __construct(array $data = null)
     {
-        $this->setIfExists('retail_outlet_name', $data ?? [], null);
-        $this->setIfExists('payment_code', $data ?? [], null);
-        $this->setIfExists('transfer_amount', $data ?? [], null);
-        $this->setIfExists('merchant_name', $data ?? [], null);
+        $this->setIfExists('issuer', $data ?? [], null);
+        $this->setIfExists('allowed_terms', $data ?? [], null);
     }
 
     /**
@@ -289,9 +274,6 @@ class RetailOutlet implements ModelInterface, ArrayAccess, \JsonSerializable
     {
         $invalidProperties = [];
 
-        if ($this->container['retail_outlet_name'] === null) {
-            $invalidProperties[] = "'retail_outlet_name' can't be null";
-        }
         return $invalidProperties;
     }
 
@@ -308,109 +290,55 @@ class RetailOutlet implements ModelInterface, ArrayAccess, \JsonSerializable
 
 
     /**
-     * Gets retail_outlet_name
-     *
-     * @return \Invoice\RetailOutletName
-     */
-    public function getRetailOutletName()
-    {
-        return $this->container['retail_outlet_name'];
-    }
-
-    /**
-     * Sets retail_outlet_name
-     *
-     * @param \Invoice\RetailOutletName $retail_outlet_name retail_outlet_name
-     *
-     * @return self
-     */
-    public function setRetailOutletName($retail_outlet_name)
-    {
-        if (is_null($retail_outlet_name)) {
-            throw new \InvalidArgumentException('non-nullable retail_outlet_name cannot be null');
-        }
-        $this->container['retail_outlet_name'] = $retail_outlet_name;
-
-        return $this;
-    }
-
-    /**
-     * Gets payment_code
+     * Gets issuer
      *
      * @return string|null
      */
-    public function getPaymentCode()
+    public function getIssuer()
     {
-        return $this->container['payment_code'];
+        return $this->container['issuer'];
     }
 
     /**
-     * Sets payment_code
+     * Sets issuer
      *
-     * @param string|null $payment_code The payment code.
+     * @param string|null $issuer The bank code of the installment provider / issuer
      *
      * @return self
      */
-    public function setPaymentCode($payment_code)
+    public function setIssuer($issuer)
     {
-        if (is_null($payment_code)) {
-            throw new \InvalidArgumentException('non-nullable payment_code cannot be null');
+        if (is_null($issuer)) {
+            throw new \InvalidArgumentException('non-nullable issuer cannot be null');
         }
-        $this->container['payment_code'] = $payment_code;
+        $this->container['issuer'] = $issuer;
 
         return $this;
     }
 
     /**
-     * Gets transfer_amount
+     * Gets allowed_terms
      *
-     * @return float|null
+     * @return float[]|null
      */
-    public function getTransferAmount()
+    public function getAllowedTerms()
     {
-        return $this->container['transfer_amount'];
+        return $this->container['allowed_terms'];
     }
 
     /**
-     * Sets transfer_amount
+     * Sets allowed_terms
      *
-     * @param float|null $transfer_amount The transfer amount.
+     * @param float[]|null $allowed_terms An array containing list of installment tenor available to choose
      *
      * @return self
      */
-    public function setTransferAmount($transfer_amount)
+    public function setAllowedTerms($allowed_terms)
     {
-        if (is_null($transfer_amount)) {
-            throw new \InvalidArgumentException('non-nullable transfer_amount cannot be null');
+        if (is_null($allowed_terms)) {
+            throw new \InvalidArgumentException('non-nullable allowed_terms cannot be null');
         }
-        $this->container['transfer_amount'] = $transfer_amount;
-
-        return $this;
-    }
-
-    /**
-     * Gets merchant_name
-     *
-     * @return string|null
-     */
-    public function getMerchantName()
-    {
-        return $this->container['merchant_name'];
-    }
-
-    /**
-     * Sets merchant_name
-     *
-     * @param string|null $merchant_name The name of the merchant.
-     *
-     * @return self
-     */
-    public function setMerchantName($merchant_name)
-    {
-        if (is_null($merchant_name)) {
-            throw new \InvalidArgumentException('non-nullable merchant_name cannot be null');
-        }
-        $this->container['merchant_name'] = $merchant_name;
+        $this->container['allowed_terms'] = $allowed_terms;
 
         return $this;
     }

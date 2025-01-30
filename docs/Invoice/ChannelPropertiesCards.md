@@ -10,6 +10,7 @@ use Xendit\Invoice\ChannelPropertiesCards;
 | Name | Type | Required | Description | Examples |
 |------------|:-------------:|:-------------:|-------------|:-------------:|
 | **allowed_bins** | **string[]** |  | An array of allowed BINs (6 or 8 digits) for credit card payments. | null |
+| **installment_configuration** | [**ChannelPropertiesCardsInstallmentConfiguration**](ChannelPropertiesCardsInstallmentConfiguration.md) |  |  | null |
 
 
 [[Back to README]](../../README.md)

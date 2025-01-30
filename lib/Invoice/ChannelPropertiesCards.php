@@ -11,7 +11,7 @@
 /**
  * xendit-invoice-service
  *
- * The version of the OpenAPI document: 1.7.6
+ * The version of the OpenAPI document: 1.8.7
  */
 
 /**
@@ -51,7 +51,8 @@ class ChannelPropertiesCards implements ModelInterface, ArrayAccess, \JsonSerial
       * @var string[]
       */
     protected static $openAPITypes = [
-        'allowed_bins' => 'string[]'
+        'allowed_bins' => 'string[]',
+        'installment_configuration' => '\Xendit\Invoice\ChannelPropertiesCardsInstallmentConfiguration'
     ];
 
     /**
@@ -62,7 +63,8 @@ class ChannelPropertiesCards implements ModelInterface, ArrayAccess, \JsonSerial
       * @psalm-var array<string, string|null>
       */
     protected static $openAPIFormats = [
-        'allowed_bins' => null
+        'allowed_bins' => null,
+        'installment_configuration' => null
     ];
 
     /**
@@ -71,7 +73,8 @@ class ChannelPropertiesCards implements ModelInterface, ArrayAccess, \JsonSerial
       * @var boolean[]
       */
     protected static array $openAPINullables = [
-        'allowed_bins' => false
+        'allowed_bins' => false,
+		'installment_configuration' => false
     ];
 
     /**
@@ -160,7 +163,8 @@ class ChannelPropertiesCards implements ModelInterface, ArrayAccess, \JsonSerial
      * @var string[]
      */
     protected static $attributeMap = [
-        'allowed_bins' => 'allowed_bins'
+        'allowed_bins' => 'allowed_bins',
+        'installment_configuration' => 'installment_configuration'
     ];
 
     /**
@@ -169,7 +173,8 @@ class ChannelPropertiesCards implements ModelInterface, ArrayAccess, \JsonSerial
      * @var string[]
      */
     protected static $setters = [
-        'allowed_bins' => 'setAllowedBins'
+        'allowed_bins' => 'setAllowedBins',
+        'installment_configuration' => 'setInstallmentConfiguration'
     ];
 
     /**
@@ -178,7 +183,8 @@ class ChannelPropertiesCards implements ModelInterface, ArrayAccess, \JsonSerial
      * @var string[]
      */
     protected static $getters = [
-        'allowed_bins' => 'getAllowedBins'
+        'allowed_bins' => 'getAllowedBins',
+        'installment_configuration' => 'getInstallmentConfiguration'
     ];
 
     /**
@@ -239,6 +245,7 @@ class ChannelPropertiesCards implements ModelInterface, ArrayAccess, \JsonSerial
     public function __construct(array $data = null)
     {
         $this->setIfExists('allowed_bins', $data ?? [], null);
+        $this->setIfExists('installment_configuration', $data ?? [], null);
     }
 
     /**
@@ -306,6 +313,33 @@ class ChannelPropertiesCards implements ModelInterface, ArrayAccess, \JsonSerial
             throw new \InvalidArgumentException('non-nullable allowed_bins cannot be null');
         }
         $this->container['allowed_bins'] = $allowed_bins;
+
+        return $this;
+    }
+
+    /**
+     * Gets installment_configuration
+     *
+     * @return \Invoice\ChannelPropertiesCardsInstallmentConfiguration|null
+     */
+    public function getInstallmentConfiguration()
+    {
+        return $this->container['installment_configuration'];
+    }
+
+    /**
+     * Sets installment_configuration
+     *
+     * @param \Invoice\ChannelPropertiesCardsInstallmentConfiguration|null $installment_configuration installment_configuration
+     *
+     * @return self
+     */
+    public function setInstallmentConfiguration($installment_configuration)
+    {
+        if (is_null($installment_configuration)) {
+            throw new \InvalidArgumentException('non-nullable installment_configuration cannot be null');
+        }
+        $this->container['installment_configuration'] = $installment_configuration;
 
         return $this;
     }

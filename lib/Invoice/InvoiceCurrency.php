@@ -11,7 +11,7 @@
 /**
  * xendit-invoice-service
  *
- * The version of the OpenAPI document: 1.7.6
+ * The version of the OpenAPI document: 1.8.7
  */
 
 /**
@@ -46,6 +46,8 @@ class InvoiceCurrency
     public const VND = 'VND';
     
     public const PHP = 'PHP';
+    
+    public const MYR = 'MYR';
     
     public const XENDIT_ENUM_DEFAULT_FALLBACK = 'UNKNOWN_ENUM_VALUE';
 
@@ -82,6 +84,7 @@ class InvoiceCurrency
             self::THB,
             self::VND,
             self::PHP,
+            self::MYR,
             self::XENDIT_ENUM_DEFAULT_FALLBACK
         ];
     }

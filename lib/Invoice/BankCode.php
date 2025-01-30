@@ -11,7 +11,7 @@
 /**
  * xendit-invoice-service
  *
- * The version of the OpenAPI document: 1.7.6
+ * The version of the OpenAPI document: 1.8.7
  */
 
 /**
@@ -54,6 +54,20 @@ class BankCode
     public const SAHABAT_SAMPOERNA = 'SAHABAT_SAMPOERNA';
     
     public const CIMB = 'CIMB';
+    
+    public const VIETCAPITAL = 'VIETCAPITAL';
+    
+    public const WOORI = 'WOORI';
+    
+    public const PV = 'PV';
+    
+    public const MSB = 'MSB';
+    
+    public const VPB = 'VPB';
+    
+    public const BIDV = 'BIDV';
+    
+    public const CAKE = 'CAKE';
     
     public const BNC = 'BNC';
     
@@ -100,6 +114,13 @@ class BankCode
             self::BJB,
             self::SAHABAT_SAMPOERNA,
             self::CIMB,
+            self::VIETCAPITAL,
+            self::WOORI,
+            self::PV,
+            self::MSB,
+            self::VPB,
+            self::BIDV,
+            self::CAKE,
             self::BNC,
             self::HANA,
             self::MUAMALAT,

@@ -11,7 +11,7 @@
 /**
  * xendit-invoice-service
  *
- * The version of the OpenAPI document: 1.7.6
+ * The version of the OpenAPI document: 1.8.7
  */
 
 /**
@@ -84,7 +84,8 @@ class Invoice implements ModelInterface, ArrayAccess, \JsonSerializable
         'customer' => '\Xendit\Invoice\CustomerObject',
         'customer_notification_preference' => '\Xendit\Invoice\NotificationPreference',
         'fees' => '\Xendit\Invoice\InvoiceFee[]',
-        'channel_properties' => '\Xendit\Invoice\ChannelProperties'
+        'channel_properties' => '\Xendit\Invoice\ChannelProperties',
+        'metadata' => 'object'
     ];
 
     /**
@@ -128,7 +129,8 @@ class Invoice implements ModelInterface, ArrayAccess, \JsonSerializable
         'customer' => null,
         'customer_notification_preference' => null,
         'fees' => null,
-        'channel_properties' => null
+        'channel_properties' => null,
+        'metadata' => null
     ];
 
     /**
@@ -170,7 +172,8 @@ class Invoice implements ModelInterface, ArrayAccess, \JsonSerializable
 		'customer' => false,
 		'customer_notification_preference' => false,
 		'fees' => false,
-		'channel_properties' => false
+		'channel_properties' => false,
+		'metadata' => false
     ];
 
     /**
@@ -292,7 +295,8 @@ class Invoice implements ModelInterface, ArrayAccess, \JsonSerializable
         'customer' => 'customer',
         'customer_notification_preference' => 'customer_notification_preference',
         'fees' => 'fees',
-        'channel_properties' => 'channel_properties'
+        'channel_properties' => 'channel_properties',
+        'metadata' => 'metadata'
     ];
 
     /**
@@ -334,7 +338,8 @@ class Invoice implements ModelInterface, ArrayAccess, \JsonSerializable
         'customer' => 'setCustomer',
         'customer_notification_preference' => 'setCustomerNotificationPreference',
         'fees' => 'setFees',
-        'channel_properties' => 'setChannelProperties'
+        'channel_properties' => 'setChannelProperties',
+        'metadata' => 'setMetadata'
     ];
 
     /**
@@ -376,7 +381,8 @@ class Invoice implements ModelInterface, ArrayAccess, \JsonSerializable
         'customer' => 'getCustomer',
         'customer_notification_preference' => 'getCustomerNotificationPreference',
         'fees' => 'getFees',
-        'channel_properties' => 'getChannelProperties'
+        'channel_properties' => 'getChannelProperties',
+        'metadata' => 'getMetadata'
     ];
 
     /**
@@ -470,6 +476,7 @@ class Invoice implements ModelInterface, ArrayAccess, \JsonSerializable
         $this->setIfExists('customer_notification_preference', $data ?? [], null);
         $this->setIfExists('fees', $data ?? [], null);
         $this->setIfExists('channel_properties', $data ?? [], null);
+        $this->setIfExists('metadata', $data ?? [], null);
     }
 
     /**
@@ -1479,6 +1486,33 @@ class Invoice implements ModelInterface, ArrayAccess, \JsonSerializable
             throw new \InvalidArgumentException('non-nullable channel_properties cannot be null');
         }
         $this->container['channel_properties'] = $channel_properties;
+
+        return $this;
+    }
+
+    /**
+     * Gets metadata
+     *
+     * @return object|null
+     */
+    public function getMetadata()
+    {
+        return $this->container['metadata'];
+    }
+
+    /**
+     * Sets metadata
+     *
+     * @param object|null $metadata A free-format JSON for additional information that you may use. Object can be up to 50 keys, with key names up to 40 characters long and values up to 500 characters long.
+     *
+     * @return self
+     */
+    public function setMetadata($metadata)
+    {
+        if (is_null($metadata)) {
+            throw new \InvalidArgumentException('non-nullable metadata cannot be null');
+        }
+        $this->container['metadata'] = $metadata;
 
         return $this;
     }

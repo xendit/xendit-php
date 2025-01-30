@@ -1,6 +1,6 @@
 <?php
 /**
- * RetailOutlet
+ * ChannelPropertiesCardsInstallmentConfiguration
  *
  * PHP version 7.4
  *
@@ -27,14 +27,14 @@ use \Xendit\ObjectSerializer;
 use \Xendit\Model\ModelInterface;
 
 /**
- * RetailOutlet Class Doc Comment
+ * ChannelPropertiesCardsInstallmentConfiguration Class Doc Comment
  *
  * @category Class
- * @description An object representing retail outlet details for invoices.
+ * @description An object to pre-set cards installment for a specific invoice
  * @package  Xendit
  * @implements \ArrayAccess<string, mixed>
  */
-class RetailOutlet implements ModelInterface, ArrayAccess, \JsonSerializable
+class ChannelPropertiesCardsInstallmentConfiguration implements ModelInterface, ArrayAccess, \JsonSerializable
 {
     public const DISCRIMINATOR = null;
 
@@ -43,7 +43,7 @@ class RetailOutlet implements ModelInterface, ArrayAccess, \JsonSerializable
       *
       * @var string
       */
-    protected static $openAPIModelName = 'RetailOutlet';
+    protected static $openAPIModelName = 'ChannelPropertiesCards_installment_configuration';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
@@ -51,10 +51,8 @@ class RetailOutlet implements ModelInterface, ArrayAccess, \JsonSerializable
       * @var string[]
       */
     protected static $openAPITypes = [
-        'retail_outlet_name' => '\Xendit\Invoice\RetailOutletName',
-        'payment_code' => 'string',
-        'transfer_amount' => 'float',
-        'merchant_name' => 'string'
+        'allow_full_payment' => 'bool',
+        'allowed_terms' => '\Xendit\Invoice\ChannelPropertiesCardsInstallmentConfigurationAllowedTermsInner[]'
     ];
 
     /**
@@ -65,10 +63,8 @@ class RetailOutlet implements ModelInterface, ArrayAccess, \JsonSerializable
       * @psalm-var array<string, string|null>
       */
     protected static $openAPIFormats = [
-        'retail_outlet_name' => null,
-        'payment_code' => null,
-        'transfer_amount' => 'double',
-        'merchant_name' => null
+        'allow_full_payment' => null,
+        'allowed_terms' => null
     ];
 
     /**
@@ -77,10 +73,8 @@ class RetailOutlet implements ModelInterface, ArrayAccess, \JsonSerializable
       * @var boolean[]
       */
     protected static array $openAPINullables = [
-        'retail_outlet_name' => false,
-		'payment_code' => false,
-		'transfer_amount' => false,
-		'merchant_name' => false
+        'allow_full_payment' => false,
+		'allowed_terms' => false
     ];
 
     /**
@@ -169,10 +163,8 @@ class RetailOutlet implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $attributeMap = [
-        'retail_outlet_name' => 'retail_outlet_name',
-        'payment_code' => 'payment_code',
-        'transfer_amount' => 'transfer_amount',
-        'merchant_name' => 'merchant_name'
+        'allow_full_payment' => 'allow_full_payment',
+        'allowed_terms' => 'allowed_terms'
     ];
 
     /**
@@ -181,10 +173,8 @@ class RetailOutlet implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $setters = [
-        'retail_outlet_name' => 'setRetailOutletName',
-        'payment_code' => 'setPaymentCode',
-        'transfer_amount' => 'setTransferAmount',
-        'merchant_name' => 'setMerchantName'
+        'allow_full_payment' => 'setAllowFullPayment',
+        'allowed_terms' => 'setAllowedTerms'
     ];
 
     /**
@@ -193,10 +183,8 @@ class RetailOutlet implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $getters = [
-        'retail_outlet_name' => 'getRetailOutletName',
-        'payment_code' => 'getPaymentCode',
-        'transfer_amount' => 'getTransferAmount',
-        'merchant_name' => 'getMerchantName'
+        'allow_full_payment' => 'getAllowFullPayment',
+        'allowed_terms' => 'getAllowedTerms'
     ];
 
     /**
@@ -256,10 +244,8 @@ class RetailOutlet implements ModelInterface, ArrayAccess, \JsonSerializable
      */
     public function __construct(array $data = null)
     {
-        $this->setIfExists('retail_outlet_name', $data ?? [], null);
-        $this->setIfExists('payment_code', $data ?? [], null);
-        $this->setIfExists('transfer_amount', $data ?? [], null);
-        $this->setIfExists('merchant_name', $data ?? [], null);
+        $this->setIfExists('allow_full_payment', $data ?? [], null);
+        $this->setIfExists('allowed_terms', $data ?? [], null);
     }
 
     /**
@@ -289,9 +275,6 @@ class RetailOutlet implements ModelInterface, ArrayAccess, \JsonSerializable
     {
         $invalidProperties = [];
 
-        if ($this->container['retail_outlet_name'] === null) {
-            $invalidProperties[] = "'retail_outlet_name' can't be null";
-        }
         return $invalidProperties;
     }
 
@@ -308,109 +291,55 @@ class RetailOutlet implements ModelInterface, ArrayAccess, \JsonSerializable
 
 
     /**
-     * Gets retail_outlet_name
+     * Gets allow_full_payment
      *
-     * @return \Invoice\RetailOutletName
+     * @return bool|null
      */
-    public function getRetailOutletName()
+    public function getAllowFullPayment()
     {
-        return $this->container['retail_outlet_name'];
+        return $this->container['allow_full_payment'];
     }
 
     /**
-     * Sets retail_outlet_name
+     * Sets allow_full_payment
      *
-     * @param \Invoice\RetailOutletName $retail_outlet_name retail_outlet_name
+     * @param bool|null $allow_full_payment Indicate whether full payment (without installment) is allowed
      *
      * @return self
      */
-    public function setRetailOutletName($retail_outlet_name)
+    public function setAllowFullPayment($allow_full_payment)
     {
-        if (is_null($retail_outlet_name)) {
-            throw new \InvalidArgumentException('non-nullable retail_outlet_name cannot be null');
+        if (is_null($allow_full_payment)) {
+            throw new \InvalidArgumentException('non-nullable allow_full_payment cannot be null');
         }
-        $this->container['retail_outlet_name'] = $retail_outlet_name;
+        $this->container['allow_full_payment'] = $allow_full_payment;
 
         return $this;
     }
 
     /**
-     * Gets payment_code
+     * Gets allowed_terms
      *
-     * @return string|null
+     * @return \Invoice\ChannelPropertiesCardsInstallmentConfigurationAllowedTermsInner[]|null
      */
-    public function getPaymentCode()
+    public function getAllowedTerms()
     {
-        return $this->container['payment_code'];
+        return $this->container['allowed_terms'];
     }
 
     /**
-     * Sets payment_code
+     * Sets allowed_terms
      *
-     * @param string|null $payment_code The payment code.
+     * @param \Invoice\ChannelPropertiesCardsInstallmentConfigurationAllowedTermsInner[]|null $allowed_terms An object to set what kind (from specific bank / specific tenor) of cards installments will be available on a specific invoice
      *
      * @return self
      */
-    public function setPaymentCode($payment_code)
+    public function setAllowedTerms($allowed_terms)
     {
-        if (is_null($payment_code)) {
-            throw new \InvalidArgumentException('non-nullable payment_code cannot be null');
+        if (is_null($allowed_terms)) {
+            throw new \InvalidArgumentException('non-nullable allowed_terms cannot be null');
         }
-        $this->container['payment_code'] = $payment_code;
-
-        return $this;
-    }
-
-    /**
-     * Gets transfer_amount
-     *
-     * @return float|null
-     */
-    public function getTransferAmount()
-    {
-        return $this->container['transfer_amount'];
-    }
-
-    /**
-     * Sets transfer_amount
-     *
-     * @param float|null $transfer_amount The transfer amount.
-     *
-     * @return self
-     */
-    public function setTransferAmount($transfer_amount)
-    {
-        if (is_null($transfer_amount)) {
-            throw new \InvalidArgumentException('non-nullable transfer_amount cannot be null');
-        }
-        $this->container['transfer_amount'] = $transfer_amount;
-
-        return $this;
-    }
-
-    /**
-     * Gets merchant_name
-     *
-     * @return string|null
-     */
-    public function getMerchantName()
-    {
-        return $this->container['merchant_name'];
-    }
-
-    /**
-     * Sets merchant_name
-     *
-     * @param string|null $merchant_name The name of the merchant.
-     *
-     * @return self
-     */
-    public function setMerchantName($merchant_name)
-    {
-        if (is_null($merchant_name)) {
-            throw new \InvalidArgumentException('non-nullable merchant_name cannot be null');
-        }
-        $this->container['merchant_name'] = $merchant_name;
+        $this->container['allowed_terms'] = $allowed_terms;
 
         return $this;
     }
