@@ -11,7 +11,7 @@
 /**
  * xendit-invoice-service
  *
- * The version of the OpenAPI document: 1.8.7
+ * The version of the OpenAPI document: 1.8.8
  */
 
 /**
@@ -51,7 +51,7 @@ class ChannelPropertiesCardsInstallmentConfigurationAllowedTermsInner implements
       */
     protected static $openAPITypes = [
         'issuer' => 'string',
-        'allowed_terms' => 'float[]'
+        'terms' => 'float[]'
     ];
 
     /**
@@ -63,7 +63,7 @@ class ChannelPropertiesCardsInstallmentConfigurationAllowedTermsInner implements
       */
     protected static $openAPIFormats = [
         'issuer' => null,
-        'allowed_terms' => null
+        'terms' => null
     ];
 
     /**
@@ -73,7 +73,7 @@ class ChannelPropertiesCardsInstallmentConfigurationAllowedTermsInner implements
       */
     protected static array $openAPINullables = [
         'issuer' => false,
-		'allowed_terms' => false
+		'terms' => false
     ];
 
     /**
@@ -163,7 +163,7 @@ class ChannelPropertiesCardsInstallmentConfigurationAllowedTermsInner implements
      */
     protected static $attributeMap = [
         'issuer' => 'issuer',
-        'allowed_terms' => 'allowed_terms'
+        'terms' => 'terms'
     ];
 
     /**
@@ -173,7 +173,7 @@ class ChannelPropertiesCardsInstallmentConfigurationAllowedTermsInner implements
      */
     protected static $setters = [
         'issuer' => 'setIssuer',
-        'allowed_terms' => 'setAllowedTerms'
+        'terms' => 'setTerms'
     ];
 
     /**
@@ -183,7 +183,7 @@ class ChannelPropertiesCardsInstallmentConfigurationAllowedTermsInner implements
      */
     protected static $getters = [
         'issuer' => 'getIssuer',
-        'allowed_terms' => 'getAllowedTerms'
+        'terms' => 'getTerms'
     ];
 
     /**
@@ -244,7 +244,7 @@ class ChannelPropertiesCardsInstallmentConfigurationAllowedTermsInner implements
     public function __construct(array $data = null)
     {
         $this->setIfExists('issuer', $data ?? [], null);
-        $this->setIfExists('allowed_terms', $data ?? [], null);
+        $this->setIfExists('terms', $data ?? [], null);
     }
 
     /**
@@ -317,28 +317,28 @@ class ChannelPropertiesCardsInstallmentConfigurationAllowedTermsInner implements
     }
 
     /**
-     * Gets allowed_terms
+     * Gets terms
      *
      * @return float[]|null
      */
-    public function getAllowedTerms()
+    public function getTerms()
     {
-        return $this->container['allowed_terms'];
+        return $this->container['terms'];
     }
 
     /**
-     * Sets allowed_terms
+     * Sets terms
      *
-     * @param float[]|null $allowed_terms An array containing list of installment tenor available to choose
+     * @param float[]|null $terms An array containing list of installment tenor available to choose
      *
      * @return self
      */
-    public function setAllowedTerms($allowed_terms)
+    public function setTerms($terms)
     {
-        if (is_null($allowed_terms)) {
-            throw new \InvalidArgumentException('non-nullable allowed_terms cannot be null');
+        if (is_null($terms)) {
+            throw new \InvalidArgumentException('non-nullable terms cannot be null');
         }
-        $this->container['allowed_terms'] = $allowed_terms;
+        $this->container['terms'] = $terms;
 
         return $this;
     }
