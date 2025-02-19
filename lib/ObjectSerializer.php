@@ -495,7 +495,8 @@ class ObjectSerializer
 
         if (method_exists($class, 'getAllowableEnumValues')) {
             if (!in_array($data, $class::getAllowableEnumValues(), true)) {
-                $data = end($class::getAllowableEnumValues());
+                $allowableEnumValues = $class::getAllowableEnumValues();
+                $data = end($allowableEnumValues);
             }
             return $data;
         } else {
