@@ -5,7 +5,7 @@
 The official Xendit PHP SDK provides a simple and convenient way to call Xendit's REST API
 in applications written in PHP.
 
-* Package version: 6.3.0
+* Package version: 6.4.0
 
 # Getting Started
 
@@ -28,7 +28,7 @@ To install the bindings via [Composer](https://getcomposer.org/), add the follow
     }
   ],
   "require": {
-    "xendit/xendit-php": "6.3.0"
+    "xendit/xendit-php": "6.4.0"
   }
 }
 ```

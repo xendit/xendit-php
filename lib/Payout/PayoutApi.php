@@ -378,7 +378,7 @@ class PayoutApi
         
         // Xendit's custom headers
         $defaultHeaders['xendit-lib'] = 'php';
-        $defaultHeaders['xendit-lib-ver'] = '6.3.0';
+        $defaultHeaders['xendit-lib-ver'] = '6.4.0';
 
         if ($this->config->getUserAgent()) {
             $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
@@ -637,7 +637,7 @@ class PayoutApi
         
         // Xendit's custom headers
         $defaultHeaders['xendit-lib'] = 'php';
-        $defaultHeaders['xendit-lib-ver'] = '6.3.0';
+        $defaultHeaders['xendit-lib-ver'] = '6.4.0';
 
         if ($this->config->getUserAgent()) {
             $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
@@ -921,7 +921,7 @@ class PayoutApi
         
         // Xendit's custom headers
         $defaultHeaders['xendit-lib'] = 'php';
-        $defaultHeaders['xendit-lib-ver'] = '6.3.0';
+        $defaultHeaders['xendit-lib-ver'] = '6.4.0';
 
         if ($this->config->getUserAgent()) {
             $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
@@ -1226,7 +1226,7 @@ class PayoutApi
         
         // Xendit's custom headers
         $defaultHeaders['xendit-lib'] = 'php';
-        $defaultHeaders['xendit-lib-ver'] = '6.3.0';
+        $defaultHeaders['xendit-lib-ver'] = '6.4.0';
 
         if ($this->config->getUserAgent()) {
             $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
@@ -1485,7 +1485,7 @@ class PayoutApi
         
         // Xendit's custom headers
         $defaultHeaders['xendit-lib'] = 'php';
-        $defaultHeaders['xendit-lib-ver'] = '6.3.0';
+        $defaultHeaders['xendit-lib-ver'] = '6.4.0';
 
         if ($this->config->getUserAgent()) {
             $defaultHeaders['User-Agent'] = $this->config->getUserAgent();

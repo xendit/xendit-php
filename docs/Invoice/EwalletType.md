@@ -11,6 +11,8 @@ use Xendit\Invoice\EwalletType;
     
         * `OVO` (value: `'OVO'`)
     
+        * `GOPAY` (value: `'GOPAY'`)
+    
         * `DANA` (value: `'DANA'`)
     
         * `LINKAJA` (value: `'LINKAJA'`)

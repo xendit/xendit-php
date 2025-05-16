@@ -11,7 +11,7 @@
 /**
  * xendit-invoice-service
  *
- * The version of the OpenAPI document: 1.8.8
+ * The version of the OpenAPI document: 1.9.0
  */
 
 /**
@@ -38,6 +38,8 @@ class EwalletType
      */
     
     public const OVO = 'OVO';
+    
+    public const GOPAY = 'GOPAY';
     
     public const DANA = 'DANA';
     
@@ -106,6 +108,7 @@ class EwalletType
     {
         return [
             self::OVO,
+            self::GOPAY,
             self::DANA,
             self::LINKAJA,
             self::PAYMAYA,
