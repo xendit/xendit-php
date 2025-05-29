@@ -55,7 +55,7 @@ class CreateInvoiceRequest implements ModelInterface, ArrayAccess, \JsonSerializ
         'amount' => 'float',
         'payer_email' => 'string',
         'description' => 'string',
-        'invoice_duration' => 'string',
+        'invoice_duration' => 'float',
         'callback_virtual_account_id' => 'string',
         'should_send_email' => 'bool',
         'customer' => '\Xendit\Invoice\CustomerObject',
@@ -547,7 +547,7 @@ class CreateInvoiceRequest implements ModelInterface, ArrayAccess, \JsonSerializ
     /**
      * Gets invoice_duration
      *
-     * @return string|null
+     * @return float|null
      */
     public function getInvoiceDuration()
     {
@@ -557,7 +557,7 @@ class CreateInvoiceRequest implements ModelInterface, ArrayAccess, \JsonSerializ
     /**
      * Sets invoice_duration
      *
-     * @param string|null $invoice_duration The duration of the invoice.
+     * @param float|null $invoice_duration The duration of the invoice in seconds.
      *
      * @return self
      */

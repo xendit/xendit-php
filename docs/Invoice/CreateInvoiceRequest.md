@@ -13,7 +13,7 @@ use Xendit\Invoice\CreateInvoiceRequest;
 | **amount** | **float** | ☑️ | The invoice amount. | null |
 | **payer_email** | **string** |  | The email address of the payer. | null |
 | **description** | **string** |  | A description of the payment. | null |
-| **invoice_duration** | **string** |  | The duration of the invoice. | null |
+| **invoice_duration** | **float** |  | The duration of the invoice in seconds. | null |
 | **callback_virtual_account_id** | **string** |  | The ID of the callback virtual account. | null |
 | **should_send_email** | **bool** |  | Indicates whether email notifications should be sent. | null |
 | **customer** | [**CustomerObject**](CustomerObject.md) |  |  | null |
