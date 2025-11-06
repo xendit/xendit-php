@@ -76,6 +76,8 @@ class EWalletChannelCode
     public const ALIPAY = 'ALIPAY';
     
     public const TOUCHNGO = 'TOUCHNGO';
+
+    public const GOPAY = 'GOPAY';
     
     public const XENDIT_ENUM_DEFAULT_FALLBACK = 'UNKNOWN_ENUM_VALUE';
 
@@ -127,6 +129,7 @@ class EWalletChannelCode
             self::TRUEMONEY,
             self::ALIPAY,
             self::TOUCHNGO,
+            self::GOPAY,
             self::XENDIT_ENUM_DEFAULT_FALLBACK
         ];
     }
