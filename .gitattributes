@@ -1,0 +1,10 @@
+.github/ export-ignore
+.openapi-generator/ export-ignore
+docs/ export-ignore
+images/ export-ignore
+test/ export-ignore
+.gitignore export-ignore
+.gitattributes export-ignore
+.openapi-generator-ignore export-ignore
+.php-cs-fixer.dist.php export-ignore
+phpunit.xml.dist export-ignore
