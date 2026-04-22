@@ -223,6 +223,12 @@ class DirectDebitChannelCode
     
     public const XENDIT_ENUM_DEFAULT_FALLBACK = 'UNKNOWN_ENUM_VALUE';
 
+    public const BPI_DIRECT_DEBIT = 'BPI_DIRECT_DEBIT';
+
+    public const UBP_DIRECT_DEBIT = 'UBP_DIRECT_DEBIT';
+
+    public const RCBC_DIRECT_DEBIT = 'RCBC_DIRECT_DEBIT';
+
     private $value;
 
     public function __construct($value = null) {
@@ -343,7 +349,10 @@ class DirectDebitChannelCode
             self::GBW_KTB,
             self::GBW_SCB,
             self::GBW_BAY,
-            self::XENDIT_ENUM_DEFAULT_FALLBACK
+            self::XENDIT_ENUM_DEFAULT_FALLBACK,
+            self::BPI_DIRECT_DEBIT,
+            self::UBP_DIRECT_DEBIT,
+            self::RCBC_DIRECT_DEBIT
         ];
     }
 }

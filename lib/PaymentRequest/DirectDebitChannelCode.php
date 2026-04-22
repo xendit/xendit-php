@@ -313,7 +313,10 @@ class DirectDebitChannelCode
             self::RCBC_ONLINE_BANKING,
             self::ROBINSONS_BANK_ONLINE_BANKING,
             self::SECURITY_BANK_ONLINE_BANKING,
-            self::XENDIT_ENUM_DEFAULT_FALLBACK
+            self::XENDIT_ENUM_DEFAULT_FALLBACK,
+            self::BPI_DIRECT_DEBIT,
+            self::UBP_DIRECT_DEBIT,
+            self::RCBC_DIRECT_DEBIT
         ];
     }
 }
